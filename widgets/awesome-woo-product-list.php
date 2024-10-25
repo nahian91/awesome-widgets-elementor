@@ -7,7 +7,7 @@
  * @since 1.0.0
  */
 namespace Elementor;
-class Widget_Awesome_Product_list extends Widget_Base {
+class Widget_Awesome_Woo_Product_List extends Widget_Base {
 
 	/**
 	 * Get widget name.
