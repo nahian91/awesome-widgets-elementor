@@ -7,7 +7,7 @@
  * @since 1.0.0
  */
 namespace Elementor;
-class Widget_Awesome_CTA extends Widget_Base {
+class Widget_Awesome_Product_list extends Widget_Base {
 
 	/**
 	 * Get widget name.
@@ -20,7 +20,7 @@ class Widget_Awesome_CTA extends Widget_Base {
 	 * @return string Widget name.
 	 */
 	public function get_name() {
-		return 'awesome-cta';
+		return 'awesome-product-list';
 	}
 
 	/**
@@ -34,7 +34,7 @@ class Widget_Awesome_CTA extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'CTA', 'awesome-widgets' );
+		return esc_html__( 'Product List', 'awesome-widgets' );
 	}
 
 	/**
@@ -298,20 +298,113 @@ class Widget_Awesome_CTA extends Widget_Base {
 	 */ 
 	protected function render() {
 		// get our input from the widget settings.
-		$settings = $this->get_settings_for_display();
-		$awea_cta_sub_title = $settings['awea_cta_sub_title'];
-		$awea_cta_title = $settings['awea_cta_title'];
-		$awea_cta_desc = $settings['awea_cta_desc'];
-		$awea_cta_button1 = $settings['awea_cta_button1'];
-		$awea_cta_button2 = $settings['awea_cta_button2'];
+		// $settings = $this->get_settings_for_display();
+		// $awea_cta_sub_title = $settings['awea_cta_sub_title'];
+		// $awea_cta_title = $settings['awea_cta_title'];
+		// $awea_cta_desc = $settings['awea_cta_desc'];
+		// $awea_cta_button1 = $settings['awea_cta_button1'];
+		// $awea_cta_button2 = $settings['awea_cta_button2'];
        ?>
-			<div class="cta-box">
-				<span><?php echo esc_html($awea_cta_sub_title);?></span>
-				<h4><?php echo esc_html($awea_cta_title);?></h4>
-				<p><?php echo esc_html($awea_cta_desc);?></p>
-				<span class="cta-button"><?php echo esc_html($awea_cta_button1);?></span>
-				<span class="cta-button"><?php echo esc_html($awea_cta_button2);?></span>
-			</div>
+			<div class="feature-product-list-wrapper">
+                        <div class="title-area">
+                            <h2 class="title">
+                                Top Selling
+                            </h2>
+                        </div>
+                        <div class="single-product-list">
+                            <a href="shop-details.html" class="thumbnail">
+                                <img src="assets/images/grocery/06.jpg" alt="product">
+                            </a>
+                            <div class="body-content">
+                                <div class="top">
+                                    <div class="stars-area">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                    <a href="shop-details.html">
+                                        <h4 class="title">Pastine Mellin Filid Angelo 100% Di Grano Tenero</h4>
+                                    </a>
+                                    <div class="price-area">
+                                        <span class="current">$36.00</span>
+                                        <div class="previous">$36.00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-product-list">
+                            <a href="shop-details.html" class="thumbnail">
+                                <img src="assets/images/grocery/04.jpg" alt="product">
+                            </a>
+                            <div class="body-content">
+                                <div class="top">
+                                    <div class="stars-area">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                    <a href="shop-details.html">
+                                        <h4 class="title">Lay's Potato Chips, Sweet Southern Heat ...</h4>
+                                    </a>
+                                    <div class="price-area">
+                                        <span class="current">$36.00</span>
+                                        <div class="previous">$36.00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-product-list">
+                            <a href="shop-details.html" class="thumbnail">
+                                <img src="assets/images/grocery/01.jpg" alt="product">
+                            </a>
+                            <div class="body-content">
+                                <div class="top">
+                                    <div class="stars-area">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                    <a href="shop-details.html">
+                                        <h4 class="title">Hillshire Farm Sliced Honey
+                                            Deli Lunch Meat</h4>
+                                    </a>
+                                    <div class="price-area">
+                                        <span class="current">$36.00</span>
+                                        <div class="previous">$36.00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-product-list">
+                            <a href="shop-details.html" class="thumbnail">
+                                <img src="assets/images/grocery/02.jpg" alt="product">
+                            </a>
+                            <div class="body-content">
+                                <div class="top">
+                                    <div class="stars-area">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                    <a href="shop-details.html">
+                                        <h4 class="title">Pastine Mellin Filid Angelo 100% Di Grano Tenero</h4>
+                                    </a>
+                                    <div class="price-area">
+                                        <span class="current">$36.00</span>
+                                        <div class="previous">$36.00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
        <?php
 	}
 }

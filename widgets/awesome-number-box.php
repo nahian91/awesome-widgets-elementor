@@ -100,7 +100,7 @@ class Widget_Awesome_Number_Box extends Widget_Base {
 				'label' => esc_html__( 'Title', 'awesome-widgets' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => esc_html__( 'Awesome Heading' ),
+				'default' => esc_html__( 'Awesome Heading', 'awesome-widgets' ),
 			]
 		);
 

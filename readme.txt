@@ -1,8 +1,8 @@
 === Awesome Widgets ===
 Contributors: nahian91
-Tags: addons, elementor, elementor addons, elementor widget, elements,widgets for elementor,
+Tags: elementor, elementor addons, elementor widget, elements
 Requires at least: 6.0
-Tested up to: 6.4.3
+Tested up to: 6.6
 Stable tag: 1.0.1
 Requires PHP: 7.4
 License: GPLv2 or later

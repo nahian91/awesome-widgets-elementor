@@ -90,7 +90,7 @@ class Widget_Awesome_Process extends Widget_Base {
                 'label' => esc_html__( 'Title', 'awesome-widgets' ),
                 'type' => \Elementor\Controls_Manager::TEXT,
                 'label_block' => true,
-                'default' => esc_html__( 'First Step' ),
+                'default' => esc_html__( 'First Step', 'awesome-widgets' ),
             ]
         );
 
@@ -101,7 +101,7 @@ class Widget_Awesome_Process extends Widget_Base {
                 'label' => esc_html__( 'Number', 'awesome-widgets' ),
                 'type' => \Elementor\Controls_Manager::TEXT,
                 'label_block' => true,
-                'default' => esc_html__( '1' ),
+                'default' => esc_html__( '1', 'awesome-widgets' ),
             ]
         );
 

@@ -97,6 +97,14 @@ if (!class_exists('AWEA')) {
             require_once $this->this_dir . 'widgets/awesome-number-box.php';
             require_once $this->this_dir . 'widgets/awesome-price.php';
             require_once $this->this_dir . 'widgets/awesome-process.php';
+            require_once $this->this_dir . 'widgets/awesome-post-grid.php';
+            require_once $this->this_dir . 'widgets/awesome-post-list.php';
+            require_once $this->this_dir . 'widgets/awesome-post-tab.php';
+            require_once $this->this_dir . 'widgets/awesome-timeline.php';
+            require_once $this->this_dir . 'widgets/awesome-woo-category-list.php';
+            require_once $this->this_dir . 'widgets/awesome-woo-product-carousel.php';
+            require_once $this->this_dir . 'widgets/awesome-woo-product-list.php';
+            require_once $this->this_dir . 'widgets/awesome-woo-product-tab.php';
 
             // // Register Featured Service Widge
             $widgets_manager->register(new \ELementor\Widget_Awesome_Heading());
@@ -105,7 +113,14 @@ if (!class_exists('AWEA')) {
             $widgets_manager->register(new \ELementor\Widget_Awesome_Number_Box());
             $widgets_manager->register(new \ELementor\Widget_Awesome_Price());
             $widgets_manager->register(new \ELementor\Widget_Awesome_Process());
-            $widgets_manager->register(new \ELementor\Widget_Awesome_CTA());
+            $widgets_manager->register(new \ELementor\Widget_Awesome_Post_List());
+            $widgets_manager->register(new \ELementor\Widget_Awesome_Post_Tab());
+            $widgets_manager->register(new \ELementor\Widget_Awesome_Timeline());
+            $widgets_manager->register(new \ELementor\Widget_Awesome_Woo_Category_List());
+            $widgets_manager->register(new \ELementor\Widget_Awesome_Woo_Product_Carousel());
+            $widgets_manager->register(new \ELementor\Widget_Awesome_Post_Grid());
+            $widgets_manager->register(new \ELementor\Widget_Awesome_Product_list());
+            $widgets_manager->register(new \ELementor\Widget_Awesome_Product_Tab());
         }
 
         /**
