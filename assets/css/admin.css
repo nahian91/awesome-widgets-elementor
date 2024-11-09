@@ -1,0 +1,152 @@
+/* General Admin Styles */
+.awea-dashboard-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f1f1f1;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.awea-dashboard-header h1 {
+    color: #0073aa;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.awea-button {
+    background-color: #0073aa;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.awea-button:hover {
+    background-color: #005a8c;
+}
+
+/* Checkbox Styles */
+.awea-settings-form table.form-table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.awea-settings-form table.form-table th {
+    width: 300px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.awea-checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.awea-checkbox-label {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Custom Awesome Checkbox */
+.awea-checkbox-container input[type="checkbox"] {
+    display: none;
+}
+
+.awea-checkbox-container input[type="checkbox"] + label::before {
+    content: "\f00c"; /* FontAwesome check icon */
+    font-family: 'FontAwesome';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    border: 2px solid #0073aa;
+    border-radius: 4px;
+    background-color: #fff;
+    color: transparent;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.awea-checkbox-container input[type="checkbox"]:checked + label::before {
+    background-color: #0073aa;
+    color: #fff;
+    border-color: #0073aa;
+}
+
+
+/* Modern Switch Styles */
+.awea-switch-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 5px 0;
+}
+
+/* Switch Toggle Styles */
+.awea-switch {
+    position: relative;
+    width: 50px;
+    height: 24px;
+    display: inline-block;
+}
+
+.awea-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.awea-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 24px;
+    transition: 0.4s;
+}
+
+.awea-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+input:checked + .awea-slider {
+    background-color: #0073aa;
+}
+
+input:checked + .awea-slider:before {
+    transform: translateX(26px);
+}
+
+/* Label Styles */
+.awea-switch-label {
+    font-size: 16px;
+    color: #333;
+    user-select: none;
+}
+/* Toggle All Container */
+.awea-toggle-all-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+}
