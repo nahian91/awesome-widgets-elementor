@@ -228,19 +228,19 @@ class Widget_Awesome_Price extends Widget_Base {
 		);
 
 		// Price Background Color
-		$this->add_control(
-			'awea_price_background_color',
-			[
-				'label' => esc_html__( 'Background', 'awesome-widgets' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .single-price' => 'background-color: {{VALUE}}',
-				],
-				'global' => [
-					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
-				]
-			]
-		);
+		// $this->add_control(
+		// 	'awea_price_background_color',
+		// 	[
+		// 		'label' => esc_html__( 'Background', 'awesome-widgets' ),
+		// 		'type' => \Elementor\Controls_Manager::COLOR,
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .single-price' => 'background-color: {{VALUE}}',
+		// 		],
+		// 		'global' => [
+		// 			'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
+		// 		]
+		// 	]
+		// );
 
 		// Price Border
 		$this->add_group_control(
@@ -582,33 +582,36 @@ class Widget_Awesome_Price extends Widget_Base {
 	protected function render() {
 		// get our input from the widget settings.
 		$settings = $this->get_settings_for_display();
-		$awea_price_box_title = $settings['awea_price_box_title'];
-		$awea_price_box_amount = $settings['awea_price_box_amount'];
-		$awea_price_box_plan = $settings['awea_price_box_plan'];
-		$awea_price_box_button_text = $settings['awea_price_box_button_text'];
-		$awea_price_box_button_link = $settings['awea_price_box_button_link']['url'];
+		// $awea_price_box_title = $settings['awea_price_box_title'];
+		// $awea_price_box_amount = $settings['awea_price_box_amount'];
+		// $awea_price_box_plan = $settings['awea_price_box_plan'];
+		// $awea_price_box_button_text = $settings['awea_price_box_button_text'];
+		// $awea_price_box_button_link = $settings['awea_price_box_button_link']['url'];
        ?>
 			<div class="single-price">
-				  <div class="price-title">
-					<h4><?php echo esc_html($awea_price_box_title);?></h4>
-				  </div>
-				  <div class="price-tag">
-					<h2><?php echo esc_html($awea_price_box_amount);?> <span><?php echo esc_html($awea_price_box_plan);?></span></h2>
-				  </div>
-				  <div class="price-item">
+				<div class="price-top">
+					<img decoding="async" src="https://royal-elementor-addons.com/wp-content/uploads/2020/02/Asset-2-2.png">
+					<div class="price-heading">
+						<h4>Premium <span>For small business</span></h4>					
+					</div>
+					<div class="price-amount">
+						<p><span>$</span>299 <small>month</small></p>
+					</div>
+				</div>
+
+				<div class="price-content">
 					<ul>
-						<?php 
-							foreach (  $settings['awea_price_box_features_list'] as $item ) { 
-								$awea_price_box_features = $item['awea_price_box_features'];
-							?>
-							<li class="price-area__item"><?php echo esc_html($awea_price_box_features);?></li>
-						<?php 
-							} 
-						?>
+						<li>20 GB Disk Space</li>
+						<li>25 GB Monthly Bandwidth</li>
+						<li>Unlimited Users</li>
+						<li>5 Domains</li>
 					</ul>
-				  </div>
-				  <a href="<?php echo esc_url($awea_price_box_button_link);?>" class="box-btn"><?php echo esc_html($awea_price_box_button_text);?></a>
-			</div>
+				</div>
+				
+				<div class="price-btn">
+					<a href="">Sign Up</a>
+				</div>
+
        <?php
 	}
 }

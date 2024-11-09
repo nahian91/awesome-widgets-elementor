@@ -1,8 +1,6 @@
 <?php
 /**
- * Awesome CTA Widget.
- *
- * Elementor widget that inserts a cta into the page
+ * Awesome Product List Widget.
  *
  * @since 1.0.0
  */
@@ -12,7 +10,7 @@ class Widget_Awesome_Woo_Product_List extends Widget_Base {
 	/**
 	 * Get widget name.
 	 *
-	 * Retrieve heading widget name.
+	 * Retrieve Product List widget name.
 	 *
 	 * @since 1.0.0
 	 * @access public

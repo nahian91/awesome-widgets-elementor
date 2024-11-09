@@ -1,13 +1,13 @@
 <?php
 /**
- * Awesome Post Grid Widget.
+ * Awesome Testimonials Widget.
  *
- * Elementor widget that inserts a post grid into the page
+ * Elementor widget that inserts a testimonials into the page
  *
  * @since 1.0.0
  */
 namespace Elementor;
-class Widget_Awesome_Post_Grid extends Widget_Base {
+class Widget_Awesome_Testimonials extends Widget_Base {
 
 	/**
 	 * Get widget name.
@@ -20,7 +20,7 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 	 * @return string Widget name.
 	 */
 	public function get_name() {
-		return 'awesome-post-grid';
+		return 'awesome-testimonials';
 	}
 
 	/**
@@ -34,7 +34,7 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'Post Grid', 'awesome-widgets' );
+		return esc_html__( 'Testimonials', 'awesome-widgets' );
 	}
 
 	/**
@@ -305,7 +305,18 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 		// $awea_cta_button1 = $settings['awea_cta_button1'];
 		// $awea_cta_button2 = $settings['awea_cta_button2'];
        ?>
-			
+	   		<div class="single-testimonial">
+				<div class="single-testimonial-icon">
+					<i class="fas fa-quote-left"></i>
+				</div>
+			   	<div class="single-testimonial-content">
+					<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima excepturi, animi eaque sed quidem libero doloribus repellat nostrum architecto atque officia molestias perferendis quaerat asperiores, quam reprehenderit temporibus corrupti eum quis! Pariatur modi quis ad voluptatem dolores odit voluptas ullam blanditiis non.</p>
+				</div>
+				<div class="single-testimonial-author">
+					<img src="https://rishidemos.com/furniture-store/wp-content/uploads/sites/86/2022/01/Ellipse-1.png" alt="">
+					<h4>John Doe <span>Web Developer</span></h4>
+				</div>
+			</div>
        <?php
 	}
 }

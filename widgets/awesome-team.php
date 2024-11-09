@@ -1,13 +1,13 @@
 <?php
 /**
- * Awesome CTA Widget.
+ * Awesome Team Widget.
  *
- * Elementor widget that inserts a cta into the page
+ * Elementor widget that inserts a team into the page
  *
  * @since 1.0.0
  */
 namespace Elementor;
-class Widget_Awesome_Timeline extends Widget_Base {
+class Widget_Awesome_Team extends Widget_Base {
 
 	/**
 	 * Get widget name.
@@ -20,7 +20,7 @@ class Widget_Awesome_Timeline extends Widget_Base {
 	 * @return string Widget name.
 	 */
 	public function get_name() {
-		return 'awesome-timeline';
+		return 'awesome-team';
 	}
 
 	/**
@@ -34,7 +34,7 @@ class Widget_Awesome_Timeline extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'Timeline', 'awesome-widgets' );
+		return esc_html__( 'Team', 'awesome-widgets' );
 	}
 
 	/**
@@ -299,18 +299,23 @@ class Widget_Awesome_Timeline extends Widget_Base {
 	protected function render() {
 		// get our input from the widget settings.
 		$settings = $this->get_settings_for_display();
-		$awea_cta_sub_title = $settings['awea_cta_sub_title'];
-		$awea_cta_title = $settings['awea_cta_title'];
-		$awea_cta_desc = $settings['awea_cta_desc'];
-		$awea_cta_button1 = $settings['awea_cta_button1'];
-		$awea_cta_button2 = $settings['awea_cta_button2'];
+		// $awea_cta_sub_title = $settings['awea_cta_sub_title'];
+		// $awea_cta_title = $settings['awea_cta_title'];
+		// $awea_cta_desc = $settings['awea_cta_desc'];
+		// $awea_cta_button1 = $settings['awea_cta_button1'];
+		// $awea_cta_button2 = $settings['awea_cta_button2'];
        ?>
-			<div class="cta-box">
-				<span><?php echo esc_html($awea_cta_sub_title);?></span>
-				<h4><?php echo esc_html($awea_cta_title);?></h4>
-				<p><?php echo esc_html($awea_cta_desc);?></p>
-				<span class="cta-button"><?php echo esc_html($awea_cta_button1);?></span>
-				<span class="cta-button"><?php echo esc_html($awea_cta_button2);?></span>
+			<div class="single-team">
+				<img src="https://demo.themefisher.com/enov-bootstrap/images/team/team-1.jpg" alt="">
+				<div class="team-content">
+					<h4>Project Manager <span>Justin Hammer</span></h4>					
+					<div class="team-social">
+						<a href="#"><i class="fa fa-facebook-f"></i></a>
+						<a href="#"><i class="fa fa-facebook-f"></i></a>
+						<a href="#"><i class="fa fa-facebook-f"></i></a>
+						<a href="#"><i class="fa fa-facebook-f"></i></a>
+					</div>
+				</div>
 			</div>
        <?php
 	}

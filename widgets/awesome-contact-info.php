@@ -1,13 +1,13 @@
 <?php
 /**
- * Awesome Post Grid Widget.
+ * Awesome CTA Widget.
  *
- * Elementor widget that inserts a post grid into the page
+ * Elementor widget that inserts a cta into the page
  *
  * @since 1.0.0
  */
 namespace Elementor;
-class Widget_Awesome_Post_Grid extends Widget_Base {
+class Widget_Awesome_Contact_Info extends Widget_Base {
 
 	/**
 	 * Get widget name.
@@ -20,7 +20,7 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 	 * @return string Widget name.
 	 */
 	public function get_name() {
-		return 'awesome-post-grid';
+		return 'awesome-contact-info';
 	}
 
 	/**
@@ -34,7 +34,7 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'Post Grid', 'awesome-widgets' );
+		return esc_html__( 'Contact Info', 'awesome-widgets' );
 	}
 
 	/**
@@ -149,20 +149,20 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 			]
 		);
 
-		// CTA Background Color
-		$this->add_control(
-			'awea_cta_background_color',
-			[
-				'label' => esc_html__( 'Background', 'awesome-widgets' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .single-price' => 'background-color: {{VALUE}}',
-				],
-				'global' => [
-					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
-				]
-			]
-		);
+		// // CTA Background Color
+		// $this->add_control(
+		// 	'awea_cta_background_color',
+		// 	[
+		// 		'label' => esc_html__( 'Background', 'awesome-widgets' ),
+		// 		'type' => \Elementor\Controls_Manager::COLOR,
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .single-price' => 'background-color: {{VALUE}}',
+		// 		],
+		// 		'global' => [
+		// 			'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
+		// 		]
+		// 	]
+		// );
 
 		// CTA Border
 		$this->add_group_control(
@@ -305,7 +305,24 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 		// $awea_cta_button1 = $settings['awea_cta_button1'];
 		// $awea_cta_button2 = $settings['awea_cta_button2'];
        ?>
-			
+	   	<div class="single-awesome-widget-contact-info">
+			<div class="icon">
+				<i class="fa fa-phone"></i>
+			</div>
+			<h4>Call Us <span>info@uibundle.com</span></h4>
+		</div>
+	   	<div class="single-awesome-widget-contact-info">
+			<div class="icon">
+				<i class="fa fa-phone"></i>
+			</div>
+			<h4>Call Us <span>info@uibundle.com</span></h4>
+		</div>
+	   	<div class="single-awesome-widget-contact-info">
+			<div class="icon">
+				<i class="fa fa-phone"></i>
+			</div>
+			<h4>Call Us <span>info@uibundle.com</span></h4>
+		</div>
        <?php
 	}
 }
