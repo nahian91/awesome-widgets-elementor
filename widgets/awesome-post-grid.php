@@ -305,7 +305,20 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 		// $awea_cta_button1 = $settings['awea_cta_button1'];
 		// $awea_cta_button2 = $settings['awea_cta_button2'];
        ?>
-			
+	   <div class="awea-single-post-grid">
+			<img src="https://rishidemos.com/consultant/wp-content/uploads/sites/51/2021/07/image-4-min-370x278.jpg" alt="">
+			<div class="awea-single-post-box">
+				<div class="awea-single-post-meta">
+					<a href="">Admin</a>
+					<a href="">Business</a>
+				</div>
+				<div class="awea-single-post-content">
+					<h4><a href="">Govt may ease tax rules for the new startups</a></h4>
+					<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem, vitae!</p>
+					<a href="">Read More</a>
+				</div>
+			</div>
+	   </div>			
        <?php
 	}
 }

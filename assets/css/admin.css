@@ -214,3 +214,104 @@ input:checked + .awea-slider:before {
 
 
 
+.awea-wrap {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 10px;
+	margin-top: 30px;
+}
+
+.awea-widgets-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  .awea-widgets-list-item {
+    border: 1px solid #eee;
+    padding: 20px;
+    border-radius: 9px;
+    background-color: #f4f4f4;
+  }
+  .awea-switch-label {
+    text-transform: capitalize;
+    font-weight: 500;
+  }
+  
+.awea-wrap table, .awea-wrap table tr, .awea-wrap table td {
+    border: 1px solid #ddd;
+    font-weight: 500;
+  }
+  .awea-wrap table {
+    margin-top: 40px;
+  }
+
+
+
+/* Paragraphs */
+.awea-wrap p {
+    margin-bottom: 15px;
+    font-size: 17px;
+}
+
+/* List styling */
+.awea-wrap ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.awea-wrap ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.awea-wrap ul li:last-child {
+    border-bottom: none;
+}
+
+/* Icon styling (Emoji enhancements) */
+.awea-wrap h3::before {
+    content: '✨';
+    margin-right: 8px;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+.awea-wrap ul li::before {
+    content: '✔️';
+    margin-right: 10px;
+    color: #28a745;
+    font-size: 16px;
+}
+
+/* Link styles */
+.awea-wrap a {
+    color: #0073aa;
+    text-decoration: none;
+}
+
+.awea-wrap a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .awea-wrap {
+        padding: 15px;
+    }
+
+    .awea-wrap h2 {
+        font-size: 24px;
+    }
+
+    .awea-wrap h3 {
+        font-size: 18px;
+    }
+
+    .awea-wrap ul li {
+        padding: 8px 0;
+    }
+}

@@ -1,8 +1,8 @@
 <?php
 /**
- * Awesome CTA Widget.
+ * Awesome Contact Info Widget.
  *
- * Elementor widget that inserts a cta into the page
+ * Elementor widget that inserts a contact info into the page
  *
  * @since 1.0.0
  */

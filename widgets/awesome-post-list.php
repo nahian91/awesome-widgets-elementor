@@ -298,19 +298,56 @@ class Widget_Awesome_Post_List extends Widget_Base {
 	 */ 
 	protected function render() {
 		// get our input from the widget settings.
-		$settings = $this->get_settings_for_display();
-		$awea_cta_sub_title = $settings['awea_cta_sub_title'];
-		$awea_cta_title = $settings['awea_cta_title'];
-		$awea_cta_desc = $settings['awea_cta_desc'];
-		$awea_cta_button1 = $settings['awea_cta_button1'];
-		$awea_cta_button2 = $settings['awea_cta_button2'];
+		// $settings = $this->get_settings_for_display();
+		// $awea_cta_sub_title = $settings['awea_cta_sub_title'];
+		// $awea_cta_title = $settings['awea_cta_title'];
+		// $awea_cta_desc = $settings['awea_cta_desc'];
+		// $awea_cta_button1 = $settings['awea_cta_button1'];
+		// $awea_cta_button2 = $settings['awea_cta_button2'];
        ?>
-			<div class="cta-box">
-				<span><?php echo esc_html($awea_cta_sub_title);?></span>
-				<h4><?php echo esc_html($awea_cta_title);?></h4>
-				<p><?php echo esc_html($awea_cta_desc);?></p>
-				<span class="cta-button"><?php echo esc_html($awea_cta_button1);?></span>
-				<span class="cta-button"><?php echo esc_html($awea_cta_button2);?></span>
+			<div class="awea-single-post-list">
+				<img src="https://rishidemos.com/consultant/wp-content/uploads/sites/51/2021/07/image-4-min-370x278.jpg" alt="">
+				<div class="awea-single-post-list-content">
+					<h4><a href="">Transforming into the digital enterprise</a></h4>
+					<div class="awea-single-post-list-meta">
+						<a href="">Admin</a>
+						<a href="">Category</a>
+						<a href="">8th November 2024</a>
+					</div>
+				</div>
+			</div>
+			<div class="awea-single-post-list">
+				<img src="https://rishidemos.com/consultant/wp-content/uploads/sites/51/2021/07/image-4-min-370x278.jpg" alt="">
+				<div class="awea-single-post-list-content">
+					<h4><a href="">Transforming into the digital enterprise</a></h4>
+					<div class="awea-single-post-list-meta">
+						<a href="">Admin</a>
+						<a href="">Category</a>
+						<a href="">8th November 2024</a>
+					</div>
+				</div>
+			</div>
+			<div class="awea-single-post-list">
+				<img src="https://rishidemos.com/consultant/wp-content/uploads/sites/51/2021/07/image-4-min-370x278.jpg" alt="">
+				<div class="awea-single-post-list-content">
+					<h4><a href="">Transforming into the digital enterprise</a></h4>
+					<div class="awea-single-post-list-meta">
+						<a href="">Admin</a>
+						<a href="">Category</a>
+						<a href="">8th November 2024</a>
+					</div>
+				</div>
+			</div>
+			<div class="awea-single-post-list">
+				<img src="https://rishidemos.com/consultant/wp-content/uploads/sites/51/2021/07/image-4-min-370x278.jpg" alt="">
+				<div class="awea-single-post-list-content">
+					<h4><a href="">Transforming into the digital enterprise</a></h4>
+					<div class="awea-single-post-list-meta">
+						<a href="">Admin</a>
+						<a href="">Category</a>
+						<a href="">8th November 2024</a>
+					</div>
+				</div>
 			</div>
        <?php
 	}

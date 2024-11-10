@@ -1,16 +1,12 @@
 <?php
-/*
- * Plugin Name: Awesome Widgets
- * Plugin URI: https://devnahian.com/about-us
- * Description: Awesome Widget is a Collection of Elementor Page Design
- * Version: 1.0.1
+/**
+ * Plugin Name: Ultimate Contact Form 7 for Elementor
+ * Description: Easily integrate Contact Form 7 forms into Elementor using a dedicated widget.
+ * Version: 1.0.0
  * Author: Abdullah Nahian
- * Author URI: https://devnahian.com
- * Elementor tested up to: 3.19.2
- * Elementor Pro tested up to: 3.19.2
- * Text Domain: awesome-widgets
+ * Text Domain: Utimate Contact Form 7 for Elementor
  * Domain Path: /languages
- * License: GPLv2 or later
+ * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
@@ -70,12 +66,7 @@ class AWEA {
         'awesome-process',
         'awesome-post-grid',
         'awesome-post-list',
-        'awesome-post-tab',
         'awesome-testimonials',
-        'awesome-woo-category-list',
-        'awesome-woo-product-carousel',
-        'awesome-woo-product-list',
-        'awesome-woo-product-tab',
         'awesome-contact-info',
         'awesome-team',
     ];
@@ -151,22 +142,49 @@ class AWEA {
     // General Page Callback
     public function general_page() {
         ?>
-        <div class="wrap">
-            <h1>Awesome Widgets - General Settings</h1>
-            
+        <div class="awea-wrap">
+            <h1>Awesome Widgets - General Settings</h1>       
+<p><strong>Awesome Widgets for Elementor</strong> is a powerful and versatile plugin designed to supercharge your Elementor page builder experience. With a collection of unique, customizable widgets, this plugin helps you create stunning, responsive, and professional websites effortlessly.</p>
+
+<h3>🌟 Key Features:</h3>
+<ul>
+  <li><strong>Exclusive Widgets:</strong> Access a wide variety of widgets to enhance your website's design and functionality.</li>
+  <li><strong>Customizable Elements:</strong> Tailor each widget to match your brand’s style with extensive customization options.</li>
+  <li><strong>Responsive Design:</strong> All widgets are fully responsive, ensuring a seamless experience across all devices.</li>
+  <li><strong>Lightweight and Fast:</strong> Optimized for performance, the plugin ensures minimal impact on your site's speed.</li>
+  <li><strong>Regular Updates:</strong> Stay ahead with frequent updates and new widget additions.</li>
+</ul>
+
+<h3>🚀 Widgets Included:</h3>
+<ul>
+  <li><strong>Advanced Slider:</strong> Create eye-catching sliders with dynamic content and animations.</li>
+  <li><strong>Testimonials:</strong> Display customer reviews in a stylish, engaging manner.</li>
+  <li><strong>Info Box:</strong> Showcase information with beautiful icons and text combinations.</li>
+  <li><strong>Team Member:</strong> Introduce your team with customizable team member cards.</li>
+  <li><strong>Pricing Table:</strong> Present your services or products with detailed, appealing pricing tables.</li>
+</ul>
+
+<h3>💡 Why Choose Awesome Widgets for Elementor?</h3>
+<p>Whether you're building a blog, e-commerce site, or business website, <strong>Awesome Widgets for Elementor</strong> provides a comprehensive toolkit to help you bring your vision to life. Its user-friendly interface and powerful features make it the perfect addition to any Elementor-powered website.</p>
+     
         </div>
         <?php
     }
 
-    // Widgets Page Callback
     public function widgets_page() {
-        ?>
-        <div class="awea-dashboard-container">
-            <div class="awea-dashboard-header">
-                <h1>Awesome Widgets Settings</h1>
-                <p>Enable or disable the widgets for your Elementor design needs.</p>
-            </div>
-
+        // Check if the form has been submitted and changes have been saved.
+        if (isset($_GET['settings-updated']) && $_GET['settings-updated']) {
+            // Add a success notice using add_settings_error.
+            add_settings_error('awea_widgets_messages', 'awea_widgets_message', 'Settings saved successfully.', 'updated');
+        }
+    ?>
+        <div class="awea-wrap">
+            <h1>Awesome Widgets Settings</h1>
+            <p>Enable or disable the widgets for your Elementor design needs.</p>
+    
+            <!-- Display settings errors (if any) -->
+            <?php settings_errors('awea_widgets_messages'); ?>
+    
             <!-- Master Toggle On/Off -->
             <div class="awea-toggle-all-container">
                 <label for="awea_toggle_all" class="awea-switch-container">
@@ -180,12 +198,38 @@ class AWEA {
                     <span class="awea-switch-label">Toggle All On/Off</span>
                 </label>
             </div>
-
+    
             <form action='options.php' method='post' class="awea-settings-form">
                 <?php
                 settings_fields('awesomeWidgets');
-                do_settings_sections('awesome-widgets');
                 ?>
+                <ul class="awea-widgets-list">
+                    <?php
+                    $options = get_option('awea_widgets_enabled', []);
+                    foreach ($this->widgets as $widget) {
+                        $checked = isset($options[$widget]) ? $options[$widget] : 0;
+                        ?>
+                        <li class="awea-widgets-list-item">
+                            <label for="awea_<?php echo esc_attr($widget); ?>" class="awea-switch-container">
+                                <span class="awea-switch">
+                                    <input 
+                                        type="checkbox" 
+                                        id="awea_<?php echo esc_attr($widget); ?>" 
+                                        name="awea_widgets_enabled[<?php echo esc_attr($widget); ?>]" 
+                                        value="1" 
+                                        <?php checked($checked, 1); ?>
+                                    />
+                                    <span class="awea-slider"></span>
+                                </span>
+                                <span class="awea-switch-label">
+                                    <?php echo ucfirst(str_replace('-', ' ', $widget)); ?>
+                                </span>
+                            </label>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                </ul>
                 <div class="awea-button-container">
                     <?php submit_button('Save Changes', 'primary', 'submit', true, ['class' => 'awea-button']); ?>
                 </div>
@@ -193,11 +237,13 @@ class AWEA {
         </div>
         <?php
     }
+    
+
 
     // System Info Page Callback
     public function system_info_page() {
         ?>
-        <div class="wrap">
+        <div class="awea-wrap">
             <h1>Awesome Widgets - System Info</h1>
             <?php
                 $system_info = [
