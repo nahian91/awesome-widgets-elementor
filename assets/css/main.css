@@ -1,24 +1,14 @@
 /* Common CSS */
-img{
-    max-width:100%;
-}
 a{
   transition: .3s;
 }
 h1, h2, h3, h4, h5, h6{
     margin:0;
     padding:0;
-    font-family: 'Poppins', sans-serif;
-    font-weight:600;
-    color:#333;
 }
 p{
     margin:0;
     padding:0;
-    font-family: 'Poppins', sans-serif;
-    font-weight:400;
-    color:#333;
-    font-size:14px;
 }
 /* Image Box */
 
@@ -418,12 +408,10 @@ p{
 
 
 
-/* Container wrapper to hide overflow */
+/* Team */
 .single-team {
 	overflow: hidden;
 }
-
-/* Content area of the team member card */
 .team-content {
 	text-align: center;
 	padding: 15px 0;
@@ -435,19 +423,15 @@ p{
 	opacity: 0.97;
 	border-radius: 4px 4px 0 0;
 }
-
-/* Social media icons styling */
 .team-social {
 	margin-bottom: 0;
 }
-
 .team-social a {
 	color: rgba(0, 0, 0, 0.5);
 	padding: 0 6px;
 	position: relative;
 	transition: color 0.3s linear;
 }
-
 .single-team img {
   width: 100%;
   border-radius: 8px;
@@ -478,7 +462,7 @@ p{
   color: #ff3636;
 }
 
-
+/* Testimonial */
 .single-testimonial {
   text-align: center;
   padding: 30px;

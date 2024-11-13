@@ -75,7 +75,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		
 		// start of the Content tab section
 	   $this->start_controls_section(
-	       'awea_cta_contents',
+	       'awea_testimonials_contents',
 		    [
 		        'label' => esc_html__('Contents', 'awesome-widgets'),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
@@ -83,58 +83,62 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		    ]
 	    );
 		
-		// CTA Sub Title
+		// Testimonials Icon
 		$this->add_control(
-			'awea_cta_sub_title',
+			'awea_testimonials_icon',
 			[
-				'label' => esc_html__( 'Sub Title', 'awesome-widgets' ),
-				'type' => Controls_Manager::TEXT,
+				'label' => esc_html__( 'Icon', 'awesome-widgets' ),
+				'type' => Controls_Manager::ICONS,
 				'label_block' => true,
-				'default' => esc_html__( 'are you ready?', 'awesome-widgets' ),
+				'default' => [
+					'value' => 'fas fa-quote-left',
+					'library' => 'fa-solid',
+				],
 			]
 		);
 
-		// CTA Title
+		// Testimonials Speech
 		$this->add_control(
-			'awea_cta_title',
+			'awea_testimonials_speech',
 			[
-				'label' => esc_html__( 'Title', 'awesome-widgets' ),
-				'type' => Controls_Manager::TEXT,
+				'label' => esc_html__( 'Speech', 'awesome-widgets' ),
+				'type' => Controls_Manager::WYSIWYG,
 				'label_block' => true,
-				'default' => esc_html__( 'We Are Awesome CTA!', 'awesome-widgets' ),
+				'default' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima excepturi, animi eaque sed quidem libero doloribus repellat nostrum architecto atque officia molestias perferendis quaerat asperiores, quam reprehenderit temporibus corrupti eum quis! Pariatur modi quis ad voluptatem dolores odit voluptas ullam blanditiis non.', 'awesome-widgets' ),
 			]
 		);
 
-		// CTA Description
+		// Testimonials Author Image
 		$this->add_control(
-			'awea_cta_desc',
+			'awea_testimonials_author_image',
 			[
-				'label' => esc_html__( 'Description', 'awesome-widgets' ),
-				'type' => Controls_Manager::TEXTAREA,
-				'label_block' => true,
-				'default' => esc_html__( 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters', 'awesome-widgets' ),
+				'label' => __('Author Image', 'plugin-domain'),
+				'type' => \Elementor\Controls_Manager::MEDIA,
+				'default' => [
+					'url' => \Elementor\Utils::get_placeholder_image_src(),
+				],
 			]
 		);
 
-		// CTA Button 1
+		// Testimonials Author Name
 		$this->add_control(
-			'awea_cta_button1',
+			'awea_testimonials_author_name',
 			[
-				'label' => esc_html__( 'Button 1', 'awesome-widgets' ),
-				'type' => Controls_Manager::TEXT,
-				'label_block' => true,
-				'default' => esc_html__( '+880 123 4567 890', 'awesome-widgets' ),
+				'label' => esc_html__( 'Name', 'awesome-widgets' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => esc_html__( 'John Doe', 'awesome-widgets' ),
+				'label_block' => true
 			]
 		);
 
-		// CTA Button 2
+		// Testimonials Author Designation
 		$this->add_control(
-			'awea_cta_button2',
+			'awea_testimonials_author_desg',
 			[
-				'label' => esc_html__( 'Button 2', 'awesome-widgets' ),
-				'type' => Controls_Manager::TEXT,
-				'label_block' => true,
-				'default' => esc_html__( 'info@anahian.com', 'awesome-widgets' ),
+				'label' => esc_html__( 'Designatiion', 'awesome-widgets' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => esc_html__( 'Web Developer', 'awesome-widgets' ),
+				'label_block' => true
 			]
 		);
 		
@@ -142,21 +146,52 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		
 		// start of the Style tab section
 		$this->start_controls_section(
-			'awea_cta_layout_style',
+			'awea_testimonials_layout_style',
 			[
 				'label' => esc_html__( 'Layouts', 'awesome-widgets' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
 
-		// CTA Background Color
 		$this->add_control(
-			'awea_cta_background_color',
+			'content_alignment',
+			[
+				'label' => __('Alignment', 'plugin-domain'),
+				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => __('Left', 'plugin-domain'),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => __('Center', 'plugin-domain'),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => __('Right', 'plugin-domain'),
+						'icon' => 'eicon-text-align-right',
+					],
+					'justify' => [
+						'title' => __('Justify', 'plugin-domain'),
+						'icon' => 'eicon-text-align-justify',
+					],
+				],
+				'default' => 'center',
+				'toggle' => true,
+				'selectors' => [
+					'{{WRAPPER}} .single-testimonial' => 'text-align: {{VALUE}}',
+				],
+			]
+		);	
+
+		// Testimonials Background Color
+		$this->add_control(
+			'awea_testimonials_background_color',
 			[
 				'label' => esc_html__( 'Background', 'awesome-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .single-price' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .single-testimonial' => 'background-color: {{VALUE}}',
 				],
 				'global' => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
@@ -164,37 +199,37 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 			]
 		);
 
-		// CTA Border
+		// Testimonials Border
 		$this->add_group_control(
 			\Elementor\Group_Control_Border::get_type(),
 			[
-				'name' => 'awea_cta_border',
-				'selector' => '{{WRAPPER}} .single-price',
+				'name' => 'awea_testimonials_border',
+				'selector' => '{{WRAPPER}} .single-testimonial',
 			]
 		);	
 
-		// CTA Border Radius
+		// Testimonials Border Radius
 		$this->add_control(
-			'awea_cta_border_radius',
+			'awea_testimonials_border_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'awesome-widgets' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
-					'{{WRAPPER}} .single-price' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .single-testimonial' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
 
-		// CTA Padding
+		// Testimonials Padding
 		$this->add_control(
-			'awea_cta_padding',
+			'awea_testimonials_padding',
 			[
 				'label' => esc_html__( 'Padding', 'awesome-widgets' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
-					'{{WRAPPER}} .single-price' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .single-testimonial' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -204,7 +239,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 
 		// start of the Style tab section
 		$this->start_controls_section(
-			'awea_cta_contents_style',
+			'awea_testimonials_contents_style',
 			[
 				'label' => esc_html__( 'Contents', 'awesome-widgets' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
@@ -212,22 +247,22 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		);
 
 		$this->add_control(
-			'awea_cta_contents_subtitle_options',
+			'awea_testimonials_contents_icon_options',
 			[
-				'label' => esc_html__( 'Sub Title', 'awesome-widgets' ),
+				'label' => esc_html__( 'Icon', 'awesome-widgets' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
 		);
 		
-		// CTA Sub Heading Color
+		// Testimonials Sub Heading Color
 		$this->add_control(
-			'awea_cta_subtitle_color',
+			'awea_testimonials_contents_icon_color',
 			[
-				'label' => esc_html__( 'Text Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .cta-box span' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .single-testimonial-icon i' => 'color: {{VALUE}}',
 				],
 				'global' => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_SECONDARY,
@@ -235,35 +270,23 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 			]
 		);
 
-		// CTA Sub Heading Typography
-		$this->add_group_control(
-			\Elementor\Group_Control_Typography::get_type(),
-			[
-				'name' => 'awea_cta_subtitle_typography',
-				'selector' => '{{WRAPPER}} .cta-box span',
-				'global' => [
-					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_SECONDARY,
-				]
-			]
-		);
-
 		$this->add_control(
-			'awea_cta_contents_title_options',
+			'awea_testimonials_contents_speech_options',
 			[
-				'label' => esc_html__( 'Title', 'awesome-widgets' ),
+				'label' => esc_html__( 'Speech', 'awesome-widgets' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
 		);
 
-		// CTA Title Color
+		// Testimonials Title Color
 		$this->add_control(
-			'awea_cta_title_color',
+			'awea_testimonials_speech_color',
 			[
-				'label' => esc_html__( 'Text Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .cta-box h4' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .single-testimonial-content p' => 'color: {{VALUE}}',
 				],
 				'global' => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
@@ -271,12 +294,143 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 			]
 		);
 
-		// CTA Title Typography
+		// Testimonials Title Typography
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			[
-				'name' => 'awea_cta_title_typography',
-				'selector' => '{{WRAPPER}} .cta-box h4',
+				'name' => 'awea_testimonials_speech_typography',
+				'selector' => '{{WRAPPER}} .single-testimonial-content p',
+				'global' => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
+				]
+			]
+		);
+
+		$this->end_controls_section();
+		// end of the Style tab section
+
+		// start of the Style tab section
+		$this->start_controls_section(
+			'awea_testimonials_author_style',
+			[
+				'label' => esc_html__( 'Author', 'awesome-widgets' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'awea_testimonials_author_image_options',
+			[
+				'label' => esc_html__( 'Image', 'awesome-widgets' ),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'awea_testimonials_author_image_width',
+			[
+				'label' => __('Width', 'plugin-domain'),
+				'type' => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => ['px', '%', 'em', 'vw'],
+				'default' => [
+					'unit' => '%',
+					'size' => 100,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .single-testimonial-author img' => 'width: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);		
+
+		// Testimonials Border
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name' => 'awea_testimonials_author_image_border',
+				'selector' => '{{WRAPPER}} .single-testimonial-author img',
+			]
+		);	
+
+		// Testimonials Border Radius
+		$this->add_control(
+			'awea_testimonials_border_author_image_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'awesome-widgets' ),
+				'type' => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem'],
+				'selectors' => [
+					'{{WRAPPER}} .single-testimonial-author img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'awea_testimonials_author_name_options',
+			[
+				'label' => esc_html__( 'Name', 'awesome-widgets' ),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+		
+		// Testimonials Sub Heading Color
+		$this->add_control(
+			'awea_testimonials_author_name_color',
+			[
+				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .single-testimonial-author h4' => 'color: {{VALUE}}',
+				],
+				'global' => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_SECONDARY,
+				],
+			]
+		);
+
+		// Testimonials Title Typography
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'awea_testimonials_author_name_typography',
+				'selector' => '{{WRAPPER}} .single-testimonial-author h4',
+				'global' => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
+				]
+			]
+		);
+
+		$this->add_control(
+			'awea_testimonials_author_designation_options',
+			[
+				'label' => esc_html__( 'Designation', 'awesome-widgets' ),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		// Testimonials Title Color
+		$this->add_control(
+			'awea_testimonials_author_designation_color',
+			[
+				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .single-testimonial-author span' => 'color: {{VALUE}}',
+				],
+				'global' => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
+				]
+			]
+		);
+
+		// Testimonials Title Typography
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'awea_testimonials_author_designation_typography',
+				'selector' => '{{WRAPPER}} .single-testimonial-author span',
 				'global' => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
 				]
@@ -299,22 +453,22 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 	protected function render() {
 		// get our input from the widget settings.
 		$settings = $this->get_settings_for_display();
-		// $awea_cta_sub_title = $settings['awea_cta_sub_title'];
-		// $awea_cta_title = $settings['awea_cta_title'];
-		// $awea_cta_desc = $settings['awea_cta_desc'];
-		// $awea_cta_button1 = $settings['awea_cta_button1'];
-		// $awea_cta_button2 = $settings['awea_cta_button2'];
+		$awea_testimonials_icon = $settings['awea_testimonials_icon']['value'];
+		$awea_testimonials_speech = $settings['awea_testimonials_speech'];
+		$awea_testimonials_author_image = $settings['awea_testimonials_author_image']['url'];
+		$awea_testimonials_author_name = $settings['awea_testimonials_author_name'];
+		$awea_testimonials_author_desg = $settings['awea_testimonials_author_desg'];
        ?>
 	   		<div class="single-testimonial">
 				<div class="single-testimonial-icon">
-					<i class="fas fa-quote-left"></i>
+					<i class="<?php echo esc_attr($awea_testimonials_icon);?>"></i>
 				</div>
 			   	<div class="single-testimonial-content">
-					<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima excepturi, animi eaque sed quidem libero doloribus repellat nostrum architecto atque officia molestias perferendis quaerat asperiores, quam reprehenderit temporibus corrupti eum quis! Pariatur modi quis ad voluptatem dolores odit voluptas ullam blanditiis non.</p>
+				   <?php echo esc_html($awea_testimonials_speech);?>
 				</div>
 				<div class="single-testimonial-author">
-					<img src="https://rishidemos.com/furniture-store/wp-content/uploads/sites/86/2022/01/Ellipse-1.png" alt="">
-					<h4>John Doe <span>Web Developer</span></h4>
+					<img src="<?php echo esc_url($awea_testimonials_author_image);?>" alt="">
+					<h4><?php echo esc_html($awea_testimonials_author_name);?> <span><?php echo esc_html($awea_testimonials_author_desg);?></span></h4>
 				</div>
 			</div>
        <?php
