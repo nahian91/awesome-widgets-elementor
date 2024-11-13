@@ -74,7 +74,7 @@ class Widget_Awesome_CTA extends Widget_Base {
 	protected function _register_controls() {
 		
 		// start of the Content tab section
-	   $this->start_controls_section(
+	   	$this->start_controls_section(
 	       'awea_cta_contents',
 		    [
 		        'label' => esc_html__('Contents', 'awesome-widgets'),
@@ -115,15 +115,27 @@ class Widget_Awesome_CTA extends Widget_Base {
 				'default' => esc_html__( 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters', 'awesome-widgets' ),
 			]
 		);
+		
+		$this->end_controls_section();
 
-		// CTA Button 1
+		// start of the Button tab section
+		$this->start_controls_section(
+			'awea_cta_btns',
+			 [
+				 'label' => esc_html__('Buttons', 'awesome-widgets'),
+				 'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
+			
+			 ]
+		 );
+
+		 // CTA Button 1
 		$this->add_control(
 			'awea_cta_button1',
 			[
 				'label' => esc_html__( 'Button 1', 'awesome-widgets' ),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => esc_html__( '+880 123 4567 890', 'awesome-widgets' ),
+				'default' => esc_html__( '+8801686195607', 'awesome-widgets' ),
 			]
 		);
 
@@ -134,10 +146,10 @@ class Widget_Awesome_CTA extends Widget_Base {
 				'label' => esc_html__( 'Button 2', 'awesome-widgets' ),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => esc_html__( 'info@anahian.com', 'awesome-widgets' ),
+				'default' => esc_html__( 'nahiansylhet@gmail.com', 'awesome-widgets' ),
 			]
 		);
-		
+
 		$this->end_controls_section();
 		
 		// start of the Style tab section
@@ -282,6 +294,150 @@ class Widget_Awesome_CTA extends Widget_Base {
 				]
 			]
 		);
+
+		$this->end_controls_section();
+
+		// start of the Style tab section
+		$this->start_controls_section(
+			'awea_cta_btns_style',
+			[
+				'label' => esc_html__( 'Buttons', 'awesome-widgets' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'awea_cta_contents_btn1_options',
+			[
+				'label' => esc_html__( 'Button 1', 'awesome-widgets' ),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		// Start of Tabs
+		$this->start_controls_tabs('cta_button_tabs');
+
+		// Normal Tab
+		$this->start_controls_tab(
+			'cta_button_tab_normal',
+			[
+				'label' => esc_html__('Normal', 'textdomain'),
+			]
+		);
+
+		$this->add_control(
+			'cta_button_link_normal',
+			[
+				'label' => esc_html__('Button Link (Normal)', 'textdomain'),
+				'type' => \Elementor\Controls_Manager::URL,
+				'options' => ['url', 'is_external', 'nofollow', 'custom_attributes'],
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+					'nofollow' => true,
+					'custom_attributes' => '',
+				],
+				'label_block' => true,
+			]
+		);
+
+		$this->end_controls_tab();
+
+		// Hover Tab
+		$this->start_controls_tab(
+			'cta_button_tab_hover',
+			[
+				'label' => esc_html__('Hover', 'textdomain'),
+			]
+		);
+
+		$this->add_control(
+			'cta_button_link_hover',
+			[
+				'label' => esc_html__('Button Link (Hover)', 'textdomain'),
+				'type' => \Elementor\Controls_Manager::URL,
+				'options' => ['url', 'is_external', 'nofollow', 'custom_attributes'],
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+					'nofollow' => true,
+					'custom_attributes' => '',
+				],
+				'label_block' => true,
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'awea_cta_contents_btn2_options',
+			[
+				'label' => esc_html__( 'Button 2', 'awesome-widgets' ),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		// Start of Tabs
+		$this->start_controls_tabs('cta_button_tabs1');
+
+		// Normal Tab
+		$this->start_controls_tab(
+			'cta_button_tab1_normal',
+			[
+				'label' => esc_html__('Normal', 'textdomain'),
+			]
+		);
+
+		$this->add_control(
+			'cta_button_link_normal1',
+			[
+				'label' => esc_html__('Button Link (Normal)', 'textdomain'),
+				'type' => \Elementor\Controls_Manager::URL,
+				'options' => ['url', 'is_external', 'nofollow', 'custom_attributes'],
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+					'nofollow' => true,
+					'custom_attributes' => '',
+				],
+				'label_block' => true,
+			]
+		);
+
+		$this->end_controls_tab();
+
+		// Hover Tab
+		$this->start_controls_tab(
+			'cta_button_tab_hover1',
+			[
+				'label' => esc_html__('Hover', 'textdomain'),
+			]
+		);
+
+		$this->add_control(
+			'cta_button_link_hover1',
+			[
+				'label' => esc_html__('Button Link (Hover)', 'textdomain'),
+				'type' => \Elementor\Controls_Manager::URL,
+				'options' => ['url', 'is_external', 'nofollow', 'custom_attributes'],
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+					'nofollow' => true,
+					'custom_attributes' => '',
+				],
+				'label_block' => true,
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
 
 		$this->end_controls_section();
 		// end of the Style tab section
