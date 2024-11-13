@@ -214,7 +214,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 					'{{WRAPPER}} .single-awesome-widget-contact-info .icon i' => 'color: {{VALUE}}',
 				],
 				'global' => [
-					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_TEXT,
 				]
 			]
 		);
@@ -226,7 +226,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 				'label' => esc_html__( 'Background', 'awesome-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .single-awesome-widget-contact-info .icon i' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .single-awesome-widget-contact-info .icon' => 'background-color: {{VALUE}}',
 				],
 				'global' => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
@@ -303,7 +303,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 				'label' => esc_html__( 'Color', 'awesome-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .single-awesome-widget-contact-info h4' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .single-awesome-widget-contact-info h4 span' => 'color: {{VALUE}}',
 				],
 				'global' => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
@@ -316,7 +316,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			[
 				'name' => 'awea_contact_info_desc_typography',
-				'selector' => '{{WRAPPER}} .single-awesome-widget-contact-info h4',
+				'selector' => '{{WRAPPER}} .single-awesome-widget-contact-info h4 span',
 				'global' => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
 				]
@@ -341,34 +341,18 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 		$settings = $this->get_settings_for_display();
 		$awea_contact_info_list = $settings['awea_contact_info_list'];
        ?>
-
-	   
-
-	   <?php foreach($awea_contact_info_list as $list) {
-?>
-<pre>
-		<?php print_r($awea_contact_info_list);?>
-	   </pre>
-<?php 
+	   <?php foreach($awea_contact_info_list as $list) { 
+			$awea_contact_info_icon = $list['awea_contact_info_icon']['value'];
+			$awea_contact_info_title = $list['awea_contact_info_title'];
+			$awea_contact_info_description = $list['awea_contact_info_description'];
+		?>
+		<div class="single-awesome-widget-contact-info">
+			<div class="icon">
+				<i class="<?php echo esc_attr($awea_contact_info_icon);?>"></i>
+			</div>
+			<h4><?php echo esc_html($awea_contact_info_title);?> <span><?php echo esc_html($awea_contact_info_description);?></span></h4>
+		</div><?php 
 	   } ?>
-	   	<div class="single-awesome-widget-contact-info">
-			<div class="icon">
-				<i class="fa fa-phone"></i>
-			</div>
-			<h4>Call Us <span>info@uibundle.com</span></h4>
-		</div>
-	   	<div class="single-awesome-widget-contact-info">
-			<div class="icon">
-				<i class="fa fa-phone"></i>
-			</div>
-			<h4>Call Us <span>info@uibundle.com</span></h4>
-		</div>
-	   	<div class="single-awesome-widget-contact-info">
-			<div class="icon">
-				<i class="fa fa-phone"></i>
-			</div>
-			<h4>Call Us <span>info@uibundle.com</span></h4>
-		</div>
        <?php
 	}
 }

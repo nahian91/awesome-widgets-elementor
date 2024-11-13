@@ -1,8 +1,8 @@
 <?php
 /**
- * Awesome CTA Widget.
+ * Awesome Post List Widget.
  *
- * Elementor widget that inserts a cta into the page
+ * Elementor widget that inserts a post list into the page
  *
  * @since 1.0.0
  */
@@ -63,7 +63,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 	 */
 	public function get_categories() {
 		return [ 'awesome-widgets-elementor' ];
-	}
+	}	
 
 	/**
 	 * Adds different input fields to allow the user to change and customize the widget settings.
@@ -75,66 +75,51 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		
 		// start of the Content tab section
 	   $this->start_controls_section(
-	       'awea_cta_contents',
+	       'awea_post_list_contents',
 		    [
 		        'label' => esc_html__('Contents', 'awesome-widgets'),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
-		   
 		    ]
 	    );
 		
-		// CTA Sub Title
+		// Number of Posts
 		$this->add_control(
-			'awea_cta_sub_title',
+			'awea_post_list_per_page',
 			[
-				'label' => esc_html__( 'Sub Title', 'awesome-widgets' ),
-				'type' => Controls_Manager::TEXT,
-				'label_block' => true,
-				'default' => esc_html__( 'are you ready?', 'awesome-widgets' ),
+				'label' => esc_html__('Number of Posts', 'awesome-widgets'),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'default' => 10,
+				'min' => 1,
+				'max' => 50,
 			]
 		);
 
-		// CTA Title
+		// Order By
 		$this->add_control(
-			'awea_cta_title',
+			'awea_post_list_orderby',
 			[
-				'label' => esc_html__( 'Title', 'awesome-widgets' ),
-				'type' => Controls_Manager::TEXT,
-				'label_block' => true,
-				'default' => esc_html__( 'We Are Awesome CTA!', 'awesome-widgets' ),
+				'label' => esc_html__('Order By', 'awesome-widgets'),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => 'date',
+				'options' => [
+					'date' => esc_html__('Date', 'awesome-widgets'),
+					'title' => esc_html__('Title', 'awesome-widgets'),
+					'rand' => esc_html__('Random', 'awesome-widgets'),
+				],
 			]
 		);
 
-		// CTA Description
+		// Order
 		$this->add_control(
-			'awea_cta_desc',
+			'awea_post_list_order',
 			[
-				'label' => esc_html__( 'Description', 'awesome-widgets' ),
-				'type' => Controls_Manager::TEXTAREA,
-				'label_block' => true,
-				'default' => esc_html__( 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters', 'awesome-widgets' ),
-			]
-		);
-
-		// CTA Button 1
-		$this->add_control(
-			'awea_cta_button1',
-			[
-				'label' => esc_html__( 'Button 1', 'awesome-widgets' ),
-				'type' => Controls_Manager::TEXT,
-				'label_block' => true,
-				'default' => esc_html__( '+880 123 4567 890', 'awesome-widgets' ),
-			]
-		);
-
-		// CTA Button 2
-		$this->add_control(
-			'awea_cta_button2',
-			[
-				'label' => esc_html__( 'Button 2', 'awesome-widgets' ),
-				'type' => Controls_Manager::TEXT,
-				'label_block' => true,
-				'default' => esc_html__( 'info@anahian.com', 'awesome-widgets' ),
+				'label' => esc_html__('Order', 'awesome-widgets'),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => 'DESC',
+				'options' => [
+					'ASC' => esc_html__('Ascending', 'awesome-widgets'),
+					'DESC' => esc_html__('Descending', 'awesome-widgets'),
+				],
 			]
 		);
 		
@@ -142,7 +127,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		
 		// start of the Style tab section
 		$this->start_controls_section(
-			'awea_cta_layout_style',
+			'awea_post_list_layout_style',
 			[
 				'label' => esc_html__( 'Layouts', 'awesome-widgets' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
@@ -151,12 +136,12 @@ class Widget_Awesome_Post_List extends Widget_Base {
 
 		// CTA Background Color
 		$this->add_control(
-			'awea_cta_background_color',
+			'awea_post_list_background_color',
 			[
 				'label' => esc_html__( 'Background', 'awesome-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .single-price' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .awea-single-post-list' => 'background-color: {{VALUE}}',
 				],
 				'global' => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
@@ -168,33 +153,33 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->add_group_control(
 			\Elementor\Group_Control_Border::get_type(),
 			[
-				'name' => 'awea_cta_border',
-				'selector' => '{{WRAPPER}} .single-price',
+				'name' => 'awea_post_list_border',
+				'selector' => '{{WRAPPER}} .awea-single-post-list',
 			]
 		);	
 
 		// CTA Border Radius
 		$this->add_control(
-			'awea_cta_border_radius',
+			'awea_post_list_border_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'awesome-widgets' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
-					'{{WRAPPER}} .single-price' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .awea-single-post-list' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
 
 		// CTA Padding
 		$this->add_control(
-			'awea_cta_padding',
+			'awea_post_list_padding',
 			[
 				'label' => esc_html__( 'Padding', 'awesome-widgets' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
-					'{{WRAPPER}} .single-price' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .awea-single-post-list' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -204,66 +189,84 @@ class Widget_Awesome_Post_List extends Widget_Base {
 
 		// start of the Style tab section
 		$this->start_controls_section(
-			'awea_cta_contents_style',
+			'awea_post_list_image_style',
 			[
-				'label' => esc_html__( 'Contents', 'awesome-widgets' ),
+				'label' => esc_html__( 'Image', 'awesome-widgets' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
 
-		$this->add_control(
-			'awea_cta_contents_subtitle_options',
+		$this->add_responsive_control(
+			'awea_post_list_image_width',
 			[
-				'label' => esc_html__( 'Sub Title', 'awesome-widgets' ),
-				'type' => \Elementor\Controls_Manager::HEADING,
-				'separator' => 'before',
-			]
-		);
-		
-		// CTA Sub Heading Color
-		$this->add_control(
-			'awea_cta_subtitle_color',
-			[
-				'label' => esc_html__( 'Text Color', 'awesome-widgets' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
+				'label' => esc_html__('Image Width', 'awesome-widgets'),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => ['%', 'px', 'vw'],
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+					'px' => [
+						'min' => 0,
+						'max' => 1000,
+					],
+					'vw' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 100,
+				],
 				'selectors' => [
-					'{{WRAPPER}} .cta-box span' => 'color: {{VALUE}}',
-				],
-				'global' => [
-					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_SECONDARY,
+					'{{WRAPPER}} .awea-single-post-list img' => 'width: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
 
-		// CTA Sub Heading Typography
+		// Image Box Border
 		$this->add_group_control(
-			\Elementor\Group_Control_Typography::get_type(),
+			\Elementor\Group_Control_Border::get_type(),
 			[
-				'name' => 'awea_cta_subtitle_typography',
-				'selector' => '{{WRAPPER}} .cta-box span',
-				'global' => [
-					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_SECONDARY,
-				]
+				'name' => 'awea_post_list_border',
+				'selector' => '{{WRAPPER}} .awea-single-post-list img',
+			]
+		);	
+		
+		// Image Box Border Radius
+		$this->add_control(
+			'awea_post_list_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'awesome-widgets' ),
+				'type' => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem'],
+				'selectors' => [
+					'{{WRAPPER}} .awea-single-post-list img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
 			]
 		);
 
-		$this->add_control(
-			'awea_cta_contents_title_options',
+		$this->end_controls_section();
+
+		// start of the Style tab section
+		$this->start_controls_section(
+			'awea_post_list_title_style',
 			[
 				'label' => esc_html__( 'Title', 'awesome-widgets' ),
-				'type' => \Elementor\Controls_Manager::HEADING,
-				'separator' => 'before',
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
 
-		// CTA Title Color
+		// Team Title Color
 		$this->add_control(
-			'awea_cta_title_color',
+			'awea_post_list_title_color',
 			[
-				'label' => esc_html__( 'Text Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .cta-box h4' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .awea-single-post-list-content h4 a' => 'color: {{VALUE}}',
 				],
 				'global' => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
@@ -271,17 +274,95 @@ class Widget_Awesome_Post_List extends Widget_Base {
 			]
 		);
 
-		// CTA Title Typography
+		// Team Title Typography
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			[
-				'name' => 'awea_cta_title_typography',
-				'selector' => '{{WRAPPER}} .cta-box h4',
+				'name' => 'awea_post_list_title_typography',
+				'selector' => '{{WRAPPER}} .awea-single-post-list-content h4 a',
 				'global' => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
 				]
 			]
 		);
+
+		$this->end_controls_section();
+		
+		// start of the Style tab section
+		$this->start_controls_section(
+			'awea_post_list_meta_style',
+			[
+				'label' => esc_html__( 'Meta', 'awesome-widgets' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		// Start of Tabs
+		$this->start_controls_tabs('awea_post_list_meta_tabs');
+
+		// Normal Tab
+		$this->start_controls_tab(
+			'awea_post_list_meta_tab_normal',
+			[
+				'label' => esc_html__('Normal', 'textdomain'),
+			]
+		);
+
+		// Team Title Color
+		$this->add_control(
+			'awea_post_list_meta_color',
+			[
+				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .awea-single-post-list-meta a' => 'color: {{VALUE}}',
+				],
+				'global' => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
+				]
+			]
+		);
+
+		// Team Title Typography
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'awea_post_list_meta_typography',
+				'selector' => '{{WRAPPER}} .awea-single-post-list-meta a',
+				'global' => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		// Hover Tab
+		$this->start_controls_tab(
+			'cta_button_tab_hover',
+			[
+				'label' => esc_html__('Hover', 'textdomain'),
+			]
+		);
+
+		// Team Title Color
+		$this->add_control(
+			'awea_post_list_meta_hover_color',
+			[
+				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .awea-single-post-list-meta a:hover' => 'color: {{VALUE}}',
+				],
+				'global' => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
 
 		$this->end_controls_section();
 		// end of the Style tab section
@@ -297,58 +378,61 @@ class Widget_Awesome_Post_List extends Widget_Base {
 	 * @access protected
 	 */ 
 	protected function render() {
-		// get our input from the widget settings.
-		// $settings = $this->get_settings_for_display();
-		// $awea_cta_sub_title = $settings['awea_cta_sub_title'];
-		// $awea_cta_title = $settings['awea_cta_title'];
-		// $awea_cta_desc = $settings['awea_cta_desc'];
-		// $awea_cta_button1 = $settings['awea_cta_button1'];
-		// $awea_cta_button2 = $settings['awea_cta_button2'];
-       ?>
-			<div class="awea-single-post-list">
-				<img src="https://rishidemos.com/consultant/wp-content/uploads/sites/51/2021/07/image-4-min-370x278.jpg" alt="">
-				<div class="awea-single-post-list-content">
-					<h4><a href="">Transforming into the digital enterprise</a></h4>
-					<div class="awea-single-post-list-meta">
-						<a href="">Admin</a>
-						<a href="">Category</a>
-						<a href="">8th November 2024</a>
+		$settings = $this->get_settings_for_display();
+		$posts_per_page = $settings['awea_post_list_per_page'];
+		$orderby = $settings['awea_post_list_orderby'];
+		$order = $settings['awea_post_list_order'];
+		$category_filter = !empty($settings['category_filter']) ? $settings['category_filter'] : '';
+	
+		$args = [
+			'post_type' => 'post',
+			'posts_per_page' => $posts_per_page,
+			'orderby' => $orderby,
+			'order' => $order,
+		];
+	
+		if (!empty($category_filter)) {
+			$args['category_name'] = implode(',', $category_filter);
+		}
+	
+		$query = new \WP_Query($args);
+		
+		if ($query->have_posts()) {
+			while ($query->have_posts()) {
+				$query->the_post();
+				?>
+				<div class="awea-single-post-list">
+					<img src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'large')); ?>" alt="">
+					<div class="awea-single-post-list-content">
+						<h4><a href="<?php echo esc_url(get_permalink()); ?>"><?php the_title(); ?></a></h4>
+						<div class="awea-single-post-list-meta">
+							<?php 
+								// Author
+								$author_id = get_the_author_meta('ID');
+								$author_name = get_the_author();
+								$author_url = get_author_posts_url($author_id);
+								echo '<a href="' . esc_url($author_url) . '">' . esc_html($author_name) . '</a>';
+	
+								// Categories
+								$categories = get_the_category();
+								if (!empty($categories)) {
+									foreach ($categories as $category) {
+										echo '<a href="' . esc_url(get_category_link($category->term_id)) . '">' . esc_html($category->name) . '</a> ';
+									}
+								}
+								
+								// Date
+								$date_link = get_day_link(get_the_date('Y'), get_the_date('m'), get_the_date('d'));
+								echo '<a href="' . esc_url($date_link) . '">' . get_the_date('jS F Y') . '</a>';
+							?>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="awea-single-post-list">
-				<img src="https://rishidemos.com/consultant/wp-content/uploads/sites/51/2021/07/image-4-min-370x278.jpg" alt="">
-				<div class="awea-single-post-list-content">
-					<h4><a href="">Transforming into the digital enterprise</a></h4>
-					<div class="awea-single-post-list-meta">
-						<a href="">Admin</a>
-						<a href="">Category</a>
-						<a href="">8th November 2024</a>
-					</div>
-				</div>
-			</div>
-			<div class="awea-single-post-list">
-				<img src="https://rishidemos.com/consultant/wp-content/uploads/sites/51/2021/07/image-4-min-370x278.jpg" alt="">
-				<div class="awea-single-post-list-content">
-					<h4><a href="">Transforming into the digital enterprise</a></h4>
-					<div class="awea-single-post-list-meta">
-						<a href="">Admin</a>
-						<a href="">Category</a>
-						<a href="">8th November 2024</a>
-					</div>
-				</div>
-			</div>
-			<div class="awea-single-post-list">
-				<img src="https://rishidemos.com/consultant/wp-content/uploads/sites/51/2021/07/image-4-min-370x278.jpg" alt="">
-				<div class="awea-single-post-list-content">
-					<h4><a href="">Transforming into the digital enterprise</a></h4>
-					<div class="awea-single-post-list-meta">
-						<a href="">Admin</a>
-						<a href="">Category</a>
-						<a href="">8th November 2024</a>
-					</div>
-				</div>
-			</div>
-       <?php
-	}
+				<?php 
+			}
+			wp_reset_postdata();
+		} else {
+			echo 'No posts found';
+		}
+	}	
 }

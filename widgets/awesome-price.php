@@ -74,13 +74,27 @@ class Widget_Awesome_Price extends Widget_Base {
 	protected function _register_controls() {
 		
 		// Start of the price Content Tab Section
-	   $this->start_controls_section(
-	       'awea_price_content',
+	   	$this->start_controls_section(
+	       'awea_price_box_header',
 		    [
-		        'label' => esc_html__('Content', 'awesome-widgets'),
+		        'label' => esc_html__('Header', 'awesome-widgets'),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT		   
 		    ]
 	    );
+
+		// Testimonials Icon
+		$this->add_control(
+			'awea_testimonials_icon',
+			[
+				'label' => esc_html__( 'Icon', 'awesome-widgets' ),
+				'type' => Controls_Manager::ICONS,
+				'label_block' => true,
+				'default' => [
+					'value' => 'fas fa-quote-left',
+					'library' => 'fa-solid',
+				],
+			]
+		);
 		
 		// Price Title
 		$this->add_control(
@@ -93,6 +107,39 @@ class Widget_Awesome_Price extends Widget_Base {
 			]
 		);
 
+		// Price Title
+		$this->add_control(
+			'awea_price_box_subtitle',
+			[
+				'label' => esc_html__( 'Price Sub Title', 'awesome-widgets' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'label_block' => true,
+				'default' => esc_html__( 'Standard', 'awesome-widgets' ),
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Start of the price Content Tab Section
+		$this->start_controls_section(
+			'awea_price_box_amount',
+			 [
+				 'label' => esc_html__('Amount', 'awesome-widgets'),
+				 'tab'   => \Elementor\Controls_Manager::TAB_CONTENT		   
+			 ]
+		 );
+
+		// Price Currency
+		$this->add_control(
+			'awea_price_box_amount_currency',
+			[
+				'label' => esc_html__( 'Price Currency', 'awesome-widgets' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'label_block' => true,
+				'default' => esc_html__( '$', 'awesome-widgets' ),
+			]
+		);
+
 		// Price Amount
 		$this->add_control(
 			'awea_price_box_amount',
@@ -100,13 +147,13 @@ class Widget_Awesome_Price extends Widget_Base {
 				'label' => esc_html__( 'Price Amount', 'awesome-widgets' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => esc_html__( '$25', 'awesome-widgets' ),
+				'default' => esc_html__( '25', 'awesome-widgets' ),
 			]
 		);
 
 		// Price Plan
 		$this->add_control(
-			'awea_price_box_plan',
+			'awea_price_box_amount_plan',
 			[
 				'label' => esc_html__( 'Price Plan', 'awesome-widgets' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
@@ -114,6 +161,17 @@ class Widget_Awesome_Price extends Widget_Base {
 				'default' => esc_html__( 'Month', 'awesome-widgets' ),
 			]
 		);
+
+		$this->end_controls_section();
+
+		// Start of the price Content Tab Section
+		$this->start_controls_section(
+			'awea_price_box_features',
+			 [
+				 'label' => esc_html__('Features', 'awesome-widgets'),
+				 'tab'   => \Elementor\Controls_Manager::TAB_CONTENT		   
+			 ]
+		 );
 
 		$repeater = new \Elementor\Repeater();
 
@@ -161,6 +219,17 @@ class Widget_Awesome_Price extends Widget_Base {
 				'title_field' => '{{{ awea_price_box_features }}}',
 			]
 		);
+
+		$this->end_controls_section();
+
+		// Start of the price Content Tab Section
+		$this->start_controls_section(
+			'awea_price_box_button',
+			 [
+				 'label' => esc_html__('Button', 'awesome-widgets'),
+				 'tab'   => \Elementor\Controls_Manager::TAB_CONTENT		   
+			 ]
+		 );
 
 		// Price Plan Button Text
 		$this->add_control(
