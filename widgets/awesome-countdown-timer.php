@@ -1,13 +1,13 @@
 <?php
 /**
- * Awesome CTA Widget.
+ * Awesome Countdown Timer Widget.
  *
- * Elementor widget that inserts a cta into the page
+ * Elementor widget that inserts a countdown timer into the page
  *
  * @since 1.0.0
  */
 namespace Elementor;
-class Widget_Awesome_CTA extends Widget_Base {
+class Widget_Awesome_Countddown_Timer extends Widget_Base {
 
 	/**
 	 * Get widget name.
@@ -20,7 +20,7 @@ class Widget_Awesome_CTA extends Widget_Base {
 	 * @return string Widget name.
 	 */
 	public function get_name() {
-		return 'awesome-cta';
+		return 'awesome-countdown-timer';
 	}
 
 	/**
@@ -34,7 +34,7 @@ class Widget_Awesome_CTA extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'CTA', 'awesome-widgets-elementor' );
+		return esc_html__( 'Countdown Timer', 'awesome-widgets-elementor' );
 	}
 
 	/**

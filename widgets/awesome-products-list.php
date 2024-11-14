@@ -1,13 +1,13 @@
 <?php
 /**
- * Awesome CTA Widget.
+ * Awesome Porducts List Widget.
  *
- * Elementor widget that inserts a cta into the page
+ * Elementor widget that inserts a products list into the page
  *
  * @since 1.0.0
  */
 namespace Elementor;
-class Widget_Awesome_CTA extends Widget_Base {
+class Widget_Awesome_Porducts_List extends Widget_Base {
 
 	/**
 	 * Get widget name.
@@ -20,7 +20,7 @@ class Widget_Awesome_CTA extends Widget_Base {
 	 * @return string Widget name.
 	 */
 	public function get_name() {
-		return 'awesome-cta';
+		return 'awesome-products-list';
 	}
 
 	/**
@@ -34,7 +34,7 @@ class Widget_Awesome_CTA extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'CTA', 'awesome-widgets-elementor' );
+		return esc_html__( 'Porducts List', 'awesome-widgets-elementor' );
 	}
 
 	/**

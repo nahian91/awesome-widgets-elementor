@@ -48,7 +48,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 	 * @return string Widget icon.
 	 */
 	public function get_icon() {
-		return 'eicon-call-to-action';
+		return 'eicon-unread';
 	}
 
 	/**
@@ -78,7 +78,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 	       'awea_contact_info_contents',
 		    [
 		        'label' => esc_html__('Contents', 'awesome-widgets-elementor'),
-				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,		   
+				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,	   
 		    ]
 	    );
 

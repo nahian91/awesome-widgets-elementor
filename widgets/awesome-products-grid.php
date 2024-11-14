@@ -1,8 +1,8 @@
 <?php
 /**
- * Awesome CTA Widget.
+ * Awesome Products Grid Widget.
  *
- * Elementor widget that inserts a cta into the page
+ * Elementor widget that inserts a products grid into the page
  *
  * @since 1.0.0
  */
@@ -20,7 +20,7 @@ class Widget_Awesome_CTA extends Widget_Base {
 	 * @return string Widget name.
 	 */
 	public function get_name() {
-		return 'awesome-cta';
+		return 'awesome-productss-grid';
 	}
 
 	/**
@@ -34,7 +34,7 @@ class Widget_Awesome_CTA extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'CTA', 'awesome-widgets-elementor' );
+		return esc_html__( 'Products Grid', 'awesome-widgets-elementor' );
 	}
 
 	/**
