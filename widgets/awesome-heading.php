@@ -35,7 +35,7 @@ class Widget_Awesome_Heading extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'Heading', 'awesome-widgets' );
+		return esc_html__( 'Heading', 'awesome-widgets-elementor' );
 	}
 
 	/**
@@ -78,7 +78,7 @@ class Widget_Awesome_Heading extends Widget_Base {
 		$this->start_controls_section(
 			'awea_heading_contents',
 			 [
-				'label' => esc_html__('Contents', 'awesome-widgets'),
+				'label' => esc_html__('Contents', 'awesome-widgets-elementor'),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,			
 			]
 		);
@@ -87,10 +87,10 @@ class Widget_Awesome_Heading extends Widget_Base {
 		$this->add_control(
 			'awea_sub_heading',
 			[
-				'label' => esc_html__( 'Sub Heading', 'awesome-widgets' ),
+				'label' => esc_html__( 'Sub Heading', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => esc_html__( 'Dummy Text', 'awesome-widgets' ),
+				'default' => esc_html__( 'Dummy Text', 'awesome-widgets-elementor' ),
 			]
 		);
 
@@ -98,10 +98,10 @@ class Widget_Awesome_Heading extends Widget_Base {
 		$this->add_control(
 			'awea_heading',
 			[
-				'label' => esc_html__( 'Heading', 'awesome-widgets' ),
+				'label' => esc_html__( 'Heading', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => esc_html__( 'Awesome Heading', 'awesome-widgets' ),
+				'default' => esc_html__( 'Awesome Heading', 'awesome-widgets-elementor' ),
 			]
 		);
 
@@ -109,10 +109,10 @@ class Widget_Awesome_Heading extends Widget_Base {
 		$this->add_control(
 			'awea_heading_desc',
 			[
-				'label' => esc_html__( 'Description', 'awesome-widgets' ),
+				'label' => esc_html__( 'Description', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::TEXTAREA,
 				'label_block' => true,
-				'default' => esc_html__( 'It is a long established fact that a reader will be distracted by the readable content of a page.', 'awesome-widgets' ),
+				'default' => esc_html__( 'It is a long established fact that a reader will be distracted by the readable content of a page.', 'awesome-widgets-elementor' ),
 			]
 		);
 
@@ -120,20 +120,20 @@ class Widget_Awesome_Heading extends Widget_Base {
 		$this->add_control(
 			'awea_heading_alignment',
 			[
-				'label' => esc_html__( 'Alignment', 'awesome-widgets' ),
+				'label' => esc_html__( 'Alignment', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::CHOOSE,
 				'separator' => 'before',
 				'options' => [
 					'left' => [
-						'title' => esc_html__( 'Left', 'awesome-widgets' ),
+						'title' => esc_html__( 'Left', 'awesome-widgets-elementor' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => esc_html__( 'Center', 'awesome-widgets' ),
+						'title' => esc_html__( 'Center', 'awesome-widgets-elementor' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => esc_html__( 'Right', 'awesome-widgets' ),
+						'title' => esc_html__( 'Right', 'awesome-widgets-elementor' ),
 						'icon' => 'eicon-text-align-right',
 					],
 				],
@@ -151,7 +151,7 @@ class Widget_Awesome_Heading extends Widget_Base {
 		$this->start_controls_section(
 			'awea_heading_style',
 			[
-				'label' => esc_html__( 'Contents', 'awesome-widgets' ),
+				'label' => esc_html__( 'Contents', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -160,7 +160,7 @@ class Widget_Awesome_Heading extends Widget_Base {
 		$this->add_control(
 			'awea_sub_heading_options',
 			[
-				'label' => esc_html__( 'Sub Heading', 'awesome-widgets' ),
+				'label' => esc_html__( 'Sub Heading', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before'
 			]
@@ -170,7 +170,7 @@ class Widget_Awesome_Heading extends Widget_Base {
 		$this->add_control(
 			'awea_sub_heading_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .section-title span' => 'color: {{VALUE}}',
@@ -197,7 +197,7 @@ class Widget_Awesome_Heading extends Widget_Base {
 		$this->add_control(
 			'awea_heading_options',
 			[
-				'label' => esc_html__( 'Heading', 'awesome-widgets' ),
+				'label' => esc_html__( 'Heading', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before'
 			]
@@ -207,7 +207,7 @@ class Widget_Awesome_Heading extends Widget_Base {
 		$this->add_control(
 			'awea_heading_color',
 			[
-				'label' => esc_html__( 'Text Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Text Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .section-title h4' => 'color: {{VALUE}}',
@@ -234,7 +234,7 @@ class Widget_Awesome_Heading extends Widget_Base {
 		$this->add_control(
 			'awea_desc_options',
 			[
-				'label' => esc_html__( 'Description', 'awesome-widgets' ),
+				'label' => esc_html__( 'Description', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before'
 			]
@@ -244,7 +244,7 @@ class Widget_Awesome_Heading extends Widget_Base {
 		$this->add_control(
 			'awea_desc_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .section-title p' => 'color: {{VALUE}}',
@@ -271,7 +271,7 @@ class Widget_Awesome_Heading extends Widget_Base {
 		$this->add_control(
 			'awea_sep_options',
 			[
-				'label' => esc_html__( 'Separator', 'awesome-widgets' ),
+				'label' => esc_html__( 'Separator', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before'
 			]
@@ -281,7 +281,7 @@ class Widget_Awesome_Heading extends Widget_Base {
 		$this->add_control(
 			'awea_sep1_color',
 			[
-				'label' => esc_html__( 'Separator 1 Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Separator 1 Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .section-title h4::before' => 'background-color: {{VALUE}}',
@@ -296,7 +296,7 @@ class Widget_Awesome_Heading extends Widget_Base {
 		$this->add_control(
 			'awea_sep2_color',
 			[
-				'label' => esc_html__( 'Separator 2 Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Separator 2 Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .section-title h4::after' => 'background-color: {{VALUE}}',

@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: Ultimate Contact Form 7 for Elementor
+ * Plugin Name: Awesome Widgets for Elementor
  * Description: Easily integrate Contact Form 7 forms into Elementor using a dedicated widget.
  * Version: 1.0.0
  * Author: Abdullah Nahian
- * Text Domain: Utimate Contact Form 7 for Elementor
+ * Text Domain: awesome-widgets-elementor
  * Domain Path: /languages
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -21,14 +21,14 @@
 
             $awe_fs = fs_dynamic_init( array(
                 'id'                  => '17015',
-                'slug'                => 'awesome-widgets',
+                'slug'                => 'awesome-widgets-elementor',
                 'type'                => 'plugin',
                 'public_key'          => 'pk_23e89894238073bcb61ffa59279c6',
                 'is_premium'          => false,
                 'has_addons'          => false,
                 'has_paid_plans'      => false,
                 'menu'                => array(
-                    'slug'           => 'awesome-widgets',
+                    'slug'           => 'awesome-widgets-elementor',
                     'account'        => false,
                     'support'        => false,
                 ),
@@ -102,7 +102,7 @@ class AWEA {
             'Awesome Widgets', 
             'Awesome Widgets', 
             'manage_options', 
-            'awesome-widgets', 
+            'awesome-widgets-elementor', 
             [$this, 'general_page'], 
             '', 
             59
@@ -110,17 +110,17 @@ class AWEA {
     
         // Submenu for General
         add_submenu_page(
-            'awesome-widgets',
+            'awesome-widgets-elementor',
             'General Settings',
             'General',
             'manage_options',
-            'awesome-widgets',
+            'awesome-widgets-elementor',
             [$this, 'general_page']
         );
     
         // Submenu for Widgets
         add_submenu_page(
-            'awesome-widgets',
+            'awesome-widgets-elementor',
             'Widgets Settings',
             'Widgets',
             'manage_options',
@@ -130,7 +130,7 @@ class AWEA {
     
         // Submenu for System Info
         add_submenu_page(
-            'awesome-widgets',
+            'awesome-widgets-elementor',
             'System Info',
             'System Info',
             'manage_options',
@@ -275,13 +275,13 @@ class AWEA {
                 // Register settings for Widgets
                 register_setting('awesomeWidgets', 'awea_widgets_enabled');
 
-                add_settings_section('awea_section', 'Widgets Settings', null, 'awesome-widgets');
+                add_settings_section('awea_section', 'Widgets Settings', null, 'awesome-widgets-elementor');
                 foreach ($this->widgets as $widget) {
                     add_settings_field(
                         "awea_{$widget}_enabled",
                         ucfirst(str_replace('-', ' ', $widget)),
                         [$this, 'checkbox_render'],
-                        'awesome-widgets',
+                        'awesome-widgets-elementor',
                         'awea_section',
                         ['widget' => $widget]
                     );
@@ -355,7 +355,7 @@ class AWEA {
                     <form action='options.php' method='post' class="awea-settings-form">
                         <?php
                         settings_fields('awesomeWidgets');
-                        do_settings_sections('awesome-widgets');
+                        do_settings_sections('awesome-widgets-elementor');
                         ?>
                         <div class="awea-button-container">
                             <?php submit_button('Save Changes', 'primary', 'submit', true, ['class' => 'awea-button']); ?>
@@ -392,7 +392,7 @@ class AWEA {
             }
             public function elementor_category() {
                 \Elementor\Plugin::instance()->elements_manager->add_category('awesome-widgets-elementor', [
-                    'title' => esc_html__('Awesome Widgets', 'awesome-widgets'),
+                    'title' => esc_html__('Awesome Widgets', 'awesome-widgets-elementor'),
                 ], 1);
             }
 

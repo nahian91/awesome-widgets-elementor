@@ -34,7 +34,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'Post List', 'awesome-widgets' );
+		return esc_html__( 'Post List', 'awesome-widgets-elementor' );
 	}
 
 	/**
@@ -77,7 +77,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 	   $this->start_controls_section(
 	       'awea_post_list_contents',
 		    [
-		        'label' => esc_html__('Contents', 'awesome-widgets'),
+		        'label' => esc_html__('Contents', 'awesome-widgets-elementor'),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 		    ]
 	    );
@@ -86,7 +86,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->add_control(
 			'awea_post_list_per_page',
 			[
-				'label' => esc_html__('Number of Posts', 'awesome-widgets'),
+				'label' => esc_html__('Number of Posts', 'awesome-widgets-elementor'),
 				'type' => \Elementor\Controls_Manager::NUMBER,
 				'default' => 10,
 				'min' => 1,
@@ -98,13 +98,13 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->add_control(
 			'awea_post_list_orderby',
 			[
-				'label' => esc_html__('Order By', 'awesome-widgets'),
+				'label' => esc_html__('Order By', 'awesome-widgets-elementor'),
 				'type' => \Elementor\Controls_Manager::SELECT,
 				'default' => 'date',
 				'options' => [
-					'date' => esc_html__('Date', 'awesome-widgets'),
-					'title' => esc_html__('Title', 'awesome-widgets'),
-					'rand' => esc_html__('Random', 'awesome-widgets'),
+					'date' => esc_html__('Date', 'awesome-widgets-elementor'),
+					'title' => esc_html__('Title', 'awesome-widgets-elementor'),
+					'rand' => esc_html__('Random', 'awesome-widgets-elementor'),
 				],
 			]
 		);
@@ -113,12 +113,12 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->add_control(
 			'awea_post_list_order',
 			[
-				'label' => esc_html__('Order', 'awesome-widgets'),
+				'label' => esc_html__('Order', 'awesome-widgets-elementor'),
 				'type' => \Elementor\Controls_Manager::SELECT,
 				'default' => 'DESC',
 				'options' => [
-					'ASC' => esc_html__('Ascending', 'awesome-widgets'),
-					'DESC' => esc_html__('Descending', 'awesome-widgets'),
+					'ASC' => esc_html__('Ascending', 'awesome-widgets-elementor'),
+					'DESC' => esc_html__('Descending', 'awesome-widgets-elementor'),
 				],
 			]
 		);
@@ -129,7 +129,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->start_controls_section(
 			'awea_post_list_layout_style',
 			[
-				'label' => esc_html__( 'Layouts', 'awesome-widgets' ),
+				'label' => esc_html__( 'Layouts', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -138,7 +138,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->add_control(
 			'awea_post_list_background_color',
 			[
-				'label' => esc_html__( 'Background', 'awesome-widgets' ),
+				'label' => esc_html__( 'Background', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .awea-single-post-list' => 'background-color: {{VALUE}}',
@@ -162,7 +162,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->add_control(
 			'awea_post_list_border_radius',
 			[
-				'label' => esc_html__( 'Border Radius', 'awesome-widgets' ),
+				'label' => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
@@ -175,7 +175,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->add_control(
 			'awea_post_list_padding',
 			[
-				'label' => esc_html__( 'Padding', 'awesome-widgets' ),
+				'label' => esc_html__( 'Padding', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
@@ -191,7 +191,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->start_controls_section(
 			'awea_post_list_image_style',
 			[
-				'label' => esc_html__( 'Image', 'awesome-widgets' ),
+				'label' => esc_html__( 'Image', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -199,7 +199,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->add_responsive_control(
 			'awea_post_list_image_width',
 			[
-				'label' => esc_html__('Image Width', 'awesome-widgets'),
+				'label' => esc_html__('Image Width', 'awesome-widgets-elementor'),
 				'type' => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => ['%', 'px', 'vw'],
 				'range' => [
@@ -239,7 +239,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->add_control(
 			'awea_post_list_border_radius',
 			[
-				'label' => esc_html__( 'Border Radius', 'awesome-widgets' ),
+				'label' => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
@@ -254,7 +254,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->start_controls_section(
 			'awea_post_list_title_style',
 			[
-				'label' => esc_html__( 'Title', 'awesome-widgets' ),
+				'label' => esc_html__( 'Title', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -263,7 +263,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->add_control(
 			'awea_post_list_title_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .awea-single-post-list-content h4 a' => 'color: {{VALUE}}',
@@ -292,7 +292,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->start_controls_section(
 			'awea_post_list_meta_style',
 			[
-				'label' => esc_html__( 'Meta', 'awesome-widgets' ),
+				'label' => esc_html__( 'Meta', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -304,7 +304,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->start_controls_tab(
 			'awea_post_list_meta_tab_normal',
 			[
-				'label' => esc_html__('Normal', 'textdomain'),
+				'label' => esc_html__('Normal', 'awesome-widgets-elementor'),
 			]
 		);
 
@@ -312,7 +312,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->add_control(
 			'awea_post_list_meta_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .awea-single-post-list-meta a' => 'color: {{VALUE}}',
@@ -341,7 +341,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->start_controls_tab(
 			'cta_button_tab_hover',
 			[
-				'label' => esc_html__('Hover', 'textdomain'),
+				'label' => esc_html__('Hover', 'awesome-widgets-elementor'),
 			]
 		);
 
@@ -349,7 +349,7 @@ class Widget_Awesome_Post_List extends Widget_Base {
 		$this->add_control(
 			'awea_post_list_meta_hover_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .awea-single-post-list-meta a:hover' => 'color: {{VALUE}}',

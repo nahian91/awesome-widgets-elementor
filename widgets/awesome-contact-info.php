@@ -34,7 +34,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'Contact Info', 'awesome-widgets' );
+		return esc_html__( 'Contact Info', 'awesome-widgets-elementor' );
 	}
 
 	/**
@@ -77,7 +77,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 	   $this->start_controls_section(
 	       'awea_contact_info_contents',
 		    [
-		        'label' => esc_html__('Contents', 'awesome-widgets'),
+		        'label' => esc_html__('Contents', 'awesome-widgets-elementor'),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,		   
 		    ]
 	    );
@@ -88,7 +88,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 		$repeater->add_control(
 			'awea_contact_info_icon',
 			[
-				'label' => esc_html__('Icon', 'textdomain'),
+				'label' => esc_html__('Icon', 'awesome-widgets-elementor'),
 				'type' => \Elementor\Controls_Manager::ICONS,
 				'default' => [
 					'value' => 'fas fa-envelope',
@@ -102,9 +102,9 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 		$repeater->add_control(
 			'awea_contact_info_title',
 			[
-				'label' => esc_html__('Title', 'textdomain'),
+				'label' => esc_html__('Title', 'awesome-widgets-elementor'),
 				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__('Title', 'textdomain'),
+				'default' => esc_html__('Title', 'awesome-widgets-elementor'),
 				'show_label' => true,
 				'label_block' => true
 			]
@@ -114,9 +114,9 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 		$repeater->add_control(
 			'awea_contact_info_description',
 			[
-				'label' => esc_html__('Description', 'textdomain'),
+				'label' => esc_html__('Description', 'awesome-widgets-elementor'),
 				'type' => \Elementor\Controls_Manager::TEXTAREA,
-				'default' => esc_html__('Description text', 'textdomain'),
+				'default' => esc_html__('Description text', 'awesome-widgets-elementor'),
 				'show_label' => true,
 				'label_block' => true
 			]
@@ -126,7 +126,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 		$this->add_control(
 			'awea_contact_info_list',
 			[
-				'label' => esc_html__('Contact Info List', 'textdomain'),
+				'label' => esc_html__('Contact Info List', 'awesome-widgets-elementor'),
 				'type' => \Elementor\Controls_Manager::REPEATER,
 				'fields' => $repeater->get_controls(),
 				'default' => [
@@ -135,24 +135,24 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 							'value' => 'fas fa-map',
 							'library' => 'fa-solid',
 						],
-						'awea_contact_info_title' => esc_html__('Address', 'textdomain'),
-						'awea_contact_info_description' => esc_html__('456 Elm St, Michigan, USA', 'textdomain'),
+						'awea_contact_info_title' => esc_html__('Address', 'awesome-widgets-elementor'),
+						'awea_contact_info_description' => esc_html__('456 Elm St, Michigan, USA', 'awesome-widgets-elementor'),
 					],
 					[
 						'awea_contact_info_icon' => [
-							'value' => 'fas fa-email',
+							'value' => 'far fa-envelope',
 							'library' => 'fa-solid',
 						],
-						'awea_contact_info_title' => esc_html__('Email', 'textdomain'),
-						'awea_contact_info_description' => esc_html__('support@devnahian.com', 'textdomain'),
+						'awea_contact_info_title' => esc_html__('Email', 'awesome-widgets-elementor'),
+						'awea_contact_info_description' => esc_html__('support@devnahian.com', 'awesome-widgets-elementor'),
 					],
 					[
 						'awea_contact_info_icon' => [
 							'value' => 'fas fa-phone',
 							'library' => 'fa-solid',
 						],
-						'awea_contact_info_title' => esc_html__('Phone', 'textdomain'),
-						'awea_contact_info_description' => esc_html__('(987) 654-3210', 'textdomain'),
+						'awea_contact_info_title' => esc_html__('Phone', 'awesome-widgets-elementor'),
+						'awea_contact_info_description' => esc_html__('(987) 654-3210', 'awesome-widgets-elementor'),
 					],
 				],
 				'title_field' => '{{{ awea_contact_info_title }}}',
@@ -165,7 +165,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 		$this->start_controls_section(
 			'awea_contact_info_layout_style',
 			[
-				'label' => esc_html__( 'Layouts', 'awesome-widgets' ),
+				'label' => esc_html__( 'Layouts', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -183,7 +183,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 		$this->add_control(
 			'awea_contact_info_padding',
 			[
-				'label' => esc_html__( 'Padding', 'awesome-widgets' ),
+				'label' => esc_html__( 'Padding', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
@@ -199,7 +199,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 		$this->start_controls_section(
 			'awea_contact_info_icon_style',
 			[
-				'label' => esc_html__( 'Icon', 'awesome-widgets' ),
+				'label' => esc_html__( 'Icon', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -208,7 +208,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 		$this->add_control(
 			'awea_contact_info_icon_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-awesome-widget-contact-info .icon i' => 'color: {{VALUE}}',
@@ -223,7 +223,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 		$this->add_control(
 			'awea_contact_info_icon_background',
 			[
-				'label' => esc_html__( 'Background', 'awesome-widgets' ),
+				'label' => esc_html__( 'Background', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-awesome-widget-contact-info .icon' => 'background-color: {{VALUE}}',
@@ -238,7 +238,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 		$this->add_control(
 			'awea_contact_info_icon_border_radius',
 			[
-				'label' => esc_html__( 'Border Radius', 'awesome-widgets' ),
+				'label' => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
@@ -253,7 +253,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 		$this->start_controls_section(
 			'awea_contact_info_title_style',
 			[
-				'label' => esc_html__( 'Title', 'awesome-widgets' ),
+				'label' => esc_html__( 'Title', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -262,7 +262,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 		$this->add_control(
 			'awea_contact_info_title_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-awesome-widget-contact-info h4' => 'color: {{VALUE}}',
@@ -291,7 +291,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 		$this->start_controls_section(
 			'awea_contact_info_desc_style',
 			[
-				'label' => esc_html__( 'Description', 'awesome-widgets' ),
+				'label' => esc_html__( 'Description', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -300,7 +300,7 @@ class Widget_Awesome_Contact_Info extends Widget_Base {
 		$this->add_control(
 			'awea_contact_info_desc_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-awesome-widget-contact-info h4 span' => 'color: {{VALUE}}',

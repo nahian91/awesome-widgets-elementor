@@ -34,7 +34,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'Testimonials', 'awesome-widgets' );
+		return esc_html__( 'Testimonials', 'awesome-widgets-elementor' );
 	}
 
 	/**
@@ -77,7 +77,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 	   $this->start_controls_section(
 	       'awea_testimonials_contents',
 		    [
-		        'label' => esc_html__('Contents', 'awesome-widgets'),
+		        'label' => esc_html__('Contents', 'awesome-widgets-elementor'),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 		   
 		    ]
@@ -87,7 +87,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_icon',
 			[
-				'label' => esc_html__( 'Icon', 'awesome-widgets' ),
+				'label' => esc_html__( 'Icon', 'awesome-widgets-elementor' ),
 				'type' => Controls_Manager::ICONS,
 				'label_block' => true,
 				'default' => [
@@ -101,10 +101,10 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_speech',
 			[
-				'label' => esc_html__( 'Speech', 'awesome-widgets' ),
+				'label' => esc_html__( 'Speech', 'awesome-widgets-elementor' ),
 				'type' => Controls_Manager::WYSIWYG,
 				'label_block' => true,
-				'default' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima excepturi, animi eaque sed quidem libero doloribus repellat nostrum architecto atque officia molestias perferendis quaerat asperiores, quam reprehenderit temporibus corrupti eum quis! Pariatur modi quis ad voluptatem dolores odit voluptas ullam blanditiis non.', 'awesome-widgets' ),
+				'default' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima excepturi, animi eaque sed quidem libero doloribus repellat nostrum architecto atque officia molestias perferendis quaerat asperiores, quam reprehenderit temporibus corrupti eum quis! Pariatur modi quis ad voluptatem dolores odit voluptas ullam blanditiis non.', 'awesome-widgets-elementor' ),
 			]
 		);
 
@@ -112,7 +112,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_author_image',
 			[
-				'label' => __('Author Image', 'plugin-domain'),
+				'label' => __('Author Image', 'awesome-widgets-elementor'),
 				'type' => \Elementor\Controls_Manager::MEDIA,
 				'default' => [
 					'url' => \Elementor\Utils::get_placeholder_image_src(),
@@ -124,9 +124,9 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_author_name',
 			[
-				'label' => esc_html__( 'Name', 'awesome-widgets' ),
+				'label' => esc_html__( 'Name', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'John Doe', 'awesome-widgets' ),
+				'default' => esc_html__( 'John Doe', 'awesome-widgets-elementor' ),
 				'label_block' => true
 			]
 		);
@@ -135,9 +135,9 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_author_desg',
 			[
-				'label' => esc_html__( 'Designatiion', 'awesome-widgets' ),
+				'label' => esc_html__( 'Designatiion', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'Web Developer', 'awesome-widgets' ),
+				'default' => esc_html__( 'Web Developer', 'awesome-widgets-elementor' ),
 				'label_block' => true
 			]
 		);
@@ -148,7 +148,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->start_controls_section(
 			'awea_testimonials_layout_style',
 			[
-				'label' => esc_html__( 'Layouts', 'awesome-widgets' ),
+				'label' => esc_html__( 'Layouts', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -156,23 +156,23 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'content_alignment',
 			[
-				'label' => __('Alignment', 'plugin-domain'),
+				'label' => __('Alignment', 'awesome-widgets-elementor'),
 				'type' => \Elementor\Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __('Left', 'plugin-domain'),
+						'title' => __('Left', 'awesome-widgets-elementor'),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => __('Center', 'plugin-domain'),
+						'title' => __('Center', 'awesome-widgets-elementor'),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => __('Right', 'plugin-domain'),
+						'title' => __('Right', 'awesome-widgets-elementor'),
 						'icon' => 'eicon-text-align-right',
 					],
 					'justify' => [
-						'title' => __('Justify', 'plugin-domain'),
+						'title' => __('Justify', 'awesome-widgets-elementor'),
 						'icon' => 'eicon-text-align-justify',
 					],
 				],
@@ -188,7 +188,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_background_color',
 			[
-				'label' => esc_html__( 'Background', 'awesome-widgets' ),
+				'label' => esc_html__( 'Background', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-testimonial' => 'background-color: {{VALUE}}',
@@ -212,7 +212,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_border_radius',
 			[
-				'label' => esc_html__( 'Border Radius', 'awesome-widgets' ),
+				'label' => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
@@ -225,7 +225,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_padding',
 			[
-				'label' => esc_html__( 'Padding', 'awesome-widgets' ),
+				'label' => esc_html__( 'Padding', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
@@ -241,7 +241,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->start_controls_section(
 			'awea_testimonials_contents_style',
 			[
-				'label' => esc_html__( 'Contents', 'awesome-widgets' ),
+				'label' => esc_html__( 'Contents', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -249,7 +249,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_contents_icon_options',
 			[
-				'label' => esc_html__( 'Icon', 'awesome-widgets' ),
+				'label' => esc_html__( 'Icon', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -259,7 +259,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_contents_icon_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-testimonial-icon i' => 'color: {{VALUE}}',
@@ -273,7 +273,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_contents_speech_options',
 			[
-				'label' => esc_html__( 'Speech', 'awesome-widgets' ),
+				'label' => esc_html__( 'Speech', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -283,7 +283,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_speech_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-testimonial-content p' => 'color: {{VALUE}}',
@@ -313,7 +313,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->start_controls_section(
 			'awea_testimonials_author_style',
 			[
-				'label' => esc_html__( 'Author', 'awesome-widgets' ),
+				'label' => esc_html__( 'Author', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -321,7 +321,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_author_image_options',
 			[
-				'label' => esc_html__( 'Image', 'awesome-widgets' ),
+				'label' => esc_html__( 'Image', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -330,7 +330,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_author_image_width',
 			[
-				'label' => __('Width', 'plugin-domain'),
+				'label' => __('Width', 'awesome-widgets-elementor'),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%', 'em', 'vw'],
 				'default' => [
@@ -356,7 +356,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_border_author_image_radius',
 			[
-				'label' => esc_html__( 'Border Radius', 'awesome-widgets' ),
+				'label' => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
@@ -368,7 +368,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_author_name_options',
 			[
-				'label' => esc_html__( 'Name', 'awesome-widgets' ),
+				'label' => esc_html__( 'Name', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -378,7 +378,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_author_name_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-testimonial-author h4' => 'color: {{VALUE}}',
@@ -404,7 +404,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_author_designation_options',
 			[
-				'label' => esc_html__( 'Designation', 'awesome-widgets' ),
+				'label' => esc_html__( 'Designation', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -414,7 +414,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
 		$this->add_control(
 			'awea_testimonials_author_designation_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-testimonial-author span' => 'color: {{VALUE}}',

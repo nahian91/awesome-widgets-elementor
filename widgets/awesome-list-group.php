@@ -34,7 +34,7 @@ class Widget_Awesome_List_Group extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'List Group', 'awesome-widgets' );
+		return esc_html__( 'List Group', 'awesome-widgets-elementor' );
 	}
 
 	/**
@@ -77,7 +77,7 @@ class Widget_Awesome_List_Group extends Widget_Base {
 	   $this->start_controls_section(
 	       'awea_list_group_contents',
 		    [
-		        'label' => esc_html__('Contents', 'awesome-widgets'),
+		        'label' => esc_html__('Contents', 'awesome-widgets-elementor'),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,		   
 		    ]
 	    );
@@ -89,10 +89,10 @@ class Widget_Awesome_List_Group extends Widget_Base {
 		$repeater->add_control(
 			'awea_list_group_title',
 			[
-				'label' => esc_html__( 'List Title', 'awesome-widgets' ),
+				'label' => esc_html__( 'List Title', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => esc_html__('List Item', 'awesome-widgets')
+				'default' => esc_html__('List Item', 'awesome-widgets-elementor')
 			]
 		);
 
@@ -100,7 +100,7 @@ class Widget_Awesome_List_Group extends Widget_Base {
 		$repeater->add_control(
         	'awea_list_group_icon',
 			[
-				'label'         => esc_html__('List Icon', 'awesome-widgets'),
+				'label'         => esc_html__('List Icon', 'awesome-widgets-elementor'),
 				'type'          => \Elementor\Controls_Manager::ICON,
 				'label_block'   => true,
 				'default' => 'fa fa-star',
@@ -111,18 +111,18 @@ class Widget_Awesome_List_Group extends Widget_Base {
 		$this->add_control(
 			'awea_list_group',
 			[
-				'label' => esc_html__( 'List Group List', 'awesome-widgets' ),
+				'label' => esc_html__( 'List Group List', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::REPEATER,
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'awea_list_group_title' => __( 'List Item 1', 'awesome-widgets' )
+						'awea_list_group_title' => __( 'List Item 1', 'awesome-widgets-elementor' )
 					],
 					[
-						'awea_list_group_title' => __( 'List Item 2', 'awesome-widgets' )
+						'awea_list_group_title' => __( 'List Item 2', 'awesome-widgets-elementor' )
 					],
 					[
-						'awea_list_group_title' => __( 'List Item 3', 'awesome-widgets' )
+						'awea_list_group_title' => __( 'List Item 3', 'awesome-widgets-elementor' )
 					],
 				],
 				'title_field' => '{{{ awea_list_group_title }}}',
@@ -136,7 +136,7 @@ class Widget_Awesome_List_Group extends Widget_Base {
 		$this->start_controls_section(
 			'awea_list_group_style',
 			[
-				'label' => esc_html__( 'Contents', 'awesome-widgets' ),
+				'label' => esc_html__( 'Contents', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);	
@@ -145,7 +145,7 @@ class Widget_Awesome_List_Group extends Widget_Base {
 		$this->add_control(
 			'wb_brand_sep_options',
 			[
-				'label' => esc_html__( 'Layouts', 'awesome-widgets' ),
+				'label' => esc_html__( 'Layouts', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before'
 			]
@@ -155,7 +155,7 @@ class Widget_Awesome_List_Group extends Widget_Base {
 		$this->add_control(
 			'awea_list_group_background_color',
 			[
-				'label' => esc_html__( 'Background', 'awesome-widgets' ),
+				'label' => esc_html__( 'Background', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .list-item' => 'background-color: {{VALUE}}',
@@ -179,7 +179,7 @@ class Widget_Awesome_List_Group extends Widget_Base {
 		$this->add_control(
 			'awea_list_group_border_radius',
 			[
-				'label' => esc_html__( 'Border Radius', 'awesome-widgets' ),
+				'label' => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
@@ -192,7 +192,7 @@ class Widget_Awesome_List_Group extends Widget_Base {
 		$this->add_control(
 			'awea_list_group_padding',
 			[
-				'label' => esc_html__( 'Padding', 'awesome-widgets' ),
+				'label' => esc_html__( 'Padding', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
@@ -205,7 +205,7 @@ class Widget_Awesome_List_Group extends Widget_Base {
 		$this->add_control(
 			'awea_list_group_icon_options',
 			[
-				'label' => esc_html__( 'Icon', 'awesome-widgets' ),
+				'label' => esc_html__( 'Icon', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before'
 			]
@@ -215,7 +215,7 @@ class Widget_Awesome_List_Group extends Widget_Base {
 		$this->add_control(
 			'awea_list_group_icon_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'global' => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_SECONDARY,
@@ -230,7 +230,7 @@ class Widget_Awesome_List_Group extends Widget_Base {
 		$this->add_control(
 			'awea_list_group_icon_border_color',
 			[
-				'label' => esc_html__( 'Border Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Border Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'global' => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_SECONDARY,
@@ -245,7 +245,7 @@ class Widget_Awesome_List_Group extends Widget_Base {
 		$this->add_control(
 			'awea_list_group_title_options',
 			[
-				'label' => esc_html__( 'Heading', 'awesome-widgets' ),
+				'label' => esc_html__( 'Heading', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before'
 			]
@@ -255,7 +255,7 @@ class Widget_Awesome_List_Group extends Widget_Base {
 		$this->add_control(
 			'awea_list_group_title_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'global' => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,

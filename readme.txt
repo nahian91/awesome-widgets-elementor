@@ -1,4 +1,4 @@
-=== Awesome Widgets ===
+=== Awesome Widgets for Elementor ===
 Contributors: nahian91
 Tags: elementor, elementor addons, elementor widget, elements
 Requires at least: 6.0

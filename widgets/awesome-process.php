@@ -35,7 +35,7 @@ class Widget_Awesome_Process extends Widget_Base {
      * @return string Widget title.
      */
     public function get_title() {
-        return esc_html__( 'Process', 'awesome-widgets' );
+        return esc_html__( 'Process', 'awesome-widgets-elementor' );
     }
 
     /**
@@ -78,7 +78,7 @@ class Widget_Awesome_Process extends Widget_Base {
         $this->start_controls_section(
             'awea_process_contents',
             [
-                'label' => esc_html__('Content', 'awesome-widgets'),
+                'label' => esc_html__('Content', 'awesome-widgets-elementor'),
                 'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -87,10 +87,10 @@ class Widget_Awesome_Process extends Widget_Base {
         $this->add_control(
             'awea_process_title',
             [
-                'label' => esc_html__( 'Title', 'awesome-widgets' ),
+                'label' => esc_html__( 'Title', 'awesome-widgets-elementor' ),
                 'type' => \Elementor\Controls_Manager::TEXT,
                 'label_block' => true,
-                'default' => esc_html__( 'First Step', 'awesome-widgets' ),
+                'default' => esc_html__( 'First Step', 'awesome-widgets-elementor' ),
             ]
         );
 
@@ -98,10 +98,10 @@ class Widget_Awesome_Process extends Widget_Base {
         $this->add_control(
             'awea_process_number',
             [
-                'label' => esc_html__( 'Number', 'awesome-widgets' ),
+                'label' => esc_html__( 'Number', 'awesome-widgets-elementor' ),
                 'type' => \Elementor\Controls_Manager::TEXT,
                 'label_block' => true,
-                'default' => esc_html__( '1', 'awesome-widgets' ),
+                'default' => esc_html__( '1', 'awesome-widgets-elementor' ),
             ]
         );
 
@@ -109,10 +109,10 @@ class Widget_Awesome_Process extends Widget_Base {
         $this->add_control(
             'awea_process_des',
             [
-                'label' => esc_html__( 'Description', 'awesome-widgets' ),
+                'label' => esc_html__( 'Description', 'awesome-widgets-elementor' ),
                 'type' => \Elementor\Controls_Manager::TEXTAREA,
                 'label_block' => true,
-                'default' => esc_html__( 'It is a long established fact that a reader will be distracted by the readable content', 'awesome-widgets' ),
+                'default' => esc_html__( 'It is a long established fact that a reader will be distracted by the readable content', 'awesome-widgets-elementor' ),
             ]
         );
 
@@ -120,20 +120,20 @@ class Widget_Awesome_Process extends Widget_Base {
         $this->add_control(
             'awea_process_alignment',
             [
-                'label' => esc_html__( 'Alignment', 'awesome-widgets' ),
+                'label' => esc_html__( 'Alignment', 'awesome-widgets-elementor' ),
                 'type' => \Elementor\Controls_Manager::CHOOSE,
                 'separator' => 'before',
                 'options' => [
                     'left' => [
-                        'title' => esc_html__( 'Left', 'awesome-widgets' ),
+                        'title' => esc_html__( 'Left', 'awesome-widgets-elementor' ),
                         'icon' => 'eicon-text-align-left',
                     ],
                     'center' => [
-                        'title' => esc_html__( 'Center', 'awesome-widgets' ),
+                        'title' => esc_html__( 'Center', 'awesome-widgets-elementor' ),
                         'icon' => 'eicon-text-align-center',
                     ],
                     'right' => [
-                        'title' => esc_html__( 'Right', 'awesome-widgets' ),
+                        'title' => esc_html__( 'Right', 'awesome-widgets-elementor' ),
                         'icon' => 'eicon-text-align-right',
                     ],
                 ],
@@ -152,7 +152,7 @@ class Widget_Awesome_Process extends Widget_Base {
         $this->start_controls_section(
             'awea_process_style_title',
             [
-                'label' => esc_html__( 'Title', 'awesome-widgets' ),
+                'label' => esc_html__( 'Title', 'awesome-widgets-elementor' ),
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
             ]
         );
@@ -161,7 +161,7 @@ class Widget_Awesome_Process extends Widget_Base {
         $this->add_control(
             'awea_process_title_color',
             [
-                'label' => esc_html__( 'Color', 'awesome-widgets' ),
+                'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'scheme' => [
                     'type' => \Elementor\Core\Schemes\Color::get_type(),
@@ -195,7 +195,7 @@ class Widget_Awesome_Process extends Widget_Base {
         $this->start_controls_section(
             'awea_process_style_number',
             [
-                'label' => esc_html__( 'Number', 'awesome-widgets' ),
+                'label' => esc_html__( 'Number', 'awesome-widgets-elementor' ),
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
             ]
         );
@@ -204,7 +204,7 @@ class Widget_Awesome_Process extends Widget_Base {
         $this->add_control(
             'awea_process_number_color',
             [
-                'label' => esc_html__( 'Color', 'awesome-widgets' ),
+                'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'scheme' => [
                     'type' => \Elementor\Core\Schemes\Color::get_type(),
@@ -223,7 +223,7 @@ class Widget_Awesome_Process extends Widget_Base {
         $this->add_control(
             'awea_process_number_bg',
             [
-                'label' => esc_html__( 'Background', 'awesome-widgets' ),
+                'label' => esc_html__( 'Background', 'awesome-widgets-elementor' ),
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'scheme' => [
                     'type' => \Elementor\Core\Schemes\Color::get_type(),
@@ -245,7 +245,7 @@ class Widget_Awesome_Process extends Widget_Base {
         $this->start_controls_section(
             'awea_process_style_desc',
             [
-                'label' => esc_html__( 'Description', 'awesome-widgets' ),
+                'label' => esc_html__( 'Description', 'awesome-widgets-elementor' ),
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
             ]
         );
@@ -254,7 +254,7 @@ class Widget_Awesome_Process extends Widget_Base {
         $this->add_control(
             'awea_process_desc_color',
             [
-                'label' => esc_html__( 'Color', 'awesome-widgets' ),
+                'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'scheme' => [
                     'type' => \Elementor\Core\Schemes\Color::get_type(),

@@ -34,7 +34,7 @@ class Widget_Awesome_team extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'Team', 'awesome-widgets' );
+		return esc_html__( 'Team', 'awesome-widgets-elementor' );
 	}
 
 	/**
@@ -48,7 +48,7 @@ class Widget_Awesome_team extends Widget_Base {
 	 * @return string Widget icon.
 	 */
 	public function get_icon() {
-		return 'eicon-call-to-action';
+		return 'eicon-user-circle-o';
 	}
 
 	/**
@@ -77,16 +77,15 @@ class Widget_Awesome_team extends Widget_Base {
 	   	$this->start_controls_section(
 	       'awea_team_image_content',
 		    [
-		        'label' => esc_html__('Image', 'awesome-widgets'),
-				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
-		   
+		        'label' => esc_html__('Image', 'awesome-widgets-elementor'),
+				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,	   
 		    ]
 	    );
 
 		$this->add_control(
 			'awea_team_image_upload',
 			[
-				'label' => esc_html__( 'Choose Image', 'awesome-widgets' ),
+				'label' => esc_html__( 'Choose Image', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::MEDIA,
 				'default' => [
 					'url' => \Elementor\Utils::get_placeholder_image_src(),
@@ -99,20 +98,19 @@ class Widget_Awesome_team extends Widget_Base {
 		// start of the Content tab section
 		$this->start_controls_section(
 			'awea_team_contents',
-			 [
-				 'label' => esc_html__('Contents', 'awesome-widgets'),
-				 'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
-			
-			 ]
+			[
+				'label' => esc_html__('Contents', 'awesome-widgets-elementor'),
+				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,		
+			]
 		);
 
 		$this->add_control(
 			'awea_team_name',
 			[
-				'label' => esc_html__( 'Name', 'awesome-widgets' ),
+				'label' => esc_html__( 'Name', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'John Doe', 'awesome-widgets' ),
-				'placeholder' => esc_html__( 'Type your title here', 'awesome-widgets' ),
+				'default' => esc_html__( 'John Doe', 'awesome-widgets-elementor' ),
+				'placeholder' => esc_html__( 'Type your title here', 'awesome-widgets-elementor' ),
 				'label_block' => true
 			]
 		);
@@ -120,10 +118,10 @@ class Widget_Awesome_team extends Widget_Base {
 		$this->add_control(
 			'awea_team_designation',
 			[
-				'label' => esc_html__( 'Designation', 'awesome-widgets' ),
+				'label' => esc_html__( 'Designation', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'Web Developer', 'awesome-widgets' ),
-				'placeholder' => esc_html__( 'Type your title here', 'awesome-widgets' ),
+				'default' => esc_html__( 'Web Developer', 'awesome-widgets-elementor' ),
+				'placeholder' => esc_html__( 'Type your title here', 'awesome-widgets-elementor' ),
 				'label_block' => true
 			]
 		);
@@ -134,7 +132,7 @@ class Widget_Awesome_team extends Widget_Base {
 		$this->start_controls_section(
 			'awea_team_socials',
 			[
-				'label' => esc_html__('Socials', 'awesome-widgets'),
+				'label' => esc_html__('Socials', 'awesome-widgets-elementor'),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -146,9 +144,9 @@ class Widget_Awesome_team extends Widget_Base {
 		$repeater->add_control(
 			'awea_team_socials_title',
 			[
-				'label' => esc_html__('Title', 'awesome-widgets'),
+				'label' => esc_html__('Title', 'awesome-widgets-elementor'),
 				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__('Facebook', 'awesome-widgets'),
+				'default' => esc_html__('Facebook', 'awesome-widgets-elementor'),
 				'label_block' => true,
 			]
 		);
@@ -157,7 +155,7 @@ class Widget_Awesome_team extends Widget_Base {
 		$repeater->add_control(
 			'awea_team_socials_icon',
 			[
-				'label' => esc_html__('Icon', 'awesome-widgets'),
+				'label' => esc_html__('Icon', 'awesome-widgets-elementor'),
 				'type' => \Elementor\Controls_Manager::ICONS,
 				'default' => [
 					'value' => 'fab fa-facebook',
@@ -180,7 +178,7 @@ class Widget_Awesome_team extends Widget_Base {
 		$repeater->add_control(
 			'awea_team_socials_link',
 			[
-				'label' => esc_html__('Link', 'awesome-widgets'),
+				'label' => esc_html__('Link', 'awesome-widgets-elementor'),
 				'type' => \Elementor\Controls_Manager::URL,
 				'options' => ['url', 'is_external', 'nofollow'],
 				'default' => [
@@ -196,27 +194,27 @@ class Widget_Awesome_team extends Widget_Base {
 		$this->add_control(
 			'awea_team_socials_list',
 			[
-				'label' => esc_html__('Social Media Links', 'awesome-widgets'),
+				'label' => esc_html__('Social Media Links', 'awesome-widgets-elementor'),
 				'type' => \Elementor\Controls_Manager::REPEATER,
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'awea_team_socials_title' => esc_html__('Facebook', 'awesome-widgets'),
+						'awea_team_socials_title' => esc_html__('Facebook', 'awesome-widgets-elementor'),
 						'awea_team_socials_icon' => ['value' => 'fab fa-facebook', 'library' => 'fa-brands'],
 						'awea_team_socials_link' => ['url' => 'https://facebook.com'],
 					],
 					[
-						'awea_team_socials_title' => esc_html__('Twitter', 'awesome-widgets'),
+						'awea_team_socials_title' => esc_html__('Twitter', 'awesome-widgets-elementor'),
 						'awea_team_socials_icon' => ['value' => 'fab fa-twitter', 'library' => 'fa-brands'],
 						'awea_team_socials_link' => ['url' => 'https://twitter.com'],
 					],
 					[
-						'awea_team_socials_title' => esc_html__('Instagram', 'awesome-widgets'),
+						'awea_team_socials_title' => esc_html__('Instagram', 'awesome-widgets-elementor'),
 						'awea_team_socials_icon' => ['value' => 'fab fa-instagram', 'library' => 'fa-brands'],
 						'awea_team_socials_link' => ['url' => 'https://instagram.com'],
 					],
 					[
-						'awea_team_socials_title' => esc_html__('LinkedIn', 'awesome-widgets'),
+						'awea_team_socials_title' => esc_html__('LinkedIn', 'awesome-widgets-elementor'),
 						'awea_team_socials_icon' => ['value' => 'fab fa-linkedin', 'library' => 'fa-brands'],
 						'awea_team_socials_link' => ['url' => 'https://linkedin.com'],
 					],
@@ -231,7 +229,7 @@ class Widget_Awesome_team extends Widget_Base {
 		$this->start_controls_section(
 			'awea_team_layout_style',
 			[
-				'label' => esc_html__( 'Layouts', 'awesome-widgets' ),
+				'label' => esc_html__( 'Layouts', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -240,7 +238,7 @@ class Widget_Awesome_team extends Widget_Base {
 		$this->add_control(
 			'awea_team_background_color',
 			[
-				'label' => esc_html__( 'Background', 'awesome-widgets' ),
+				'label' => esc_html__( 'Background', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-team' => 'background-color: {{VALUE}}',
@@ -264,7 +262,7 @@ class Widget_Awesome_team extends Widget_Base {
 		$this->add_control(
 			'awea_team_padding',
 			[
-				'label' => esc_html__( 'Padding', 'awesome-widgets' ),
+				'label' => esc_html__( 'Padding', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
@@ -280,7 +278,7 @@ class Widget_Awesome_team extends Widget_Base {
 		$this->start_controls_section(
 			'awea_team_image_style',
 			[
-				'label' => esc_html__( 'Image', 'awesome-widgets' ),
+				'label' => esc_html__( 'Image', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -288,7 +286,7 @@ class Widget_Awesome_team extends Widget_Base {
 		$this->add_responsive_control(
 			'awea_image_width',
 			[
-				'label' => esc_html__('Image Width', 'awesome-widgets'),
+				'label' => esc_html__('Image Width', 'awesome-widgets-elementor'),
 				'type' => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => ['%', 'px', 'vw'],
 				'range' => [
@@ -328,7 +326,7 @@ class Widget_Awesome_team extends Widget_Base {
 		$this->add_control(
 			'awea_image_box_border_radius',
 			[
-				'label' => esc_html__( 'Border Radius', 'awesome-widgets' ),
+				'label' => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
@@ -344,7 +342,7 @@ class Widget_Awesome_team extends Widget_Base {
 		$this->start_controls_section(
 			'awea_team_contents_style',
 			[
-				'label' => esc_html__( 'Contents', 'awesome-widgets' ),
+				'label' => esc_html__( 'Contents', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -352,7 +350,7 @@ class Widget_Awesome_team extends Widget_Base {
 		$this->add_control(
 			'awea_team_contents_designation_options',
 			[
-				'label' => esc_html__( 'Designation', 'awesome-widgets' ),
+				'label' => esc_html__( 'Designation', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -362,7 +360,7 @@ class Widget_Awesome_team extends Widget_Base {
 		$this->add_control(
 			'awea_team_contents_designation_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-team h4' => 'color: {{VALUE}}',
@@ -388,7 +386,7 @@ class Widget_Awesome_team extends Widget_Base {
 		$this->add_control(
 			'awea_team_contents_title_options',
 			[
-				'label' => esc_html__( 'Title', 'awesome-widgets' ),
+				'label' => esc_html__( 'Title', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -398,7 +396,7 @@ class Widget_Awesome_team extends Widget_Base {
 		$this->add_control(
 			'awea_team_contents_title_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-team h4 span' => 'color: {{VALUE}}',
@@ -428,7 +426,7 @@ class Widget_Awesome_team extends Widget_Base {
 		$this->start_controls_section(
 			'awea_team_social_style',
 			[
-				'label' => esc_html__( 'Socials', 'awesome-widgets' ),
+				'label' => esc_html__( 'Socials', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -440,14 +438,14 @@ class Widget_Awesome_team extends Widget_Base {
 		$this->start_controls_tab(
 			'awea_team_social_tabs_normal',
 			[
-				'label' => esc_html__('Normal', 'awesome-widgets'),
+				'label' => esc_html__('Normal', 'awesome-widgets-elementor'),
 			]
 		);
 
 		$this->add_control(
 			'awea_team_social_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .team-social a' => 'color: {{VALUE}}',
@@ -461,14 +459,14 @@ class Widget_Awesome_team extends Widget_Base {
 		$this->start_controls_tab(
 			'awea_team_social_tabs_hover',
 			[
-				'label' => esc_html__('Hover', 'awesome-widgets'),
+				'label' => esc_html__('Hover', 'awesome-widgets-elementor'),
 			]
 		);
 
 		$this->add_control(
 			'awea_team_social_color_hover',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .team-social a:hover' => 'color: {{VALUE}}',

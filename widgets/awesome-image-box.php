@@ -34,7 +34,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'Image Box', 'awesome-widgets' );
+		return esc_html__( 'Image Box', 'awesome-widgets-elementor' );
 	}
 
 	/**
@@ -77,7 +77,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 	    $this->start_controls_section(
 	       'awea_image_box_contents',
 		    [
-		        'label' => esc_html__('Contents', 'awesome-widgets'),
+		        'label' => esc_html__('Contents', 'awesome-widgets-elementor'),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 		    ]
 	    );
@@ -86,7 +86,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->add_control(
 			'awea_image_box_image',
 			[
-				'label' => esc_html__( 'Choose Image', 'awesome-widgets' ),
+				'label' => esc_html__( 'Choose Image', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::MEDIA,
 				'label_block' => true,
 				'default' => [
@@ -99,10 +99,10 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->add_control(
 			'awea_image_box_title',
 			[
-				'label' => esc_html__( 'Title', 'awesome-widgets' ),
+				'label' => esc_html__( 'Title', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => esc_html__( 'Awesome Heading', 'awesome-widgets' ),
+				'default' => esc_html__( 'Awesome Heading', 'awesome-widgets-elementor' ),
 			]
 		);
 
@@ -110,10 +110,10 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->add_control(
 			'awea_image_box_des',
 			[
-				'label' => esc_html__( 'Description', 'awesome-widgets' ),
+				'label' => esc_html__( 'Description', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::TEXTAREA,
 				'label_block' => true,
-				'default' => esc_html__( 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ', 'awesome-widgets' ),
+				'default' => esc_html__( 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ', 'awesome-widgets-elementor' ),
 			]
 		);
 
@@ -121,10 +121,10 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->add_control(
 			'awea_image_box_show_btn',
 			[
-				'label' => esc_html__( 'Show Button?', 'awesome-widgets' ),
+				'label' => esc_html__( 'Show Button?', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Show', 'awesome-widgets' ),
-				'label_off' => esc_html__( 'Hide', 'awesome-widgets' ),
+				'label_on' => esc_html__( 'Show', 'awesome-widgets-elementor' ),
+				'label_off' => esc_html__( 'Hide', 'awesome-widgets-elementor' ),
 				'return_value' => 'yes',
 				'default' => 'yes',
 				'separator' => 'before'
@@ -135,10 +135,10 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->add_control(
 		    'awea_image_box_btn_title',
 			[
-			    'label' => esc_html__('Button Text', 'awesome-widgets'),
+			    'label' => esc_html__('Button Text', 'awesome-widgets-elementor'),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => esc_html__('Read More', 'awesome-widgets'),
+				'default' => esc_html__('Read More', 'awesome-widgets-elementor'),
 				'separator' => 'before',
 				'condition' => [
 					'awea_image_box_show_btn' => 'yes'
@@ -150,7 +150,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->add_control(
 		    'awea_image_box_btn_link',
 			[
-			    'label' => esc_html__( 'Button Link', 'awesome-widgets' ),
+			    'label' => esc_html__( 'Button Link', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::URL,
 				'default' => [
 					'url' => 'https://anahian.com/',
@@ -168,20 +168,20 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->add_control(
 			'awea_image_box_alignment',
 			[
-				'label' => esc_html__( 'Alignment', 'awesome-widgets' ),
+				'label' => esc_html__( 'Alignment', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::CHOOSE,
 				'separator' => 'before',
 				'options' => [
 					'left' => [
-						'title' => esc_html__( 'Left', 'awesome-widgets' ),
+						'title' => esc_html__( 'Left', 'awesome-widgets-elementor' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => esc_html__( 'Center', 'awesome-widgets' ),
+						'title' => esc_html__( 'Center', 'awesome-widgets-elementor' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => esc_html__( 'Right', 'awesome-widgets' ),
+						'title' => esc_html__( 'Right', 'awesome-widgets-elementor' ),
 						'icon' => 'eicon-text-align-right',
 					],
 				],
@@ -201,7 +201,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->start_controls_section(
 			'awea_image_box_layout_style',
 			[
-				'label' => esc_html__( 'Layout', 'awesome-widgets' ),
+				'label' => esc_html__( 'Layout', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);	
@@ -210,7 +210,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->add_control(
 			'awea_image_box_bg_color',
 			[
-				'label' => esc_html__( 'Background', 'awesome-widgets' ),
+				'label' => esc_html__( 'Background', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-image-box' => 'background-color: {{VALUE}}',
@@ -225,7 +225,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->add_control(
 			'awea_image_box_padding',
 			[
-				'label' => esc_html__( 'Padding', 'awesome-widgets' ),
+				'label' => esc_html__( 'Padding', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
@@ -247,7 +247,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->add_control(
 			'awea_image_box_border_radius',
 			[
-				'label' => esc_html__( 'Border Radius', 'awesome-widgets' ),
+				'label' => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
@@ -262,7 +262,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->start_controls_section(
 			'awea_image_box_contents_style',
 			[
-				'label' => esc_html__( 'Contents', 'awesome-widgets' ),
+				'label' => esc_html__( 'Contents', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);	
@@ -270,7 +270,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->add_control(
 			'awea_image_box_title_options',
 			[
-				'label' => esc_html__( 'Title', 'awesome-widgets' ),
+				'label' => esc_html__( 'Title', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -280,7 +280,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->add_control(
 			'awea_image_box_title_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-image-box h4' => 'color: {{VALUE}} !important',
@@ -306,7 +306,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->add_control(
 			'awea_image_box_desc_options',
 			[
-				'label' => esc_html__( 'Description', 'awesome-widgets' ),
+				'label' => esc_html__( 'Description', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -316,7 +316,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->add_control(
 			'awea_image_box_desc_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-image-box p' => 'color: {{VALUE}} !important',
@@ -346,7 +346,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->start_controls_section(
 			'awea_image_box_btn_style',
 			[
-				'label' => esc_html__( 'Button', 'awesome-widgets' ),
+				'label' => esc_html__( 'Button', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'awea_image_box_show_btn' => 'yes'
@@ -362,7 +362,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->start_controls_tab(
 			'awea_image_box_btn_normal_tab',
 			[
-				'label' => esc_html__( 'Normal', 'awesome-widgets' ),
+				'label' => esc_html__( 'Normal', 'awesome-widgets-elementor' ),
 			]
 		);
 
@@ -370,7 +370,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->add_control(
 			'awea_image_box_btn_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-image-box a' => 'color: {{VALUE}}',
@@ -399,7 +399,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->start_controls_tab(
 			'awea_image_box_btn_hover_tab',
 			[
-				'label' => esc_html__( 'Hover', 'awesome-widgets' ),
+				'label' => esc_html__( 'Hover', 'awesome-widgets-elementor' ),
 			]
 		);
 
@@ -407,7 +407,7 @@ class Widget_Awesome_Image_Box extends Widget_Base {
 		$this->add_control(
 			'awea_image_box_btn_hover_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-image-box a:hover' => 'color: {{VALUE}}',

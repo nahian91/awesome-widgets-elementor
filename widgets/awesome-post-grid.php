@@ -34,7 +34,7 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'Post Grid', 'awesome-widgets' );
+		return esc_html__( 'Post Grid', 'awesome-widgets-elementor' );
 	}
 
 	/**
@@ -77,7 +77,7 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 	   $this->start_controls_section(
 	       'awea_cta_contents',
 		    [
-		        'label' => esc_html__('Contents', 'awesome-widgets'),
+		        'label' => esc_html__('Contents', 'awesome-widgets-elementor'),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 		   
 		    ]
@@ -87,10 +87,10 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 		$this->add_control(
 			'awea_cta_sub_title',
 			[
-				'label' => esc_html__( 'Sub Title', 'awesome-widgets' ),
+				'label' => esc_html__( 'Sub Title', 'awesome-widgets-elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => esc_html__( 'are you ready?', 'awesome-widgets' ),
+				'default' => esc_html__( 'are you ready?', 'awesome-widgets-elementor' ),
 			]
 		);
 
@@ -98,10 +98,10 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 		$this->add_control(
 			'awea_cta_title',
 			[
-				'label' => esc_html__( 'Title', 'awesome-widgets' ),
+				'label' => esc_html__( 'Title', 'awesome-widgets-elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => esc_html__( 'We Are Awesome CTA!', 'awesome-widgets' ),
+				'default' => esc_html__( 'We Are Awesome CTA!', 'awesome-widgets-elementor' ),
 			]
 		);
 
@@ -109,10 +109,10 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 		$this->add_control(
 			'awea_cta_desc',
 			[
-				'label' => esc_html__( 'Description', 'awesome-widgets' ),
+				'label' => esc_html__( 'Description', 'awesome-widgets-elementor' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'label_block' => true,
-				'default' => esc_html__( 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters', 'awesome-widgets' ),
+				'default' => esc_html__( 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters', 'awesome-widgets-elementor' ),
 			]
 		);
 
@@ -120,10 +120,10 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 		$this->add_control(
 			'awea_cta_button1',
 			[
-				'label' => esc_html__( 'Button 1', 'awesome-widgets' ),
+				'label' => esc_html__( 'Button 1', 'awesome-widgets-elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => esc_html__( '+880 123 4567 890', 'awesome-widgets' ),
+				'default' => esc_html__( '+880 123 4567 890', 'awesome-widgets-elementor' ),
 			]
 		);
 
@@ -131,10 +131,10 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 		$this->add_control(
 			'awea_cta_button2',
 			[
-				'label' => esc_html__( 'Button 2', 'awesome-widgets' ),
+				'label' => esc_html__( 'Button 2', 'awesome-widgets-elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => esc_html__( 'info@anahian.com', 'awesome-widgets' ),
+				'default' => esc_html__( 'info@anahian.com', 'awesome-widgets-elementor' ),
 			]
 		);
 		
@@ -144,7 +144,7 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 		$this->start_controls_section(
 			'awea_cta_layout_style',
 			[
-				'label' => esc_html__( 'Layouts', 'awesome-widgets' ),
+				'label' => esc_html__( 'Layouts', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -153,7 +153,7 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 		$this->add_control(
 			'awea_cta_background_color',
 			[
-				'label' => esc_html__( 'Background', 'awesome-widgets' ),
+				'label' => esc_html__( 'Background', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-price' => 'background-color: {{VALUE}}',
@@ -177,7 +177,7 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 		$this->add_control(
 			'awea_cta_border_radius',
 			[
-				'label' => esc_html__( 'Border Radius', 'awesome-widgets' ),
+				'label' => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
@@ -190,7 +190,7 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 		$this->add_control(
 			'awea_cta_padding',
 			[
-				'label' => esc_html__( 'Padding', 'awesome-widgets' ),
+				'label' => esc_html__( 'Padding', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem'],
 				'selectors' => [
@@ -206,7 +206,7 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 		$this->start_controls_section(
 			'awea_cta_contents_style',
 			[
-				'label' => esc_html__( 'Contents', 'awesome-widgets' ),
+				'label' => esc_html__( 'Contents', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -214,7 +214,7 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 		$this->add_control(
 			'awea_cta_contents_subtitle_options',
 			[
-				'label' => esc_html__( 'Sub Title', 'awesome-widgets' ),
+				'label' => esc_html__( 'Sub Title', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -224,7 +224,7 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 		$this->add_control(
 			'awea_cta_subtitle_color',
 			[
-				'label' => esc_html__( 'Text Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Text Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .cta-box span' => 'color: {{VALUE}}',
@@ -250,7 +250,7 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 		$this->add_control(
 			'awea_cta_contents_title_options',
 			[
-				'label' => esc_html__( 'Title', 'awesome-widgets' ),
+				'label' => esc_html__( 'Title', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -260,7 +260,7 @@ class Widget_Awesome_Post_Grid extends Widget_Base {
 		$this->add_control(
 			'awea_cta_title_color',
 			[
-				'label' => esc_html__( 'Text Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Text Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .cta-box h4' => 'color: {{VALUE}}',

@@ -34,7 +34,7 @@ class Widget_Awesome_Number_Box extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'Number Box', 'awesome-widgets' );
+		return esc_html__( 'Number Box', 'awesome-widgets-elementor' );
 	}
 
 	/**
@@ -77,7 +77,7 @@ class Widget_Awesome_Number_Box extends Widget_Base {
 	   $this->start_controls_section(
 	       'awea_number_box_contents',
 		    [
-		        'label' => esc_html__('Contents', 'awesome-widgets'),
+		        'label' => esc_html__('Contents', 'awesome-widgets-elementor'),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,		   
 		    ]
 	    );
@@ -86,10 +86,10 @@ class Widget_Awesome_Number_Box extends Widget_Base {
 		$this->add_control(
 			'awea_number_box_number',
 			[
-				'label' => esc_html__( 'Number', 'awesome-widgets' ),
+				'label' => esc_html__( 'Number', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => esc_html__( '1', 'awesome-widgets' ),
+				'default' => esc_html__( '1', 'awesome-widgets-elementor' ),
 			]
 		);
 
@@ -97,10 +97,10 @@ class Widget_Awesome_Number_Box extends Widget_Base {
 		$this->add_control(
 			'awea_number_box_title',
 			[
-				'label' => esc_html__( 'Title', 'awesome-widgets' ),
+				'label' => esc_html__( 'Title', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => esc_html__( 'Awesome Heading', 'awesome-widgets' ),
+				'default' => esc_html__( 'Awesome Heading', 'awesome-widgets-elementor' ),
 			]
 		);
 
@@ -108,10 +108,10 @@ class Widget_Awesome_Number_Box extends Widget_Base {
 		$this->add_control(
 			'awea_number_box_des',
 			[
-				'label' => esc_html__( 'Description', 'awesome-widgets' ),
+				'label' => esc_html__( 'Description', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::TEXTAREA,
 				'label_block' => true,
-				'default' => esc_html__( 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters', 'awesome-widgets' ),
+				'default' => esc_html__( 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters', 'awesome-widgets-elementor' ),
 			]
 		);
 
@@ -119,20 +119,20 @@ class Widget_Awesome_Number_Box extends Widget_Base {
 		$this->add_control(
 			'awea_number_box_alignment',
 			[
-				'label' => esc_html__( 'Alignment', 'awesome-widgets' ),
+				'label' => esc_html__( 'Alignment', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::CHOOSE,
 				'separator' => 'before',
 				'options' => [
 					'left' => [
-						'title' => esc_html__( 'Left', 'awesome-widgets' ),
+						'title' => esc_html__( 'Left', 'awesome-widgets-elementor' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => esc_html__( 'Center', 'awesome-widgets' ),
+						'title' => esc_html__( 'Center', 'awesome-widgets-elementor' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => esc_html__( 'Right', 'awesome-widgets' ),
+						'title' => esc_html__( 'Right', 'awesome-widgets-elementor' ),
 						'icon' => 'eicon-text-align-right',
 					],
 				],
@@ -151,7 +151,7 @@ class Widget_Awesome_Number_Box extends Widget_Base {
 		$this->start_controls_section(
 			'awea_number_box_layout_style',
 			[
-				'label' => esc_html__( 'Layout', 'awesome-widgets' ),
+				'label' => esc_html__( 'Layout', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -160,7 +160,7 @@ class Widget_Awesome_Number_Box extends Widget_Base {
 		$this->add_control(
 			'awea_number_box_layout_background',
 			[
-				'label' => esc_html__( 'Background', 'awesome-widgets' ),
+				'label' => esc_html__( 'Background', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-number-box' => 'background-color: {{VALUE}}',
@@ -184,7 +184,7 @@ class Widget_Awesome_Number_Box extends Widget_Base {
 		$this->add_control(
 			'awea_number_box_border_radius',
 			[
-				'label' => esc_html__( 'Border Radius', 'awesome-widgets' ),
+				'label' => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%'],
 				'selectors' => [
@@ -197,7 +197,7 @@ class Widget_Awesome_Number_Box extends Widget_Base {
 		$this->add_control(
 			'awea_number_box_padding',
 			[
-				'label' => esc_html__( 'Padding', 'awesome-widgets' ),
+				'label' => esc_html__( 'Padding', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%'],
 				'selectors' => [
@@ -212,7 +212,7 @@ class Widget_Awesome_Number_Box extends Widget_Base {
 		$this->start_controls_section(
 			'awea_number_box_number_style',
 			[
-				'label' => esc_html__( 'Number', 'awesome-widgets' ),
+				'label' => esc_html__( 'Number', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -221,7 +221,7 @@ class Widget_Awesome_Number_Box extends Widget_Base {
 		$this->add_control(
 			'awea_number_box_number_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-number-box span' => 'color: {{VALUE}}',
@@ -251,7 +251,7 @@ class Widget_Awesome_Number_Box extends Widget_Base {
 		$this->start_controls_section(
 			'awea_number_box_title_style',
 			[
-				'label' => esc_html__( 'Title', 'awesome-widgets' ),
+				'label' => esc_html__( 'Title', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -260,7 +260,7 @@ class Widget_Awesome_Number_Box extends Widget_Base {
 		$this->add_control(
 			'awea_number_box_title_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-number-box h4' => 'color: {{VALUE}}',
@@ -290,7 +290,7 @@ class Widget_Awesome_Number_Box extends Widget_Base {
 		$this->start_controls_section(
 			'awea_number_box_desc_style',
 			[
-				'label' => esc_html__( 'Description', 'awesome-widgets' ),
+				'label' => esc_html__( 'Description', 'awesome-widgets-elementor' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -299,7 +299,7 @@ class Widget_Awesome_Number_Box extends Widget_Base {
 		$this->add_control(
 			'awea_number_box_desc_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets' ),
+				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-number-box p' => 'color: {{VALUE}}',
