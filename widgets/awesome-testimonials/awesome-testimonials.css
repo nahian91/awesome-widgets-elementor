@@ -1,0 +1,152 @@
+/* Kinetic Engine Setup */
+@property --awea-testimonial-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.awea-testimonial-card {
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+}
+
+/* The Border Beam */
+.awea-testimonial-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(from var(--awea-testimonial-angle), transparent 70%, var(--awea-accent), transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+@keyframes awea-testimonial-spin { 
+    to { --awea-testimonial-angle: 360deg; } 
+}
+
+/* Interactions */
+.awea-testimonial-card:hover {
+    transform: translateY(-10px);
+    background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.07), #ffffff 75%);
+}
+
+.awea-testimonial-card:hover::after {
+    opacity: 1;
+    animation: awea-testimonial-spin 3.5s linear infinite;
+}
+
+/* Visual Elements */
+.awea-testimonial-quote-brand {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    opacity: 0.1;
+    color: var(--awea-accent);
+    z-index: 0;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.awea-testimonial-card:hover .awea-testimonial-quote-brand {
+    opacity: 0.3;
+    transform: rotate(-12deg) scale(1.3);
+}
+
+.awea-testimonial-stars {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 25px;
+    position: relative;
+    z-index: 2;
+}
+
+.awea-testimonial-text {
+    font-size: 1.15rem;
+    font-weight: 500;
+    line-height: 1.7;
+    color: #334155;
+    margin: 0 0 35px 0;
+    position: relative;
+    z-index: 2;
+    font-style: italic;
+}
+
+.awea-testimonial-footer {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+    z-index: 2;
+}
+
+.awea-testimonial-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    object-fit: cover;
+    background: #f1f5f9;
+    transition: transform 0.4s ease;
+}
+
+.awea-testimonial-card:hover .awea-testimonial-avatar {
+    transform: scale(1.1);
+}
+
+.awea-testimonial-meta h4 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.awea-testimonial-meta cite {
+    font-size: 0.8rem;
+    color: #64748b;
+    font-style: normal;
+    font-weight: 600;
+    display: block;
+    margin-top: 2px;
+}
+
+.awea-testimonial-verify {
+    margin-left: auto;
+    color: #94a3b8;
+    background: #f8fafc;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    border: 1px solid rgba(0,0,0,0.03);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.awea-testimonial-card:hover .awea-testimonial-verify {
+    color: #ffffff;
+    background: var(--awea-accent);
+    transform: scale(1.25) rotate(12deg);
+    border-color: transparent;
+}
+
+@media (max-width: 768px) {
+    .awea-testimonial-card { padding: 30px; }
+    .awea-testimonial-text { font-size: 1.05rem; }
+}

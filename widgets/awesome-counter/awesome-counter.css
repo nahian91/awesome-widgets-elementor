@@ -1,0 +1,35 @@
+            .counter-card {
+                background: #fff; padding: 50px 25px; text-align: center; border-radius: 28px;
+                position: relative; border: 1px solid var(--border-soft); font-family: sans-serif;
+                transition: transform 0.4s ease;
+            }
+            /* Border trace effect */
+            .counter-card::before, .counter-card::after {
+                content: ''; position: absolute; border-radius: inherit; width: 0; height: 0;
+                border: 2.5px solid transparent; box-sizing: border-box; pointer-events: none;
+            }
+            .counter-card::before { top: -1px; left: -1px; }
+            .counter-card::after { bottom: -1px; right: -1px; }
+            
+            .counter-card:hover::before {
+                width: calc(100% + 2px); height: calc(100% + 2px);
+                border-top-color: var(--primary); border-right-color: var(--primary);
+                transition: width 0.2s linear, height 0.2s linear 0.2s;
+            }
+            .counter-card:hover::after {
+                width: calc(100% + 2px); height: calc(100% + 2px);
+                border-bottom-color: var(--primary); border-left-color: var(--primary);
+                transition: border-color 0s linear 0.4s, width 0.2s linear 0.4s, height 0.2s linear 0.6s;
+            }
+            .counter-card:hover { transform: translateY(-10px); }
+            
+            .icon-box { 
+                width: 50px; height: 50px; background: var(--border-soft); border-radius: 12px; 
+                display: grid; place-items: center; margin: 0 auto 20px; color: var(--gray); transition: 0.3s; 
+            }
+            .icon-box i, .icon-box svg { font-size: 20px; }
+            .counter-card:hover .icon-box { background: var(--primary); color: #fff; }
+            
+            .stat-value { font-size: 50px; font-weight: 800; color: var(--dark); line-height: 1; }
+            .symbol { font-size: 24px; font-weight: 700; color: var(--primary); margin-left: 4px; }
+            .label { font-size: 13px; font-weight: 600; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-top: 15px; }

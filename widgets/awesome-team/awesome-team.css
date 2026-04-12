@@ -1,0 +1,94 @@
+.awea-single-team {
+    background: #f8fafc;
+    border-radius: 45px;
+    padding: 12px;
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s linear;
+    border: 1px solid rgba(15, 23, 42, 0.04);
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+.awea-single-team:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 40px 60px -15px rgba(15, 23, 42, 0.1);
+    background: #ffffff;
+}
+
+.awea-single-team-image-wrap {
+    position: relative;
+    border-radius: 35px;
+    overflow: hidden;
+    background: #e2e8f0;
+}
+
+/* Dark color overlay on hover */
+.awea-single-team-image-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.4); /* Darkens image */
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.4s ease;
+}
+
+.awea-single-team:hover .awea-single-team-image-wrap::before {
+    opacity: 1;
+}
+
+.awea-single-team-image-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    vertical-align: middle;
+}
+
+.awea-single-team:hover .awea-single-team-image-wrap img { 
+    transform: scale(1.1); 
+}
+
+/* Icons centered in the middle of the image */
+.awea-single-team-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* Horizontal center + vertical center with slight offset for entry animation */
+    transform: translate(-50%, -30%); 
+    display: flex;
+    gap: 10px;
+    opacity: 0;
+    z-index: 2;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s linear;
+}
+
+.awea-single-team:hover .awea-single-team-overlay {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+.awea-single-team-social-icon {
+    width: 40px;
+    height: 40px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    color: #0f172a;
+}
+
+.awea-single-team-social-icon:hover {
+    background: #6366f1;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.awea-single-team-content { padding: 24px 10px 18px; }
+.awea-single-team-member-name { font-size: 1.3rem; font-weight: 800; margin-bottom: 6px; color: #0f172a; }
+.awea-single-team-member-role { font-size: 0.75rem; font-weight: 700; color: #6366f1; text-transform: uppercase; letter-spacing: 1.5px; }

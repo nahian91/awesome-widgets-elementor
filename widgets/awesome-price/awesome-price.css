@@ -1,0 +1,24 @@
+.awea-price-features ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+.awea-price-header {
+  padding: 20px 0;
+}
+.awea-price-header h4 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+.awea-price-header p {
+  font-size: 18px;
+}
+.awea-price-btn {
+  padding: 20px 0;
+}
+.awea-price-features {
+  margin: 20px 0;
+}

@@ -1,0 +1,21 @@
+.awea-list-item {
+	display: flex;
+	align-items: center;
+	border: 1px solid #ddd;
+	padding: 5px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+}
+.awea-list-item h4 {
+	margin-left: 10px;
+	font-size: 16px;
+}
+.awea-list-item i {
+	border: 1px solid #ddd;
+	width: 40px;
+	border-radius: 50%;
+	font-size: 16px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+}

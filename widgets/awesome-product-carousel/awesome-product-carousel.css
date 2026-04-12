@@ -1,0 +1,73 @@
+
+.awea-product-carousel-img {
+  background-size: cover;
+  background-position: center;
+  padding-top: 90%;
+}
+.awea-product-carousel {
+  position: relative;
+  overflow: hidden;
+}
+.awea-product-carousel-sale {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 30px;
+}
+.awea-product-carousel-btn {
+	display: inline-block;
+}
+.awea-product-carousel {
+    display: flex;
+    flex-direction: column; /* stack elements vertically */
+    height: 100%; /* fill available height */
+}
+
+.awea-product-carousel-content {
+    flex: 1; /* take remaining space */
+    display: flex;
+    flex-direction: column;
+}
+
+.awea-product-carousel-price-bottom {
+    margin-top: auto; /* push to bottom */
+}
+
+
+.awea-products-carousel .awea-carousel-arrow-border {
+  background-color: var(--e-global-color-primary);
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.awea-products-carousel .owl-prev .awea-carousel-arrow-border {
+  margin-left: -20px;
+}
+
+.awea-products-carousel .owl-next .awea-carousel-arrow-border {
+  margin-right: -20px;
+}
+
+.awea-products-carousel .owl-dots {
+  display: flex;
+  justify-content: center;
+}
+.awea-products-carousel .owl-dots button.owl-dot {
+  width: 12px;
+  height: 12px;
+  background-color: var(--e-global-color-secondary);
+  border-radius: 50%;
+  margin: 0 5px;
+}
+.awea-products-carousel .owl-dots button.owl-dot.active {
+  background-color: var(--e-global-color-primary);
+}
+.awea-products-carousel .owl-dots {
+  margin-top: 30px;
+}

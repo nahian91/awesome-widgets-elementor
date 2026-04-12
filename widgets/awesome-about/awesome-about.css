@@ -1,0 +1,35 @@
+.awea-about-content span {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.awea-about-content h4 {
+  font-size: 45px;
+  line-height: 55px;
+  margin-bottom: 10px;
+}
+.awea-about-list {
+  margin: 20px 0;
+  list-style: none;
+}
+.awea-about-list li {
+  font-size: 18px;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+}
+.awea-about-list li i {
+  position: absolute;
+  left: 0;
+  top: 5px;
+}
+.awea-about-btn {
+  display: inline-block;
+  background-color: var(--e-global-color-primary);
+  color: var(--e-global-color-text);
+  padding: 10px 30px;
+  font-size: 17px;
+  font-weight: 500;
+  transition: .3s;
+}

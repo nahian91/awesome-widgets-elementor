@@ -1,0 +1,57 @@
+.awea-testimonial-carousel {
+  text-align: center;
+  padding: 30px;
+}
+.awea-testimonial-carousel-content {
+  margin: 20px 0 30px;
+}
+.awea-testimonial-carousel-author {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.awea-testimonial-carousel-author img {
+  max-width: 70px;
+  border: 1px dashed #ddd;
+  margin-right: 15px;
+}
+.awea-testimonial-carousel-author h4 {
+  font-size: 20px;
+  text-align: left;
+}
+.awea-testimonial-carousel-author h4 span {
+  display: block;
+  margin-top: 2px;
+}
+.awea-testimonials .awea-carousel-arrow-border {
+  background-color: var(--e-global-color-primary);
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  z-index: 10;
+  cursor: pointer;
+}
+.awea-testimonials .owl-prev .awea-carousel-arrow-border {
+  margin-left: -20px;
+}
+.awea-testimonials .owl-next .awea-carousel-arrow-border {
+  margin-right: -20px;
+}
+.awea-testimonials .owl-dots {
+  display: flex;
+  justify-content: center;
+}
+.awea-testimonials .owl-dots button.owl-dot {
+  width: 12px;
+  height: 12px;
+  background-color: var(--e-global-color-secondary);
+  border-radius: 50%;
+  margin: 0 5px;
+}
+.awea-testimonials .owl-dots button.owl-dot.active {
+  background-color: var(--e-global-color-primary);
+}
+.awea-testimonials .owl-dots {
+  margin-top: 30px;
+}

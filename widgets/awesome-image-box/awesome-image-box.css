@@ -1,0 +1,10 @@
+.awea-single-image-box {
+	overflow: hidden;
+}
+.awea-single-image-box img{
+  vertical-align: middle;
+}
+.awea-single-image-box-content a, .awea-single-icon-box-content a{
+  display: block;
+  text-decoration: none;
+}

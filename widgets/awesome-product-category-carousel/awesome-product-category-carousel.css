@@ -1,0 +1,42 @@
+.awesa-product-category {
+  position: relative;
+}
+.awea-product-category-content {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  text-align: center;
+  padding: 20px 5px;
+}
+.awea-product-category-carousel .awea-carousel-arrow-border {
+  background-color: var(--e-global-color-primary);
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  z-index: 10;
+  cursor: pointer;
+}
+.awea-product-category-carousel .owl-prev .awea-carousel-arrow-border {
+  margin-left: -20px;
+}
+.awea-product-category-carousel .owl-next .awea-carousel-arrow-border {
+  margin-right: -20px;
+}
+.awea-product-category-carousel .owl-dots {
+  display: flex;
+  justify-content: center;
+}
+.awea-product-category-carousel .owl-dots button.owl-dot {
+  width: 12px;
+  height: 12px;
+  background-color: var(--e-global-color-secondary);
+  border-radius: 50%;
+  margin: 0 5px;
+}
+.awea-product-category-carousel .owl-dots button.owl-dot.active {
+  background-color: var(--e-global-color-primary);
+}
+.awea-product-category-carousel .owl-dots {
+  margin-top: 30px;
+}

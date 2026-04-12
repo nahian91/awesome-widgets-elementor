@@ -1,0 +1,20 @@
+.awea-single-number-box {
+  padding: 45px 30px 15px;
+  position: relative;
+}
+.awea-single-number-box span {
+	margin-bottom: 0;
+	display: block;
+	position: absolute;
+	top: -30px;
+	left: 30px;
+	width: 60px;
+	height: 60px;
+	line-height: 60px;
+	text-align: center;
+	font-size: 30px;
+	border-radius: 9px;
+}
+.awea-single-number-box h4 {
+  margin: 0 0 15px 0;
+}
