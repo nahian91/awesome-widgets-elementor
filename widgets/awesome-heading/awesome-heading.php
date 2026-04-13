@@ -78,6 +78,58 @@ class Widget_Awesome_Heading extends Widget_Base {
         $settings = $this->get_settings_for_display();
         ?>
 
+        <style>
+            .section-signature { 
+                --primary: #6366f1; --dark: #0f172a; --gray: #64748b; --ease: cubic-bezier(0.19, 1, 0.22, 1);
+                text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%;
+            }
+            
+            .tag-pill {
+                background: rgba(99, 102, 241, 0.08); color: var(--primary); padding: 10px 26px;
+                border-radius: 100px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;
+                letter-spacing: 4px; margin-bottom: 32px; border: 1px solid rgba(99, 102, 241, 0.1);
+                display: inline-block; animation: revealDown 1.2s var(--ease) both;
+            }
+
+            .hero-title {
+                font-size: 4.5rem; font-weight: 800; letter-spacing: -4px; color: var(--dark);
+                line-height: 0.95; margin-bottom: 40px; animation: revealUp 1.2s var(--ease) 0.15s both;
+            }
+
+            .signature-divider {
+                position: relative; width: 140px; height: 2px; background: #e2e8f0;
+                margin-bottom: 40px; border-radius: 4px; overflow: hidden;
+            }
+
+            .signature-divider::after {
+                content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+                background: var(--primary); animation: dividerFlow 3s infinite var(--ease);
+            }
+
+            .hero-desc {
+                font-size: 1.35rem; color: var(--gray); line-height: 1.6; max-width: 680px;
+                margin-bottom: 55px; font-weight: 500; animation: revealUp 1.2s var(--ease) 0.45s both;
+            }
+
+            .magnetic-btn {
+                text-decoration: none; background: var(--dark); color: #fff; padding: 22px 54px;
+                border-radius: 100px; font-weight: 800; font-size: 1.1rem; display: inline-flex;
+                align-items: center; gap: 15px; transition: all 0.5s var(--ease);
+                box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.2); animation: revealUp 1.2s var(--ease) 0.6s both;
+            }
+
+            .magnetic-btn:hover { background: var(--primary); transform: translateY(-8px) scale(1.05); }
+
+            @keyframes dividerFlow { 0% { left: -100%; } 50% { left: 0%; } 100% { left: 100%; } }
+            @keyframes revealUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+            @keyframes revealDown { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: translateY(0); } }
+
+            @media (max-width: 768px) {
+                .hero-title { font-size: 3.2rem; letter-spacing: -2px; }
+                .magnetic-btn { width: 100%; justify-content: center; }
+            }
+        </style>
+
         <section class="section-signature">
             <?php if ( ! empty( $settings['tag_text'] ) ) : ?>
                 <div class="tag-pill"><?php echo esc_html( $settings['tag_text'] ); ?></div>
