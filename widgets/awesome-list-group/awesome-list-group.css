@@ -1,21 +1,78 @@
-.awea-list-item {
-	display: flex;
-	align-items: center;
-	border: 1px solid #ddd;
-	padding: 5px;
-	margin-bottom: 10px;
-	border-radius: 5px;
-}
-.awea-list-item h4 {
-	margin-left: 10px;
-	font-size: 16px;
-}
-.awea-list-item i {
-	border: 1px solid #ddd;
-	width: 40px;
-	border-radius: 50%;
-	font-size: 16px;
-	height: 40px;
-	text-align: center;
-	line-height: 40px;
-}
+        /* --- THE PRO CONTAINER --- */
+        .awea-icon-list-card {
+            background: #ffffff;
+            width: 100%;
+            padding: 48px;
+            border-radius: 32px;
+            box-shadow: 0 40px 100px -20px rgba(26, 81, 53, 0.08);
+            border: 1px solid rgba(148, 193, 101, 0.1);
+        }
+
+        /* --- ARCHITECTURAL LIST ITEM --- */
+        .awea-icon-list-item {
+            display: grid;
+            grid-template-columns: 64px 1fr;
+            gap: 24px;
+            padding: 32px 0;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            border-bottom: 1px solid #f1f5f0;
+            cursor: default;
+        }
+
+        .awea-icon-list-item:first-child { padding-top: 0; }
+        .awea-icon-list-item:last-child { padding-bottom: 0; border-bottom: none; }
+
+        /* Pro Hover State */
+        .awea-icon-list-item:hover {
+            transform: translateX(8px);
+        }
+
+        /* --- PRECISION ICONOGRAPHY --- */
+        .awea-icon-list-icon-wrap {
+            width: 64px;
+            height: 64px;
+            background: #94c165;
+            border-radius: 20px; /* Sophisticated Squircle */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 20px -5px rgba(148, 193, 101, 0.4);
+        }
+
+        .awea-icon-list-item:hover .awea-icon-list-icon-wrap {
+            background: #1a5135;
+            transform: rotate(-5deg) scale(1.05);
+            box-shadow: 0 15px 30px -10px rgba(26, 81, 53, 0.3);
+        }
+
+        .awea-icon-list-icon-wrap i {
+            color: #ffffff;
+            font-size: 1.5rem;
+        }
+
+        /* --- ELITE TYPOGRAPHY --- */
+        .awea-icon-list-text h3 {
+            color: #1a5135;
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+        }
+
+        .awea-icon-list-text p {
+            color: #5c6d64;
+            font-size: 1rem;
+            line-height: 1.6;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        /* --- RESPONSIVE OPTIMIZATION --- */
+        @media (max-width: 480px) {
+            .awea-icon-list-card { padding: 32px 24px; }
+            .awea-icon-list-item { grid-template-columns: 1fr; gap: 16px; }
+            .awea-icon-list-item:hover { transform: translateY(-4px); }
+            .awea-icon-list-icon-wrap { width: 56px; height: 56px; }
+        }

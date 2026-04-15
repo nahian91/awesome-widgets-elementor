@@ -233,59 +233,25 @@ class Widget_Awesome_Price extends Widget_Base {
         $this->add_link_attributes( 'button', $settings['btn_link'] );
         ?>
 
-        <style>
-            {{WRAPPER}} .quantum-card {
-                --primary: #6366f1; --primary-glow: rgba(99, 102, 241, 0.4);
-                background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-                border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 32px; padding: 48px;
-                position: relative; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-                display: flex; flex-direction: column; overflow: hidden; color: #fff;
-            }
-            {{WRAPPER}} .quantum-card:hover { transform: translateY(-15px); border-color: var(--primary); }
-            {{WRAPPER}} .tier-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: var(--primary); margin-bottom: 12px; display: block; }
-            {{WRAPPER}} .price-wrap { display: flex; align-items: baseline; gap: 8px; margin-bottom: 24px; }
-            {{WRAPPER}} .price-wrap h2 { font-size: 3.5rem; font-weight: 800; letter-spacing: -2px; margin: 0; color: #fff; }
-            {{WRAPPER}} .desc { color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 32px; }
-            {{WRAPPER}} .feature-list { list-style: none; margin: 0 0 40px 0; padding: 0; flex-grow: 1; }
-            {{WRAPPER}} .feature-item { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
-            {{WRAPPER}} .icon-box { width: 24px; height: 24px; background: rgba(16, 185, 129, 0.1); color: #10b981; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-            {{WRAPPER}} .action-btn { padding: 18px 30px; border-radius: 16px; font-weight: 700; text-decoration: none; transition: 0.3s; background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255, 255, 255, 0.1); }
-            {{WRAPPER}} .quantum-card.featured { border: 1px solid rgba(99, 102, 241, 0.3); background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), rgba(17, 24, 39, 0.7)); }
-            {{WRAPPER}} .featured .action-btn { background: var(--primary); box-shadow: 0 10px 20px -5px var(--primary-glow); border: none; }
-            {{WRAPPER}} .best-value { position: absolute; top: 24px; right: -35px; background: var(--primary); padding: 8px 40px; font-size: 0.65rem; font-weight: 900; transform: rotate(45deg); box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 10; }
-        </style>
-
-        <div class="quantum-card <?php echo esc_attr($settings['is_featured']); ?>">
-            <?php if ( 'featured' === $settings['is_featured'] ) : ?>
-                <div class="best-value"><?php echo esc_html($settings['badge_text']); ?></div>
-            <?php endif; ?>
-
-            <span class="tier-label"><?php echo esc_html($settings['tier_label']); ?></span>
-            
-            <div class="price-wrap">
-                <h2><?php echo esc_html($settings['currency'] . $settings['price']); ?></h2>
-                <span><?php echo esc_html($settings['period']); ?></span>
-            </div>
-
-            <p class="desc"><?php echo esc_html($settings['description']); ?></p>
-
-            <ul class="feature-list">
-                <?php foreach ( $settings['features'] as $item ) : ?>
-                    <li class="feature-item">
-                        <div class="icon-box">
-                            <?php Icons_Manager::render_icon( $item['feature_icon'], [ 'aria-hidden' => 'true' ] ); ?>
-                        </div>
-                        <?php echo esc_html($item['feature_text']); ?>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-
-            <div class="btn-container">
-                <a <?php echo wp_kses_post( $this->get_render_attribute_string( 'button' ) ); ?> class="action-btn">
-                    <?php echo esc_html( $settings['btn_text'] ); ?>
-                </a>
+         <div class="awea-pricing-card">
+        <div class="awea-pricing-card-header">
+            <span class="awea-pricing-plan-tag">Professional</span>
+            <div class="awea-pricing-price-box">
+                <span class="awea-pricing-currency">$</span>
+                <span class="awea-pricing-amount">299</span>
+                <span class="awea-pricing-cycle">/mo</span>
             </div>
         </div>
+        <div class="awea-pricing-card-body">
+            <ul class="awea-pricing-feature-list">
+                <li class="awea-pricing-feature-item"><i class="fas fa-check-circle"></i> Priority manufacturing</li>
+                <li class="awea-pricing-feature-item"><i class="fas fa-check-circle"></i> Global logistics support</li>
+                <li class="awea-pricing-feature-item"><i class="fas fa-check-circle"></i> Sustainable options</li>
+                <li class="awea-pricing-feature-item"><i class="fas fa-check-circle"></i> Dedicated Manager</li>
+            </ul>
+            <a href="#" class="awea-pricing-btn-cta">Select Pro Plan</a>
+        </div>
+    </div>
         <?php
     }
 }

@@ -1,72 +1,112 @@
-.awea-steps-list {
-  display: flex;
-  justify-content: space-between;
-  gap: 40px;
-  margin-top: 0;
-  flex-direction: column;
+.awea-step-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+.awea-step-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+.awea-step-box {
+    width: 90px;
+    height: 90px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    position: relative;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    border: 1px solid rgba(255, 255, 255, 1);
+    box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05), inset 0 0 0 1px rgba(255,255,255,1);
+    cursor: pointer;
+}
+.awea-step-number {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    border: 1px solid #e2e8f0;
+}
+.awea-step-item:hover .awea-step-box {
+    transform: translateY(-15px) scale(1.05);
+    box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.4);
+}
+.awea-flow-connector {
+    flex: 0.5;
+    height: 2px;
+    margin-top: 45px;
+    position: relative;
+    min-width: 50px;
+}
+.awea-flow-connector::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    transition: width 0.6s ease;
+}
+.awea-flow-beam {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: awea-flowMove 3s infinite linear;
+    opacity: 0.4;
+}
+@keyframes awea-flowMove {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+.awea-step-item:hover + .awea-flow-connector::after {
+    width: 100%;
+}
+.awea-step-content {
+    margin-top: 25px;
+    padding: 0 15px;
+}
+.awea-step-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.5px;
+}
+.awea-step-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0;
+}
+@media (max-width: 850px) {
+    .awea-step-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+    .awea-flow-connector {
+        width: 2px;
+        height: 40px;
+        margin: 0;
+    }
+    .awea-flow-beam { animation: awea-flowMoveVertical 3s infinite linear; }
 }
 
-@media (min-width: 600px) {
-  .awea-steps-list {
-    flex-direction: row;
-    margin-top: 60px;
-  }
-}
-
-.awea-steps-single {
-  position: relative;
-  text-align: center;
-}
-
-.awea-steps-single:after {
-  position: absolute;
-  content: "";
-  background-image: url("img/arrow-1.png");
-  width: 100%;
-  height: 60px;
-  right: -120px;
-  top: -60px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 150px 30px;
-  display: none;
-}
-
-@media (min-width: 600px) {
-  .awea-steps-single:after {
-    display: block;
-  }
-}
-
-.awea-steps-img {
-  max-width: 120px !important;
-}
-
-.awea-steps-number {
-  position: absolute;
-  right: -50px;
-  top: -65px;
-  background-color: var(--e-global-color-primary);
-  width: 40px;
-  height: 40px;
-  z-index: 2;
-  color: var(--e-global-color-text);
-  line-height: 40px;
-  border-radius: 10px;
-  display: none;
-}
-
-@media (min-width: 600px) {
-  .awea-steps-number {
-    display: block;
-  }
-}
-
-.awea-steps-title {
-  margin: 15px 0;
-}
-
-.awea-steps-single:last-child .awea-steps-number,
-.awea-steps-single:last-child:after {
-  display: none;
+@keyframes awea-flowMoveVertical {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
 }

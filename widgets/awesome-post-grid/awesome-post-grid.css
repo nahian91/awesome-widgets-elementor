@@ -1,182 +1,169 @@
-    :root {
-            --primary: #6366f1;
-            --dark: #0f172a;
-            --gray: #64748b;
-            --white: #ffffff;
-            --border: #f1f5f9;
-            --bg: #f8fafc;
-            --ease: cubic-bezier(0.16, 1, 0.3, 1);
-        }
+/* --- AWEA GRID SYSTEM --- */
+.awea-grid-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -15px;
+}
 
-        /* --- AWEA GRID SYSTEM --- */
-        .awea-grid-row {
-            margin: -15px;
-            display: flex;
-            flex-wrap: wrap;
-        }
+.awea-grid-item {
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
 
-        .awea-single-post {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
+/* Desktop Column Logic */
+.awea-col-1, .awea-grid-desktop-12 { width: 100%; }
+.awea-col-2 { width: 50%; }
+.awea-col-3, .awea-grid-desktop-4 { width: 33.3333%; }
+.awea-col-4 { width: 25%; }
 
-        .awea-post-content {
-            flex-grow: 1;
-        }
+/* Tablet Breakpoint (991px - 1024px range) */
+@media screen and (max-width: 1024px) {
+    .awea-grid-item, .awea-grid-tablet-6 { 
+        width: 50% !important; 
+    }
+}
 
-        .awea-grid-row > div[class^="awea-grid-desktop-"] .awea-single-post {
-            flex: 1;
-        }
+/* Mobile Breakpoint */
+@media screen and (max-width: 767px) {
+    .awea-grid-item, .awea-grid-mobile-12 { 
+        width: 100% !important; 
+    }
+}
 
-        /* Desktop Columns */
-        .awea-grid-desktop-4 { width: 33.33%; padding: 15px; }
-        .awea-grid-desktop-12 { width: 100%; padding: 15px; }
+/* --- BLOG CARD STYLES --- */
+.awea-blog-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    border-radius: 40px;
+    border: 1px solid #f1f5f9;
+    padding: 12px;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: aweaCardReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
 
-        /* Tablet Breakpoint */
-        @media screen and (max-width: 991px) {
-            .awea-grid-tablet-6 { width: 50%; padding: 15px; }
-        }
+@keyframes aweaCardReveal {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-        /* Mobile Breakpoint */
-        @media screen and (max-width: 767px) {
-            .awea-grid-mobile-12 { width: 100%; padding: 15px; }
-        }
+.awea-blog-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 40px 80px -20px rgba(99, 102, 241, 0.15);
+}
 
-        /* --- PAGE STYLES --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+/* Image Handling */
+.awea-blog-img-wrap {
+    position: relative;
+    height: 260px;
+    border-radius: 30px;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
-            color: var(--dark);
-            padding: 80px 24px;
-            line-height: 1.6;
-        }
+.awea-blog-img-wrap img, .awea-blog-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-        .awea-blog-container {
-            max-width: 1280px;
-            margin: 0 auto;
-        }
+.awea-blog-card:hover .awea-blog-img-wrap img,
+.awea-blog-card:hover .awea-blog-img { 
+    transform: scale(1.1); 
+}
 
-        /* --- BLOG CARD UI --- */
-        .awea-blog-card {
-            background: var(--white);
-            border-radius: 40px;
-            border: 1px solid var(--border);
-            padding: 12px;
-            transition: all 0.6s var(--ease);
-            cursor: pointer;
-            animation: aweaCardReveal 0.8s var(--ease) both;
-        }
+/* Badge */
+.awea-blog-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 5;
+    background: #fff;
+    backdrop-filter: blur(8px);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
 
-        @keyframes aweaCardReveal {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+/* Body Content */
+.awea-blog-body {
+    flex-grow: 1;
+    padding: 0 16px 20px;
+}
 
-        .awea-blog-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 40px 80px -20px rgba(99, 102, 241, 0.15);
-            border-color: var(--primary);
-        }
+.awea-blog-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #64748b;
+    margin-bottom: 12px;
+}
 
-        .awea-blog-img-wrap {
-            position: relative;
-            height: 260px;
-            border-radius: 30px;
-            overflow: hidden;
-            margin-bottom: 24px;
-        }
+.awea-blog-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.8px;
+    margin: 0 0 12px 0;
+    transition: color 0.3s;
+}
 
-        .awea-blog-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 1.2s var(--ease);
-        }
+.awea-blog-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #64748b;
+}
 
-        .awea-blog-card:hover .awea-blog-img { transform: scale(1.1); }
+/* Footer & Link */
+.awea-blog-footer {
+    margin-top: auto;
+    padding: 24px 16px 12px;
+    border-top: 1px dashed #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-        .awea-blog-badge {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
-            padding: 8px 16px;
-            border-radius: 100px;
-            font-size: 0.7rem;
-            font-weight: 800;
-            color: var(--dark);
-            z-index: 2;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+.awea-blog-link {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    background: #f8fafc;
+    color: #0f172a;
+    border: 1px solid #f1f5f9;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-        .awea-blog-body { padding: 0 16px 20px; }
+.awea-blog-link i {
+    transition: transform 0.3s;
+}
 
-        .awea-blog-meta {
-            display: flex;
-            gap: 15px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--gray);
-            margin-bottom: 12px;
-            opacity: 0.7;
-        }
+.awea-blog-card:hover .awea-blog-link {
+    padding-right: 32px;
+}
 
-        .awea-blog-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            line-height: 1.2;
-            letter-spacing: -0.8px;
-            margin-bottom: 12px;
-            transition: color 0.3s;
-        }
+.awea-blog-card:hover .awea-blog-link i {
+    transform: translateX(8px);
+}
 
-        .awea-blog-card:hover .awea-blog-title { color: var(--primary); }
-
-        .awea-blog-desc {
-            font-size: 0.95rem;
-            color: var(--gray);
-            line-height: 1.5;
-        }
-
-        .awea-blog-footer {
-            margin-top: auto;
-            padding: 24px 16px 12px;
-            border-top: 1px dashed #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .awea-blog-link {
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 24px;
-            background: #f8fafc;
-            color: var(--dark);
-            border-radius: 100px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            transition: all 0.4s var(--ease);
-            border: 1px solid var(--border);
-        }
-
-        .awea-blog-card:hover .awea-blog-link {
-            background: var(--dark);
-            color: var(--white);
-            padding-right: 32px;
-            border-color: var(--dark);
-        }
-
-        .awea-blog-card:hover .awea-blog-link i {
-            transform: translateX(8px);
-            color: var(--primary);
-        }
-
-        .awea-blog-num { font-weight: 800; opacity: 0.2; font-size: 0.8rem; }
+.awea-post-num, .awea-blog-num { 
+    font-weight: 900; 
+    opacity: 0.15; 
+    font-size: 0.8rem; 
+}

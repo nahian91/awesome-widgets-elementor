@@ -2,7 +2,7 @@
 /**
  * Awesome List Group
  *
- * Elementor widget that inserts a list into the page
+ * Elementor widget that inserts a dynamic list into the page
  *
  * @since 1.0.0
  */
@@ -16,334 +16,315 @@ use \Elementor\Group_Control_Typography;
 use \Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use \Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use \Elementor\Widget_Base;
+use \Elementor\Repeater;
 
 class Widget_Awesome_List_Group extends Widget_Base {
 
-	/**
-	 * Get widget name.
-	 *
-	 * Retrieve brand widget name.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return string Widget name.
-	 */
-	public function get_name() {
-		return 'awesome-list-group';
-	}
+    public function get_name() {
+        return 'awesome-list-group';
+    }
 
-	/**
-	 * Get widget title.
-	 *
-	 * Retrieve brand widget title.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return string Widget title.
-	 */
-	public function get_title() {
-		return esc_html__( 'List Group', 'awesome-widgets-elementor' );
-	}
+    public function get_title() {
+        return esc_html__( 'List Group', 'awesome-widgets-elementor' );
+    }
 
-	/**
-	 * Get widget icon.
-	 *
-	 * Retrieve heading widget icon.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return string Widget icon.
-	 */
-	public function get_icon() {
-		return 'eicon-bullet-list';
-	}
+    public function get_icon() {
+        return 'eicon-bullet-list';
+    }
 
-	/**
-	 * Get widget categories.
-	 *
-	 * Retrieve the list of categories the heading widget belongs to.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return array Widget categories.
-	 */
-	public function get_categories() {
-		return [ 'awesome-widgets-elementor' ];
-	}
+    public function get_categories() {
+        return [ 'awesome-widgets-elementor' ];
+    }
 
-	public function get_keywords() {
-		return [ 'list', 'item', 'awesome'];
-	}
+    public function get_keywords() {
+        return [ 'list', 'item', 'awesome'];
+    }
 
-	/**
-	 * Adds different input fields to allow the user to change and customize the widget settings.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 */
-	protected function _register_controls() {
-		
-		// start of the Content tab section
-	   $this->start_controls_section(
-	       'awea_list_group_contents',
-		    [
-		        'label' => esc_html__('Contents', 'awesome-widgets-elementor'),
-				'tab'   => Controls_Manager::TAB_CONTENT,		   
-		    ]
-	    );
-		
-		// List Group Repeater 
-		$repeater = new Repeater();
+    protected function register_controls() {
 
-		// List Group Title 
-		$repeater->add_control(
-			'awea_list_group_title',
-			[
-				'label' => esc_html__( 'List Title', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::TEXT,
-				'label_block' => true,
-				'default' => esc_html__('List Item', 'awesome-widgets-elementor')
-			]
-		);
-
-		// List Group Icon
-		$repeater->add_control(
-        	'awea_list_group_icon',
-			[
-				'label'         => esc_html__('List Icon', 'awesome-widgets-elementor'),
-				'type'          => Controls_Manager::ICON,
-				'label_block'   => true,
-				'default' => 'fa fa-star',
-			]
+        // --- CONTENT SECTION ---
+        $this->start_controls_section(
+            'section_content',
+            [
+                'label' => esc_html__( 'Content', 'awesome-widgets-elementor' ),
+                'tab' => Controls_Manager::TAB_CONTENT,
+            ]
         );
 
-		// List Group List
-		$this->add_control(
-			'awea_list_group',
-			[
-				'label' => esc_html__( 'List Group List', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::REPEATER,
-				'fields' => $repeater->get_controls(),
-				'default' => [
-					[
-						'awea_list_group_title' => __( 'List Item 1', 'awesome-widgets-elementor' )
-					],
-					[
-						'awea_list_group_title' => __( 'List Item 2', 'awesome-widgets-elementor' )
-					],
-					[
-						'awea_list_group_title' => __( 'List Item 3', 'awesome-widgets-elementor' )
-					],
-				],
-				'title_field' => '{{{ awea_list_group_title }}}',
-			]
-		);		
-		
-		$this->end_controls_section();
-		// end of the Content tab section
+        $repeater = new Repeater();
 
-		// start of the Content tab section
-		$this->start_controls_section(
-			'awea_list_group_pro_message',
-			[
-				'label' => esc_html__('Premium', 'awesome-widgets-elementor'),
-				'tab'   => Controls_Manager::TAB_CONTENT		
-			]
-		);
+        $repeater->add_control(
+            'list_title', [
+                'label' => esc_html__( 'Title', 'awesome-widgets-elementor' ),
+                'type' => Controls_Manager::TEXT,
+                'default' => esc_html__( 'List Title' , 'awesome-widgets-elementor' ),
+                'label_block' => true,
+            ]
+        );
 
-		$this->add_control( 
-			'awea_list_group_pro_message_notice', 
-			[
-				'type'      => Controls_Manager::RAW_HTML,
-				'raw'       => sprintf(
-					'<div style="text-align:center;line-height:1.6;">
-						<p style="margin-bottom:10px">%s</p>
-					</div>',
-					esc_html__('Awesome Widgets for Elementor Premium is coming soon with more widgets, features, and customization options.', 'awesome-widgets-elementor')
-				)
-			]  
-		);
-		$this->end_controls_section();
-		
-		// start of the Style tab section
-		$this->start_controls_section(
-			'awea_list_group_style',
-			[
-				'label' => esc_html__( 'Contents', 'awesome-widgets-elementor' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);	
+        $repeater->add_control(
+            'list_content', [
+                'label' => esc_html__( 'Description', 'awesome-widgets-elementor' ),
+                'type' => Controls_Manager::TEXTAREA,
+                'default' => esc_html__( 'List description goes here.' , 'awesome-widgets-elementor' ),
+                'show_label' => true,
+            ]
+        );
 
-		// List Group Layout Options
-		$this->add_control(
-			'wb_brand_sep_options',
-			[
-				'label' => esc_html__( 'Layouts', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before'
-			]
-		);
+        $repeater->add_control(
+            'list_icon', [
+                'label' => esc_html__( 'Icon', 'awesome-widgets-elementor' ),
+                'type' => Controls_Manager::ICONS,
+                'default' => [
+                    'value' => 'fas fa-check',
+                    'library' => 'solid',
+                ],
+            ]
+        );
 
-		// List Group Background Color
-		$this->add_control(
-			'awea_list_group_background_color',
-			[
-				'label' => esc_html__( 'Background', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .awea-list-item' => 'background-color: {{VALUE}}',
-				],
-				'global' => [
-					'default' => Global_Colors::COLOR_PRIMARY,
-				]
-			]
-		);
+        $this->add_control(
+            'list_items',
+            [
+                'label' => esc_html__( 'Repeater List', 'awesome-widgets-elementor' ),
+                'type' => Controls_Manager::REPEATER,
+                'fields' => $repeater->get_controls(),
+                'default' => [
+                    [
+                        'list_title' => esc_html__( 'Sourced from Trusted Farm', 'awesome-widgets-elementor' ),
+                        'list_icon' => ['value' => 'fa-solid fa-earth-americas', 'library' => 'solid'],
+                    ],
+                ],
+                'title_field' => '{{{ list_title }}}',
+            ]
+        );
 
-		// List Group Border
-		$this->add_group_control(
-			Group_Control_Border::get_type(),
-			[
-				'name' => 'awea_list_group_border',
-				'selector' => '{{WRAPPER}} .awea-list-item',
-			]
-		);	
+        $this->end_controls_section();
 
-		// List Group Border Radius
-		$this->add_control(
-			'awea_list_group_border_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem'],
-				'selectors' => [
-					'{{WRAPPER}} .awea-list-item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
+        // --- STYLE: LAYOUT ---
+        $this->start_controls_section(
+            'section_style_layout',
+            [
+                'label' => esc_html__( 'Layout', 'awesome-widgets-elementor' ),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
 
-		// List Group Padding
-		$this->add_control(
-			'awea_list_group_padding',
-			[
-				'label' => esc_html__( 'Padding', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem'],
-				'selectors' => [
-					'{{WRAPPER}} .awea-list-item' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
+        $this->add_responsive_control(
+            'item_spacing',
+            [
+                'label' => esc_html__( 'Spacing Between Items', 'awesome-widgets-elementor' ),
+                'type' => Controls_Manager::SLIDER,
+                'selectors' => [
+                    '{{WRAPPER}} .awea-icon-list-item:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
 
-		// List Group Icon Options
-		$this->add_control(
-			'awea_list_group_icon_options',
-			[
-				'label' => esc_html__( 'Icon', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before'
-			]
-		);
-		
-		// List Group Icon Color
-		$this->add_control(
-			'awea_list_group_icon_color',
-			[
-				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_SECONDARY,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .awea-list-item i' => 'color: {{VALUE}}',
-				],
-			]
-		);
+        $this->add_responsive_control(
+            'item_padding',
+            [
+                'label' => esc_html__( 'Padding', 'awesome-widgets-elementor' ),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', 'em', '%' ],
+                'selectors' => [
+                    '{{WRAPPER}} .awea-icon-list-item' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
 
-		// List Group Icon Border Color
-		$this->add_control(
-			'awea_list_group_icon_border_color',
-			[
-				'label' => esc_html__( 'Border Color', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_SECONDARY,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .awea-list-item i' => 'border-color: {{VALUE}}',
-				],
-			]
-		);
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'item_border',
+                'selector' => '{{WRAPPER}} .awea-icon-list-item',
+            ]
+        );
 
-		// List Group Title Options
-		$this->add_control(
-			'awea_list_group_title_options',
-			[
-				'label' => esc_html__( 'Heading', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before'
-			]
-		);
+        $this->add_control(
+            'item_border_radius',
+            [
+                'label' => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
+                'type' => Controls_Manager::DIMENSIONS,
+                'selectors' => [
+                    '{{WRAPPER}} .awea-icon-list-item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
 
-		// List Group Title Color
-		$this->add_control(
-			'awea_list_group_title_color',
-			[
-				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_SECONDARY,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .awea-list-item h4' => 'color: {{VALUE}}',
-				],
-			]
-		);
+        $this->add_control(
+            'item_background',
+            [
+                'label' => esc_html__( 'Background Color', 'awesome-widgets-elementor' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .awea-icon-list-item' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
 
-		// List Group Title Typography
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'awea_list_group_title_typography',
-				'selector' => '{{WRAPPER}} .awea-list-item h4',
-				'global' => [
-					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
-				]
-			]
-		);	
+        $this->end_controls_section();
 
-		$this->end_controls_section();
-		// end of the Style tab section
+        // --- STYLE: ICON ---
+        $this->start_controls_section(
+            'section_style_icon',
+            [
+                'label' => esc_html__( 'Icon', 'awesome-widgets-elementor' ),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
 
-	}
+        $this->start_controls_tabs( 'icon_colors' );
 
-	/**
-	 * Render heading widget output on the frontend.
-	 *
-	 * Written in PHP and used to generate the final HTML.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 */
-	protected function render() {
-		// get our input from the widget settings.
-		$settings = $this->get_settings_for_display();
+        $this->start_controls_tab(
+            'icon_colors_normal',
+            [ 'label' => esc_html__( 'Normal', 'awesome-widgets-elementor' ) ]
+        );
 
-		if ( $settings['awea_list_group'] ) {  ?>			
-			<?php 
-			foreach (  $settings['awea_list_group'] as $item ) { 
-				$awea_group_list_title = $item['awea_list_group_title'];
-				$awea_group_list_icon =  $item['awea_list_group_icon'];
-			?>
-				<div class="awea-list-group">
-					<div class="awea-list-item">
-						<i class="<?php echo esc_attr($awea_group_list_icon);?>"></i> <h4><?php echo esc_html($awea_group_list_title);?></h4>
-					</div>
-				</div>
-			<?php } ?>
-		<?php } 
-	}
+        $this->add_control(
+            'icon_color',
+            [
+                'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [ '{{WRAPPER}} .awea-icon-list-icon-wrap i' => 'color: {{VALUE}};' ],
+            ]
+        );
+
+        $this->add_control(
+            'icon_bg_color',
+            [
+                'label' => esc_html__( 'Background Color', 'awesome-widgets-elementor' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [ '{{WRAPPER}} .awea-icon-list-icon-wrap' => 'background-color: {{VALUE}};' ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        $this->start_controls_tab(
+            'icon_colors_hover',
+            [ 'label' => esc_html__( 'Hover', 'awesome-widgets-elementor' ) ]
+        );
+
+        $this->add_control(
+            'icon_bg_color_hover',
+            [
+                'label' => esc_html__( 'Background Hover', 'awesome-widgets-elementor' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [ '{{WRAPPER}} .awea-icon-list-item:hover .awea-icon-list-icon-wrap' => 'background-color: {{VALUE}};' ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+
+        $this->add_responsive_control(
+            'icon_size',
+            [
+                'label' => esc_html__( 'Size', 'awesome-widgets-elementor' ),
+                'type' => Controls_Manager::SLIDER,
+                'selectors' => [ '{{WRAPPER}} .awea-icon-list-icon-wrap i' => 'font-size: {{SIZE}}{{UNIT}};' ],
+            ]
+        );
+
+        $this->add_control(
+            'icon_radius',
+            [
+                'label' => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
+                'type' => Controls_Manager::SLIDER,
+                'selectors' => [ '{{WRAPPER}} .awea-icon-list-icon-wrap' => 'border-radius: {{SIZE}}{{UNIT}};' ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        // --- STYLE: CONTENT ---
+        $this->start_controls_section(
+            'section_style_content',
+            [
+                'label' => esc_html__( 'Content', 'awesome-widgets-elementor' ),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'heading_title',
+            [ 'label' => esc_html__( 'Title', 'awesome-widgets-elementor' ), 'type' => Controls_Manager::HEADING ]
+        );
+
+        $this->add_control(
+            'title_color',
+            [
+                'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [ '{{WRAPPER}} .awea-icon-list-text h3' => 'color: {{VALUE}};' ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'title_typography',
+                'selector' => '{{WRAPPER}} .awea-icon-list-text h3',
+            ]
+        );
+
+        $this->add_control(
+            'heading_description',
+            [ 
+                'label' => esc_html__( 'Description', 'awesome-widgets-elementor' ), 
+                'type' => Controls_Manager::HEADING,
+                'separator' => 'before'
+            ]
+        );
+
+        $this->add_control(
+            'desc_color',
+            [
+                'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [ '{{WRAPPER}} .awea-icon-list-text p' => 'color: {{VALUE}};' ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'desc_typography',
+                'selector' => '{{WRAPPER}} .awea-icon-list-text p',
+            ]
+        );
+
+        $this->end_controls_section();
+    }
+
+    protected function render() {
+        $settings = $this->get_settings_for_display();
+
+        if ( empty( $settings['list_items'] ) ) {
+            return;
+        }
+        ?>
+        <div class="awea-icon-list-card">
+            <?php foreach ( $settings['list_items'] as $item ) : 
+                $item_id = $item['_id'];
+                ?>
+                <article class="awea-icon-list-item elementor-repeater-item-<?php echo esc_attr( $item_id ); ?>">
+                    <div class="awea-icon-list-icon-wrap">
+                        <?php \Elementor\Icons_Manager::render_icon( $item['list_icon'], [ 'aria-hidden' => 'true' ] ); ?>
+                    </div>
+                    <div class="awea-icon-list-text">
+                        <?php if ( ! empty( $item['list_title'] ) ) : ?>
+                            <h3><?php echo esc_html( $item['list_title'] ); ?></h3>
+                        <?php endif; ?>
+                        
+                        <?php if ( ! empty( $item['list_content'] ) ) : ?>
+                            <p><?php echo esc_html( $item['list_content'] ); ?></p>
+                        <?php endif; ?>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        </div>
+        <?php 
+    }
 }

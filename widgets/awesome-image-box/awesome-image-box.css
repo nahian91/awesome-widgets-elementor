@@ -1,10 +1,74 @@
-.awea-single-image-box {
-	overflow: hidden;
+.awea-image-box-body-wrapper {
+    padding: 80px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.awea-single-image-box img{
-  vertical-align: middle;
+.awea-image-box-card {
+    position: relative;
+    padding: 24px;
+    border-radius: 32px;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    overflow: hidden;
+    box-sizing: border-box;
 }
-.awea-single-image-box-content a, .awea-single-icon-box-content a{
-  display: block;
-  text-decoration: none;
+.awea-image-box-card:hover {
+    transform: translateY(-12px) scale(1.01);
+    box-shadow: 0 40px 60px -15px rgba(0, 0, 0, 0.08);
+}
+.awea-image-box-img-container {
+    width: 100%;
+    height: 260px;
+    border-radius: 24px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+}
+.awea-image-box-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    display: block;
+}
+.awea-image-box-card:hover .awea-image-box-img-container img {
+    transform: scale(1.08);
+}
+.awea-image-box-content h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.awea-image-box-content p {
+    line-height: 1.6;
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+}
+.awea-image-box-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: fit-content;
+}
+.awea-image-box-action-btn:hover {
+    gap: 12px;
+}
+.awea-image-box-sparkle {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(79, 70, 229, 0.08) 0%, transparent 70%);
+    pointer-events: none;
 }
