@@ -982,55 +982,71 @@ class Widget_Awesome_Post_Carousel extends Widget_Base {
     $query = new \WP_Query($args);
     ?>
     <div class="awea-post-carousel owl-carousel"
-        awea-post-items="<?php echo esc_attr($awea_post_carousel_slide_number); ?>"
-        awea-post-arrows="<?php echo esc_attr($awea_post_carousel_arrows); ?>"
-		awea-post-dots="<?php echo esc_attr($awea_post_carousel_dots); ?>"
-        awea-post-loops="<?php echo esc_attr($awea_post_carousel_loop); ?>"
-        awea-post-pause="<?php echo esc_attr($awea_post_carousel_pause); ?>"
-        awea-post-autoplay="<?php echo esc_attr($awea_post_carousel_autoplay); ?>"
-        awea-post-autoplay-speed="<?php echo esc_attr($awea_post_carousel_autoplay_speed); ?>"
-        awea-post-autoplay-animation="<?php echo esc_attr($awea_post_carousel_autoplay_animation); ?>"
-    >
-        <?php if ($query->have_posts()) : ?>
-            <?php while ($query->have_posts()) : $query->the_post(); ?>
-                <div class="awea-single-post-carousel">
-                    <?php
-                    $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full') ?: get_template_directory_uri() . '/assets/images/default-image.jpg';
-                    ?>
-                    <div class="awea-post-carousel-img" style="background-image: url('<?php echo esc_url($thumbnail_url); ?>');"></div>
-                    <div class="awea-post-carousel-content">
-                        <div class="awea-post-carousel-meta">
-                            <?php if ($awea_post_carousel_cat_visibility) : ?>
-                                <?php the_category(', '); ?>
-                            <?php endif; ?>
-                            <?php if ($awea_post_carousel_date_visibility) : ?>
-                                <a class="awea-post-carousel-date" href="<?php echo esc_url(get_the_permalink()); ?>"><?php echo esc_html(get_the_date('j M, Y')); ?></a>
-                            <?php endif; ?>
-                        </div>
-                        <div class="awea-post-carousel-title">
-                            <<?php echo esc_attr($awea_post_carousel_title_tag); ?> class="awea-post-carousel-title">
-                                <a href="<?php echo esc_url(get_the_permalink()); ?>"><?php the_title(); ?></a>
-                            </<?php echo esc_attr($awea_post_carousel_title_tag); ?>>
-                        </div>
-                        <?php if ($awea_post_carousel_excerpt_visibility) : ?>
-                            <div class="awea-post-carousel-excerpt">
-                                <?php echo wp_kses_post(wp_trim_words(get_the_excerpt(), 20, '...')); ?>
-                            </div>
-                        <?php endif; ?>
+    awea-post-items="<?php echo esc_attr($awea_post_carousel_slide_number); ?>"
+    awea-post-arrows="<?php echo esc_attr($awea_post_carousel_arrows); ?>"
+    awea-post-dots="<?php echo esc_attr($awea_post_carousel_dots); ?>"
+    awea-post-loops="<?php echo esc_attr($awea_post_carousel_loop); ?>"
+    awea-post-pause="<?php echo esc_attr($awea_post_carousel_pause); ?>"
+    awea-post-autoplay="<?php echo esc_attr($awea_post_carousel_autoplay); ?>"
+    awea-post-autoplay-speed="<?php echo esc_attr($awea_post_carousel_autoplay_speed); ?>"
+    awea-post-autoplay-animation="<?php echo esc_attr($awea_post_carousel_autoplay_animation); ?>"
+>
+    <?php if ($query->have_posts()) : ?>
+        <?php 
+        $post_counter = 1; 
+        while ($query->have_posts()) : $query->the_post(); 
+            // Calculate Reading Time
+            $content = get_post_field('post_content', get_the_ID());
+            $word_count = str_word_count(strip_tags($content));
+            $reading_time = ceil($word_count / 200); // Average 200 words per minute
+        ?>
+            <article class="awea-blog-card awea-single-post" style="animation-delay: <?php echo esc_attr($post_counter * 0.1); ?>s;">
+                <div class="awea-blog-img-wrap">
+                    <?php 
+                    $categories = get_the_category();
+                    if (!empty($categories)) : ?>
+                        <span class="awea-blog-badge"><?php echo esc_html($categories[0]->name); ?></span>
+                    <?php endif; ?>
 
-                        <?php if ($awea_post_carousel_btn_visibility) : ?>
-                            <a href="<?php echo esc_url(get_the_permalink()); ?>" class="awea-btn-line" aria-label="<?php the_title_attribute(); ?>">
-                                <?php echo esc_html($awea_post_carousel_btn_text); ?>
-                            </a>
-                        <?php endif; ?>
-                    </div>
+                    <?php if (has_post_thumbnail()) : ?>
+                        <?php the_post_thumbnail('full', ['class' => 'awea-blog-img']); ?>
+                    <?php else : ?>
+                        <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/default.jpg'); ?>" class="awea-blog-img" alt="<?php the_title_attribute(); ?>">
+                    <?php endif; ?>
                 </div>
-            <?php endwhile; ?>
-            <?php wp_reset_postdata(); ?>
-        <?php else : ?>
-            <p><?php esc_html_e('No posts found.', 'awesome-widgets-elementor'); ?></p>
-        <?php endif; ?>
-    </div>
+
+                <div class="awea-blog-body awea-post-content">
+                    <div class="awea-blog-meta">
+                        <span><?php echo esc_html(get_the_date('M d, Y')); ?></span>
+                        <span>•</span>
+                        <span><?php echo esc_html($reading_time); ?> MIN READ</span>
+                    </div>
+
+                    <<?php echo esc_attr($awea_post_carousel_title_tag); ?> class="awea-blog-title">
+                        <a href="<?php echo esc_url(get_the_permalink()); ?>"><?php the_title(); ?></a>
+                    </<?php echo esc_attr($awea_post_carousel_title_tag); ?>>
+
+                    <p class="awea-blog-desc">
+                        <?php echo wp_kses_post(wp_trim_words(get_the_excerpt(), 15, '...')); ?>
+                    </p>
+                </div>
+
+                <div class="awea-blog-footer">
+                    <a href="<?php echo esc_url(get_the_permalink()); ?>" class="awea-blog-link">
+                        <?php echo esc_html($awea_post_carousel_btn_text); ?> <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <span class="awea-blog-num"><?php echo esc_html(sprintf('%02d', $post_counter)); ?></span>
+                </div>
+            </article>
+        <?php 
+            $post_counter++;
+        endwhile; 
+        wp_reset_postdata(); 
+        ?>
+    <?php else : ?>
+        <p><?php esc_html_e('No posts found.', 'awesome-widgets-elementor'); ?></p>
+    <?php endif; ?>
+</div>
     <?php
 	}
 }

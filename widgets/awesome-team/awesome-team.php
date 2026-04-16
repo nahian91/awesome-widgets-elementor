@@ -222,11 +222,11 @@ class Widget_Awesome_Team extends Widget_Base {
                 'label' => esc_html__( 'Background', 'awesome-widgets-elementor' ),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .awea-single-team' => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} .awea-team-master-card' => 'background-color: {{VALUE}}',
                 ],
-                'global' => [
-                    'default' => Global_Colors::COLOR_PRIMARY,
-                ]
+                'global' => [ 
+                    'default' => Global_Colors::COLOR_PRIMARY 
+                ],
             ]
         );
 
@@ -234,7 +234,7 @@ class Widget_Awesome_Team extends Widget_Base {
             Group_Control_Border::get_type(),
             [
                 'name' => 'awea_single_team_border',
-                'selector' => '{{WRAPPER}} .awea-single-team',
+                'selector' => '{{WRAPPER}} .awea-team-master-card',
             ]
         );  
 
@@ -245,7 +245,7 @@ class Widget_Awesome_Team extends Widget_Base {
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', '%', 'em', 'rem'],
                 'selectors' => [
-                    '{{WRAPPER}} .awea-single-team' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .awea-team-master-card' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -257,7 +257,7 @@ class Widget_Awesome_Team extends Widget_Base {
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', '%', 'em', 'rem'],
                 'selectors' => [
-                    '{{WRAPPER}} .awea-single-team' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .awea-team-master-card' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -285,7 +285,7 @@ class Widget_Awesome_Team extends Widget_Base {
                 ],
                 'default' => [ 'unit' => '%', 'size' => 100 ],
                 'selectors' => [
-                    '{{WRAPPER}} .awea-single-team-image-wrap' => 'width: {{SIZE}}{{UNIT}}; margin: 0 auto;',
+                    '{{WRAPPER}} .awea-team-img-container' => 'width: {{SIZE}}{{UNIT}}; margin: 0 auto;',
                 ],
             ]
         );
@@ -294,7 +294,7 @@ class Widget_Awesome_Team extends Widget_Base {
             Group_Control_Border::get_type(),
             [
                 'name' => 'awea_single_team_image_box_border',
-                'selector' => '{{WRAPPER}} .awea-single-team-image-wrap img',
+                'selector' => '{{WRAPPER}} .awea-team-img-container img',
             ]
         );  
         
@@ -305,7 +305,7 @@ class Widget_Awesome_Team extends Widget_Base {
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', '%', 'em', 'rem'],
                 'selectors' => [
-                    '{{WRAPPER}} .awea-single-team-image-wrap, {{WRAPPER}} .awea-single-team-image-wrap img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .awea-team-img-container' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -321,6 +321,16 @@ class Widget_Awesome_Team extends Widget_Base {
             ]
         );
 
+        $this->add_control(
+            'awea_single_team_content_bg',
+            [
+                'label' => esc_html__( 'Background', 'awesome-widgets-elementor' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [ '{{WRAPPER}} .awea-team-info-panel' => 'background-color: {{VALUE}}' ],
+                'global' => [ 'default' => Global_Colors::COLOR_PRIMARY ]
+            ]
+        );
+
         $this->add_control( 'name_heading', [ 'label' => esc_html__( 'Name', 'awesome-widgets-elementor' ), 'type' => Controls_Manager::HEADING, 'separator' => 'before' ] );
 
         $this->add_control(
@@ -328,7 +338,7 @@ class Widget_Awesome_Team extends Widget_Base {
             [
                 'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
                 'type' => Controls_Manager::COLOR,
-                'selectors' => [ '{{WRAPPER}} .awea-single-team-member-name' => 'color: {{VALUE}}' ],
+                'selectors' => [ '{{WRAPPER}} .awea-team-name' => 'color: {{VALUE}}' ],
                 'global' => [ 'default' => Global_Colors::COLOR_SECONDARY ]
             ]
         );
@@ -337,7 +347,7 @@ class Widget_Awesome_Team extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name' => 'awea_single_team_name_typography',
-                'selector' => '{{WRAPPER}} .awea-single-team-member-name',
+                'selector' => '{{WRAPPER}} .awea-team-name',
                 'global' => [ 'default' => Global_Typography::TYPOGRAPHY_SECONDARY ]
             ]
         );
@@ -349,7 +359,7 @@ class Widget_Awesome_Team extends Widget_Base {
             [
                 'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
                 'type' => Controls_Manager::COLOR,
-                'selectors' => [ '{{WRAPPER}} .awea-single-team-member-role' => 'color: {{VALUE}}' ],
+                'selectors' => [ '{{WRAPPER}} .awea-team-role' => 'color: {{VALUE}}' ],
                 'global' => [ 'default' => Global_Colors::COLOR_TEXT ]
             ]
         );
@@ -358,7 +368,7 @@ class Widget_Awesome_Team extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name' => 'awea_single_team_desig_typography',
-                'selector' => '{{WRAPPER}} .awea-single-team-member-role',
+                'selector' => '{{WRAPPER}} .awea-team-role',
                 'global' => [ 'default' => Global_Typography::TYPOGRAPHY_TEXT ]
             ]
         );
@@ -384,7 +394,7 @@ class Widget_Awesome_Team extends Widget_Base {
                 'label' => esc_html__( 'Size', 'awesome-widgets-elementor' ),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [ 'px' => [ 'min' => 10, 'max' => 50 ] ],
-                'selectors' => [ '{{WRAPPER}} .awea-single-team-social-icon svg' => 'font-size: {{SIZE}}px; width: calc({{SIZE}}px + 20px); height: calc({{SIZE}}px + 20px);' ],
+                'selectors' => [ '{{WRAPPER}} .awea-team-social-btn i' => 'font-size: {{SIZE}}px; width: calc({{SIZE}}px + 20px); height: calc({{SIZE}}px + 20px);' ],
             ]
         );
 
@@ -393,7 +403,7 @@ class Widget_Awesome_Team extends Widget_Base {
             [
                 'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
                 'type' => Controls_Manager::COLOR,
-                'selectors' => [ '{{WRAPPER}} .awea-single-team-social-icon svg' => 'fill: {{VALUE}}' ],
+                'selectors' => [ '{{WRAPPER}} .awea-team-social-btn i' => 'color: {{VALUE}}' ],
             ]
         );
 
@@ -406,7 +416,7 @@ class Widget_Awesome_Team extends Widget_Base {
             [
                 'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
                 'type' => Controls_Manager::COLOR,
-                'selectors' => [ '{{WRAPPER}} .awea-single-team-social-icon svg:hover' => 'fill: {{VALUE}}; background-color: #0f172a;' ],
+                'selectors' => [ '{{WRAPPER}} .awea-team-social-btn i:hover' => 'color: {{VALUE}};' ],
             ]
         );
 
@@ -423,34 +433,30 @@ class Widget_Awesome_Team extends Widget_Base {
     protected function render() {
         $settings = $this->get_settings_for_display();
         $image_url = !empty($settings['awea_single_team_image_upload']['url']) ? $settings['awea_single_team_image_upload']['url'] : '';
+        $awea_single_team_name = $settings['awea_single_team_name'];
+        $awea_single_team_designation = $settings['awea_single_team_designation'];
+        $awea_single_team_socials_list = $settings['awea_single_team_socials_list'];
         ?>
+        <article class="awea-team-master-card">
+        <div class="awea-team-img-container">
+            <img src="<?php echo esc_url($image_url);?>" alt="<?php echo esc_attr($awea_single_team_name);?>">
+        </div>
 
-        <article class="awea-single-team">
-            <div class="awea-single-team-image-wrap">
-                <?php if ( $image_url ) : ?>
-                    <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($settings['awea_single_team_name']); ?>">
-                <?php endif; ?>
-                
-                <?php if ( !empty($settings['awea_single_team_socials_list']) ) : ?>
-                    <div class="awea-single-team-overlay">
-                        <?php foreach ( $settings['awea_single_team_socials_list'] as $item ) : 
-                            $link = $item['awea_single_team_socials_link'];
-                            $target = $link['is_external'] ? ' target="_blank"' : '';
-                            $nofollow = $link['nofollow'] ? ' rel="nofollow"' : '';
+        <div class="awea-team-info-panel">
+            <h3 class="awea-team-name"><?php echo esc_html($awea_single_team_name);?></h3>
+            <p class="awea-team-role"><?php echo esc_html($awea_single_team_designation);?></p>
+            
+            <div class="awea-team-social-dock">
+                <?php 
+                    foreach($awea_single_team_socials_list as $social) {
                         ?>
-                            <a href="<?php echo esc_url( $link['url'] ); ?>" class="awea-single-team-social-icon" <?php echo esc_attr( $target . $nofollow ); ?>>
-                                <?php Icons_Manager::render_icon( $item['awea_single_team_socials_icon'], [ 'aria-hidden' => 'true' ] ); ?>
-                            </a>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
+                        <a href="<?php echo $social['awea_single_team_socials_link']['url']; ?>" class="awea-team-social-btn" target="_blank"><i class="<?php echo $social['awea_single_team_socials_icon']['value']; ?>"></i></a>
+                        <?php 
+                    }
+                ?>
             </div>
-
-            <div class="awea-single-team-content">
-                <h3 class="awea-single-team-member-name"><?php echo esc_html($settings['awea_single_team_name']); ?></h3>
-                <p class="awea-single-team-member-role"><?php echo esc_html($settings['awea_single_team_designation']); ?></p>
-            </div>
-        </article>
+        </div>
+    </article>
         <?php
     }
 }

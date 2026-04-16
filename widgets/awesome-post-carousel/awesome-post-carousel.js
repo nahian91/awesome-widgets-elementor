@@ -12,7 +12,7 @@ jQuery(window).on('elementor/frontend/init', function () {
         var post_pause = post_carousel.attr('awea-post-pause') === 'yes';
         var post_autoplay = post_carousel.attr('awea-post-autoplay') === 'yes';
         var post_autoplay_speed = parseInt(post_carousel.attr('awea-post-autoplay-speed')) || 5000;
-        var post_autoplay_animation = parseInt(post_carousel.attr('awea-post-autoplay-animation')) || 600; // default slide animation speed
+        var post_autoplay_animation = parseInt(post_carousel.attr('awea-post-autoplay-animation')) || 600;
 
         // Initialize Owl Carousel
         post_carousel.owlCarousel({
@@ -31,27 +31,32 @@ jQuery(window).on('elementor/frontend/init', function () {
             ],
             responsive: {
                 0: { items: 1, nav: false },
-                600: { items: 2, nav: false },
-                1000: { items: post_items, nav: post_arrows, loop: post_loops }
+                768: { items: 2, nav: false },
+                1025: { items: post_items, nav: post_arrows, loop: post_loops }
             },
             onInitialized: equalizeHeights,
             onResized: equalizeHeights,
-            onChanged: equalizeHeights
+            onRefreshed: equalizeHeights
         });
 
         function equalizeHeights() {
-            var maxHeight = 0;
-            var items = post_carousel.find('.awea-single-post-carousel');
-            
-            items.css('height', 'auto'); // reset height first
-            items.each(function () {
-                var currentHeight = $(this).outerHeight();
-                if (currentHeight > maxHeight) {
-                    maxHeight = currentHeight;
+            setTimeout(function() {
+                var maxHeight = 0;
+                // Updated selector to match your new article class
+                var items = post_carousel.find('.awea-blog-card');
+                
+                items.css('height', 'auto'); 
+                items.each(function () {
+                    var currentHeight = $(this).outerHeight();
+                    if (currentHeight > maxHeight) {
+                        maxHeight = currentHeight;
+                    }
+                });
+                
+                if (maxHeight > 0) {
+                    items.css('height', maxHeight + 'px');
                 }
-            });
-            items.css('height', maxHeight + 'px');
+            }, 100);
         }
-
     });
 });

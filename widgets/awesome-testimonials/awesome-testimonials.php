@@ -230,7 +230,7 @@ class Widget_Awesome_Testimonials extends Widget_Base {
         $this->start_controls_section(
             'awea_testi_typo_section',
             [
-                'label' => esc_html__( 'Typography', 'awesome-widgets-elementor' ),
+                'label' => esc_html__( 'Content', 'awesome-widgets-elementor' ),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -320,6 +320,37 @@ class Widget_Awesome_Testimonials extends Widget_Base {
                 'default'   => '#64748b',
                 'selectors' => [
                     '{{WRAPPER}} .awea-testimonial-meta cite' => 'color: {{VALUE}}',
+                ],
+            ]
+        );
+
+        // --- Designation ---
+        $this->add_control(
+            'awea_testi_head_img',
+            [
+                'label'     => esc_html__( 'Image', 'awesome-widgets-elementor' ),
+                'type'      => \Elementor\Controls_Manager::HEADING,
+                'separator' => 'before',
+            ]
+        );
+
+        $this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name' => 'awea_testi_head_img_border',
+				'selector' => '{{WRAPPER}} .awea-testimonial-avatar',
+			]
+		);
+
+        $this->add_control(
+            'awea_testi_head_img_radius',
+            [
+                'label' => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', '%', 'em', 'rem'],
+                'default' => [ 'top' => '0', 'right' => '0', 'bottom' => '0', 'left' => '0', 'unit' => 'px' ],
+                'selectors' => [
+                    '{{WRAPPER}} .awea-testimonial-avatar' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );

@@ -5,17 +5,12 @@
     gap: 80px;
     align-items: center;
     position: relative;
-    /* Uses Elementor's default Body Font Family */
-    font-family: var(--e-global-typography-text-font-family, 'Inter', sans-serif);
 }
-
-/* --- LEFT SIDE: THE ART COMPOSITION --- */
 .awea-about-visual-container {
     position: relative;
     display: flex;
     align-items: center;
 }
-
 .awea-about-image-frame {
     width: 90%;
     height: 650px;
@@ -24,18 +19,15 @@
     box-shadow: 0 40px 80px -20px rgba(6, 17, 60, 0.15);
     position: relative;
 }
-
 .awea-about-image-frame img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 .awea-about-visual-container:hover .awea-about-image-frame img {
     transform: scale(1.08);
 }
-
 .awea-about-floating-circle {
     position: absolute;
     width: 380px;
@@ -49,18 +41,14 @@
     z-index: 10;
     animation: awea-about-subtleFloat 6s infinite ease-in-out;
 }
-
 @keyframes awea-about-subtleFloat {
     0%, 100% { transform: translateY(0) rotate(0); }
     50% { transform: translateY(-15px) rotate(1deg); }
 }
-
 .awea-about-ribbon {
     position: absolute;
     bottom: 60px;
     left: -30px;
-    background: var(--e-global-color-accent, #ff5e33);
-    color: #ffffff;
     padding: 24px 45px;
     font-weight: 800;
     font-size: 1.4rem;
@@ -68,87 +56,61 @@
     border-radius: 4px;
     box-shadow: 0 15px 35px rgba(255, 94, 51, 0.4);
 }
-
 .awea-about-ribbon::before {
     content: '';
     position: absolute;
     top: -12px;
     left: 0;
-    /* Slight darkening effect for the ribbon fold */
     border-right: 12px solid rgba(0,0,0,0.2); 
     border-top: 12px solid transparent;
 }
-
-/* --- RIGHT SIDE: CONTENT --- */
 .awea-about-label-group {
     display: flex;
     align-items: center;
     gap: 15px;
-    color: var(--e-global-color-accent, #ff5e33);
     font-weight: 800;
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 3px;
     margin-bottom: 25px;
 }
-
 .awea-about-label-line { 
     width: 40px; 
     height: 3px; 
-    background: var(--e-global-color-accent, #ff5e33); 
     border-radius: 10px; 
 }
-
 .awea-about-heading {
-    font-family: var(--e-global-typography-primary-font-family, inherit);
     font-size: 4rem;
-    color: var(--e-global-color-primary, #06113c);
     line-height: 1.1;
-    font-weight: var(--e-global-typography-primary-font-weight, 800);
     margin-bottom: 30px;
-    letter-spacing: -0.03em;
 }
-
 .awea-about-main-desc {
-    font-family: var(--e-global-typography-text-font-family, inherit);
     font-size: 1.15rem;
-    color: var(--e-global-color-text, #64748b);
     line-height: 1.8;
     margin-bottom: 40px;
-    border-left: 4px solid var(--e-global-color-secondary, #eee);
-    padding-left: 25px;
 }
-
 .awea-about-feature-box {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     margin-bottom: 50px;
 }
-
 .awea-about-check-item {
     display: flex;
     align-items: center;
     gap: 12px;
     font-weight: 700;
-    color: var(--e-global-color-primary, #06113c);
     transition: 0.3s;
 }
-
-.awea-about-check-item i { 
-    color: var(--e-global-color-accent, #ff5e33); 
-    font-size: 1.2rem; 
+.awea-about-check-item svg {
+	width: 20px;
 }
-
 .awea-about-cta-wrapper {
     display: flex;
     align-items: center;
     gap: 40px;
 }
-
 .awea-about-prime-btn {
-    background: var(--e-global-color-accent, #ff5e33);
-    color: #ffffff;
     padding: 20px 45px;
     border-radius: 100px;
     text-decoration: none;
@@ -159,30 +121,22 @@
     box-shadow: 0 15px 30px rgba(255, 94, 51, 0.3);
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 .awea-about-prime-btn:hover {
     transform: scale(1.05) translateY(-3px);
-    background: var(--e-global-color-secondary, #06113c);
-    color: #fff;
 }
-
 .awea-about-phone-call {
     display: flex;
     align-items: center;
     gap: 20px;
     text-decoration: none;
 }
-
 .awea-about-icon-circle {
     width: 60px; height: 60px;
-    background: var(--e-global-color-primary, #06113c);
-    color: #ffffff;
     border-radius: 50%;
     display: grid; place-items: center;
     font-size: 1.3rem;
     transition: 0.3s;
 }
-
 @media (max-width: 1100px) {
     .awea-about-master-grid { grid-template-columns: 1fr; padding-bottom: 50px; }
     .awea-about-image-frame { height: 450px; width: 100%; border-radius: 30px; }
