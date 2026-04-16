@@ -7,6 +7,7 @@
     border: 2px solid #ff601f;
     position: relative;
     width: 100%;
+    padding: 20px;
 }
 .awea-pricing-card:hover {
     transform: translateY(-16px);
@@ -20,9 +21,9 @@
     pointer-events: none;
 }
 .awea-pricing-card-header {
-    padding: 55px 40px;
     text-align: center;
     border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 25px;
 }
 .awea-pricing-plan-tag {
     padding: 8px 18px;
@@ -52,7 +53,6 @@
     font-size: 1rem; 
 }
 .awea-pricing-card-body {
-    padding: 45px 40px;
     flex-grow: 1;
 }
 .awea-pricing-feature-list { 

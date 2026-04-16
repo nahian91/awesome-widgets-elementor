@@ -150,27 +150,20 @@ class Widget_Awesome_Price extends Widget_Base {
                 'label' => 'Background', 
                 'type' => Controls_Manager::COLOR, '
                 separator' => 'before', 
-                'selectors' => [ '{{WRAPPER}} .desc' => 'color: {{VALUE}};' ] 
+                'selectors' => [ '{{WRAPPER}} .awea-pricing-card' => 'background-color: {{VALUE}};' ] 
             ] 
-        );
-
-        $this->add_responsive_control( 'awea_price_style_card_padding', 
-            [
-                'label' => 'Padding', 
-                'type' => Controls_Manager::DIMENSIONS, 'selectors' => [ '{{WRAPPER}} .quantum-card' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ]
-            ]
         );
 
         $this->add_responsive_control( 'awea_price_style_card_radius', 
             [
                 'label' => 'Border Radius', 
-                'type' => Controls_Manager::DIMENSIONS, 'selectors' => [ '{{WRAPPER}} .quantum-card' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ]
+                'type' => Controls_Manager::DIMENSIONS, 'selectors' => [ '{{WRAPPER}} .awea-pricing-card' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ]
             ]
         );
 
         $this->add_group_control( Group_Control_Border::get_type(), 
             [ 
-                'name' => 'awea_price_style_card_border', 'selector' => '{{WRAPPER}} .quantum-card' 
+                'name' => 'awea_price_style_card_border', 'selector' => '{{WRAPPER}} .awea-pricing-card' 
             ] 
         );
 
@@ -188,7 +181,7 @@ class Widget_Awesome_Price extends Widget_Base {
             [ 
                 'label' => 'Color', 
                 'type' => Controls_Manager::COLOR, 
-                'selectors' => [ '{{WRAPPER}} .tier-label' => 'color: {{VALUE}};' ] 
+                'selectors' => [ '{{WRAPPER}} .awea-pricing-plan-tag' => 'color: {{VALUE}};' ] 
             ] 
         );
 
@@ -196,14 +189,14 @@ class Widget_Awesome_Price extends Widget_Base {
             [ 
                 'label' => 'Background', 
                 'type' => Controls_Manager::COLOR, 
-                'selectors' => [ '{{WRAPPER}} .tier-label' => 'color: {{VALUE}};' ] 
+                'selectors' => [ '{{WRAPPER}} .awea-pricing-plan-tag' => 'background-color: {{VALUE}};' ] 
             ] 
         );
 
         $this->add_group_control( Group_Control_Typography::get_type(), 
             [ 
                 'name' => 'awea_price_header_typo', 
-                'selector' => '{{WRAPPER}} .desc' 
+                'selector' => '{{WRAPPER}} .awea-pricing-plan-tag' 
             ] 
         );
 
@@ -217,89 +210,207 @@ class Widget_Awesome_Price extends Widget_Base {
             ] 
         );
 
-        $this->add_control( 'awea_price_bg', 
-            [ 
-                'label' => 'Background', 
-                'type' => Controls_Manager::COLOR, 
-                'selectors' => [ '{{WRAPPER}} .price-wrap h2' => 'background-color: {{VALUE}};' ] 
+        $this->add_control(
+			'awea_price_symbol_options',
+			[
+				'label' => esc_html__( 'Symbol', 'awesome-widgets-elementor' ),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+       
+        $this->add_control( 'awea_price_symbol_color', 
+        [ 
+            'label' => 'Color', 
+            'type' => Controls_Manager::COLOR, 
+            'selectors' => [ '{{WRAPPER}} .awea-pricing-currency' => 'color: {{VALUE}};' ] 
             ] 
         );
 
         $this->add_control(
-			'more_options',
+			'awea_price_options',
 			[
-				'label' => esc_html__( 'Additional Options', 'textdomain' ),
-				'type' => \Elementor\Controls_Manager::HEADING,
-				'separator' => 'before',
-			]
-		);
-        $this->add_group_control( Group_Control_Typography::get_type(), [ 'name' => 'p_t', 'selector' => '{{WRAPPER}} .price-wrap h2' ] );
-
-        $this->add_control(
-			'more_options',
-			[
-				'label' => esc_html__( 'Additional Options', 'textdomain' ),
+				'label' => esc_html__( 'Price', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
 		);
         
-        $this->add_control( 'curr_color', [ 'label' => 'Currency Color', 'type' => Controls_Manager::COLOR, 'selectors' => [ '{{WRAPPER}} .price-wrap span' => 'color: {{VALUE}};' ] ] );
-        $this->add_group_control( Group_Control_Typography::get_type(), [ 'name' => 'curr_t', 'selector' => '{{WRAPPER}} .price-wrap span' ] );
+        $this->add_control( 'awea_price_color', 
+        [ 
+            'label' => 'Color', 
+            'type' => Controls_Manager::COLOR, 
+            'selectors' => [ '{{WRAPPER}} .awea-pricing-amount' => 'color: {{VALUE}};' ] 
+            ] 
+        );
+
+        $this->add_group_control( Group_Control_Typography::get_type(), 
+            [ 
+                'name' => 'awea_price_typo', 
+                'selector' => '{{WRAPPER}} .awea-pricing-amount' 
+            ] 
+        );
 
         $this->add_control(
-			'more_options',
+			'awea_price_period_options',
 			[
-				'label' => esc_html__( 'Additional Options', 'textdomain' ),
+				'label' => esc_html__( 'Period', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
 		);
+
+        $this->add_control( 'awea_price_period_color', 
+        [ 
+            'label' => 'Color', 
+            'type' => Controls_Manager::COLOR, 
+            'selectors' => [ '{{WRAPPER}} .awea-pricing-cycle' => 'color: {{VALUE}};' ] 
+            ] 
+        );
 
         $this->end_controls_section();
 
         // --- 4. FEATURES STYLE ---
-        $this->start_controls_section( 'style_features_list', [ 'label' => 'Features Styling', 'tab' => Controls_Manager::TAB_STYLE ] );
+        $this->start_controls_section(
+            'awea_price_features_list',
+            [
+                'label' => __( 'Features', 'awesome-widgets-elementor' ),
+                'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
 
-        $this->add_control( 'f_icon_color', [ 'label' => 'Icon Color', 'type' => Controls_Manager::COLOR, 'selectors' => [ '{{WRAPPER}} .icon-box i' => 'color: {{VALUE}};' ] ] );
-        $this->add_control( 'f_icon_bg', [ 'label' => 'Icon BG', 'type' => Controls_Manager::COLOR, 'selectors' => [ '{{WRAPPER}} .icon-box' => 'background: {{VALUE}};' ] ] );
-        
-        $this->add_control( 'f_text_color', [ 'label' => 'Text Color', 'type' => Controls_Manager::COLOR, 'separator' => 'before', 'selectors' => [ '{{WRAPPER}} .feature-item' => 'color: {{VALUE}};' ] ] );
-        $this->add_group_control( Group_Control_Typography::get_type(), [ 'name' => 'f_text_t', 'selector' => '{{WRAPPER}} .feature-item' ] );
-        $this->add_responsive_control( 'f_item_spacing', [ 'label' => 'Spacing', 'type' => Controls_Manager::SLIDER, 'selectors' => [ '{{WRAPPER}} .feature-item' => 'margin-bottom: {{SIZE}}{{UNIT}};' ] ] );
+        $this->add_control(
+            'awea_price_features_icon_color',
+            [
+                'label'     => __( 'Icon Color', 'awesome-widgets-elementor' ),
+                'type'      => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .awea-pricing-feature-item i' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'awea_price_features_text_color',
+            [
+                'label'     => __( 'Text Color', 'awesome-widgets-elementor' ),
+                'type'      => \Elementor\Controls_Manager::COLOR,
+                'separator' => 'before',
+                'selectors' => [
+                    '{{WRAPPER}} .awea-pricing-feature-item' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name'     => 'awea_price_features_text_typo',
+                'selector' => '{{WRAPPER}} .awea-pricing-feature-item',
+            ]
+        );
 
         $this->end_controls_section();
 
         // --- 5. BUTTON STYLE ---
-        $this->start_controls_section( 'style_button_pro', [ 'label' => 'Button Style', 'tab' => Controls_Manager::TAB_STYLE ] );
-
-        $this->add_responsive_control( 'btn_align', [
-            'label' => 'Alignment',
-            'type' => Controls_Manager::CHOOSE,
-            'options' => [
-                'left' => [ 'title' => 'Left', 'icon' => 'eicon-text-align-left' ],
-                'center' => [ 'title' => 'Center', 'icon' => 'eicon-text-align-center' ],
-                'right' => [ 'title' => 'Right', 'icon' => 'eicon-text-align-right' ],
-                'justify' => [ 'title' => 'Full Width', 'icon' => 'eicon-text-align-justify' ],
-            ],
-            'selectors' => [ 
-                '{{WRAPPER}} .btn-container' => 'text-align: {{VALUE}};',
-                '{{WRAPPER}} .action-btn' => 'display: {{VALUE}} === "justify" ? "block" : "inline-block"; width: {{VALUE}} === "justify" ? "100%" : "auto";',
-            ],
-        ]);
+        $this->start_controls_section(
+            'awea_price_button_style',
+            [
+                'label' => __( 'Button', 'awesome-widgets-elementor' ),
+                'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
 
         $this->start_controls_tabs( 'btn_tabs' );
-        $this->start_controls_tab( 'btn_n', [ 'label' => 'Normal' ] );
-        $this->add_control( 'btn_bg_n', [ 'label' => 'Background', 'type' => Controls_Manager::COLOR, 'selectors' => [ '{{WRAPPER}} .action-btn' => 'background: {{VALUE}};' ] ] );
-        $this->add_control( 'btn_c_n', [ 'label' => 'Text Color', 'type' => Controls_Manager::COLOR, 'selectors' => [ '{{WRAPPER}} .action-btn' => 'color: {{VALUE}};' ] ] );
+
+        // Normal Tab
+        $this->start_controls_tab( 'awea_price_btn_normal', 
+            [ 
+                'label' => __( 'Normal', 'awesome-widgets-elementor' ) 
+            ] 
+        );
+
+        $this->add_control(
+            'awea_price_btn_normal_color',
+            [
+                'label'     => __( 'Color', 'awesome-widgets-elementor' ),
+                'type'      => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [ '{{WRAPPER}} .awea-pricing-btn-cta' => 'color: {{VALUE}};' ],
+            ]
+        );
+            
+        $this->add_control(
+            'awea_price_btn_normal_bg',
+            [
+                'label'     => __( 'Background', 'awesome-widgets-elementor' ),
+                'type'      => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [ '{{WRAPPER}} .awea-pricing-btn-cta' => 'background-color: {{VALUE}};' ],
+            ]
+        );
+
+        $this->add_group_control(
+        \Elementor\Group_Control_Typography::get_type(),
+        [
+            'name'     => 'awea_price_btn_normal_typo',
+            'selector' => '{{WRAPPER}} .awea-pricing-btn-cta',
+        ]
+        );
+
+        $this->add_control(
+            'awea_price_btn_normal_padding',
+            [
+                'label'      => __( 'Padding', 'awesome-widgets-elementor' ),
+                'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', 'em', '%' ],
+                'selectors'  => [
+                    '{{WRAPPER}} .awea-pricing-btn-cta' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'awea_price_btn_normal_radius',
+            [
+                'label'      => __( 'Border Radius', 'awesome-widgets-elementor' ),
+                'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', 'em', '%' ],
+                'selectors'  => [
+                    '{{WRAPPER}} .awea-pricing-btn-cta' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
         $this->end_controls_tab();
-        $this->start_controls_tab( 'btn_h', [ 'label' => 'Hover' ] );
-        $this->add_control( 'btn_bg_h', [ 'label' => 'Background Hover', 'type' => Controls_Manager::COLOR, 'selectors' => [ '{{WRAPPER}} .action-btn:hover' => 'background: {{VALUE}};' ] ] );
+
+        // Hover Tab
+        $this->start_controls_tab( 'awea_price_btn_hover_style', 
+            [ 
+                'label' => __( 'Hover', 'awesome-widgets-elementor' ) 
+            ] 
+        );
+            
+        $this->add_control(
+            'awea_price_btn_hover_color',
+            [
+                'label'     => __( 'Color', 'awesome-widgets-elementor' ),
+                'type'      => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [ '{{WRAPPER}} .awea-pricing-btn-cta:hover' => 'color: {{VALUE}};' ],
+            ]
+        );
+
+        $this->add_control(
+            'awea_price_btn_hover_bg',
+            [
+                'label'     => __( 'Background', 'awesome-widgets-elementor' ),
+                'type'      => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [ '{{WRAPPER}} .awea-pricing-btn-cta:hover' => 'background-color: {{VALUE}};' ],
+            ]
+        );
+
         $this->end_controls_tab();
+
         $this->end_controls_tabs();
 
-        $this->add_group_control( Group_Control_Typography::get_type(), [ 'name' => 'btn_t', 'selector' => '{{WRAPPER}} .action-btn' ] );
-        $this->add_responsive_control( 'btn_p', [ 'label' => 'Padding', 'type' => Controls_Manager::DIMENSIONS, 'selectors' => [ '{{WRAPPER}} .action-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ] ] );
 
         $this->end_controls_section();
     }

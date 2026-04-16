@@ -185,7 +185,7 @@ class Widget_Awesome_About extends Widget_Base {
         $this->add_control(
 			'awea_about_style_images1_options',
 			[
-				'label' => esc_html__( 'Main Image', 'textdomain' ),
+				'label' => esc_html__( 'Main Image', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -211,7 +211,7 @@ class Widget_Awesome_About extends Widget_Base {
         $this->add_control(
 			'awea_about_style_images2_options',
 			[
-				'label' => esc_html__( 'Image 2', 'textdomain' ),
+				'label' => esc_html__( 'Image 2', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -280,7 +280,7 @@ class Widget_Awesome_About extends Widget_Base {
         $this->add_control(
 			'awea_about_divider_heading',
 			[
-				'label' => esc_html__( 'Divider', 'textdomain' ),
+				'label' => esc_html__( 'Divider', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -298,7 +298,7 @@ class Widget_Awesome_About extends Widget_Base {
         $this->add_control(
 			'awea_about_subheading_heading',
 			[
-				'label' => esc_html__( 'Subheading', 'textdomain' ),
+				'label' => esc_html__( 'Subheading', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -323,7 +323,7 @@ class Widget_Awesome_About extends Widget_Base {
         $this->add_control(
 			'awea_about_heading_options',
 			[
-				'label' => esc_html__( 'Heading', 'textdomain' ),
+				'label' => esc_html__( 'Heading', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -348,7 +348,7 @@ class Widget_Awesome_About extends Widget_Base {
         $this->add_control(
 			'awea_about_desc_options',
 			[
-				'label' => esc_html__( 'Description', 'textdomain' ),
+				'label' => esc_html__( 'Description', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -417,7 +417,7 @@ class Widget_Awesome_About extends Widget_Base {
         $this->add_control(
 			'awea_about_style_icon',
 			[
-				'label' => esc_html__( 'Icon', 'textdomain' ),
+				'label' => esc_html__( 'Icon', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -453,7 +453,7 @@ class Widget_Awesome_About extends Widget_Base {
         $this->add_control(
 			'awea_about_style_text',
 			[
-				'label' => esc_html__( 'Text', 'textdomain' ),
+				'label' => esc_html__( 'Text', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]

@@ -114,17 +114,17 @@ class Widget_Awesome_Icon_Box extends Widget_Base {
         $this->add_control(
 			'awea_icon_box_button_title',
 			[
-				'label' => esc_html__( 'Title', 'textdomain' ),
+				'label' => esc_html__( 'Title', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'Default title', 'textdomain' ),
-				'placeholder' => esc_html__( 'Type your title here', 'textdomain' ),
+				'default' => esc_html__( 'Default title', 'awesome-widgets-elementor' ),
+				'placeholder' => esc_html__( 'Type your title here', 'awesome-widgets-elementor' ),
 			]
 		);
 
         $this->add_control(
 			'awea_icon_box_button_link',
 			[
-				'label' => esc_html__( 'Link', 'textdomain' ),
+				'label' => esc_html__( 'Link', 'awesome-widgets-elementor' ),
 				'type' => \Elementor\Controls_Manager::URL,
 				'options' => [ 'url', 'is_external', 'nofollow' ],
 				'default' => [
