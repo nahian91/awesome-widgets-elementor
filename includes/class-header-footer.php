@@ -161,9 +161,10 @@ class AWEA_Header_Footer {
 			case 'awea_type':
 				$type  = get_post_meta( $post_id, '_awea_hf_type', true );
 				$type  = ! empty( $type ) ? ucfirst( $type ) : esc_html__( 'Header', 'awesome-widgets-elementor' );
-				$color = 'Header' === $type ? '#4338ca' : '#0284c7';
-				$bg    = 'Header' === $type ? '#e0e7ff' : '#e0f2fe';
-				echo '<span style="display:inline-block; padding:3px 10px; border-radius:12px; font-weight:700; font-size:11px; background:' . esc_attr( $bg ) . '; color:' . esc_attr( $color ) . ';">' . esc_html( $type ) . '</span>';
+				$color = 'Header' === $type ? '#4f46e5' : '#0284c7';
+				$bg    = 'Header' === $type ? 'rgba(79, 70, 229, 0.08)' : 'rgba(2, 132, 199, 0.08)';
+				$border = 'Header' === $type ? 'rgba(79, 70, 229, 0.2)' : 'rgba(2, 132, 199, 0.2)';
+				echo '<span style="display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:100px; font-weight:700; font-size:11px; letter-spacing:0.04em; text-transform:uppercase; background:' . esc_attr( $bg ) . '; color:' . esc_attr( $color ) . '; border:1px solid ' . esc_attr( $border ) . ';">' . esc_html( $type ) . '</span>';
 				break;
 
 			case 'awea_conditions':
@@ -176,21 +177,21 @@ class AWEA_Header_Footer {
 					'archive'       => esc_html__( 'All Archives', 'awesome-widgets-elementor' ),
 					'not_found_404' => esc_html__( '404 Page', 'awesome-widgets-elementor' ),
 				);
-				echo esc_html( isset( $labels[ $cond ] ) ? $labels[ $cond ] : $labels['entire_site'] );
+				echo '<span style="display:inline-block; background:#f1f5f9; color:#334155; border:1px solid #e2e8f0; padding:2px 8px; border-radius:6px; font-size:12px; font-weight:600;">' . esc_html( isset( $labels[ $cond ] ) ? $labels[ $cond ] : $labels['entire_site'] ) . '</span>';
 				break;
 
 			case 'awea_roles':
 				$roles       = get_post_meta( $post_id, '_awea_hf_visibility', true );
 				$role_labels = array(
-					'all'        => esc_html__( 'All Users', 'awesome-widgets-elementor' ),
+					'all'        => esc_html__( 'Public', 'awesome-widgets-elementor' ),
 					'logged_in'  => esc_html__( 'Logged In', 'awesome-widgets-elementor' ),
 					'logged_out' => esc_html__( 'Logged Out', 'awesome-widgets-elementor' ),
 				);
-				echo esc_html( isset( $role_labels[ $roles ] ) ? $role_labels[ $roles ] : $role_labels['all'] );
+				echo '<span style="font-size:12px; color:#64748b; font-weight:500;">' . esc_html( isset( $role_labels[ $roles ] ) ? $role_labels[ $roles ] : $role_labels['all'] ) . '</span>';
 				break;
 
 			case 'awea_shortcode':
-				echo '<code style="background:#f1f5f9; padding:4px 8px; border-radius:6px; user-select:all;">[awea_template id="' . esc_attr( $post_id ) . '"]</code>';
+				echo '<code style="background:#f8fafc; border:1px solid #e2e8f0; padding:3px 8px; border-radius:6px; font-size:11px; font-family:ui-monospace, monospace; color:#475569; user-select:all;">[awea_template id="' . esc_attr( $post_id ) . '"]</code>';
 				break;
 		}
 	}
@@ -438,7 +439,7 @@ class AWEA_Header_Footer {
 	 */
 	public function render_header() {
 		if ( wp_is_block_theme() ) {
-			return; // Managed cleanly via filter_block_template_parts
+			return;
 		}
 
 		echo $this->get_header_markup(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -449,7 +450,7 @@ class AWEA_Header_Footer {
 	 */
 	public function render_footer() {
 		if ( wp_is_block_theme() ) {
-			return; // Managed cleanly via filter_block_template_parts
+			return;
 		}
 
 		echo $this->get_footer_markup(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -539,7 +540,6 @@ class AWEA_Header_Footer {
 			}
 		';
 
-		// Hide classic theme headers/footers when an AWEA template is active
 		if ( ! wp_is_block_theme() ) {
 			if ( self::$active_header_id ) {
 				$css .= '
@@ -609,7 +609,7 @@ class AWEA_Header_Footer {
 	}
 
 	/**
-	 * Admin Quick-Create Template Modal.
+	 * Modern Studio Quick-Create Modal with Raycast/Linear UI & Micro-Interactions.
 	 */
 	public function render_admin_quick_create_modal() {
 		$screen = get_current_screen();
@@ -624,53 +624,84 @@ class AWEA_Header_Footer {
 			return;
 		}
 		?>
-		<!-- AWEA Quick-Create Template Modal -->
-		<div id="awea-quick-create-modal" class="awea-modal-overlay" style="display:none;">
-			<div class="awea-modal-container">
-				<div class="awea-modal-header">
-					<div class="awea-modal-title-wrap">
-						<span class="awea-modal-tag"><?php esc_html_e( 'Canvas Studio', 'awesome-widgets-elementor' ); ?></span>
-						<h2><?php esc_html_e( 'Create New Template', 'awesome-widgets-elementor' ); ?></h2>
-						<p><?php esc_html_e( 'Configure layout architecture and launch directly into Elementor Canvas.', 'awesome-widgets-elementor' ); ?></p>
+		<!-- AWEA Modern Studio Quick-Create Modal -->
+		<div id="awea-quick-create-modal" class="awea-studio-backdrop" style="display:none;" role="dialog" aria-modal="true">
+			<div class="awea-studio-card">
+				
+				<!-- Specular Header -->
+				<div class="awea-studio-header">
+					<div class="awea-studio-pill">
+						<span class="awea-beacon-glow"></span>
+						<?php esc_html_e( 'Canvas Studio &bull; Builder Engine', 'awesome-widgets-elementor' ); ?>
 					</div>
-					<button type="button" class="awea-modal-close-trigger" onclick="aweaCloseQuickModal()">&times;</button>
+					<button type="button" class="awea-studio-close-btn" onclick="aweaCloseQuickModal()" aria-label="<?php esc_attr_e( 'Close', 'awesome-widgets-elementor' ); ?>">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+					</button>
 				</div>
 
-				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+				<div class="awea-studio-intro">
+					<h2><?php esc_html_e( 'Create New Template', 'awesome-widgets-elementor' ); ?></h2>
+					<p><?php esc_html_e( 'Configure layout architecture and launch directly into Elementor Canvas with zero bloat.', 'awesome-widgets-elementor' ); ?></p>
+				</div>
+
+				<form method="post" id="awea_quick_modal_form" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 					<?php wp_nonce_field( 'awea_quick_create_action', 'awea_quick_create_nonce' ); ?>
 					<input type="hidden" name="action" value="awea_quick_create_template" />
 
-					<!-- Template Title -->
-					<div class="awea-modal-field">
-						<label for="awea_new_title"><?php esc_html_e( 'Template Name', 'awesome-widgets-elementor' ); ?> <span style="color:#ef4444;">*</span></label>
-						<input type="text" id="awea_new_title" name="awea_new_title" required placeholder="<?php esc_attr_e( 'e.g. Primary Header Navigation', 'awesome-widgets-elementor' ); ?>" autocomplete="off" />
-					</div>
+					<!-- Segmented Visual Type Picker -->
+					<div class="awea-input-block">
+						<label class="awea-label-meta"><?php esc_html_e( 'Template Type', 'awesome-widgets-elementor' ); ?></label>
+						<div class="awea-segmented-grid">
+							
+							<!-- Header Option -->
+							<label class="awea-segment-item">
+								<input type="radio" name="awea_new_type" value="header" checked onchange="aweaTypeSelected(this.value)" />
+								<div class="awea-segment-box">
+									<div class="awea-segment-icon">
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+									</div>
+									<div class="awea-segment-text">
+										<strong><?php esc_html_e( 'Header Layout', 'awesome-widgets-elementor' ); ?></strong>
+										<span><?php esc_html_e( 'Sticky navigation & hero ribbons', 'awesome-widgets-elementor' ); ?></span>
+									</div>
+									<div class="awea-radio-indicator"></div>
+								</div>
+							</label>
 
-					<!-- Visual Type Selection Cards -->
-					<div class="awea-modal-field">
-						<label><?php esc_html_e( 'Select Template Type', 'awesome-widgets-elementor' ); ?></label>
-						<div class="awea-type-selector">
-							<label class="awea-type-option">
-								<input type="radio" name="awea_new_type" value="header" checked onchange="aweaModalTypeChange(this.value)" />
-								<span class="awea-type-card">
-									<span class="dashicons dashicons-heading"></span>
-									<strong><?php esc_html_e( 'Header', 'awesome-widgets-elementor' ); ?></strong>
-								</span>
+							<!-- Footer Option -->
+							<label class="awea-segment-item">
+								<input type="radio" name="awea_new_type" value="footer" onchange="aweaTypeSelected(this.value)" />
+								<div class="awea-segment-box">
+									<div class="awea-segment-icon">
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="15" x2="21" y2="15"></line></svg>
+									</div>
+									<div class="awea-segment-text">
+										<strong><?php esc_html_e( 'Footer Layout', 'awesome-widgets-elementor' ); ?></strong>
+										<span><?php esc_html_e( 'Columns, sitemaps & copyright', 'awesome-widgets-elementor' ); ?></span>
+									</div>
+									<div class="awea-radio-indicator"></div>
+								</div>
 							</label>
-							<label class="awea-type-option">
-								<input type="radio" name="awea_new_type" value="footer" onchange="aweaModalTypeChange(this.value)" />
-								<span class="awea-type-card">
-									<span class="dashicons dashicons-embed-generic"></span>
-									<strong><?php esc_html_e( 'Footer', 'awesome-widgets-elementor' ); ?></strong>
-								</span>
-							</label>
+
 						</div>
 					</div>
 
-					<!-- Target Condition & Visibility Row -->
-					<div class="awea-modal-grid-2">
-						<div class="awea-modal-field">
-							<label for="awea_new_condition"><?php esc_html_e( 'Display Condition', 'awesome-widgets-elementor' ); ?></label>
+					<!-- Template Title Input -->
+					<div class="awea-input-block">
+						<label class="awea-label-meta" for="awea_new_title">
+							<?php esc_html_e( 'Template Name', 'awesome-widgets-elementor' ); ?>
+							<span class="awea-req-star">*</span>
+						</label>
+						<div class="awea-input-wrapper">
+							<input type="text" id="awea_new_title" name="awea_new_title" required placeholder="<?php esc_attr_e( 'e.g. Master Site Header 2026', 'awesome-widgets-elementor' ); ?>" autocomplete="off" />
+							<span class="awea-kbd-hint"><kbd>Tab</kbd></span>
+						</div>
+					</div>
+
+					<!-- Condition & Visibility Row -->
+					<div class="awea-dual-grid">
+						<div class="awea-input-block">
+							<label class="awea-label-meta" for="awea_new_condition"><?php esc_html_e( 'Target Rule', 'awesome-widgets-elementor' ); ?></label>
 							<select id="awea_new_condition" name="awea_new_condition">
 								<option value="entire_site"><?php esc_html_e( 'Entire Website', 'awesome-widgets-elementor' ); ?></option>
 								<option value="front_page"><?php esc_html_e( 'Homepage Only', 'awesome-widgets-elementor' ); ?></option>
@@ -681,269 +712,479 @@ class AWEA_Header_Footer {
 							</select>
 						</div>
 
-						<div class="awea-modal-field">
-							<label for="awea_new_visibility"><?php esc_html_e( 'User Visibility', 'awesome-widgets-elementor' ); ?></label>
+						<div class="awea-input-block">
+							<label class="awea-label-meta" for="awea_new_visibility"><?php esc_html_e( 'Audience Scope', 'awesome-widgets-elementor' ); ?></label>
 							<select id="awea_new_visibility" name="awea_new_visibility">
-								<option value="all"><?php esc_html_e( 'All Users (Public)', 'awesome-widgets-elementor' ); ?></option>
-								<option value="logged_in"><?php esc_html_e( 'Logged-In Users Only', 'awesome-widgets-elementor' ); ?></option>
-								<option value="logged_out"><?php esc_html_e( 'Logged-Out Visitors Only', 'awesome-widgets-elementor' ); ?></option>
+								<option value="all"><?php esc_html_e( 'Public (All Visitors)', 'awesome-widgets-elementor' ); ?></option>
+								<option value="logged_in"><?php esc_html_e( 'Logged-In Members', 'awesome-widgets-elementor' ); ?></option>
+								<option value="logged_out"><?php esc_html_e( 'Logged-Out Visitors', 'awesome-widgets-elementor' ); ?></option>
 							</select>
 						</div>
 					</div>
 
-					<!-- Header Feature Toggles -->
-					<div id="awea_modal_header_options" class="awea-modal-subbox">
-						<label class="awea-checkbox-label">
-							<input type="checkbox" name="awea_header_sticky" value="1" />
-							<span><strong><?php esc_html_e( 'Enable Sticky Header', 'awesome-widgets-elementor' ); ?></strong> - <?php esc_html_e( 'Dock navigation to the top during scroll', 'awesome-widgets-elementor' ); ?></span>
-						</label>
-						<label class="awea-checkbox-label" style="margin-top:8px;">
-							<input type="checkbox" name="awea_header_shrink" value="1" />
-							<span><strong><?php esc_html_e( 'Enable Shrink Animation', 'awesome-widgets-elementor' ); ?></strong> - <?php esc_html_e( 'Compress height dynamically when scrolled', 'awesome-widgets-elementor' ); ?></span>
-						</label>
+					<!-- Header Feature Expansion Drawer -->
+					<div id="awea_modal_header_expansion" class="awea-feature-drawer">
+						<div class="awea-feature-drawer-head">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+							<strong><?php esc_html_e( 'Header Physics & Docking', 'awesome-widgets-elementor' ); ?></strong>
+						</div>
+						<div class="awea-toggles-list">
+							<label class="awea-toggle-row">
+								<input type="checkbox" name="awea_header_sticky" value="1" />
+								<div class="awea-toggle-switch"></div>
+								<div class="awea-toggle-label">
+									<strong><?php esc_html_e( 'Sticky Header Docking', 'awesome-widgets-elementor' ); ?></strong>
+									<span><?php esc_html_e( 'Locks navigation seamlessly to the top of the screen on scroll', 'awesome-widgets-elementor' ); ?></span>
+								</div>
+							</label>
+							<label class="awea-toggle-row">
+								<input type="checkbox" name="awea_header_shrink" value="1" />
+								<div class="awea-toggle-switch"></div>
+								<div class="awea-toggle-label">
+									<strong><?php esc_html_e( 'Smooth Shrink Animation', 'awesome-widgets-elementor' ); ?></strong>
+									<span><?php esc_html_e( 'Compresses paddings dynamically as visitors explore your page', 'awesome-widgets-elementor' ); ?></span>
+								</div>
+							</label>
+						</div>
 					</div>
 
-					<div class="awea-modal-footer">
-						<button type="button" onclick="aweaCloseQuickModal()" class="awea-modal-btn-cancel"><?php esc_html_e( 'Cancel', 'awesome-widgets-elementor' ); ?></button>
-						<button type="submit" class="awea-modal-btn-submit">
-							<span class="dashicons dashicons-art"></span>
-							<?php esc_html_e( 'Create & Open Elementor', 'awesome-widgets-elementor' ); ?>
-						</button>
+					<!-- Footer Actions -->
+					<div class="awea-studio-footer">
+						<div class="awea-footer-meta">
+							<span class="awea-kbd-badge"><kbd>&crarr;</kbd> <?php esc_html_e( 'to confirm', 'awesome-widgets-elementor' ); ?></span>
+						</div>
+						<div class="awea-action-buttons">
+							<button type="button" onclick="aweaCloseQuickModal()" class="awea-btn-dismiss"><?php esc_html_e( 'Cancel', 'awesome-widgets-elementor' ); ?></button>
+							<button type="submit" class="awea-btn-launch">
+								<?php esc_html_e( 'Create & Open Canvas', 'awesome-widgets-elementor' ); ?>
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+							</button>
+						</div>
 					</div>
+
 				</form>
 			</div>
 		</div>
 
-		<!-- Modal Styles -->
+		<!-- Studio UI/UX Scoped Stylesheet -->
 		<style>
-			.awea-modal-overlay {
+			.awea-studio-backdrop {
 				position: fixed;
 				inset: 0;
-				background: rgba(15, 23, 42, 0.72);
-				backdrop-filter: blur(8px);
-				-webkit-backdrop-filter: blur(8px);
+				background: rgba(10, 15, 29, 0.72);
+				backdrop-filter: blur(14px);
+				-webkit-backdrop-filter: blur(14px);
 				z-index: 999999;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				padding: 20px;
-				animation: aweaModalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+				padding: 24px;
+				animation: aweaBackdropIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+				box-sizing: border-box;
 			}
-			@keyframes aweaModalFadeIn {
-				from { opacity: 0; transform: scale(0.98); }
-				to { opacity: 1; transform: scale(1); }
+			@keyframes aweaBackdropIn {
+				from { opacity: 0; }
+				to { opacity: 1; }
 			}
-			.awea-modal-container {
+
+			.awea-studio-card {
 				background: #ffffff;
-				border-radius: 20px;
-				max-width: 540px;
+				border-radius: 28px;
+				max-width: 580px;
 				width: 100%;
-				padding: 32px;
-				box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35);
+				padding: 36px;
+				box-shadow: 
+					0 30px 70px -15px rgba(0, 0, 0, 0.35),
+					0 0 0 1px rgba(15, 23, 42, 0.06),
+					inset 0 1px 0 rgba(255, 255, 255, 0.9);
 				position: relative;
 				box-sizing: border-box;
-				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+				font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
 				max-height: 90vh;
 				overflow-y: auto;
+				animation: aweaCardPop 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 			}
-			.awea-modal-header {
+			@keyframes aweaCardPop {
+				from { opacity: 0; transform: scale(0.94) translateY(12px); }
+				to { opacity: 1; transform: scale(1) translateY(0); }
+			}
+
+			.awea-studio-header {
 				display: flex;
 				justify-content: space-between;
-				align-items: flex-start;
-				margin-bottom: 22px;
+				align-items: center;
+				margin-bottom: 20px;
 			}
-			.awea-modal-tag {
+
+			.awea-studio-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
 				font-size: 11px;
 				font-weight: 700;
-				text-transform: uppercase;
 				letter-spacing: 0.08em;
+				text-transform: uppercase;
 				color: #4338ca;
-				background: #e0e7ff;
-				padding: 3px 10px;
+				background: rgba(99, 102, 241, 0.08);
+				border: 1px solid rgba(99, 102, 241, 0.2);
+				padding: 5px 14px;
 				border-radius: 100px;
-				display: inline-block;
-				margin-bottom: 8px;
 			}
-			.awea-modal-title-wrap h2 {
-				margin: 0 0 6px 0;
-				font-size: 22px;
-				font-weight: 800;
-				color: #0f172a;
-				letter-spacing: -0.02em;
+
+			.awea-beacon-glow {
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+				background: #4f46e5;
+				box-shadow: 0 0 8px rgba(79, 70, 229, 0.8);
 			}
-			.awea-modal-title-wrap p {
-				margin: 0;
-				color: #64748b;
-				font-size: 13px;
-				line-height: 1.5;
-			}
-			.awea-modal-close-trigger {
+
+			.awea-studio-close-btn {
 				background: #f1f5f9;
 				border: none;
 				width: 32px;
 				height: 32px;
 				border-radius: 50%;
-				font-size: 20px;
-				line-height: 1;
 				color: #64748b;
 				cursor: pointer;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				transition: all 0.2s;
+				transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 			}
-			.awea-modal-close-trigger:hover {
+			.awea-studio-close-btn svg {
+				width: 15px;
+				height: 15px;
+			}
+			.awea-studio-close-btn:hover {
 				background: #e2e8f0;
 				color: #0f172a;
+				transform: rotate(90deg);
 			}
-			.awea-type-selector {
-				display: grid;
-				grid-template-columns: repeat(2, 1fr);
-				gap: 12px;
-				margin-top: 6px;
+
+			.awea-studio-intro h2 {
+				margin: 0 0 6px 0;
+				font-size: 24px;
+				font-weight: 800;
+				letter-spacing: -0.03em;
+				color: #0f172a;
 			}
-			.awea-type-option input {
-				display: none;
-			}
-			.awea-type-card {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				gap: 6px;
-				padding: 16px;
-				border: 1.5px solid #e2e8f0;
-				border-radius: 12px;
-				background: #f8fafc;
-				cursor: pointer;
-				transition: all 0.2s;
-			}
-			.awea-type-card .dashicons {
-				font-size: 22px;
-				width: 22px;
-				height: 22px;
+			.awea-studio-intro p {
+				margin: 0 0 24px 0;
 				color: #64748b;
+				font-size: 13.5px;
+				line-height: 1.55;
 			}
-			.awea-type-card strong {
-				font-size: 13px;
-				color: #334155;
+
+			.awea-input-block {
+				margin-bottom: 20px;
 			}
-			.awea-type-option input:checked + .awea-type-card {
-				border-color: #4338ca;
-				background: #eef2ff;
-			}
-			.awea-type-option input:checked + .awea-type-card .dashicons,
-			.awea-type-option input:checked + .awea-type-card strong {
-				color: #4338ca;
-			}
-			.awea-modal-field {
-				margin-bottom: 16px;
-			}
-			.awea-modal-field label {
+
+			.awea-label-meta {
 				display: block;
-				font-size: 13px;
+				font-size: 12.5px;
 				font-weight: 700;
 				color: #334155;
-				margin-bottom: 6px;
+				margin-bottom: 8px;
 			}
-			.awea-modal-field input[type="text"],
-			.awea-modal-field select {
+			.awea-req-star {
+				color: #ef4444;
+				margin-left: 2px;
+			}
+
+			/* Segmented Cards */
+			.awea-segmented-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 14px;
+			}
+			.awea-segment-item input {
+				display: none;
+			}
+			.awea-segment-box {
+				display: flex;
+				align-items: center;
+				gap: 14px;
+				padding: 16px 18px;
+				border-radius: 16px;
+				background: #f8fafc;
+				border: 1.5px solid #e2e8f0;
+				cursor: pointer;
+				position: relative;
+				transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+			}
+			.awea-segment-icon {
+				width: 40px;
+				height: 40px;
+				border-radius: 12px;
+				background: #ffffff;
+				border: 1px solid #e2e8f0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: #64748b;
+				flex-shrink: 0;
+				transition: all 0.2s ease;
+			}
+			.awea-segment-icon svg {
+				width: 20px;
+				height: 20px;
+			}
+			.awea-segment-text {
+				display: flex;
+				flex-direction: column;
+				gap: 2px;
+			}
+			.awea-segment-text strong {
+				font-size: 13.5px;
+				color: #0f172a;
+				font-weight: 700;
+			}
+			.awea-segment-text span {
+				font-size: 11.5px;
+				color: #64748b;
+				line-height: 1.3;
+			}
+
+			/* Active Selection */
+			.awea-segment-item input:checked + .awea-segment-box {
+				border-color: #4f46e5;
+				background: #f5f3ff;
+				box-shadow: 0 8px 24px -6px rgba(79, 70, 229, 0.15);
+			}
+			.awea-segment-item input:checked + .awea-segment-box .awea-segment-icon {
+				background: #4f46e5;
+				border-color: #4f46e5;
+				color: #ffffff;
+			}
+			.awea-segment-item input:checked + .awea-segment-box .awea-segment-text strong {
+				color: #4338ca;
+			}
+
+			/* Inputs & Selects */
+			.awea-input-wrapper {
+				position: relative;
+			}
+			.awea-studio-card input[type="text"],
+			.awea-studio-card select {
 				width: 100%;
-				height: 42px;
-				padding: 0 14px;
-				border-radius: 10px;
+				height: 46px;
+				padding: 0 16px;
+				border-radius: 12px;
 				border: 1px solid #cbd5e1;
 				background: #f8fafc;
 				font-size: 14px;
 				color: #0f172a;
 				outline: none;
 				box-sizing: border-box;
-				transition: border-color 0.2s, background 0.2s;
+				transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 			}
-			.awea-modal-field input:focus,
-			.awea-modal-field select:focus {
-				border-color: #4338ca;
+			.awea-studio-card input[type="text"]:focus,
+			.awea-studio-card select:focus {
+				border-color: #4f46e5;
 				background: #ffffff;
-				box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.15);
+				box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.14);
 			}
-			.awea-modal-grid-2 {
+			.awea-kbd-hint {
+				position: absolute;
+				right: 12px;
+				top: 50%;
+				transform: translateY(-50%);
+				pointer-events: none;
+			}
+			.awea-kbd-hint kbd,
+			.awea-kbd-badge kbd {
+				background: #ffffff;
+				border: 1px solid #e2e8f0;
+				border-radius: 4px;
+				padding: 2px 6px;
+				font-size: 10.5px;
+				font-family: ui-monospace, monospace;
+				color: #64748b;
+				box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+			}
+
+			.awea-dual-grid {
 				display: grid;
 				grid-template-columns: 1fr 1fr;
 				gap: 14px;
 			}
-			.awea-modal-subbox {
+
+			/* Drawer Feature Panel */
+			.awea-feature-drawer {
 				background: #f8fafc;
 				border: 1px solid #e2e8f0;
-				border-radius: 12px;
-				padding: 16px;
-				margin-bottom: 18px;
+				border-radius: 16px;
+				padding: 18px 20px;
+				margin-bottom: 24px;
+				animation: aweaDrawerReveal 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 			}
-			.awea-checkbox-label {
+			@keyframes aweaDrawerReveal {
+				from { opacity: 0; transform: translateY(-6px); }
+				to { opacity: 1; transform: translateY(0); }
+			}
+			.awea-feature-drawer-head {
 				display: flex;
 				align-items: center;
 				gap: 8px;
-				font-size: 13px;
-				color: #475569;
+				margin-bottom: 14px;
+				color: #334155;
+				font-size: 12.5px;
+			}
+			.awea-feature-drawer-head svg {
+				width: 16px;
+				height: 16px;
+				color: #4f46e5;
+			}
+			.awea-toggles-list {
+				display: flex;
+				flex-direction: column;
+				gap: 12px;
+			}
+			.awea-toggle-row {
+				display: flex;
+				align-items: center;
+				gap: 12px;
 				cursor: pointer;
 			}
-			.awea-modal-footer {
-				display: flex;
-				justify-content: flex-end;
-				gap: 12px;
-				margin-top: 20px;
-				border-top: 1px solid #f1f5f9;
-				padding-top: 20px;
+			.awea-toggle-row input {
+				display: none;
 			}
-			.awea-modal-btn-cancel {
+			.awea-toggle-switch {
+				width: 38px;
+				height: 22px;
+				border-radius: 100px;
+				background: #cbd5e1;
+				position: relative;
+				flex-shrink: 0;
+				transition: background 0.25s ease;
+			}
+			.awea-toggle-switch::after {
+				content: "";
+				position: absolute;
+				width: 16px;
+				height: 16px;
+				border-radius: 50%;
+				background: #ffffff;
+				top: 3px;
+				left: 3px;
+				transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+				box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+			}
+			.awea-toggle-row input:checked + .awea-toggle-switch {
+				background: #4f46e5;
+			}
+			.awea-toggle-row input:checked + .awea-toggle-switch::after {
+				transform: translateX(16px);
+			}
+			.awea-toggle-label {
+				display: flex;
+				flex-direction: column;
+				gap: 1px;
+			}
+			.awea-toggle-label strong {
+				font-size: 13px;
+				color: #0f172a;
+			}
+			.awea-toggle-label span {
+				font-size: 11.5px;
+				color: #64748b;
+			}
+
+			/* Footer Controls */
+			.awea-studio-footer {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				border-top: 1px solid #f1f5f9;
+				padding-top: 22px;
+				margin-top: 24px;
+			}
+			.awea-footer-meta {
+				font-size: 12px;
+				color: #94a3b8;
+			}
+			.awea-action-buttons {
+				display: flex;
+				gap: 10px;
+			}
+			.awea-btn-dismiss {
 				background: transparent;
-				border: 1px solid #cbd5e1;
+				border: 1px solid #e2e8f0;
 				color: #475569;
 				padding: 10px 18px;
-				border-radius: 10px;
+				border-radius: 12px;
 				font-size: 13px;
 				font-weight: 600;
 				cursor: pointer;
+				transition: all 0.2s ease;
 			}
-			.awea-modal-btn-submit {
-				background: #4338ca;
+			.awea-btn-dismiss:hover {
+				background: #f8fafc;
+				border-color: #cbd5e1;
+				color: #0f172a;
+			}
+			.awea-btn-launch {
+				background: #4f46e5;
 				border: none;
 				color: #ffffff;
-				padding: 10px 22px;
-				border-radius: 10px;
-				font-size: 13px;
+				padding: 11px 22px;
+				border-radius: 12px;
+				font-size: 13.5px;
 				font-weight: 700;
 				display: inline-flex;
 				align-items: center;
 				gap: 8px;
 				cursor: pointer;
-				box-shadow: 0 4px 14px rgba(67, 56, 202, 0.3);
+				box-shadow: 0 4px 16px rgba(79, 70, 229, 0.3);
+				transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 			}
-			.awea-modal-btn-submit:hover {
-				background: #3730a3;
+			.awea-btn-launch svg {
+				width: 16px;
+				height: 16px;
+				transition: transform 0.2s ease;
+			}
+			.awea-btn-launch:hover {
+				background: #4338ca;
+				transform: translateY(-1.5px);
+				box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+			}
+			.awea-btn-launch:hover svg {
+				transform: translateX(3px);
 			}
 		</style>
 
-		<!-- Modal Controller Logic -->
+		<!-- Controller Logic -->
 		<script>
 			function aweaOpenQuickModal() {
 				var modal = document.getElementById('awea-quick-create-modal');
 				if (modal) {
 					modal.style.display = 'flex';
 					var titleInput = document.getElementById('awea_new_title');
-					if (titleInput) setTimeout(function() { titleInput.focus(); }, 100);
+					if (titleInput) {
+						setTimeout(function() {
+							titleInput.focus();
+						}, 120);
+					}
 				}
 			}
 
 			function aweaCloseQuickModal() {
 				var modal = document.getElementById('awea-quick-create-modal');
-				if (modal) modal.style.display = 'none';
+				if (modal) {
+					modal.style.display = 'none';
+				}
 			}
 
-			function aweaModalTypeChange(type) {
-				var headerBox = document.getElementById('awea_modal_header_options');
-				if (headerBox) headerBox.style.display = (type === 'header') ? 'block' : 'none';
+			function aweaTypeSelected(type) {
+				var drawer = document.getElementById('awea_modal_header_expansion');
+				if (drawer) {
+					drawer.style.display = (type === 'header') ? 'block' : 'none';
+				}
 			}
 
 			document.addEventListener('DOMContentLoaded', function() {
+				// Intercept standard Add New buttons
 				var addBtns = document.querySelectorAll('.page-title-action, .awea-btn-action, a[href*="post-new.php?post_type=awea_hf_template"]');
 				addBtns.forEach(function(btn) {
 					btn.addEventListener('click', function(e) {
@@ -952,15 +1193,27 @@ class AWEA_Header_Footer {
 					});
 				});
 
+				// Dismiss on backdrop click
 				var modal = document.getElementById('awea-quick-create-modal');
 				if (modal) {
 					modal.addEventListener('click', function(e) {
-						if (e.target === modal) aweaCloseQuickModal();
+						if (e.target === modal) {
+							aweaCloseQuickModal();
+						}
 					});
 				}
 
+				// Keyboard controls
 				document.addEventListener('keydown', function(e) {
-					if (e.key === 'Escape') aweaCloseQuickModal();
+					if (!modal || modal.style.display !== 'flex') return;
+
+					if (e.key === 'Escape') {
+						aweaCloseQuickModal();
+					}
+					if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+						var form = document.getElementById('awea_quick_modal_form');
+						if (form) form.submit();
+					}
 				});
 			});
 		</script>
@@ -1005,7 +1258,7 @@ class AWEA_Header_Footer {
 		update_post_meta( $post_id, '_awea_hf_condition', $condition );
 		update_post_meta( $post_id, '_awea_hf_visibility', $visibility );
 
-		// Header Settings
+		// Header Physics Settings
 		update_post_meta( $post_id, '_awea_header_sticky', isset( $_POST['awea_header_sticky'] ) ? '1' : '0' );
 		update_post_meta( $post_id, '_awea_header_shrink', isset( $_POST['awea_header_shrink'] ) ? '1' : '0' );
 

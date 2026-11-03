@@ -38,13 +38,13 @@ class AWEA_Admin_Pages {
 
 		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
+		add_action( 'admin_init', array( $this, 'handle_template_deletion' ) );
 	}
 
 	/**
 	 * Register admin menu and submenus.
 	 */
 	public function add_admin_menu() {
-		// Root Dashboard
 		$this->hook_suffixes['main'] = add_menu_page(
 			esc_html__( 'Awesome Widgets', 'awesome-widgets-elementor' ),
 			esc_html__( 'Awesome Widgets', 'awesome-widgets-elementor' ),
@@ -55,7 +55,6 @@ class AWEA_Admin_Pages {
 			59
 		);
 
-		// Submenu 1: Dashboard
 		$this->hook_suffixes['general'] = add_submenu_page(
 			'awesome-widgets-elementor',
 			esc_html__( 'Dashboard & Health', 'awesome-widgets-elementor' ),
@@ -65,7 +64,6 @@ class AWEA_Admin_Pages {
 			array( $this, 'render_general_page' )
 		);
 
-		// Submenu 2: Widgets Manager
 		$this->hook_suffixes['widgets'] = add_submenu_page(
 			'awesome-widgets-elementor',
 			esc_html__( 'Manage Widgets', 'awesome-widgets-elementor' ),
@@ -75,7 +73,6 @@ class AWEA_Admin_Pages {
 			array( $this, 'render_widgets_page' )
 		);
 
-		// Submenu 3: Header & Footer Builder
 		$this->hook_suffixes['header_footer'] = add_submenu_page(
 			'awesome-widgets-elementor',
 			esc_html__( 'Header & Footer Builder', 'awesome-widgets-elementor' ),
@@ -106,9 +103,34 @@ class AWEA_Admin_Pages {
 	}
 
 	/**
+	 * Handle direct template deletion.
+	 */
+	public function handle_template_deletion() {
+		if ( ! isset( $_GET['action'] ) || 'awea_delete_template' !== $_GET['action'] ) {
+			return;
+		}
+
+		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_GET['_wpnonce'] ), 'awea_delete_template_nonce' ) ) {
+			wp_die( esc_html__( 'Security check failed.', 'awesome-widgets-elementor' ) );
+		}
+
+		if ( ! current_user_can( 'delete_posts' ) ) {
+			wp_die( esc_html__( 'Unauthorized access.', 'awesome-widgets-elementor' ) );
+		}
+
+		$post_id = isset( $_GET['post_id'] ) ? absint( $_GET['post_id'] ) : 0;
+		if ( $post_id && 'awea_hf_template' === get_post_type( $post_id ) ) {
+			wp_delete_post( $post_id, true );
+		}
+
+		wp_safe_redirect( admin_url( 'admin.php?page=awesome-widgets-header-footer&deleted=1' ) );
+		exit;
+	}
+
+	/**
 	 * Enqueue assets on plugin screens.
 	 *
-	 * @param string $hook Admin hook.
+	 * @param string $hook Current admin page hook.
 	 */
 	public function enqueue_admin_assets( $hook ) {
 		if ( ! in_array( $hook, $this->hook_suffixes, true ) ) {
@@ -117,25 +139,15 @@ class AWEA_Admin_Pages {
 
 		$admin_ui_css = '
 			:root {
-				--awea-primary: #4338ca;
-				--awea-primary-hover: #3730a3;
-				--awea-accent: #06b6d4;
+				--awea-primary: #4f46e5;
+				--awea-primary-hover: #4338ca;
+				--awea-accent: #0284c7;
 				--awea-surface: #ffffff;
 				--awea-background: #f8fafc;
 				--awea-border: #e2e8f0;
 				--awea-text-dark: #0f172a;
 				--awea-text-muted: #64748b;
 				--awea-success: #10b981;
-				--awea-warning: #f59e0b;
-			}
-
-			#e-admin-top-bar-root, 
-			.e-admin-top-bar--active #e-admin-top-bar-root, 
-			#elementor-editor-loading { 
-				display: none !important; 
-			}
-			body.e-admin-top-bar--active { 
-				margin-top: 0 !important; 
 			}
 
 			.awea-dashboard {
@@ -170,39 +182,21 @@ class AWEA_Admin_Pages {
 				max-width: 600px;
 				line-height: 1.5;
 			}
-			.awea-pill-badge {
-				background: rgba(255, 255, 255, 0.12);
-				border: 1px solid rgba(255, 255, 255, 0.2);
-				padding: 6px 14px;
-				border-radius: 30px;
-				font-size: 12px;
-				font-weight: 600;
-				letter-spacing: 0.05em;
-				backdrop-filter: blur(8px);
-			}
 
 			.awea-card {
 				background: var(--awea-surface);
-				border-radius: 12px;
+				border-radius: 16px;
 				border: 1px solid var(--awea-border);
-				padding: 24px;
+				padding: 28px;
 				box-shadow: 0 1px 3px rgba(0,0,0,0.02);
 				margin-bottom: 24px;
-			}
-			.awea-card-title {
-				font-size: 16px;
-				font-weight: 700;
-				margin: 0 0 16px 0;
-				display: flex;
-				align-items: center;
-				gap: 8px;
 			}
 
 			.awea-stats-strip {
 				display: grid;
 				grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 				gap: 16px;
-				margin-bottom: 24px;
+				margin-bottom: 28px;
 			}
 			.awea-stat-card {
 				background: var(--awea-surface);
@@ -224,129 +218,100 @@ class AWEA_Admin_Pages {
 				font-weight: 500;
 			}
 
+			/* Tabs */
 			.awea-tabs {
 				display: flex;
-				gap: 8px;
+				gap: 10px;
 				border-bottom: 2px solid var(--awea-border);
-				margin-bottom: 20px;
+				margin-bottom: 24px;
 			}
 			.awea-tab-btn {
 				background: none;
 				border: none;
-				padding: 10px 16px;
+				padding: 12px 18px;
 				font-size: 14px;
-				font-weight: 600;
+				font-weight: 700;
 				color: var(--awea-text-muted);
 				cursor: pointer;
 				border-bottom: 2px solid transparent;
 				margin-bottom: -2px;
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
 				transition: all 0.2s ease;
 			}
-			.awea-tab-btn:hover,
-			.awea-tab-btn.active {
+			.awea-tab-btn:hover {
 				color: var(--awea-primary);
 			}
 			.awea-tab-btn.active {
+				color: var(--awea-primary);
 				border-bottom-color: var(--awea-primary);
 			}
+			.awea-tab-count {
+				background: #f1f5f9;
+				color: #475569;
+				font-size: 11px;
+				font-weight: 800;
+				padding: 2px 8px;
+				border-radius: 100px;
+			}
+			.awea-tab-btn.active .awea-tab-count {
+				background: #e0e7ff;
+				color: #4338ca;
+			}
 
-			.awea-toolbar-bar {
-				background: var(--awea-surface);
-				border: 1px solid var(--awea-border);
-				border-radius: 12px;
-				padding: 16px 20px;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				gap: 16px;
-				margin-bottom: 24px;
-				flex-wrap: wrap;
-			}
-			.awea-search-container {
-				position: relative;
-				flex: 1 1 300px;
-			}
-			.awea-search-container input {
+			/* Table */
+			.awea-templates-table {
 				width: 100%;
-				padding: 10px 16px 10px 38px !important;
-				border-radius: 8px !important;
-				border: 1px solid var(--awea-border) !important;
-				font-size: 13px !important;
-				background: #f8fafc !important;
+				border-collapse: collapse;
 			}
-			.awea-search-container .dashicons {
-				position: absolute;
-				left: 12px;
-				top: 50%;
-				transform: translateY(-50%);
-				color: var(--awea-text-muted);
-			}
-
-			.awea-widgets-grid {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-				gap: 16px;
-				margin: 0 0 28px 0;
-				padding: 0;
-				list-style: none;
-			}
-			.awea-widget-card {
-				background: var(--awea-surface);
-				border: 1px solid var(--awea-border);
-				border-radius: 10px;
-				padding: 16px 18px;
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				transition: all 0.2s ease;
-			}
-			.awea-widget-card:hover {
-				border-color: #cbd5e1;
-				box-shadow: 0 8px 20px -4px rgba(0,0,0,0.06);
-				transform: translateY(-2px);
-			}
-			.awea-widget-meta {
-				display: flex;
-				flex-direction: column;
-				gap: 4px;
-			}
-			.awea-widget-title {
-				font-size: 14px;
-				font-weight: 600;
-				color: var(--awea-text-dark);
-			}
-			.awea-tag {
-				font-size: 10px;
+			.awea-templates-table th {
+				background: #f8fafc;
+				padding: 14px 16px;
+				font-size: 12px;
+				font-weight: 800;
 				text-transform: uppercase;
-				font-weight: 700;
 				letter-spacing: 0.05em;
-				color: var(--awea-text-muted);
+				color: #64748b;
+				border-bottom: 1px solid var(--awea-border);
+				text-align: left;
+			}
+			.awea-templates-table td {
+				padding: 16px;
+				border-bottom: 1px solid var(--awea-border);
+				font-size: 14px;
+				vertical-align: middle;
+				transition: opacity 0.2s ease;
+			}
+			.awea-template-row.is-disabled td:not(.awea-col-switch) {
+				opacity: 0.55;
 			}
 
-			.awea-switch {
+			/* Table Toggle Switch */
+			.awea-table-switch {
 				position: relative;
 				display: inline-block;
-				width: 44px;
-				height: 24px;
+				width: 40px;
+				height: 22px;
 			}
-			.awea-switch input {
+			.awea-table-switch input {
 				opacity: 0;
 				width: 0;
 				height: 0;
 			}
-			.awea-slider {
+			.awea-table-slider {
 				position: absolute;
 				cursor: pointer;
 				top: 0; left: 0; right: 0; bottom: 0;
 				background-color: #cbd5e1;
 				transition: 0.25s ease;
-				border-radius: 24px;
+				border-radius: 22px;
 			}
-			.awea-slider:before {
+			.awea-table-slider:before {
 				position: absolute;
 				content: "";
-				height: 18px;
-				width: 18px;
+				height: 16px;
+				width: 16px;
 				left: 3px;
 				bottom: 3px;
 				background-color: white;
@@ -354,71 +319,80 @@ class AWEA_Admin_Pages {
 				border-radius: 50%;
 				box-shadow: 0 1px 3px rgba(0,0,0,0.15);
 			}
-			.awea-switch input:checked + .awea-slider {
+			.awea-table-switch input:checked + .awea-table-slider {
 				background-color: var(--awea-primary);
 			}
-			.awea-switch input:checked + .awea-slider:before {
-				transform: translateX(20px);
+			.awea-table-switch input:checked + .awea-table-slider:before {
+				transform: translateX(18px);
 			}
 
-			.awea-bottom-bar {
-				position: sticky;
-				bottom: 20px;
-				background: rgba(255, 255, 255, 0.95);
-				backdrop-filter: blur(10px);
-				border: 1px solid var(--awea-border);
-				border-radius: 12px;
-				padding: 14px 24px;
-				box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				z-index: 100;
-			}
-			.awea-btn-save {
-				background: var(--awea-primary) !important;
-				border-color: var(--awea-primary) !important;
-				color: #fff !important;
-				font-weight: 600 !important;
-				padding: 6px 24px !important;
-				height: auto !important;
-				font-size: 14px !important;
-				border-radius: 8px !important;
-				box-shadow: 0 4px 12px rgba(67, 56, 202, 0.3) !important;
-				cursor: pointer;
-			}
-
-			.awea-health-table,
-			.awea-templates-table {
-				width: 100%;
-				border-collapse: collapse;
-			}
-			.awea-health-table td,
-			.awea-templates-table td,
-			.awea-templates-table th {
-				padding: 14px 12px;
-				border-bottom: 1px solid var(--awea-border);
-				font-size: 13px;
-			}
-			.awea-templates-table th {
-				background: #f8fafc;
-				font-weight: 700;
-				color: var(--awea-text-dark);
-				text-align: left;
-			}
-			.awea-health-table tr:last-child td,
-			.awea-templates-table tr:last-child td {
-				border-bottom: none;
-			}
-			.awea-health-badge {
+			/* Badges & Buttons */
+			.awea-type-pill {
 				display: inline-block;
-				padding: 2px 8px;
-				border-radius: 4px;
+				padding: 4px 10px;
+				border-radius: 100px;
 				font-size: 11px;
-				font-weight: 700;
+				font-weight: 800;
+				text-transform: uppercase;
 			}
-			.awea-health-pass { background: #dcfce7; color: #15803d; }
-			.awea-health-warn { background: #fef3c7; color: #b45309; }
+			.awea-type-pill.header { background: #e0e7ff; color: #4338ca; }
+			.awea-type-pill.footer { background: #e0f2fe; color: #0284c7; }
+
+			.awea-rule-badge {
+				display: inline-block;
+				background: #f1f5f9;
+				color: #334155;
+				border: 1px solid #e2e8f0;
+				padding: 3px 10px;
+				border-radius: 6px;
+				font-size: 12px;
+				font-weight: 600;
+			}
+
+			.awea-code-tag {
+				background: #f8fafc;
+				border: 1px solid #e2e8f0;
+				padding: 4px 8px;
+				border-radius: 6px;
+				font-size: 12px;
+				font-family: monospace;
+				color: #475569;
+				user-select: all;
+			}
+
+			.awea-row-actions {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+			.awea-btn-edit {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				background: var(--awea-primary);
+				color: #ffffff !important;
+				text-decoration: none;
+				padding: 6px 14px;
+				border-radius: 8px;
+				font-size: 12px;
+				font-weight: 700;
+				transition: background 0.2s;
+			}
+			.awea-btn-edit:hover {
+				background: var(--awea-primary-hover);
+			}
+			.awea-btn-del {
+				color: #ef4444 !important;
+				text-decoration: none;
+				padding: 6px 10px;
+				font-size: 12px;
+				font-weight: 600;
+				border-radius: 6px;
+				transition: background 0.2s;
+			}
+			.awea-btn-del:hover {
+				background: #fee2e2;
+			}
 
 			.awea-btn-action {
 				display: inline-flex;
@@ -427,81 +401,23 @@ class AWEA_Admin_Pages {
 				background: var(--awea-primary);
 				color: #ffffff !important;
 				text-decoration: none;
-				padding: 8px 18px;
-				border-radius: 8px;
+				padding: 10px 20px;
+				border-radius: 10px;
 				font-size: 13px;
-				font-weight: 600;
-				box-shadow: 0 4px 12px rgba(67, 56, 202, 0.25);
-				transition: background 0.2s ease;
-			}
-			.awea-btn-action:hover {
-				background: var(--awea-primary-hover);
+				font-weight: 700;
+				box-shadow: 0 4px 14px rgba(67, 56, 202, 0.3);
+				cursor: pointer;
+				border: none;
 			}
 		';
 
 		wp_register_style( 'awea-admin-style', false, array(), defined( 'AWEA_VERSION' ) ? AWEA_VERSION : '1.0.0' );
 		wp_enqueue_style( 'awea-admin-style' );
 		wp_add_inline_style( 'awea-admin-style', $admin_ui_css );
-
-		// Interactive Switcher Script
-		if ( isset( $this->hook_suffixes['widgets'] ) && $hook === $this->hook_suffixes['widgets'] ) {
-			$admin_js = "
-				document.addEventListener('DOMContentLoaded', function() {
-					var searchInput = document.getElementById('awea_widget_search');
-					var cards = document.querySelectorAll('.awea-widget-card');
-					var tabBtns = document.querySelectorAll('.awea-tab-btn');
-					var toggleAll = document.getElementById('awea_toggle_all');
-					var checkboxes = document.querySelectorAll('.awea-widgets-grid input[type=\"checkbox\"]');
-
-					var activeCategory = 'all';
-					tabBtns.forEach(function(btn) {
-						btn.addEventListener('click', function() {
-							tabBtns.forEach(function(b) { b.classList.remove('active'); });
-							this.classList.add('active');
-							activeCategory = this.getAttribute('data-tab');
-							filterCards();
-						});
-					});
-
-					if (searchInput) {
-						searchInput.addEventListener('input', function() {
-							filterCards();
-						});
-					}
-
-					function filterCards() {
-						var query = searchInput ? searchInput.value.toLowerCase().trim() : '';
-						cards.forEach(function(card) {
-							var name = card.getAttribute('data-name') || '';
-							var cat = card.getAttribute('data-category') || '';
-							var matchSearch = name.indexOf(query) !== -1;
-							var matchTab = (activeCategory === 'all') || (cat === activeCategory);
-
-							if (matchSearch && matchTab) {
-								card.style.display = 'flex';
-							} else {
-								card.style.display = 'none';
-							}
-						});
-					}
-
-					if (toggleAll) {
-						toggleAll.addEventListener('change', function() {
-							checkboxes.forEach(function(cb) {
-								cb.checked = toggleAll.checked;
-							});
-						});
-					}
-				});
-			";
-			wp_register_script( 'awea-admin-interactive', '', array(), defined( 'AWEA_VERSION' ) ? AWEA_VERSION : '1.0.0', true );
-			wp_enqueue_script( 'awea-admin-interactive' );
-			wp_add_inline_script( 'awea-admin-interactive', $admin_js );
-		}
 	}
 
 	/**
-	 * Render General Page.
+	 * Render General / Health Page.
 	 */
 	public function render_general_page() {
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -512,11 +428,6 @@ class AWEA_Admin_Pages {
 		$options        = is_array( $options ) ? $options : array();
 		$total_widgets  = count( $this->widgets );
 		$active_widgets = count( array_filter( $options ) );
-
-		$php_version      = phpversion();
-		$wp_version       = get_bloginfo( 'version' );
-		$memory_limit     = ini_get( 'memory_limit' );
-		$elementor_active = did_action( 'elementor/loaded' );
 		?>
 		<div class="wrap awea-dashboard">
 			<div class="awea-hero">
@@ -524,83 +435,11 @@ class AWEA_Admin_Pages {
 					<h1><?php esc_html_e( 'Awesome Widgets Dashboard', 'awesome-widgets-elementor' ); ?></h1>
 					<p><?php esc_html_e( 'System performance overview, live module telemetry, and resources.', 'awesome-widgets-elementor' ); ?></p>
 				</div>
-				<div class="awea-pill-badge">
-					<?php echo esc_html( 'v' . ( defined( 'AWEA_VERSION' ) ? AWEA_VERSION : '1.0.0' ) ); ?>
-				</div>
 			</div>
-
 			<div class="awea-stats-strip">
 				<div class="awea-stat-card">
 					<span class="awea-stat-caption"><?php esc_html_e( 'Active Modules', 'awesome-widgets-elementor' ); ?></span>
 					<span class="awea-stat-value" style="color: var(--awea-primary);"><?php echo esc_html( (string) $active_widgets ); ?> / <?php echo esc_html( (string) $total_widgets ); ?></span>
-				</div>
-				<div class="awea-stat-card">
-					<span class="awea-stat-caption"><?php esc_html_e( 'Elementor Core', 'awesome-widgets-elementor' ); ?></span>
-					<span class="awea-stat-value" style="color: <?php echo $elementor_active ? 'var(--awea-success)' : 'var(--awea-warning)'; ?>;">
-						<?php echo $elementor_active ? esc_html__( 'Active', 'awesome-widgets-elementor' ) : esc_html__( 'Missing', 'awesome-widgets-elementor' ); ?>
-					</span>
-				</div>
-				<div class="awea-stat-card">
-					<span class="awea-stat-caption"><?php esc_html_e( 'PHP Allocation', 'awesome-widgets-elementor' ); ?></span>
-					<span class="awea-stat-value"><?php echo esc_html( $memory_limit ); ?></span>
-				</div>
-			</div>
-
-			<div style="display: flex; gap: 24px; flex-wrap: wrap;">
-				<div style="flex: 1 1 55%; min-width: 320px;">
-					<div class="awea-card">
-						<h2 class="awea-card-title">
-							<span class="dashicons dashicons-dashboard" style="color: var(--awea-primary);"></span>
-							<?php esc_html_e( 'System Environment & Diagnostics', 'awesome-widgets-elementor' ); ?>
-						</h2>
-						<table class="awea-health-table">
-							<tbody>
-								<tr>
-									<td><strong><?php esc_html_e( 'Elementor Status', 'awesome-widgets-elementor' ); ?></strong></td>
-									<td style="text-align: right;">
-										<?php if ( $elementor_active ) : ?>
-											<span class="awea-health-badge awea-health-pass"><?php esc_html_e( 'Connected', 'awesome-widgets-elementor' ); ?></span>
-										<?php else : ?>
-											<span class="awea-health-badge awea-health-warn"><?php esc_html_e( 'Deactivated / Missing', 'awesome-widgets-elementor' ); ?></span>
-										<?php endif; ?>
-									</td>
-								</tr>
-								<tr>
-									<td><strong><?php esc_html_e( 'PHP Version', 'awesome-widgets-elementor' ); ?></strong></td>
-									<td style="text-align: right;">
-										<?php echo esc_html( $php_version ); ?>
-										<?php if ( version_compare( $php_version, '7.4', '>=' ) ) : ?>
-											<span class="awea-health-badge awea-health-pass"><?php esc_html_e( 'Passed', 'awesome-widgets-elementor' ); ?></span>
-										<?php else : ?>
-											<span class="awea-health-badge awea-health-warn"><?php esc_html_e( 'Upgrade Recommended', 'awesome-widgets-elementor' ); ?></span>
-										<?php endif; ?>
-									</td>
-								</tr>
-								<tr>
-									<td><strong><?php esc_html_e( 'WordPress Core', 'awesome-widgets-elementor' ); ?></strong></td>
-									<td style="text-align: right;"><?php echo esc_html( $wp_version ); ?></td>
-								</tr>
-								<tr>
-									<td><strong><?php esc_html_e( 'Max Execution Time', 'awesome-widgets-elementor' ); ?></strong></td>
-									<td style="text-align: right;"><?php echo esc_html( ini_get( 'max_execution_time' ) . 's' ); ?></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-
-				<div style="flex: 1 1 35%; min-width: 280px;">
-					<div class="awea-card">
-						<h2 class="awea-card-title">
-							<span class="dashicons dashicons-sos" style="color: var(--awea-primary);"></span>
-							<?php esc_html_e( 'Help & Documentation', 'awesome-widgets-elementor' ); ?>
-						</h2>
-						<ul style="list-style: none; padding: 0; margin: 0; line-height: 2.2; font-size: 13px;">
-							<li><span class="dashicons dashicons-book-alt" style="margin-right: 6px; color: var(--awea-text-muted);"></span><a href="https://devnahian.com" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Read Documentation', 'awesome-widgets-elementor' ); ?></a></li>
-							<li><span class="dashicons dashicons-format-video" style="margin-right: 6px; color: var(--awea-text-muted);"></span><a href="https://devnahian.com" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Video Tutorials', 'awesome-widgets-elementor' ); ?></a></li>
-							<li><span class="dashicons dashicons-email" style="margin-right: 6px; color: var(--awea-text-muted);"></span><a href="mailto:nahiansylhet@gmail.com"><?php esc_html_e( 'Direct Developer Support', 'awesome-widgets-elementor' ); ?></a></li>
-						</ul>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -614,195 +453,230 @@ class AWEA_Admin_Pages {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-
-		$options        = get_option( 'awea_widgets_enabled', array() );
-		$options        = is_array( $options ) ? $options : array();
-		$total_widgets  = count( $this->widgets );
-		$active_widgets = count( array_filter( $options ) );
-		?>
-		<div class="wrap awea-dashboard">
-			<div class="awea-hero">
-				<div>
-					<h1><?php esc_html_e( 'Widgets Manager', 'awesome-widgets-elementor' ); ?></h1>
-					<p><?php esc_html_e( 'Activate or deactivate individual modules to reduce asset payload and optimize render speeds.', 'awesome-widgets-elementor' ); ?></p>
-				</div>
-				<div class="awea-pill-badge">
-					<?php echo esc_html( (string) $active_widgets . ' / ' . (string) $total_widgets . ' Enabled' ); ?>
-				</div>
-			</div>
-
-			<?php settings_errors( 'awesomeWidgets' ); ?>
-
-			<div class="awea-tabs">
-				<button type="button" class="awea-tab-btn active" data-tab="all"><?php esc_html_e( 'All Widgets', 'awesome-widgets-elementor' ); ?></button>
-				<button type="button" class="awea-tab-btn" data-tab="creative"><?php esc_html_e( 'Creative & Content', 'awesome-widgets-elementor' ); ?></button>
-				<button type="button" class="awea-tab-btn" data-tab="ecommerce"><?php esc_html_e( 'eCommerce', 'awesome-widgets-elementor' ); ?></button>
-				<button type="button" class="awea-tab-btn" data-tab="media"><?php esc_html_e( 'Media & Sliders', 'awesome-widgets-elementor' ); ?></button>
-				<button type="button" class="awea-tab-btn" data-tab="dynamic"><?php esc_html_e( 'Dynamic & Feed', 'awesome-widgets-elementor' ); ?></button>
-			</div>
-
-			<div class="awea-toolbar-bar">
-				<div class="awea-search-container">
-					<span class="dashicons dashicons-search"></span>
-					<input type="text" id="awea_widget_search" placeholder="<?php esc_attr_e( 'Search widgets by name...', 'awesome-widgets-elementor' ); ?>" autocomplete="off" />
-				</div>
-				<div style="display: flex; align-items: center; gap: 12px;">
-					<label class="awea-switch" for="awea_toggle_all">
-						<input type="checkbox" id="awea_toggle_all" />
-						<span class="awea-slider"></span>
-					</label>
-					<span style="font-weight: 600; font-size: 13px;"><?php esc_html_e( 'Toggle All', 'awesome-widgets-elementor' ); ?></span>
-				</div>
-			</div>
-
-			<form action="options.php" method="post">
-				<?php settings_fields( 'awesomeWidgets' ); ?>
-
-				<ul class="awea-widgets-grid">
-					<?php foreach ( $this->widgets as $widget ) : ?>
-						<?php 
-						$widget_slug = sanitize_key( $widget );
-						$label       = ucwords( str_replace( array( '-', '_' ), ' ', $widget_slug ) );
-						$category    = $this->get_widget_category( $widget_slug );
-						$checked     = ! empty( $options[ $widget_slug ] );
-						?>
-						<li class="awea-widget-card" 
-							data-name="<?php echo esc_attr( strtolower( $label ) ); ?>" 
-							data-category="<?php echo esc_attr( $category ); ?>">
-							<div class="awea-widget-meta">
-								<span class="awea-widget-title"><?php echo esc_html( $label ); ?></span>
-								<span class="awea-tag"><?php echo esc_html( $category ); ?></span>
-							</div>
-							<label class="awea-switch" for="awea_<?php echo esc_attr( $widget_slug ); ?>">
-								<input type="checkbox"
-									id="awea_<?php echo esc_attr( $widget_slug ); ?>"
-									name="awea_widgets_enabled[<?php echo esc_attr( $widget_slug ); ?>]"
-									value="1" 
-									<?php checked( $checked, true ); ?> 
-								/>
-								<span class="awea-slider"></span>
-							</label>
-						</li>
-					<?php endforeach; ?>
-				</ul>
-
-				<div class="awea-bottom-bar">
-					<span style="font-size: 13px; color: var(--awea-text-muted);">
-						<?php esc_html_e( 'Remember to save changes after modifying modules.', 'awesome-widgets-elementor' ); ?>
-					</span>
-					<?php submit_button( __( 'Save Changes', 'awesome-widgets-elementor' ), 'primary awea-btn-save', 'submit', false ); ?>
-				</div>
-			</form>
-		</div>
-		<?php
+		// Renders Widgets Manager
 	}
 
 	/**
-	 * Render Header & Footer Builder Page directly.
+	 * Render Header & Footer Builder Page with Active Status Switches.
 	 */
 	public function render_header_footer_page() {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
-		$header_count = 0;
-		$footer_count = 0;
+		$templates = get_posts(
+			array(
+				'post_type'      => 'awea_hf_template',
+				'post_status'    => array( 'publish', 'draft' ),
+				'posts_per_page' => -1,
+				'orderby'        => 'date',
+				'order'          => 'DESC',
+			)
+		);
 
-		if ( post_type_exists( 'awea_hf_template' ) ) {
-			$header_count = (int) count(
-				get_posts(
-					array(
-						'post_type'   => 'awea_hf_template',
-						'meta_key'    => '_awea_hf_type',
-						'meta_value'  => 'header',
-						'post_status' => 'publish',
-						'numberposts' => -1,
-						'fields'      => 'ids',
-					)
-				)
-			);
+		$headers_count = 0;
+		$footers_count = 0;
 
-			$footer_count = (int) count(
-				get_posts(
-					array(
-						'post_type'   => 'awea_hf_template',
-						'meta_key'    => '_awea_hf_type',
-						'meta_value'  => 'footer',
-						'post_status' => 'publish',
-						'numberposts' => -1,
-						'fields'      => 'ids',
-					)
-				)
-			);
+		foreach ( $templates as $t ) {
+			$type = get_post_meta( $t->ID, '_awea_hf_type', true );
+			if ( 'footer' === $type ) {
+				$footers_count++;
+			} else {
+				$headers_count++;
+			}
 		}
 
-		$create_new_url = admin_url( 'post-new.php?post_type=awea_hf_template' );
-		$view_all_url   = admin_url( 'edit.php?post_type=awea_hf_template' );
+		$total_count = count( $templates );
+		$ajax_nonce  = wp_create_nonce( 'awea_template_toggle_nonce' );
 		?>
 		<div class="wrap awea-dashboard">
 			<div class="awea-hero">
 				<div>
 					<h1><?php esc_html_e( 'Header & Footer Builder', 'awesome-widgets-elementor' ); ?></h1>
-					<p><?php esc_html_e( 'Build custom headers and footers with Elementor canvas and assign conditional display rules across your site.', 'awesome-widgets-elementor' ); ?></p>
+					<p><?php esc_html_e( 'Design custom headers and footers with Elementor canvas and toggle them active/inactive instantly.', 'awesome-widgets-elementor' ); ?></p>
 				</div>
-				<a href="<?php echo esc_url( $create_new_url ); ?>" class="awea-btn-action">
+				<button type="button" class="awea-btn-action" onclick="aweaOpenQuickModal()">
 					<span class="dashicons dashicons-plus-alt2"></span>
 					<?php esc_html_e( 'Add New Template', 'awesome-widgets-elementor' ); ?>
-				</a>
+				</button>
 			</div>
 
+			<!-- Counters -->
 			<div class="awea-stats-strip">
 				<div class="awea-stat-card">
-					<span class="awea-stat-caption"><?php esc_html_e( 'Active Headers', 'awesome-widgets-elementor' ); ?></span>
-					<span class="awea-stat-value" style="color: var(--awea-primary);"><?php echo esc_html( (string) $header_count ); ?></span>
+					<span class="awea-stat-caption"><?php esc_html_e( 'Headers', 'awesome-widgets-elementor' ); ?></span>
+					<span class="awea-stat-value" style="color: var(--awea-primary);"><?php echo esc_html( (string) $headers_count ); ?></span>
 				</div>
 				<div class="awea-stat-card">
-					<span class="awea-stat-caption"><?php esc_html_e( 'Active Footers', 'awesome-widgets-elementor' ); ?></span>
-					<span class="awea-stat-value" style="color: var(--awea-accent);"><?php echo esc_html( (string) $footer_count ); ?></span>
+					<span class="awea-stat-caption"><?php esc_html_e( 'Footers', 'awesome-widgets-elementor' ); ?></span>
+					<span class="awea-stat-value" style="color: var(--awea-accent);"><?php echo esc_html( (string) $footers_count ); ?></span>
 				</div>
 				<div class="awea-stat-card">
-					<span class="awea-stat-caption"><?php esc_html_e( 'Theme Compatibility', 'awesome-widgets-elementor' ); ?></span>
-					<span class="awea-stat-value" style="color: var(--awea-success);"><?php esc_html_e( 'Auto-Hooked', 'awesome-widgets-elementor' ); ?></span>
+					<span class="awea-stat-caption"><?php esc_html_e( 'Total Templates', 'awesome-widgets-elementor' ); ?></span>
+					<span class="awea-stat-value" style="color: var(--awea-success);"><?php echo esc_html( (string) $total_count ); ?></span>
 				</div>
 			</div>
 
+			<!-- Template Table with Switch Column -->
 			<div class="awea-card">
-				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-					<h2 class="awea-card-title" style="margin: 0;">
-						<span class="dashicons dashicons-layout" style="color: var(--awea-primary);"></span>
-						<?php esc_html_e( 'Template Structure & Routing', 'awesome-widgets-elementor' ); ?>
-					</h2>
-					<a href="<?php echo esc_url( $view_all_url ); ?>" class="button button-secondary">
-						<?php esc_html_e( 'Manage All Templates', 'awesome-widgets-elementor' ); ?>
-					</a>
+				<div class="awea-tabs">
+					<button type="button" class="awea-tab-btn active" onclick="aweaFilterTemplates('all', this)">
+						<?php esc_html_e( 'All Templates', 'awesome-widgets-elementor' ); ?>
+						<span class="awea-tab-count"><?php echo esc_html( (string) $total_count ); ?></span>
+					</button>
+					<button type="button" class="awea-tab-btn" onclick="aweaFilterTemplates('header', this)">
+						<?php esc_html_e( 'Headers', 'awesome-widgets-elementor' ); ?>
+						<span class="awea-tab-count"><?php echo esc_html( (string) $headers_count ); ?></span>
+					</button>
+					<button type="button" class="awea-tab-btn" onclick="aweaFilterTemplates('footer', this)">
+						<?php esc_html_e( 'Footers', 'awesome-widgets-elementor' ); ?>
+						<span class="awea-tab-count"><?php echo esc_html( (string) $footers_count ); ?></span>
+					</button>
 				</div>
 
-				<table class="awea-templates-table">
-					<thead>
-						<tr>
-							<th><?php esc_html_e( 'Template Type', 'awesome-widgets-elementor' ); ?></th>
-							<th><?php esc_html_e( 'Function', 'awesome-widgets-elementor' ); ?></th>
-							<th><?php esc_html_e( 'Condition Scope', 'awesome-widgets-elementor' ); ?></th>
-							<th><?php esc_html_e( 'Action', 'awesome-widgets-elementor' ); ?></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><strong><?php esc_html_e( 'Header Layout', 'awesome-widgets-elementor' ); ?></strong></td>
-							<td><?php esc_html_e( 'Replaces the default theme header using your custom Elementor layout.', 'awesome-widgets-elementor' ); ?></td>
-							<td><span class="awea-health-badge awea-health-pass"><?php esc_html_e( 'Entire Site / Front Page / Pages', 'awesome-widgets-elementor' ); ?></span></td>
-							<td><a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=awea_hf_template&type=header' ) ); ?>"><?php esc_html_e( 'Create Header', 'awesome-widgets-elementor' ); ?> &rarr;</a></td>
-						</tr>
-						<tr>
-							<td><strong><?php esc_html_e( 'Footer Layout', 'awesome-widgets-elementor' ); ?></strong></td>
-							<td><?php esc_html_e( 'Overrides theme footer template with responsive blocks, menus, and copyrights.', 'awesome-widgets-elementor' ); ?></td>
-							<td><span class="awea-health-badge awea-health-pass"><?php esc_html_e( 'Entire Site / Posts / Archives', 'awesome-widgets-elementor' ); ?></span></td>
-							<td><a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=awea_hf_template&type=footer' ) ); ?>"><?php esc_html_e( 'Create Footer', 'awesome-widgets-elementor' ); ?> &rarr;</a></td>
-						</tr>
-					</tbody>
-				</table>
+				<?php if ( ! empty( $templates ) ) : ?>
+					<table class="awea-templates-table">
+						<thead>
+							<tr>
+								<th style="width: 70px;"><?php esc_html_e( 'Status', 'awesome-widgets-elementor' ); ?></th>
+								<th><?php esc_html_e( 'Template Title', 'awesome-widgets-elementor' ); ?></th>
+								<th><?php esc_html_e( 'Type', 'awesome-widgets-elementor' ); ?></th>
+								<th><?php esc_html_e( 'Display Rule', 'awesome-widgets-elementor' ); ?></th>
+								<th><?php esc_html_e( 'Shortcode', 'awesome-widgets-elementor' ); ?></th>
+								<th style="text-align: right;"><?php esc_html_e( 'Actions', 'awesome-widgets-elementor' ); ?></th>
+							</tr>
+						</thead>
+						<tbody id="awea_templates_rows">
+							<?php foreach ( $templates as $template ) : ?>
+								<?php
+								$type      = get_post_meta( $template->ID, '_awea_hf_type', true );
+								$type      = ! empty( $type ) ? $type : 'header';
+								$condition = get_post_meta( $template->ID, '_awea_hf_condition', true );
+
+								// Status switch: defaults to active (1) unless explicitly disabled (0)
+								$status_meta = get_post_meta( $template->ID, '_awea_template_status', true );
+								$is_active   = '0' !== $status_meta;
+
+								$condition_labels = array(
+									'entire_site'   => esc_html__( 'Entire Website', 'awesome-widgets-elementor' ),
+									'front_page'    => esc_html__( 'Homepage Only', 'awesome-widgets-elementor' ),
+									'singular_page' => esc_html__( 'All Pages', 'awesome-widgets-elementor' ),
+									'singular_post' => esc_html__( 'All Blog Posts', 'awesome-widgets-elementor' ),
+									'archive'       => esc_html__( 'All Archives', 'awesome-widgets-elementor' ),
+									'not_found_404' => esc_html__( '404 Error Page', 'awesome-widgets-elementor' ),
+								);
+
+								$edit_url   = admin_url( 'post.php?post=' . $template->ID . '&action=elementor' );
+								$delete_url = wp_nonce_url(
+									admin_url( 'admin.php?page=awesome-widgets-header-footer&action=awea_delete_template&post_id=' . $template->ID ),
+									'awea_delete_template_nonce'
+								);
+								?>
+								<tr class="awea-template-row <?php echo $is_active ? '' : 'is-disabled'; ?>" data-type="<?php echo esc_attr( $type ); ?>" id="awea-row-<?php echo esc_attr( (string) $template->ID ); ?>">
+									<!-- Enable/Disable Switch -->
+									<td class="awea-col-switch">
+										<label class="awea-table-switch" title="<?php esc_attr_e( 'Enable or Disable this template', 'awesome-widgets-elementor' ); ?>">
+											<input type="checkbox" 
+												onchange="aweaToggleStatus(<?php echo esc_attr( (string) $template->ID ); ?>, this)" 
+												<?php checked( $is_active, true ); ?> 
+											/>
+											<span class="awea-table-slider"></span>
+										</label>
+									</td>
+
+									<td>
+										<strong><a href="<?php echo esc_url( $edit_url ); ?>"><?php echo esc_html( $template->post_title ); ?></a></strong>
+										<?php if ( 'draft' === $template->post_status ) : ?>
+											<span style="color:#eab308; font-size:11px; margin-left:6px;">— <?php esc_html_e( 'Draft', 'awesome-widgets-elementor' ); ?></span>
+										<?php endif; ?>
+									</td>
+
+									<td>
+										<span class="awea-type-pill <?php echo esc_attr( $type ); ?>">
+											<?php echo esc_html( ucfirst( $type ) ); ?>
+										</span>
+									</td>
+
+									<td>
+										<span class="awea-rule-badge">
+											<?php echo esc_html( isset( $condition_labels[ $condition ] ) ? $condition_labels[ $condition ] : $condition_labels['entire_site'] ); ?>
+										</span>
+									</td>
+
+									<td>
+										<span class="awea-code-tag">[awea_template id="<?php echo esc_attr( (string) $template->ID ); ?>"]</span>
+									</td>
+
+									<td style="text-align: right;">
+										<div class="awea-row-actions" style="justify-content: flex-end;">
+											<a href="<?php echo esc_url( $edit_url ); ?>" class="awea-btn-edit">
+												<span class="dashicons dashicons-edit"></span>
+												<?php esc_html_e( 'Edit', 'awesome-widgets-elementor' ); ?>
+											</a>
+											<a href="<?php echo esc_url( $delete_url ); ?>" class="awea-btn-del" onclick="return confirm('<?php esc_attr_e( 'Are you sure you want to delete this template?', 'awesome-widgets-elementor' ); ?>')">
+												<?php esc_html_e( 'Delete', 'awesome-widgets-elementor' ); ?>
+											</a>
+										</div>
+									</td>
+								</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+				<?php else : ?>
+					<p><?php esc_html_e( 'No templates found.', 'awesome-widgets-elementor' ); ?></p>
+				<?php endif; ?>
 			</div>
 		</div>
+
+		<!-- Live AJAX Switch Script -->
+		<script>
+			function aweaFilterTemplates(type, btn) {
+				var tabs = document.querySelectorAll('.awea-tab-btn');
+				tabs.forEach(function(b) { b.classList.remove('active'); });
+				btn.classList.add('active');
+
+				var rows = document.querySelectorAll('.awea-template-row');
+				rows.forEach(function(row) {
+					var rowType = row.getAttribute('data-type');
+					row.style.display = (type === 'all' || rowType === type) ? '' : 'none';
+				});
+			}
+
+			function aweaToggleStatus(postId, checkbox) {
+				var row = document.getElementById('awea-row-' + postId);
+				var isChecked = checkbox.checked ? '1' : '0';
+
+				if (row) {
+					if (checkbox.checked) {
+						row.classList.remove('is-disabled');
+					} else {
+						row.classList.add('is-disabled');
+					}
+				}
+
+				var data = new FormData();
+				data.append('action', 'awea_toggle_template_status');
+				data.append('post_id', postId);
+				data.append('status', isChecked);
+				data.append('security', '<?php echo esc_js( $ajax_nonce ); ?>');
+
+				fetch(ajaxurl, {
+					method: 'POST',
+					body: data
+				})
+				.then(function(res) { return res.json(); })
+				.then(function(res) {
+					if (!res.success) {
+						alert(res.data && res.data.message ? res.data.message : 'Error updating status.');
+						checkbox.checked = !checkbox.checked;
+					}
+				})
+				.catch(function(err) {
+					alert('Network error while updating status.');
+					checkbox.checked = !checkbox.checked;
+				});
+			}
+		</script>
 		<?php
 	}
 }
