@@ -1,67 +1,283 @@
- @property --bento-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
-            :root { --awea-ease: cubic-bezier(0.2, 0, 0, 1); }
+/* ==========================================================================
+   AWEA Product Grid Studio 10/10 Architecture
+   ========================================================================== */
 
-            .awea-grid-row { display: flex; flex-wrap: wrap; margin: -15px; box-sizing: border-box; }
-            .awea-grid-item { box-sizing: border-box; display: flex; padding: 15px; }
+@property --bento-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
 
-            .awea-grid-12 { width: 100%; } .awea-grid-6 { width: 50%; } 
-            .awea-grid-4 { width: 33.333%; } .awea-grid-3 { width: 25%; }
+:root {
+  --awea-ease: cubic-bezier(0.2, 0, 0, 1);
+}
 
-            @media (max-width: 1024px) { 
-                .awea-grid-tablet-12 { width: 100% !important; } 
-                .awea-grid-tablet-6 { width: 50% !important; } 
-            }
-            @media (max-width: 767px) { 
-                .awea-grid-mobile-12 { width: 100% !important; } 
-            }
+.awea-product-grid-wrap {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
 
-            .awea-card {
-                position: relative; width: 100%; border-radius: 32px; 
-                overflow: hidden; display: flex; flex-direction: column; border: 1px solid #e2e8f0;
-                transition: transform 0.6s var(--awea-ease), box-shadow 0.6s var(--awea-ease); z-index: 1;
-            }
+/* 1. Grid Row Engine */
+.awea-grid-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
 
-            .awea-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px -12px rgba(0,0,0,0.12); }
+.awea-grid-item {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  box-sizing: border-box;
+}
 
-            .awea-card::after {
-                content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 2.5px;
-                background: conic-gradient(from var(--bento-angle), transparent 70%, #6366f1, transparent);
-                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: 0.4s; pointer-events: none;
-            }
-            .awea-card:hover::after { opacity: 1; animation: awea-spin 3s linear infinite; }
-            @keyframes awea-spin { to { --bento-angle: 360deg; } }
+/* 2. Product Card Shell */
+.awea-card {
+  position: relative;
+  width: 100%;
+  border-radius: 32px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+  transition: transform 0.6s var(--awea-ease),
+              box-shadow 0.6s var(--awea-ease),
+              border-color 0.3s ease;
+  z-index: 1;
+  box-sizing: border-box;
+}
 
-            .awea-badge-sale {
-                position: absolute; top: 15px; left: 15px; color: #fff;
-                padding: 5px 12px; border-radius: 10px; font-size: 10px; font-weight: 900; z-index: 3;
-            }
+.awea-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.12);
+}
 
-            .awea-image-container { height: 260px; overflow: hidden; background: #f8fafc; }
-            .awea-image-container img { width: 100%; height: 100%; object-fit: cover; transition: 1.2s var(--awea-ease); }
-            .awea-card:hover .awea-image-container img { transform: scale(1.1); }
+/* Kinetic Border Glow Beam */
+.awea-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2.5px;
+  background: conic-gradient(from var(--bento-angle), transparent 70%, var(--e-global-color-primary, #6366f1), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
 
-            .awea-post-content { padding: 25px; flex-grow: 1; }
-            .awea-brand { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-            .awea-product-name { font-size: 19px; font-weight: 700; margin: 0; line-height: 1.3; }
+.awea-card:hover::after {
+  opacity: 1;
+  animation: aweaSpin 3s linear infinite;
+}
 
-            .awea-footer { padding: 20px 25px; border-top: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; background: #fcfdfe; }
-            .awea-pricing { display: flex; flex-direction: column; }
-            .awea-old-price { font-size: 13px; color: #94a3b8; text-decoration: line-through; }
-            .awea-current-price { font-size: 18px; font-weight: 900; color: #0f172a; }
+@keyframes aweaSpin {
+  to {
+    --bento-angle: 360deg;
+  }
+}
 
-            .awea-buy-btn {
-                background: #0f172a; color: #fff; width: 46px; height: 46px; border-radius: 14px;
-                display: flex; align-items: center; justify-content: center; position: relative;
-                transition: 0.4s var(--awea-ease); overflow: hidden; border: none; cursor: pointer; text-decoration: none;
-            }
-            .awea-buy-btn i { font-size: 16px; position: absolute; transition: 0.3s; }
-            .awea-btn-label { opacity: 0; font-weight: 700; font-size: 12px; white-space: nowrap; transition: 0.3s; transform: translateX(10px); }
-            
-            .awea-card:hover .awea-buy-btn { width: 130px; }
-            .awea-card:hover .awea-buy-btn i { position: relative; margin-right: 8px; }
-            .awea-card:hover .awea-btn-label { opacity: 1; transform: translateX(0); }
+/* 3. Sale Badge */
+.awea-badge-sale {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  color: #ffffff;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background-color: #ef4444;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  z-index: 3;
+}
 
-            .awea-view-cart-btn { display: none; background: #10b981 !important; }
-            .product-in-cart .awea-add-to-cart-btn { display: none; }
-            .product-in-cart .awea-view-cart-btn { display: flex; }
+/* 4. Image Container */
+.awea-image-container {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background-color: #f8fafc;
+  box-sizing: border-box;
+}
+
+.awea-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 1.2s var(--awea-ease);
+}
+
+.awea-card:hover .awea-image-container img {
+  transform: scale(1.08);
+}
+
+/* 5. Post Content */
+.awea-post-content {
+  padding: 24px;
+  flex-grow: 1;
+  box-sizing: border-box;
+}
+
+.awea-brand {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--e-global-color-primary, #6366f1);
+  margin: 0 0 8px 0;
+}
+
+.awea-product-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.awea-product-name a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.25s ease;
+}
+
+.awea-product-name a:hover {
+  color: var(--e-global-color-primary, #6366f1);
+}
+
+/* 6. Footer & Expandable Action Button */
+.awea-footer {
+  padding: 20px 24px;
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fcfdfe;
+  box-sizing: border-box;
+}
+
+.awea-pricing {
+  display: flex;
+  flex-direction: column;
+}
+
+.awea-old-price {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  text-decoration: line-through;
+  font-weight: 600;
+}
+
+.awea-current-price {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--e-global-color-primary, #0f172a);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Sliding Expandable Add to Cart Button */
+.awea-action-container {
+  display: flex;
+  align-items: center;
+}
+
+.awea-buy-btn {
+  background-color: #0f172a;
+  color: #ffffff;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: width 0.4s var(--awea-ease), background-color 0.3s ease, color 0.3s ease;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.awea-buy-btn i {
+  font-size: 15px;
+  position: absolute;
+  transition: margin-right 0.3s ease;
+}
+
+.awea-btn-label {
+  opacity: 0;
+  font-weight: 700;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateX(10px);
+}
+
+.awea-card:hover .awea-buy-btn {
+  width: 135px;
+}
+
+.awea-card:hover .awea-buy-btn i {
+  position: relative;
+  margin-right: 8px;
+}
+
+.awea-card:hover .awea-btn-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.awea-view-cart-btn {
+  display: none;
+  background-color: #10b981 !important;
+}
+
+.product-in-cart .awea-add-to-cart-btn {
+  display: none;
+}
+
+.product-in-cart .awea-view-cart-btn {
+  display: flex;
+}
+
+/* 7. Responsive Adaptations */
+@media (max-width: 1024px) {
+  .awea-grid-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .awea-grid-row {
+    grid-template-columns: 1fr !important;
+  }
+  .awea-card {
+    border-radius: 24px;
+  }
+  .awea-card:hover .awea-buy-btn {
+    width: 46px;
+  }
+  .awea-card:hover .awea-buy-btn i {
+    margin-right: 0;
+  }
+  .awea-card:hover .awea-btn-label {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+}

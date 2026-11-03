@@ -1,616 +1,382 @@
 <?php
+/**
+ * Awesome Product Category Carousel Studio Widget.
+ * Architectural WooCommerce Category Slider with Frosted Overlays & Global Kits.
+ *
+ * @package AwesomeWidgetsElementor
+ * @since 1.0.0
+ */
+
 namespace Elementor;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 use \Elementor\Controls_Manager;
 use \Elementor\Group_Control_Border;
+use \Elementor\Group_Control_Box_Shadow;
 use \Elementor\Group_Control_Typography;
-use \Elementor\Group_Control_Background;
 use \Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use \Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use \Elementor\Widget_Base;
 
 class Widget_Awesome_Product_Category_Carousel extends Widget_Base {
 
-	/**
-	 * Get widget name.
-	 *
-	 * Retrieve about widget name.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return string Widget name.
-	*/
 	public function get_name() {
 		return 'awesome-product-category-carousel';
 	}
 
-	/**
-	 * Get widget title.
-	 *
-	 * Retrieve about widget title.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return string Widget title.
-	 */
 	public function get_title() {
-		return esc_html__( 'Products Category Carousel', 'awesome-widgets-elementor' );
+		return esc_html__( 'Product Category Carousel Studio', 'awesome-widgets-elementor' );
 	}
 
-	/**
-	 * Get widget icon.
-	 *
-	 * Retrieve about widget icon.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return string Widget icon.
-	 */
 	public function get_icon() {
-		return 'awea-icon eicon-nested-carousel';
-	}	
+		return 'eicon-nested-carousel';
+	}
 
-	/**
-	 * Get widget categories.
-	 *
-	 * Retrieve the list of categories the about widget belongs to.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return array Widget categories.
-	 */
 	public function get_categories() {
 		return [ 'awesome-widgets-elementor' ];
 	}
 
-	/**
-	 * Get widget keywords.
-	 *
-	 * Retrieve the list of keywords the list widget belongs to.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return array Widget keywords.
-	 */
 	public function get_keywords() {
-		return [ 'category', 'products', 'carousel', 'awea'];
+		return [ 'awea', 'woocommerce', 'category', 'categories', 'carousel', 'slider', 'shop' ];
 	}
 
-	/**
-	 * Adds different input fields to allow the user to change and customize the widget settings.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 */
 	protected function register_controls() {
 
-		// start of the Content tab section
+		/* ==========================================================================
+		   CONTENT: QUERY & SOURCE
+		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_product_categories_carousel_contents',
+			'awea_section_cat_query',
 			[
-				'label' => esc_html__('Contents', 'awesome-widgets-elementor'),
-				'tab'   => Controls_Manager::TAB_CONTENT		
+				'label' => esc_html__( 'Category Query', 'awesome-widgets-elementor' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
-		 
-		// Product Categories
+
+		// Category Options Dropdown
+		$cat_options = [];
+		if ( class_exists( 'WooCommerce' ) ) {
+			$categories = get_terms( [
+				'taxonomy'   => 'product_cat',
+				'hide_empty' => false,
+			] );
+			if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
+				foreach ( $categories as $cat ) {$cat_options[ $cat->term_id ] =$cat->name;
+				}
+			}
+		}
+
 		$this->add_control(
-			'awea_product_categories_carousel',
+			'awea_include_categories',
 			[
-				'label' => esc_html__('Select Category', 'awesome-widgets-elementor'),
-				'type' => Controls_Manager::SELECT2,
-				'options' => $this->get_all_product_categories(),
+				'label'       => esc_html__( 'Filter Categories', 'awesome-widgets-elementor' ),
+				'type'        => Controls_Manager::SELECT2,
 				'label_block' => true,
-				'multiple' => true, // Set to true for multiple selections
+				'multiple'    => true,
+				'options'     => $cat_options,
 			]
 		);
- 
-		 // Show Product Category Count
-		 $this->add_control(
-			'awea_product_categories_carousel_count',
-			[
-				'label' => esc_html__( 'Show Products Count', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Show', 'awesome-widgets-elementor' ),
-				'label_off' => esc_html__( 'Hide', 'awesome-widgets-elementor' ),
-				'return_value' => 'yes',
-				'default' => 'yes',
-			]
-		);
- 
-		 // Show Product Category Button
-		 $this->add_control(
-			'awea_product_categories_carousel_btn_show',
-			[
-				'label' => esc_html__( 'Show Button', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Show', 'awesome-widgets-elementor' ),
-				'label_off' => esc_html__( 'Hide', 'awesome-widgets-elementor' ),
-				'return_value' => 'yes',
-				'default' => 'yes',
-			]
-		);
- 
-		// Product Category Alignment
+
 		$this->add_control(
-			'awea_product_categories_carousel_alignment',
+			'awea_hide_empty',
 			[
-				'type' => Controls_Manager::CHOOSE,
-				'label' => esc_html__( 'Alignment', 'awesome-widgets-elementor' ),
+				'label'        => esc_html__( 'Hide Empty Categories', 'awesome-widgets-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default'      => '',
+			]
+		);
+
+		$this->add_control(
+			'awea_orderby',
+			[
+				'label'   => esc_html__( 'Order By', 'awesome-widgets-elementor' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'name',
 				'options' => [
-					'left' => [
-						'title' => esc_html__( 'Left', 'awesome-widgets-elementor' ),
-						'icon' => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'awesome-widgets-elementor' ),
-						'icon' => 'eicon-text-align-center',
-					],
-					'right' => [
-						'title' => esc_html__( 'Right', 'awesome-widgets-elementor' ),
-						'icon' => 'eicon-text-align-right',
-					],
-				],
-				'default' => 'left',
-				'selectors' => [
-					'{{WRAPPER}} .product-category-content' => 'text-align: {{VALUE}}',
-				],
-				'separator' => 'before'
-			],
-		);
-		
-		$this->end_controls_section();
-		// end of the Products Category Carousel Content tab section
-
-		// start of the Content tab section
-		$this->start_controls_section(
-			'awea_product_category_carousel_settings',
-			[
-				'label' => esc_html__('Settings', 'awesome-widgets-elementor'),
-				'tab'   => Controls_Manager::TAB_CONTENT,		
-			]
-		);
-
-		// Product Category Carousel Number
-		$this->add_control(
-			'awea_product_category_carousel_number',
-			[
-				'label' 		=> __('Number of Product Category', 'awesome-widgets-elementor'),
-				'type' 			=> Controls_Manager::NUMBER,
-				'default' 		=> '3',
-			]
-		);
-
-		// Product Category Carousel Arrows
-		$this->add_control(
-			'awea_product_category_carousel_arrows',
-			[
-				'label' => esc_html__( 'Arrows', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'awesome-widgets-elementor' ),
-				'label_off' => esc_html__( 'No', 'awesome-widgets-elementor' ),
-				'return_value' => 'yes',
-				'default' => 'yes',
-			]
-		);
-
-		// Product Category Carousel Dots
-		$this->add_control(
-			'awea_product_category_carousel_dots',
-			[
-				'label' => esc_html__( 'Dots', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'awesome-widgets-elementor' ),
-				'label_off' => esc_html__( 'No', 'awesome-widgets-elementor' ),
-				'return_value' => 'yes',
-				'default' => 'yes',
-			]
-		);
-
-		// Product Category Carousel Loops
-		$this->add_control(
-			'awea_product_category_carousel_loop',
-			[
-				'label' => esc_html__( 'Loops', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'awesome-widgets-elementor' ),
-				'label_off' => esc_html__( 'No', 'awesome-widgets-elementor' ),
-				'return_value' => 'yes',
-				'default' => 'yes',
-			]
-		);
-
-		// Product Category Carousel Pause
-		$this->add_control(
-			'awea_product_category_carousel_pause',
-			[
-				'label' => esc_html__( 'Pause on hover', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'awesome-widgets-elementor' ),
-				'label_off' => esc_html__( 'No', 'awesome-widgets-elementor' ),
-				'return_value' => 'yes',
-				'default' => 'yes',
-			]
-		);
-
-		// Product Category Carousel Autoplay
-		$this->add_control(
-			'awea_product_category_carousel_autoplay',
-			[
-				'label' => esc_html__( 'Autoplay', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'awesome-widgets-elementor' ),
-				'label_off' => esc_html__( 'No', 'awesome-widgets-elementor' ),
-				'return_value' => 'yes',
-				'default' => 'yes',
-			]
-		);
-
-		// Product Category Carousel Autoplay Speed
-		$this->add_control(
-			'awea_product_category_carousel_autoplay_speed',
-			[
-				'label' => esc_html__( 'Speed', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => '5000',
-				'options' => [
-					'1000' => esc_html__( '1 Seconds', 'awesome-widgets-elementor' ),
-					'2000' => esc_html__( '2 Seconds', 'awesome-widgets-elementor' ),
-					'3000' => esc_html__( '3 Seconds', 'awesome-widgets-elementor' ),
-					'4000' => esc_html__( '4 Seconds', 'awesome-widgets-elementor' ),
-					'5000' => esc_html__( '5 Seconds', 'awesome-widgets-elementor' ),
-					'6000' => esc_html__( '6 Seconds', 'awesome-widgets-elementor' ),
-					'7000' => esc_html__( '7 Seconds', 'awesome-widgets-elementor' ),
-					'8000' => esc_html__( '8 Seconds', 'awesome-widgets-elementor' ),
-					'9000' => esc_html__( '9 Seconds', 'awesome-widgets-elementor' ),
-					'10000' => esc_html__( '10 Seconds', 'awesome-widgets-elementor' ),
+					'name'  => 'Name',
+					'id'    => 'ID',
+					'count' => 'Product Count',
+					'rand'  => 'Random',
 				],
 			]
 		);
 
-		// Product Category Carousel Animation Speed
 		$this->add_control(
-			'awea_product_category_carousel_autoplay_animation',
+			'awea_order',
 			[
-				'label' => esc_html__( 'Timeout', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => '5000',
+				'label'   => esc_html__( 'Order', 'awesome-widgets-elementor' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'ASC',
 				'options' => [
-					'1000' => esc_html__( '1 Seconds', 'awesome-widgets-elementor' ),
-					'2000' => esc_html__( '2 Seconds', 'awesome-widgets-elementor' ),
-					'3000' => esc_html__( '3 Seconds', 'awesome-widgets-elementor' ),
-					'4000' => esc_html__( '4 Seconds', 'awesome-widgets-elementor' ),
-					'5000' => esc_html__( '5 Seconds', 'awesome-widgets-elementor' ),
-					'6000' => esc_html__( '6 Seconds', 'awesome-widgets-elementor' ),
-					'7000' => esc_html__( '7 Seconds', 'awesome-widgets-elementor' ),
-					'8000' => esc_html__( '8 Seconds', 'awesome-widgets-elementor' ),
-					'9000' => esc_html__( '9 Seconds', 'awesome-widgets-elementor' ),
-					'10000' => esc_html__( '10 Seconds', 'awesome-widgets-elementor' ),
+					'ASC'  => 'ASC',
+					'DESC' => 'DESC',
 				],
 			]
 		);
 
 		$this->end_controls_section();
-		// end of the Content tab section
 
-		// start of the Content tab section
+		/* ==========================================================================
+		   CONTENT: ELEMENTS & CAROUSEL SETTINGS
+		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_products_category_carousel_pro_message',
+			'awea_section_cat_settings',
 			[
-				'label' => esc_html__('Premium', 'awesome-widgets-elementor'),
-				'tab'   => Controls_Manager::TAB_CONTENT		
+				'label' => esc_html__( 'Elements & Carousel Settings', 'awesome-widgets-elementor' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
 
-		$this->add_control( 
-			'awea_products_category_carousel_pro_message_notice', 
+		$this->add_control(
+			'awea_show_count',
 			[
-				'type'      => Controls_Manager::RAW_HTML,
-				'raw'       => sprintf(
-					'<div style="text-align:center;line-height:1.6;">
-						<p style="margin-bottom:10px">%s</p>
-					</div>',
-					esc_html__('Awesome Widgets for Elementor Premium is coming soon with more widgets, features, and customization options.', 'awesome-widgets-elementor')
-				)
-			]  
+				'label'        => esc_html__( 'Show Product Count', 'awesome-widgets-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default'      => 'yes',
+			]
 		);
+
+		$this->add_control(
+			'awea_slides_per_view',
+			[
+				'label'              => esc_html__( 'Items Per Slide', 'awesome-widgets-elementor' ),
+				'type'               => Controls_Manager::SELECT,
+				'default'            => '3',
+				'options'            => [
+					'1' => '1 Item',
+					'2' => '2 Items',
+					'3' => '3 Items',
+					'4' => '4 Items',
+				],
+				'frontend_available' => true,
+				'separator'          => 'before',
+			]
+		);
+
+		$this->add_control(
+			'awea_carousel_arrows',
+			[
+				'label'        => esc_html__( 'Navigation Arrows', 'awesome-widgets-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default'      => 'yes',
+			]
+		);
+
+		$this->add_control(
+			'awea_carousel_dots',
+			[
+				'label'        => esc_html__( 'Pagination Dots', 'awesome-widgets-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default'      => 'yes',
+			]
+		);
+
+		$this->add_control(
+			'awea_carousel_loop',
+			[
+				'label'        => esc_html__( 'Infinite Loop', 'awesome-widgets-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default'      => 'yes',
+			]
+		);
+
+		$this->add_control(
+			'awea_carousel_autoplay',
+			[
+				'label'        => esc_html__( 'Autoplay', 'awesome-widgets-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default'      => 'yes',
+			]
+		);
+
+		$this->add_control(
+			'awea_carousel_autoplay_speed',
+			[
+				'label'     => esc_html__( 'Autoplay Speed (ms)', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::NUMBER,
+				'default'   => 5000,
+				'condition' => [ 'awea_carousel_autoplay' => 'yes' ],
+			]
+		);
+
 		$this->end_controls_section();
-		
-		// Style
+
+		/* ==========================================================================
+		   STYLE: CARD SHELL & LAYOUT
+		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_product_category_content_style',
+			'awea_section_style_card',
 			[
-				'label' => esc_html__( 'Content', 'awesome-widgets-elementor' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label' => esc_html__( 'Card Shell', 'awesome-widgets-elementor' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
-		$this->add_control(
-			'awea_product_category_color',
+		$this->add_responsive_control(
+			'awea_card_radius',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .awea-product-category-content a, .awea-product-category-content span' => 'color: {{VALUE}}',
+				'label'      => esc_html__( 'Corner Radius', 'awesome-widgets-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default'    => [ 'top' => '28', 'right' => '28', 'bottom' => '28', 'left' => '28', 'unit' => 'px', 'isLinked' => true ],
+				'selectors'  => [
+					'{{WRAPPER}} .awea-product-category' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'global' => [
-					'default' => Global_Colors::COLOR_TEXT,
-				]
-			]
-		);
-
-		$this->add_control(
-			'awea_product_category_bg_color',
-			[
-				'label' => esc_html__( 'Background', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .awea-product-category-content' => 'background-color: {{VALUE}}',
-				],
-				'global' => [
-					'default' => Global_Colors::COLOR_PRIMARY,
-				]
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'awea_product_category_typography',
-				'selector' => '{{WRAPPER}} .awea-product-category-content a, .awea-product-category-content span',
-				'global' => [
-					'default' => Global_Typography::TYPOGRAPHY_TEXT,
-				]
 			]
 		);
 
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			[
-				'name' => 'awea_product_category_border',
+				'name'     => 'awea_card_border',
 				'selector' => '{{WRAPPER}} .awea-product-category',
 			]
-		);	
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name'     => 'awea_card_shadow',
+				'selector' => '{{WRAPPER}} .awea-product-category',
+			]
+		);
+
+		$this->end_controls_section();
+
+		/* ==========================================================================
+		   STYLE: CONTENT OVERLAY
+		   ========================================================================== */
+		$this->start_controls_section(
+			'awea_section_style_content',
+			[
+				'label' => esc_html__( 'Content Overlay & Typography', 'awesome-widgets-elementor' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
 
 		$this->add_control(
-			'awea_product_category_padding',
+			'awea_content_bg',
 			[
-				'label' => esc_html__( 'Padding', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%'],
+				'label'     => esc_html__( 'Overlay Background', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => 'rgba(15, 23, 42, 0.76)',
 				'selectors' => [
+					'{{WRAPPER}} .awea-product-category-content' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'awea_category_color',
+			[
+				'label'     => esc_html__( 'Text Color', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .awea-product-category-link, {{WRAPPER}} .awea-category-count' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'awea_category_typography',
+				'selector' => '{{WRAPPER}} .awea-product-category-link',
+				'global'   => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'awea_content_padding',
+			[
+				'label'      => esc_html__( 'Overlay Padding', 'awesome-widgets-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', 'rem' ],
+				'default'    => [ 'top' => '18', 'right' => '20', 'bottom' => '18', 'left' => '20', 'unit' => 'px', 'isLinked' => false ],
+				'selectors'  => [
 					'{{WRAPPER}} .awea-product-category-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
+				'separator'  => 'before',
 			]
 		);
 
 		$this->end_controls_section();
-
-		// start of the Style tab section
-		$this->start_controls_section(
-			'awea_product_category_carousel_arrows_style',
-			[
-				'label' => esc_html__( 'Arrows', 'awesome-widgets-elementor' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'condition'		=> [
-					'awea_product_category_carousel_arrows' => 'yes'
-				]
-			]
-		);
-
-		// Start of Tabs
-		$this->start_controls_tabs('awea_product_category_carousel_arrows_tabs');
-
-		// Normal Tab
-		$this->start_controls_tab(
-			'awea_product_category_carousel_arrows_tabs_normal',
-			[
-				'label' => esc_html__('Normal', 'awesome-widgets-elementor'),
-			]
-		);
-
-		$this->add_control(
-			'awea_product_category_carousel_arrows_color',
-			[
-				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .awea-product-category-carousel .awea-carousel-arrow-border i' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'awea_product_category_carousel_arrows_bg',
-			[
-				'label' => esc_html__( 'Background', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .awea-product-category-carousel .awea-carousel-arrow-border' => 'background-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		// Hover Tab
-		$this->start_controls_tab(
-			'awea_product_category_carousel_arrows_tabs_hover',
-			[
-				'label' => esc_html__('Hover', 'awesome-widgets-elementor'),
-			]
-		);
-
-		$this->add_control(
-			'awea_product_category_carousel_arrow_hover_bg',
-			[
-				'label' => esc_html__( 'Background', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .awea-product-category-carousel .awea-carousel-arrow-border:hover' => 'background-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-
-		$this->end_controls_section();
-		// end of the Style tab section
-
-		// start of the Style tab section
-		$this->start_controls_section(
-			'awea_product_category_carousel_dots_style',
-			[
-				'label' => esc_html__( 'Dots', 'awesome-widgets-elementor' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'condition'		=> [
-					'awea_product_category_carousel_dots' => 'yes'
-				]
-			]
-		);
-
-		// Start of Tabs
-		$this->start_controls_tabs('awea_product_category_carousel_dots_tabs');
-
-		// Normal Tab
-		$this->start_controls_tab(
-			'awea_product_category_carousel_dots_tabs_normal',
-			[
-				'label' => esc_html__('Normal', 'awesome-widgets-elementor'),
-			]
-		);
-
-		$this->add_control(
-			'awea_product_category_carousel_dots_color',
-			[
-				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .awea-product-category-carousel .owl-dots button.owl-dot' => 'background-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'awea_product_category_carousel_dots_active',
-			[
-				'label' => esc_html__( 'Active Color', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .awea-product-category-carousel .owl-dots button.owl-dot.active' => 'background-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		// Hover Tab
-		$this->start_controls_tab(
-			'awea_product_category_carousel_dots_tabs_hover',
-			[
-				'label' => esc_html__('Hover', 'awesome-widgets-elementor'),
-			]
-		);
-
-		$this->add_control(
-			'awea_product_category_carousel_dots_hover_color',
-			[
-				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .awea-product-category-carousel .awea-carousel-arrow-border i' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-
-		$this->end_controls_section();
-		// end of the Style tab section
-
 	}
 
-	protected function get_all_product_categories() {
-    $product_categories = get_terms('product_cat');
-    $options = [];
-
-    if ( $product_categories && ! is_wp_error($product_categories) ) {
-        foreach ( $product_categories as $category ) {
-            $options[$category->term_id] = $category->name;
-        }
-    }
-    return $options;
-}
-
-
 	protected function render() {
-    $settings = $this->get_settings_for_display();
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			echo '<div class="awea-notice-error"><p>' . esc_html__( 'WooCommerce must be installed and active to use the Product Category Carousel Studio widget.', 'awesome-widgets-elementor' ) . '</p></div>';
+			return;
+		}
 
-    // Widget settings
-    $awea_product_category_carousel_items = $settings['awea_product_category_carousel_number'];
-    $awea_product_category_carousel_arrows = $settings['awea_product_category_carousel_arrows'];
-    $awea_product_category_carousel_dots = $settings['awea_product_category_carousel_dots'];
-    $awea_product_category_carousel_loops = $settings['awea_product_category_carousel_loop'];
-    $awea_product_category_carousel_pause = $settings['awea_product_category_carousel_pause'];
-    $awea_product_category_carousel_autoplay = $settings['awea_product_category_carousel_autoplay'];
-    $awea_product_category_carousel_autoplay_speed = $settings['awea_product_category_carousel_autoplay_speed'];
-    $awea_product_category_carousel_autoplay_animation = $settings['awea_product_category_carousel_autoplay_animation'];
+		$settings   = $this->get_settings_for_display();$categories = $settings['awea_include_categories'] ?? [];$hide_empty = 'yes' === ( $settings['awea_hide_empty'] ?? 'no' );$show_count = 'yes' === ( $settings['awea_show_count'] ?? 'no' );$slides_view= $settings['awea_slides_per_view'] ?? '3';$arrows     = 'yes' === ( $settings['awea_carousel_arrows'] ?? 'no' );$dots       = 'yes' === ( $settings['awea_carousel_dots'] ?? 'no' );$loop       = 'yes' === ( $settings['awea_carousel_loop'] ?? 'no' );$autoplay   = 'yes' === ( $settings['awea_carousel_autoplay'] ?? 'no' );$auto_speed = ! empty( $settings['awea_carousel_autoplay_speed'] ) ? absint( $settings['awea_carousel_autoplay_speed'] ) : 5000;
+		$widget_id  =$this->get_id();
 
-    // Build query args
-    $args = [
-        'taxonomy'   => 'product_cat',
-        'hide_empty' => false,
-    ];
+		$args = [
+			'taxonomy'   => 'product_cat',
+			'hide_empty' => $hide_empty,
+			'orderby'    => $settings['awea_orderby'] ?? 'name',
+			'order'      => $settings['awea_order'] ?? 'ASC',
+		];
 
-    // If user selected categories, filter by them
-    if ( ! empty( $settings['awea_product_category_include'] ) ) {
-        $args['include'] = $settings['awea_product_category_include'];
-    }
+		if ( ! empty( $categories ) && is_array($categories ) ) {
+			$args['include'] = array_map( 'absint',$categories );
+		}
 
-    $product_categories = get_terms( $args );
+		$product_categories = get_terms($args );
 
-    if ( empty( $product_categories ) || is_wp_error( $product_categories ) ) {
-        echo '<p>' . esc_html__( 'No categories found.', 'awesome-widgets-elementor' ) . '</p>';
-        return;
-    }
-    ?>
-    <div class="awea-product-category-carousel owl-carousel" 
-        awea-product-category-carousel-items="<?php echo esc_attr( $awea_product_category_carousel_items ); ?>" 
-        awea-product-category-carousel-arrows="<?php echo esc_attr( $awea_product_category_carousel_arrows ); ?>" 
-        awea-product-category-carousel-dots="<?php echo esc_attr( $awea_product_category_carousel_dots ); ?>" 
-        awea-product-category-carousel-loops="<?php echo esc_attr( $awea_product_category_carousel_loops ); ?>" 
-        awea-product-category-carousel-pause="<?php echo esc_attr( $awea_product_category_carousel_pause ); ?>" 
-        awea-product-category-carousel-autoplay="<?php echo esc_attr( $awea_product_category_carousel_autoplay ); ?>" 
-        awea-product-category-carousel-autoplay-speed="<?php echo esc_attr( $awea_product_category_carousel_autoplay_speed ); ?>" 
-        awea-product-category-carousel-autoplay-animation="<?php echo esc_attr( $awea_product_category_carousel_autoplay_animation ); ?>">
+		if ( empty( $product_categories ) \vert{}\vert{} is_wp_error($product_categories ) ) {
+			return;
+		}
+		?>
+		<div class="awea-product-category-carousel-wrap">
+			<div class="awea-product-category-carousel owl-carousel"
+			     id="awea-cat-carousel-<?php echo esc_attr( $widget_id ); ?>"
+			     data-items="<?php echo esc_attr( $slides_view ); ?>"
+			     data-arrows="<?php echo esc_attr( $arrows ? 'true' : 'false' ); ?>"
+			     data-dots="<?php echo esc_attr( $dots ? 'true' : 'false' ); ?>"
+			     data-loop="<?php echo esc_attr( $loop ? 'true' : 'false' ); ?>"
+			     data-autoplay="<?php echo esc_attr( $autoplay ? 'true' : 'false' ); ?>"
+			     data-speed="<?php echo esc_attr( (string) $auto_speed ); ?>">
 
-        <?php foreach ( $product_categories as $category ) : 
-            $thumbnail_id = get_term_meta( $category->term_id, 'thumbnail_id', true );
-            $image_url = $thumbnail_id ? wp_get_attachment_url( $thumbnail_id ) : wc_placeholder_img_src();
-        ?>
-            <div class="awea-product-category">
-                <a href="<?php echo esc_url( get_term_link( $category ) ); ?>" class="awea-product-category-img-link">
-                    <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $category->name ); ?>">
-                </a>
-                <div class="awea-product-category-content">
-                    <a href="<?php echo esc_url( get_term_link( $category ) ); ?>" class="awea-product-category-link">
-                        <?php echo esc_html( $category->name ); ?>
-                    </a>
-                    <span class="count">(<?php echo esc_html( $category->count ); ?>)</span>
-                </div>
-            </div>
-        <?php endforeach; ?>
-    </div>
-    <?php
-}
+				<?php foreach ( $product_categories as $category ) :$thumbnail_id = get_term_meta( $category->term_id, 'thumbnail_id', true );$image_url    = $thumbnail_id ? wp_get_attachment_url( $thumbnail_id ) : ( function_exists( 'wc_placeholder_img_src' ) ? wc_placeholder_img_src() : '' );
+				?>
+					<div class="awea-product-category-slide">
+						<article class="awea-product-category">
+							
+							<a href="<?php echo esc_url( get_term_link( $category ) ); ?>" class="awea-product-category-img-link" aria-label="<?php echo esc_attr( $category->name ); ?>">
+								<?php if ( ! empty( $image_url ) ) : ?>
+									<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $category->name ); ?>" loading="lazy" />
+								<?php endif; ?>
+							</a>
+
+							<div class="awea-product-category-content">
+								<a href="<?php echo esc_url( get_term_link( $category ) ); ?>" class="awea-product-category-link">
+									<?php echo esc_html( $category->name ); ?>
+								</a>
+								<?php if ( $show_count ) : ?>
+									<span class="awea-category-count">(<?php echo esc_html( (string) $category->count ); ?>)</span>
+								<?php endif; ?>
+							</div>
+
+						</article>
+					</div>
+				<?php endforeach; ?>
+
+			</div>
+		</div>
+		<?php
+	}
 }

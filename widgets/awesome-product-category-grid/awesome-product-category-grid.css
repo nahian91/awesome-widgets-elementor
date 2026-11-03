@@ -1,10 +1,173 @@
-.awesa-product-category {
-  position: relative;
-}
-.awea-product-category-content {
-  position: absolute;
+/* ==========================================================================
+   AWEA Product Category Grid Studio 10/10 Architecture
+   ========================================================================== */
+
+.awea-product-category-grid-wrap {
   width: 100%;
-  bottom: 0;
-  text-align: center;
-  padding: 20px 5px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* 1. Native Responsive Grid Engine */
+.awea-grid-wrapper {
+  display: grid;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 2. Luxury Dark Card Shell */
+.awea-cat-card {
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+  background-color: #0f172a;
+  isolation: isolate;
+  border-radius: 28px;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.12);
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+              border-color 0.3s ease;
+  will-change: transform;
+}
+
+.awea-cat-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.35);
+}
+
+/* 3. Gradient Overlay Layer */
+.awea-cat-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  background: linear-gradient(to bottom, transparent 30%, rgba(15, 23, 42, 0.9) 100%);
+}
+
+/* 4. Cinematic Image Zoom */
+.awea-cat-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(35%) brightness(0.85);
+  transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1),
+              filter 0.8s ease;
+  display: block;
+}
+
+.awea-cat-card:hover .awea-cat-image {
+  transform: scale(1.08) rotate(0.4deg);
+  filter: grayscale(0%) brightness(1);
+}
+
+/* 5. Frosted Glass Info Box */
+.awea-cat-info {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  z-index: 2;
+  box-sizing: border-box;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+              border-color 0.6s ease,
+              background-color 0.4s ease;
+}
+
+.awea-cat-info span {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.awea-cat-info h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  word-break: break-word;
+}
+
+.awea-view-collection {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 18px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #ffffff;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+              transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.awea-view-collection::after {
+  content: "→";
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+
+/* Hover Interactions */
+.awea-cat-card:hover .awea-cat-info {
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.awea-cat-card:hover .awea-view-collection {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.awea-cat-card:hover .awea-view-collection::after {
+  transform: translateX(5px);
+}
+
+/* 6. Radial Glow Effect Layer */
+.awea-cat-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 120%, rgba(255, 255, 255, 0.18) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.awea-cat-card:hover::after {
+  opacity: 1;
+}
+
+/* 7. Responsive Adaptations */
+@media (max-width: 1024px) {
+  .awea-cat-info {
+    padding: 20px;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+  }
+  .awea-cat-info h3 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .awea-cat-card {
+    height: 420px !important;
+  }
 }

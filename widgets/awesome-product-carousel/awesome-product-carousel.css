@@ -1,73 +1,220 @@
+/* ==========================================================================
+   AWEA Product Carousel Studio 10/10 Architecture
+   ========================================================================== */
 
-.awea-product-carousel-img {
-  background-size: cover;
-  background-position: center;
-  padding-top: 90%;
-}
-.awea-product-carousel {
+.awea-product-carousel-wrap {
+  width: 100%;
   position: relative;
+  box-sizing: border-box;
+}
+
+/* 1. Product Card Shell */
+.awea-product-card {
+  background-color: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 32px;
+  padding: 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
+  will-change: transform;
+}
+
+.awea-product-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--e-global-color-primary, #4f46e5);
+  box-shadow: 0 25px 50px -15px rgba(79, 70, 229, 0.15);
+}
+
+/* 2. Featured Image Frame & Sale Badge */
+.awea-product-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 20px;
   overflow: hidden;
+  background-color: #0f172a;
+  margin-bottom: 20px;
+  box-sizing: border-box;
 }
-.awea-product-carousel-sale {
+
+.awea-product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.awea-product-card:hover .awea-product-img {
+  transform: scale(1.08);
+}
+
+.awea-product-sale-badge {
   position: absolute;
-  left: 0;
-  top: 0;
-  background-color: #333;
-  color: #fff;
-  padding: 10px 30px;
-}
-.awea-product-carousel-btn {
-	display: inline-block;
-}
-.awea-product-carousel {
-    display: flex;
-    flex-direction: column; /* stack elements vertically */
-    height: 100%; /* fill available height */
-}
-
-.awea-product-carousel-content {
-    flex: 1; /* take remaining space */
-    display: flex;
-    flex-direction: column;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  padding: 5px 14px;
+  border-radius: 100px;
+  background-color: var(--e-global-color-accent, #38bdf8);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.awea-product-carousel-price-bottom {
-    margin-top: auto; /* push to bottom */
+/* 3. Card Body & Typography */
+.awea-product-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
+.awea-product-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px 0;
+  word-break: break-word;
+}
 
-.awea-products-carousel .awea-carousel-arrow-border {
-  background-color: var(--e-global-color-primary);
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
+.awea-product-title a {
+  text-decoration: none;
+  color: var(--e-global-color-primary, #0f172a);
+  transition: color 0.25s ease;
+}
+
+.awea-product-title a:hover {
+  color: var(--e-global-color-primary, #4f46e5);
+}
+
+.awea-product-price {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--e-global-color-primary, #4f46e5);
+  margin-bottom: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.awea-product-price ins {
+  text-decoration: none;
+  color: var(--e-global-color-primary, #4f46e5);
+}
+
+.awea-product-price del {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #94a3b8;
+  margin-right: 6px;
+}
+
+/* 4. Footer Cart Button */
+.awea-product-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.awea-product-cart-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  background-color: var(--e-global-color-primary, #4f46e5);
+  color: #ffffff;
+  box-shadow: 0 8px 20px -4px rgba(79, 70, 229, 0.35);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.25s ease;
+  border: 1.5px solid transparent;
+}
+
+.awea-product-cart-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px -4px rgba(79, 70, 229, 0.45);
+}
+
+.awea-product-cart-btn.awea-in-cart {
+  background-color: #0f172a;
+}
+
+/* 5. Owl Carousel Custom Navigation & Dots */
+.awea-product-carousel .owl-nav {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  top: -75px;
+  right: 0;
+}
+
+.awea-product-carousel .owl-nav button.owl-prev,
+.awea-product-carousel .owl-nav button.owl-next {
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  z-index: 10;
-  cursor: pointer;
+  background-color: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.1) !important;
+  color: var(--e-global-color-primary, #0f172a) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.awea-products-carousel .owl-prev .awea-carousel-arrow-border {
-  margin-left: -20px;
+.awea-product-carousel .owl-nav button.owl-prev:hover,
+.awea-product-carousel .owl-nav button.owl-next:hover {
+  background-color: var(--e-global-color-primary, #4f46e5) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  transform: scale(1.08);
 }
 
-.awea-products-carousel .owl-next .awea-carousel-arrow-border {
-  margin-right: -20px;
-}
-
-.awea-products-carousel .owl-dots {
+.awea-product-carousel .owl-dots {
   display: flex;
   justify-content: center;
+  gap: 8px;
+  margin-top: 36px;
 }
-.awea-products-carousel .owl-dots button.owl-dot {
-  width: 12px;
-  height: 12px;
-  background-color: var(--e-global-color-secondary);
+
+.awea-product-carousel .owl-dots button.owl-dot {
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  margin: 0 5px;
+  background-color: #cbd5e1;
+  border: none;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
 }
-.awea-products-carousel .owl-dots button.owl-dot.active {
-  background-color: var(--e-global-color-primary);
+
+.awea-product-carousel .owl-dots button.owl-dot.active {
+  width: 28px;
+  border-radius: 100px;
+  background-color: var(--e-global-color-primary, #4f46e5);
 }
-.awea-products-carousel .owl-dots {
-  margin-top: 30px;
+
+/* 6. Responsive Adaptations */
+@media (max-width: 768px) {
+  .awea-product-carousel .owl-nav {
+    display: none;
+  }
+  .awea-product-card {
+    padding: 20px;
+    border-radius: 20px;
+  }
 }

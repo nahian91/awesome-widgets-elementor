@@ -1,42 +1,157 @@
-.awesa-product-category {
+/* ==========================================================================
+   AWEA Product Category Carousel Studio 10/10 Architecture
+   ========================================================================== */
+
+.awea-product-category-carousel-wrap {
+  width: 100%;
   position: relative;
+  box-sizing: border-box;
 }
+
+/* 1. Category Card Shell */
+.awea-product-category {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 28px;
+  overflow: hidden;
+  background-color: #0f172a;
+  box-sizing: border-box;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.awea-product-category:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.2);
+}
+
+/* 2. Thumbnail Image Canvas */
+.awea-product-category-img-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.awea-product-category-img-link img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.awea-product-category:hover .awea-product-category-img-link img {
+  transform: scale(1.08);
+}
+
+/* 3. Frosted Bottom Overlay */
 .awea-product-category-content {
   position: absolute;
-  width: 100%;
-  bottom: 0;
-  text-align: center;
-  padding: 20px 5px;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  background: rgba(15, 23, 42, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  box-sizing: border-box;
+  z-index: 2;
+  transition: background-color 0.3s ease;
 }
-.awea-product-category-carousel .awea-carousel-arrow-border {
-  background-color: var(--e-global-color-primary);
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
+
+.awea-product-category-link {
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  transition: color 0.25s ease;
+  word-break: break-word;
+}
+
+.awea-product-category-link:hover {
+  color: var(--e-global-color-accent, #38bdf8);
+}
+
+.awea-category-count {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+/* 4. Owl Carousel Custom Navigation & Dots */
+.awea-product-category-carousel .owl-nav {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  top: -75px;
+  right: 0;
+}
+
+.awea-product-category-carousel .owl-nav button.owl-prev,
+.awea-product-category-carousel .owl-nav button.owl-next {
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  z-index: 10;
-  cursor: pointer;
+  background-color: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.1) !important;
+  color: var(--e-global-color-primary, #0f172a) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.awea-product-category-carousel .owl-prev .awea-carousel-arrow-border {
-  margin-left: -20px;
+
+.awea-product-category-carousel .owl-nav button.owl-prev:hover,
+.awea-product-category-carousel .owl-nav button.owl-next:hover {
+  background-color: var(--e-global-color-primary, #4f46e5) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  transform: scale(1.08);
 }
-.awea-product-category-carousel .owl-next .awea-carousel-arrow-border {
-  margin-right: -20px;
-}
+
 .awea-product-category-carousel .owl-dots {
   display: flex;
   justify-content: center;
+  gap: 8px;
+  margin-top: 36px;
 }
+
 .awea-product-category-carousel .owl-dots button.owl-dot {
-  width: 12px;
-  height: 12px;
-  background-color: var(--e-global-color-secondary);
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  margin: 0 5px;
+  background-color: #cbd5e1;
+  border: none;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
 }
+
 .awea-product-category-carousel .owl-dots button.owl-dot.active {
-  background-color: var(--e-global-color-primary);
+  width: 28px;
+  border-radius: 100px;
+  background-color: var(--e-global-color-primary, #4f46e5);
 }
-.awea-product-category-carousel .owl-dots {
-  margin-top: 30px;
+
+/* 5. Responsive Adaptations */
+@media (max-width: 768px) {
+  .awea-product-category-carousel .owl-nav {
+    display: none;
+  }
+  .awea-product-category {
+    border-radius: 22px;
+  }
+  .awea-product-category-content {
+    padding: 12px 16px;
+  }
 }
