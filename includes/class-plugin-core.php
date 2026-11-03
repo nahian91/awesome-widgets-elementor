@@ -66,8 +66,6 @@ final class AWEA {
 	/**
 	 * Main AWEA Instance.
 	 *
-	 * Ensures only one instance of the plugin core exists in memory.
-	 *
 	 * @return AWEA
 	 */
 	public static function instance() {
@@ -78,12 +76,12 @@ final class AWEA {
 	}
 
 	/**
-	 * Throw error on object clone (Singleton pattern).
+	 * Throw error on object clone.
 	 */
 	private function __clone() {}
 
 	/**
-	 * Disable unserializing of the class (Singleton pattern).
+	 * Disable unserializing of the class.
 	 */
 	public function __wakeup() {
 		wp_die( esc_html__( 'Cheatin&#8217; huh?', 'awesome-widgets-elementor' ) );
@@ -94,14 +92,11 @@ final class AWEA {
 	 */
 	private function __construct() {
 		$this->set_widgets();
-		$this->includes();
-		$this->init_components();
+		$this->includes();$this->init_components();
 	}
 
 	/**
-	 * Set up the list of available widgets.
-	 *
-	 * Includes a filter so widgets can be registered or modified dynamically.
+	 * Set up the list of available widgets (Exactly 31 widgets).
 	 */
 	private function set_widgets() {
 		$default_widgets = array(
@@ -136,12 +131,6 @@ final class AWEA {
 			'awesome-about',
 			'awesome-step-flow',
 			'awesome-progress-bar',
-			// Exclusive modern 2027 widgets:
-			'awesome-sticky-card-stack',
-			'awesome-split-reveal',
-			'awesome-comparison-matrix',
-			'awesome-logo-cloud',
-			'awesome-review-wall',
 		);
 
 		/**
@@ -149,7 +138,7 @@ final class AWEA {
 		 *
 		 * @param array $default_widgets List of widget folder slugs.
 		 */
-		$this->widgets = apply_filters( 'awea_registered_widgets', $default_widgets );
+		$this->widgets = apply_filters( 'awea_registered_widgets',$default_widgets );
 	}
 
 	/**
@@ -176,10 +165,7 @@ final class AWEA {
 	 * Initialize plugin sub-components.
 	 */
 	private function init_components() {
-		$this->settings      = new AWEA_Settings( $this->widgets );
-		$this->header_footer = new AWEA_Header_Footer();
-		$this->widget_loader = new AWEA_Widget_Loader( $this->widgets );
-		$this->admin_pages   = new AWEA_Admin_Pages( $this->widgets );
-		$this->scripts       = new AWEA_Scripts();
+		$this->settings      = new AWEA_Settings($this->widgets );
+		$this->header_footer = new AWEA_Header_Footer();$this->widget_loader = new AWEA_Widget_Loader( $this->widgets );$this->admin_pages   = new AWEA_Admin_Pages( $this->widgets );$this->scripts       = new AWEA_Scripts();
 	}
 }

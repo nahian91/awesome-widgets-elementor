@@ -1,42 +1,110 @@
-.awea-breadcumb {
-  padding: 20px 0;
-    position: relative;
-    overflow: hidden;
-	  z-index: 2;
-    background-color: var(--e-global-color-primary);
-}
-.awea-breadcumb::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    pointer-events: none;
-}
-.awea-breadcumb h4{
-  margin-bottom: 15px;
-}
-.awea-breadcumb ul {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-  gap: 25px;
-}
-.awea-breadcumb ul li {
+/* ==========================================================================
+   AWEA Breadcrumb Studio 10/10 Architecture
+   ========================================================================== */
+
+.awea-breadcrumb-hero {
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: #0f172a;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
 }
-.awea-breadcumb ul li:after {
-  position: absolute;
+
+/* 1. Backdrop Overlay */
+.awea-breadcrumb-hero::before {
   content: "";
-  width: 5px;
-  height: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  border-radius: 50%;
-  right: -15px;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.85) 100%);
+  pointer-events: none;
+  z-index: -1;
+  transition: opacity 0.3s ease;
 }
-.awea-breadcumb ul li:last-child::after {
-  display: none;
+
+.awea-breadcrumb-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+/* 2. Page Title Header */
+.awea-breadcrumb-title {
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  margin: 0 0 14px 0;
+  word-break: break-word;
+}
+
+/* 3. Navigation Trail */
+.awea-breadcrumb-nav {
+  display: flex;
+  align-items: center;
+}
+
+.awea-breadcrumb-list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.awea-breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.awea-breadcrumb-item a {
+  text-decoration: none;
+  transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s ease;
+}
+
+.awea-breadcrumb-item a:hover {
+  transform: translateY(-1px);
+}
+
+.awea-breadcrumb-item.is-current {
+  font-weight: 600;
+  pointer-events: none;
+}
+
+/* 4. Separator Micro-Indicators */
+.awea-breadcrumb-sep {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  line-height: 1;
+}
+
+.awea-breadcrumb-sep svg {
+  width: 13px;
+  height: 13px;
+}
+
+.awea-breadcrumb-sep i {
+  font-size: 11px;
+}
+
+/* 5. Responsive Adjustments */
+@media (max-width: 768px) {
+  .awea-breadcrumb-hero {
+    padding: 50px 20px !important;
+  }
+  .awea-breadcrumb-title {
+    font-size: 2rem;
+  }
+  .awea-breadcrumb-list {
+    font-size: 0.85rem;
+  }
 }

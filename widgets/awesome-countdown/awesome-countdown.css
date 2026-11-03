@@ -1,19 +1,131 @@
- .monolith-wrap { 
-                --primary: #31a68d; --dark: #0f172a; --border: #e2e8f0; --ease: cubic-bezier(0.16, 1, 0.3, 1);
-                width: 100%; text-align: center; font-family: 'Plus Jakarta Sans', sans-serif;
-            }
-            .timer-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-            .time-cell { 
-                flex: 1; min-width: 110px; padding: 30px 10px; background: #f8fafc; 
-                border: 1px solid var(--border); border-radius: 24px; transition: all 0.5s var(--ease); 
-            }
-            .time-cell:hover { transform: translateY(-8px); border-color: var(--primary); background: #fff; box-shadow: 0 30px 60px rgba(49, 166, 141, 0.1); }
-            .digit { display: block; font-size: 3.2rem; font-weight: 800; letter-spacing: -2px; color: var(--dark); line-height: 1; margin-bottom: 8px; font-variant-numeric: tabular-nums; }
-            .unit { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #64748b; }
-            .awea-finished { display: none; padding: 40px; font-size: 1.5rem; font-weight: 700; color: var(--dark); }
+/* ==========================================================================
+   AWEA Countdown Studio 10/10 Architecture
+   ========================================================================== */
 
-            @media (max-width: 767px) {
-                .timer-row { gap: 10px; }
-                .time-cell { min-width: calc(50% - 10px); padding: 20px 5px; }
-                .digit { font-size: 2rem; }
-            }
+.awea-countdown-wrapper {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* 1. Flex Timer Row */
+.awea-timer-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s ease;
+}
+
+.awea-timer-row.awea-is-hidden {
+  display: none !important;
+}
+
+/* 2. Micro-Interactive Time Cells */
+.awea-time-cell {
+  flex: 1 1 auto;
+  min-width: 120px;
+  max-width: 220px;
+  padding: 28px 20px 24px 20px;
+  background-color: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.3s ease;
+  will-change: transform;
+}
+
+.awea-time-cell:hover {
+  transform: translateY(-6px);
+  border-color: var(--e-global-color-primary, #4f46e5);
+  box-shadow: 0 20px 40px -12px rgba(79, 70, 229, 0.15);
+}
+
+/* 3. Tabular Numeric Typography */
+.awea-digit {
+  display: block;
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--e-global-color-primary, #0f172a);
+  line-height: 1;
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.awea-unit {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--e-global-color-text, #64748b);
+  line-height: 1;
+}
+
+/* 4. Glowing Colon Separators */
+.awea-colon-sep {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--e-global-color-primary, #4f46e5);
+  line-height: 1;
+  user-select: none;
+  animation: aweaColonBlink 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes aweaColonBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.92); }
+}
+
+/* 5. Expired State Container */
+.awea-countdown-expired {
+  display: none;
+  padding: 36px 24px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--e-global-color-primary, #0f172a);
+  letter-spacing: -0.02em;
+  animation: aweaFadeIn 0.4s ease forwards;
+}
+
+.awea-countdown-expired.awea-is-visible {
+  display: block !important;
+}
+
+@keyframes aweaFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 6. Responsive Mobile Viewports */
+@media (max-width: 768px) {
+  .awea-timer-row {
+    gap: 10px;
+  }
+  .awea-time-cell {
+    min-width: calc(50% - 10px);
+    padding: 20px 10px;
+    border-radius: 18px;
+  }
+  .awea-digit {
+    font-size: 2.25rem;
+  }
+  .awea-unit {
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+  }
+  .awea-colon-sep {
+    display: none; /* Hide colons on 2x2 mobile wrap */
+  }
+}

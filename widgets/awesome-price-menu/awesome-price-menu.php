@@ -1,97 +1,58 @@
 <?php
 /**
- * Awesome Price Menu Widget.
+ * Awesome Price Menu Studio Widget.
+ * Modern Architectural Restaurant & Service Menu with Dotted Leaders & Dynamic Tags.
  *
- * Elementor widget that inserts a cta into the page
- *
+ * @package AwesomeWidgetsElementor
  * @since 1.0.0
  */
+
 namespace Elementor;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 use \Elementor\Controls_Manager;
 use \Elementor\Group_Control_Border;
+use \Elementor\Group_Control_Box_Shadow;
 use \Elementor\Group_Control_Typography;
+use \Elementor\Group_Control_Image_Size;
 use \Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use \Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use \Elementor\Widget_Base;
 
 class Widget_Awesome_Price_Menu extends Widget_Base {
 
-	/**
-	 * Get widget name.
-	 *
-	 * Retrieve heading widget name.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return string Widget name.
-	 */
 	public function get_name() {
 		return 'awesome-price-menu';
 	}
 
-	/**
-	 * Get widget title.
-	 *
-	 * Retrieve affiliate products widget title.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return string Widget title.
-	 */
 	public function get_title() {
-		return esc_html__( 'Price Menu', 'awesome-widgets-elementor' );
+		return esc_html__( 'Price Menu Studio', 'awesome-widgets-elementor' );
 	}
 
-	/**
-	 * Get widget icon.
-	 *
-	 * Retrieve affiliate products widget icon.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return string Widget icon.
-	 */
 	public function get_icon() {
 		return 'eicon-menu-card';
 	}
 
-	/**
-	 * Get widget categories.
-	 *
-	 * Retrieve the list of categories the heading widget belongs to.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return array Widget categories.
-	 */
 	public function get_categories() {
 		return [ 'awesome-widgets-elementor' ];
 	}
 
 	public function get_keywords() {
-		return [ 'price', 'menu', 'awesome'];
+		return [ 'awea', 'price menu', 'restaurant', 'catalog', 'pricing', 'food menu', 'services' ];
 	}
 
-	/**
-	 * Adds different input fields to allow the user to change and customize the widget settings.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 */
-	protected function _register_controls() {
+	protected function register_controls() {
 
-		// Price Menu Section
+		/* ==========================================================================
+		   CONTENT: MENU ITEMS REPEATER
+		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_price_menu_section',
+			'awea_section_price_menu_content',
 			[
-				'label' => esc_html__( 'Price Menu', 'awesome-widgets-elementor' ),
+				'label' => esc_html__( 'Menu Items', 'awesome-widgets-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -99,10 +60,11 @@ class Widget_Awesome_Price_Menu extends Widget_Base {
 		$repeater = new Repeater();
 
 		$repeater->add_control(
-			'awea_price_menu_image',
+			'awea_item_image',
 			[
-				'label' => esc_html__( 'Image', 'awesome-widgets-elementor' ),
-				'type'  => Controls_Manager::MEDIA,
+				'label'   => esc_html__( 'Item Thumbnail', 'awesome-widgets-elementor' ),
+				'type'    => Controls_Manager::MEDIA,
+				'dynamic' => [ 'active' => true ],
 				'default' => [
 					'url' => Utils::get_placeholder_image_src(),
 				],
@@ -110,197 +72,237 @@ class Widget_Awesome_Price_Menu extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'awea_price_menu_title',
+			'awea_item_title',
 			[
-				'label' => esc_html__( 'Title', 'awesome-widgets-elementor' ),
-				'type'  => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Product Name', 'awesome-widgets-elementor' ),
+				'label'       => esc_html__( 'Item Title', 'awesome-widgets-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'default'     => esc_html__( 'Signature Truffle Burger', 'awesome-widgets-elementor' ),
+				'dynamic'     => [ 'active' => true ],
 				'label_block' => true,
 			]
 		);
 
 		$repeater->add_control(
-			'awea_price_menu_price',
+			'awea_item_price',
 			[
-				'label' => esc_html__( 'Price', 'awesome-widgets-elementor' ),
-				'type'  => Controls_Manager::TEXT,
-				'default' => '$0.00',
+				'label'       => esc_html__( 'Price', 'awesome-widgets-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'default'     => '$28.00',
+				'dynamic'     => [ 'active' => true ],
 			]
 		);
 
 		$repeater->add_control(
-			'awea_price_menu_description',
+			'awea_item_description',
 			[
-				'label' => esc_html__( 'Description', 'awesome-widgets-elementor' ),
-				'type'  => Controls_Manager::TEXTAREA,
-				'default' => esc_html__( 'Product short description...', 'awesome-widgets-elementor' ),
-				'rows' => 3,
+				'label'       => esc_html__( 'Description', 'awesome-widgets-elementor' ),
+				'type'        => Controls_Manager::TEXTAREA,
+				'rows'        => 3,
+				'default'     => esc_html__( 'Wagyu beef patty, aged Gruyère, caramelized shallots, and house black truffle aioli.', 'awesome-widgets-elementor' ),
+				'dynamic'     => [ 'active' => true ],
 			]
 		);
 
 		$this->add_control(
 			'awea_price_menu_items',
 			[
-				'label' => esc_html__( 'Price Menu Items', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::REPEATER,
-				'fields' => $repeater->get_controls(),
-				'default' => [
+				'label'       => esc_html__( 'Menu List', 'awesome-widgets-elementor' ),
+				'type'        => Controls_Manager::REPEATER,
+				'fields'      => $repeater->get_controls(),
+				'default'     => [
 					[
-						'awea_price_menu_title' => esc_html__( 'Body Soap', 'awesome-widgets-elementor' ),
-						'awea_price_menu_price' => '$25',
-						'awea_price_menu_description' => esc_html__( 'The glowing formula works great for skin.', 'awesome-widgets-elementor' ),
+						'awea_item_title'       => esc_html__( 'Signature Truffle Burger', 'awesome-widgets-elementor' ),
+						'awea_item_price'       => '$28.00',
+						'awea_item_description' => esc_html__( 'Wagyu beef patty, aged Gruyère, caramelized shallots, and house black truffle aioli.', 'awesome-widgets-elementor' ),
 					],
 					[
-						'awea_price_menu_title' => esc_html__( 'Shampoo', 'awesome-widgets-elementor' ),
-						'awea_price_menu_price' => '$15',
-						'awea_price_menu_description' => esc_html__( 'Cleans and nourishes hair naturally.', 'awesome-widgets-elementor' ),
+						'awea_item_title'       => esc_html__( 'Pan-Seared Chilean Sea Bass', 'awesome-widgets-elementor' ),
+						'awea_item_price'       => '$42.00',
+						'awea_item_description' => esc_html__( 'Served over saffron risotto with charred asparagus and lemon-herb beurre blanc.', 'awesome-widgets-elementor' ),
 					],
 					[
-						'awea_price_menu_title' => esc_html__( 'Face Cream', 'awesome-widgets-elementor' ),
-						'awea_price_menu_price' => '$30',
-						'awea_price_menu_description' => esc_html__( 'Hydrates and revitalizes the skin.', 'awesome-widgets-elementor' ),
-					],
-					[
-						'awea_price_menu_title' => esc_html__( 'Hair Oil', 'awesome-widgets-elementor' ),
-						'awea_price_menu_price' => '$18',
-						'awea_price_menu_description' => esc_html__( 'Strengthens hair and promotes growth.', 'awesome-widgets-elementor' ),
-					],
-					[
-						'awea_price_menu_title' => esc_html__( 'Body Lotion', 'awesome-widgets-elementor' ),
-						'awea_price_menu_price' => '$22',
-						'awea_price_menu_description' => esc_html__( 'Keeps skin soft and moisturized all day.', 'awesome-widgets-elementor' ),
+						'awea_item_title'       => esc_html__( 'Artisanal Burrata & Heirloom', 'awesome-widgets-elementor' ),
+						'awea_item_price'       => '$22.00',
+						'awea_item_description' => esc_html__( 'Fresh creamy burrata, organic heirloom tomatoes, basil oil, and 25-year aged balsamic.', 'awesome-widgets-elementor' ),
 					],
 				],
-				'title_field' => '{{{ awea_price_menu_title }}}',
+				'title_field' => '{{{ awea_item_title }}} — {{{ awea_item_price }}}',
+			]
+		);
+
+		$this->add_control(
+			'awea_title_tag',
+			[
+				'label'     => esc_html__( 'Title HTML Tag', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => 'h4',
+				'options'   => [
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+				],
+				'separator' => 'before',
 			]
 		);
 
 		$this->end_controls_section();
 
-		// start of the Content tab section
+		/* ==========================================================================
+		   STYLE: CONTAINER SHELL & LAYOUT
+		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_price_menu_pro_message',
+			'awea_section_style_layout',
 			[
-				'label' => esc_html__('Premium', 'awesome-widgets-elementor'),
-				'tab'   => Controls_Manager::TAB_CONTENT		
+				'label' => esc_html__( 'Container Shell', 'awesome-widgets-elementor' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
-		$this->add_control( 
-			'awea_price_menu_pro_message_notice', 
+		$this->add_responsive_control(
+			'awea_container_padding',
 			[
-				'type'      => Controls_Manager::RAW_HTML,
-				'raw'       => sprintf(
-					'<div style="text-align:center;line-height:1.6;">
-						<p style="margin-bottom:10px">%s</p>
-					</div>',
-					esc_html__('Awesome Widgets for Elementor Premium is coming soon with more widgets, features, and customization options.', 'awesome-widgets-elementor')
-				)
-			]  
-		);
-		$this->end_controls_section();
-
-		// Style: Product Title
-		$this->start_controls_section(
-			'awea_style_price_menu_layout',
-			[
-				'label' => esc_html__( 'Layout', 'awesome-widgets-elementor' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->add_control(
-			'awea_price_menu_layout_bg',
-			[
-				'label' => esc_html__( 'Background', 'awesome-widgets-elementor' ),
-				'type'  => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .awea-price-menu-list' => 'background-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'awea_price_menu_layout_padding',
-			[
-				'label' => esc_html__( 'Padding', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
-				'selectors' => [
+				'label'      => esc_html__( 'Container Padding', 'awesome-widgets-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', 'rem' ],
+				'default'    => [ 'top' => '40', 'right' => '40', 'bottom' => '40', 'left' => '40', 'unit' => 'px', 'isLinked' => true ],
+				'selectors'  => [
 					'{{WRAPPER}} .awea-price-menu-list' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Border::get_type(),
+		$this->add_responsive_control(
+			'awea_container_radius',
 			[
-				'name' => 'awea_price_menu_layout_border',
-				'selector' => '{{WRAPPER}} .awea-price-menu-list',
-			]
-		);
-
-		$this->add_control(
-			'awea_price_menu_layout_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
-				'selectors' => [
+				'label'      => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'rem' ],
+				'default'    => [ 'top' => '32', 'right' => '32', 'bottom' => '32', 'left' => '32', 'unit' => 'px', 'isLinked' => true ],
+				'selectors'  => [
 					'{{WRAPPER}} .awea-price-menu-list' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
 
-		$this->end_controls_section();
-
-		// Style: Product Title
-		$this->start_controls_section(
-			'awea_style_price_menu_image',
+		$this->add_control(
+			'awea_container_bg',
 			[
-				'label' => esc_html__( 'Image', 'awesome-widgets-elementor' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Background Color', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .awea-price-menu-list' => 'background-color: {{VALUE}};',
+				],
 			]
 		);
 
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			[
-				'name' => 'awea_style_price_menu_image_border',
-				'selector' => '{{WRAPPER}} .awea-price-menu img',
+				'name'     => 'awea_container_border',
+				'selector' => '{{WRAPPER}} .awea-price-menu-list',
 			]
 		);
 
-		$this->add_control(
-			'awea_style_price_menu_image_radius',
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
 			[
-				'label' => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
-				'selectors' => [
-					'{{WRAPPER}} .awea-price-menu img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
+				'name'     => 'awea_container_shadow',
+				'selector' => '{{WRAPPER}} .awea-price-menu-list',
 			]
 		);
 
 		$this->end_controls_section();
 
-		// Style: Product Title
+		/* ==========================================================================
+		   STYLE: THUMBNAIL IMAGE
+		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_style_product_title',
+			'awea_section_style_image',
 			[
-				'label' => esc_html__( 'Title', 'awesome-widgets-elementor' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label' => esc_html__( 'Thumbnail Image', 'awesome-widgets-elementor' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Image_Size::get_type(),
+			[
+				'name'      => 'awea_thumbnail_size',
+				'default'   => 'thumbnail',
+				'separator' => 'none',
+			]
+		);
+
+		$this->add_responsive_control(
+			'awea_thumb_size',
+			[
+				'label'      => esc_html__( 'Thumbnail Width', 'awesome-widgets-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range'      => [ 'px' => [ 'min' => 50, 'max' => 140 ] ],
+				'default'    => [ 'unit' => 'px', 'size' => 76 ],
+				'selectors'  => [
+					'{{WRAPPER}} .awea-price-menu-thumb' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'awea_thumb_radius',
+			[
+				'label'      => esc_html__( 'Corner Radius', 'awesome-widgets-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default'    => [ 'top' => '16', 'right' => '16', 'bottom' => '16', 'left' => '16', 'unit' => 'px', 'isLinked' => true ],
+				'selectors'  => [
+					'{{WRAPPER}} .awea-price-menu-thumb' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			[
+				'name'     => 'awea_thumb_border',
+				'selector' => '{{WRAPPER}} .awea-price-menu-thumb',
+			]
+		);
+
+		$this->end_controls_section();
+
+		/* ==========================================================================
+		   STYLE: TYPOGRAPHY (TITLE, PRICE, DESCRIPTION)
+		   ========================================================================== */
+		$this->start_controls_section(
+			'awea_section_style_typography',
+			[
+				'label' => esc_html__( 'Typography & Leaders', 'awesome-widgets-elementor' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		// Item Title
+		$this->add_control(
+			'awea_heading_title',
+			[
+				'label' => esc_html__( 'Item Title', 'awesome-widgets-elementor' ),
+				'type'  => Controls_Manager::HEADING,
 			]
 		);
 
 		$this->add_control(
 			'awea_title_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
-				'type'  => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
 				'selectors' => [
-					'{{WRAPPER}} .awea-price-menu h4' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .awea-price-menu-title' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -308,29 +310,34 @@ class Widget_Awesome_Price_Menu extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'awea_title_typography',
-				'selector' => '{{WRAPPER}} .awea-price-menu h4',
+				'name'     => 'awea_title_typography',
+				'selector' => '{{WRAPPER}} .awea-price-menu-title',
+				'global'   => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
 			]
 		);
 
-		$this->end_controls_section();
-
-		// Style: Price
-		$this->start_controls_section(
-			'awea_style_price',
+		// Price Amount
+		$this->add_control(
+			'awea_heading_price',
 			[
-				'label' => esc_html__( 'Price', 'awesome-widgets-elementor' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Price Amount', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
 			]
 		);
 
 		$this->add_control(
 			'awea_price_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
-				'type'  => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
 				'selectors' => [
-					'{{WRAPPER}} .awea-price' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .awea-price' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -338,29 +345,55 @@ class Widget_Awesome_Price_Menu extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'awea_price_typography',
+				'name'     => 'awea_price_typography',
 				'selector' => '{{WRAPPER}} .awea-price',
+				'global'   => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
 			]
 		);
 
-		$this->end_controls_section();
-
-		// Style: Description
-		$this->start_controls_section(
-			'awea_style_description',
+		// Dotted Leader Line
+		$this->add_control(
+			'awea_heading_leader',
 			[
-				'label' => esc_html__( 'Description', 'awesome-widgets-elementor' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Leader Line', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
 			]
 		);
 
 		$this->add_control(
-			'awea_description_color',
+			'awea_leader_color',
 			[
-				'label' => esc_html__( 'Color', 'awesome-widgets-elementor' ),
-				'type'  => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .awea-description' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .awea-price-menu-header' => 'border-bottom-color: {{VALUE}};',
+				],
+			]
+		);
+
+		// Description
+		$this->add_control(
+			'awea_heading_desc',
+			[
+				'label'     => esc_html__( 'Description', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'awea_desc_color',
+			[
+				'label'     => esc_html__( 'Color', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .awea-description' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -368,8 +401,26 @@ class Widget_Awesome_Price_Menu extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'awea_description_typography',
+				'name'     => 'awea_desc_typography',
 				'selector' => '{{WRAPPER}} .awea-description',
+				'global'   => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'awea_row_gap',
+			[
+				'label'      => esc_html__( 'Gap Between Rows', 'awesome-widgets-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em' ],
+				'range'      => [ 'px' => [ 'min' => 10, 'max' => 50 ] ],
+				'default'    => [ 'unit' => 'px', 'size' => 24 ],
+				'selectors'  => [
+					'{{WRAPPER}} .awea-price-menu' => 'margin-bottom: {{SIZE}}{{UNIT}}; padding-bottom: {{SIZE}}{{UNIT}};',
+				],
+				'separator'  => 'before',
 			]
 		);
 
@@ -377,28 +428,59 @@ class Widget_Awesome_Price_Menu extends Widget_Base {
 	}
 
 	protected function render() {
-		$settings = $this->get_settings_for_display();
+		$settings  =$this->get_settings_for_display();
+		$items     =$settings['awea_price_menu_items'] ?? [];
+		$title_tag = Utils::validate_html_tag($settings['awea_title_tag'] ?? 'h4' );
 
-		if ( ! empty( $settings['awea_price_menu_items'] ) ) {
-			echo '<ul class="awea-price-menu-list">';
-			foreach ( $settings['awea_price_menu_items'] as $item ) {
-				$img_url = ! empty( $item['awea_price_menu_image']['url'] ) ? esc_url( $item['awea_price_menu_image']['url'] ) : 'https://placehold.co/600x400/png';
-				?>
+		if ( empty( $items ) ) {
+			return;
+		}
+		?>
+		<ul class="awea-price-menu-list" role="list">
+			<?php foreach ( $items as$item ) : 
+				$title =$item['awea_item_title'] ?? '';
+				$price =$item['awea_item_price'] ?? '';
+				$desc  =$item['awea_item_description'] ?? '';
+			?>
 				<li class="awea-price-menu">
-					<img src="<?php echo esc_url($img_url); ?>" alt="<?php echo esc_attr( $item['awea_price_menu_title'] ); ?>">
+					
+					<!-- Thumbnail Image -->
+					<?php if ( ! empty( $item['awea_item_image']['url'] ) ) : ?>
+						<div class="awea-price-menu-thumb">
+							<?php 
+							if ( ! empty( $item['awea_item_image']['id'] ) ) {
+								echo wp_get_attachment_image( $item['awea_item_image']['id'],$settings['awea_thumbnail_size_size'], false, [ 'loading' => 'lazy' ] );
+							} else {
+								echo '<img src="' . esc_url( $item['awea_item_image']['url'] ) . '" alt="' . esc_attr( $title ) . '" loading="lazy" />';
+							}
+							?>
+						</div>
+					<?php endif; ?>
+
+					<!-- Item Details -->
 					<div class="awea-price-menu-details">
 						<div class="awea-price-menu-header">
-							<h4><?php echo esc_html( $item['awea_price_menu_title'] ); ?></h4>
-							<span class="awea-price"><?php echo esc_html( $item['awea_price_menu_price'] ); ?></span>
+							<?php if ( ! empty( $title ) ) : ?>
+								<<?php echo esc_attr( $title_tag ); ?> class="awea-price-menu-title">
+									<?php echo esc_html( $title ); ?>
+								</<?php echo esc_attr( $title_tag ); ?>>
+							<?php endif; ?>
+
+							<?php if ( ! empty( $price ) ) : ?>
+								<span class="awea-price"><?php echo esc_html( $price ); ?></span>
+							<?php endif; ?>
 						</div>
-						<p class="awea-description">
-							<?php echo esc_html( $item['awea_price_menu_description'] ); ?>
-						</p>
+
+						<?php if ( ! empty( $desc ) ) : ?>
+							<p class="awea-description">
+								<?php echo esc_html( $desc ); ?>
+							</p>
+						<?php endif; ?>
 					</div>
+
 				</li>
-				<?php
-			}
-			echo '</ul>';
-		}
+			<?php endforeach; ?>
+		</ul>
+		<?php
 	}
 }

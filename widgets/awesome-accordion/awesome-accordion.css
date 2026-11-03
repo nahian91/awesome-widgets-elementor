@@ -1,76 +1,171 @@
-.awea-accordion {
-  border-top-width: 3px;
-  border-bottom-width: 3px;
-  border-style: solid;
-  border-top-color: var(--e-global-color-primary);
-  border-bottom-color: var(--e-global-color-primary);
-  border-left: 0;
-  border-right: 0;
-  list-style: none;
-}
-.awea-accordion li {
-  font-size: 1.125rem;
-  line-height: 1.6875rem;
-  position: relative;
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--e-global-color-primary);
-  padding: 16px 0;
-  border-left-width: 0;
-  border-right-width: 0;
-}
-.awea-accordion li:first-child {
-  border-top: 0;
-}
-.awea-accordion li:last-child{
-  border-bottom: 0;
-}
-.awea-accordion li p {
-  display: none;
-  color: var(--e-global-color-text);
-}
-.awea-accordion li:first-child p {
-	display: block;
-}
-.awea-accordion li, .awea-accordion li p, .awea-accordion li ul, .awea-accordion li ol{
-  font-size: 1.125rem;
-  line-height: 1.6875rem;
-}
-.awea-accordion span {
+/* ==========================================================================
+   AWEA Accordion Studio 10/10 Hardware-Accelerated Architecture
+   ========================================================================== */
+
+.awea-accordion-container {
   width: 100%;
-  display: block;
-  cursor: pointer;
+  position: relative;
+  box-sizing: border-box;
 }
-.awea-accordion span:after {
-  width: 15px;
-  height: 15px;
-  position: absolute;
-  right: 0;
-  font-family: "Font Awesome 5 Free"; 
-  font-weight: 900; 
-  content: "\f067";
-  top: 15px;
-  transition: all 0.2s ease-in-out;
-  color: var(--e-global-color-primary);
-}
-.awea-accordion span.active:after {
-  transition: all 0.2s ease-in-out;
-  top: 15px;
-  font-family: "Font Awesome 5 Free"; 
-  font-weight: 900; 
-  content: "\f068";
-  color: var(--e-global-color-secondary);
-}
-.awea-accordion li span.active {
-  border-bottom: 1px dashed var(--e-global-color-primary);
-  padding-bottom: 16px;
+
+/* 1. Item Shell */
+.awea-accordion-item {
+  background-color: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
   margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.03);
+  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.3s ease;
 }
-.awea-accordion li ul li, .accordion li ol li {
-  border: 0;
-  padding: 0;
+
+.awea-accordion-item:last-child {
+  margin-bottom: 0;
+}
+
+.awea-accordion-item:hover {
+  box-shadow: 0 8px 25px -4px rgba(0, 0, 0, 0.06);
+}
+
+.awea-accordion-item.is-active {
+  border-color: var(--e-global-color-primary, #4f46e5);
+  box-shadow: 0 12px 30px -5px rgba(79, 70, 229, 0.12);
+}
+
+/* 2. Interactive Header */
+.awea-accordion-header {
+  padding: 22px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+}
+
+.awea-accordion-header:focus-visible {
+  outline: 2px solid var(--e-global-color-primary, #4f46e5);
+  outline-offset: -2px;
+}
+
+.awea-icon-pos-left .awea-accordion-header {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.awea-accordion-title {
   margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--e-global-color-primary, #0f172a);
+  letter-spacing: -0.01em;
+  transition: color 0.3s ease;
 }
-.awea-accordion li ul, .accordion li ol {
-  margin-left: 15px;
+
+.awea-accordion-item.is-active .awea-accordion-title {
+  color: var(--e-global-color-primary, #4f46e5);
+}
+
+/* 3. Micro-Interaction Icons */
+.awea-icon-box {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Morphing Cross (+ to -) */
+.awea-icon-line {
+  position: absolute;
+  background-color: #64748b;
+  border-radius: 4px;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.25s ease,
+              background-color 0.3s ease;
+}
+
+.awea-icon-line.h {
+  width: 14px;
+  height: 2px;
+}
+
+.awea-icon-line.v {
+  width: 2px;
+  height: 14px;
+}
+
+.awea-accordion-item.is-active .awea-icon-line.v {
+  transform: rotate(90deg);
+  opacity: 0;
+}
+
+.awea-accordion-item.is-active .awea-icon-line.h {
+  transform: rotate(180deg);
+  background-color: var(--e-global-color-primary, #4f46e5);
+}
+
+/* Rotating Chevron */
+.awea-icon-chevron {
+  width: 18px;
+  height: 18px;
+  stroke: #64748b;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              stroke 0.3s ease;
+}
+
+.awea-accordion-item.is-active .awea-icon-chevron {
+  transform: rotate(180deg);
+  stroke: var(--e-global-color-primary, #4f46e5);
+}
+
+/* 4. Fluid CSS Grid Transition (No Max-Height Jitter) */
+.awea-accordion-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.awea-accordion-item.is-active .awea-accordion-collapse {
+  grid-template-rows: 1fr;
+}
+
+.awea-accordion-overflow {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.awea-content-inner {
+  padding: 0 24px 24px 24px;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: var(--e-global-color-text, #475569);
+}
+
+.awea-content-inner p {
+  margin: 0 0 12px 0;
+}
+
+.awea-content-inner p:last-child {
+  margin-bottom: 0;
+}
+
+/* 5. Mobile Adjustments */
+@media (max-width: 640px) {
+  .awea-accordion-header {
+    padding: 18px 20px;
+  }
+  .awea-content-inner {
+    padding: 0 20px 20px 20px;
+    font-size: 0.92rem;
+  }
+  .awea-accordion-title {
+    font-size: 1rem;
+  }
 }

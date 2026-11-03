@@ -1,20 +1,174 @@
+/* ==========================================================================
+   AWEA Number Box Studio 10/10 Architecture
+   ========================================================================== */
+
 .awea-single-number-box {
-  padding: 45px 30px 15px;
+  width: 100%;
   position: relative;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 24px;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.03);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              background-color 0.3s ease;
+  will-change: transform;
 }
-.awea-single-number-box span {
-	margin-bottom: 0;
-	display: block;
-	position: absolute;
-	top: -30px;
-	left: 30px;
-	width: 60px;
-	height: 60px;
-	line-height: 60px;
-	text-align: center;
-	font-size: 30px;
-	border-radius: 9px;
+
+.awea-single-number-box:hover {
+  transform: translateY(-8px);
+  border-color: var(--e-global-color-primary, #4f46e5);
+  box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.12);
 }
-.awea-single-number-box h4 {
-  margin: 0 0 15px 0;
+
+/* 1. Alignment Support */
+.awea-align-left .awea-number-badge-wrap,
+.awea-align-left .awea-number-box-btn-wrap {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.awea-align-center .awea-number-badge-wrap,
+.awea-align-center .awea-number-box-btn-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.awea-align-right .awea-number-badge-wrap,
+.awea-align-right .awea-number-box-btn-wrap {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 2. Floating Squircle Badge */
+.awea-number-badge {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background-color: var(--e-global-color-primary, #4f46e5);
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.35);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              background-color 0.3s ease,
+              box-shadow 0.35s ease;
+  user-select: none;
+}
+
+.awea-single-number-box:hover .awea-number-badge {
+  transform: rotate(-8deg) scale(1.08);
+  box-shadow: 0 15px 32px -6px rgba(79, 70, 229, 0.45);
+}
+
+/* 3. Ghost Watermark Mode */
+.awea-number-watermark {
+  position: absolute;
+  top: -20px;
+  right: 15px;
+  font-size: 9rem;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--e-global-color-primary, #0f172a);
+  opacity: 0.07;
+  pointer-events: none;
+  user-select: none;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.05em;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  z-index: 1;
+}
+
+.awea-align-right .awea-number-watermark {
+  right: auto;
+  left: 15px;
+}
+
+.awea-single-number-box:hover .awea-number-watermark {
+  transform: translateY(-8px) scale(1.05);
+  opacity: 0.12;
+}
+
+/* 4. Body Content */
+.awea-number-box-body {
+  position: relative;
+  z-index: 2;
+}
+
+.awea-number-box-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--e-global-color-primary, #0f172a);
+  margin: 0 0 14px 0;
+  word-break: break-word;
+  transition: color 0.3s ease;
+}
+
+.awea-number-box-desc {
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--e-global-color-text, #64748b);
+  margin: 0 0 20px 0;
+}
+
+/* 5. Action Button */
+.awea-number-box-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--e-global-color-primary, #4f46e5);
+  transition: gap 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s ease;
+}
+
+.awea-number-box-btn svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.awea-number-box-btn:hover {
+  gap: 12px;
+}
+
+.awea-number-box-btn:hover svg {
+  transform: translateX(4px);
+}
+
+/* 6. Responsive Adaptations */
+@media (max-width: 768px) {
+  .awea-single-number-box {
+    padding: 32px 24px;
+    border-radius: 20px;
+  }
+  .awea-number-badge {
+    width: 52px;
+    height: 52px;
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+  }
+  .awea-number-watermark {
+    font-size: 6.5rem;
+    top: -10px;
+  }
+  .awea-number-box-title {
+    font-size: 1.2rem;
+  }
+  .awea-number-box-desc {
+    font-size: 0.92rem;
+  }
 }

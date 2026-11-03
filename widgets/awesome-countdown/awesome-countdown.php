@@ -1,242 +1,664 @@
 <?php
+/**
+ * Awesome Countdown Studio Widget.
+ * Architectural Precision Countdown with Timezone Calibration & Kinetic Micro-Interactions.
+ *
+ * @package AwesomeWidgetsElementor
+ * @since 1.0.0
+ */
+
 namespace Elementor;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+use \Elementor\Controls_Manager;
+use \Elementor\Group_Control_Border;
+use \Elementor\Group_Control_Box_Shadow;
+use \Elementor\Group_Control_Typography;
+use \Elementor\Group_Control_Background;
+use \Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use \Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use \Elementor\Widget_Base;
 
 class Widget_Awesome_Countdown extends Widget_Base {
 
-    public function get_name() { return 'awea_countdown'; }
-    public function get_title() { return esc_html__('Countdown', 'awesome-widgets-elementor'); }
-    public function get_icon() { return 'eicon-countdown'; }
-    public function get_categories() { return ['awesome-widgets-elementor']; }
+	public function get_name() {
+		return 'awea_countdown';
+	}
 
-    protected function register_controls() {
+	public function get_title() {
+		return esc_html__( 'Countdown Studio', 'awesome-widgets-elementor' );
+	}
 
-        // --- SECTION: TIMER SETTINGS ---
-        $this->start_controls_section('awea_section_timer', [
-            'label' => __( 'Countdown Settings', 'awesome-widgets-elementor' ),
-        ]);
+	public function get_icon() {
+		return 'eicon-countdown';
+	}
 
-        $this->add_control('awea_due_date', [
-            'label' => __( 'Due Date', 'awesome-widgets-elementor' ),
-            'type' => Controls_Manager::DATE_TIME,
-            'default' => gmdate('Y-m-d H:i', strtotime('+1 month')),
-        ]);
+	public function get_categories() {
+		return [ 'awesome-widgets-elementor' ];
+	}
 
-        $this->add_control('awea_expire_type', [
-            'label' => __('Expire Type', 'awesome-widgets-elementor'),
-            'type' => Controls_Manager::SELECT,
-            'options' => [
-                'message'  => __('Message', 'awesome-widgets-elementor'),
-                'redirect' => __('Redirect to Link', 'awesome-widgets-elementor')
-            ],
-            'default' => 'message'
-        ]);
+	public function get_keywords() {
+		return [ 'awea', 'countdown', 'timer', 'clock', 'launch', 'sale', 'urgent', 'event' ];
+	}
 
-        $this->add_control('awea_expire_message', [
-            'label' => __('Expire Message', 'awesome-widgets-elementor'),
-            'type' => Controls_Manager::TEXTAREA,
-            'default' => __('Sorry you are late!', 'awesome-widgets-elementor'),
-            'condition' => ['awea_expire_type' => 'message']
-        ]);
+	protected function register_controls() {
 
-        $this->add_control('awea_expire_link', [
-            'label' => __('Redirect Link', 'awesome-widgets-elementor'),
-            'type' => Controls_Manager::URL,
-            'condition' => ['awea_expire_type' => 'redirect']
-        ]);
+		/* ==========================================================================
+		   CONTENT: TIMER SETTINGS
+		   ========================================================================== */
+		$this->start_controls_section(
+			'awea_section_timer',
+			[
+				'label' => esc_html__( 'Countdown Settings', 'awesome-widgets-elementor' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
+			]
+		);
 
-        $this->end_controls_section();
+		$this->add_control(
+			'awea_due_date',
+			[
+				'label'       => esc_html__( 'Target Due Date (Site Timezone)', 'awesome-widgets-elementor' ),
+				'type'        => Controls_Manager::DATE_TIME,
+				'default'     => wp_date( 'Y-m-d H:i', strtotime( '+1 month' ) ),
+				'description' => sprintf(
+					/* translators: %s: Site current timezone string */
+					esc_html__( 'Calculated according to your WordPress timezone setting: %s', 'awesome-widgets-elementor' ),
+					'<strong>' . esc_html( wp_timezone_string() ) . '</strong>'
+				),
+			]
+		);
 
-        // --- SECTION: LABELS ---
-        $this->start_controls_section('awea_section_labels', [
-            'label' => __( 'Labels', 'awesome-widgets-elementor' ),
-        ]);
+		$this->add_control(
+			'awea_expire_type',
+			[
+				'label'   => esc_html__( 'Action On Expiry', 'awesome-widgets-elementor' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'message',
+				'options' => [
+					'message'  => esc_html__( 'Display Custom Message', 'awesome-widgets-elementor' ),
+					'redirect' => esc_html__( 'Redirect to URL', 'awesome-widgets-elementor' ),
+					'none'     => esc_html__( 'Stay at Zero', 'awesome-widgets-elementor' ),
+				],
+			]
+		);
 
-        $this->add_control('awea_label_days', [ 'label' => __('Days', 'awesome-widgets-elementor'), 'type' => Controls_Manager::TEXT, 'default' => 'Days' ]);
-        $this->add_control('awea_label_hours', [ 'label' => __('Hours', 'awesome-widgets-elementor'), 'type' => Controls_Manager::TEXT, 'default' => 'Hours' ]);
-        $this->add_control('awea_label_mins', [ 'label' => __('Minutes', 'awesome-widgets-elementor'), 'type' => Controls_Manager::TEXT, 'default' => 'Mins' ]);
-        $this->add_control('awea_label_secs', [ 'label' => __('Seconds', 'awesome-widgets-elementor'), 'type' => Controls_Manager::TEXT, 'default' => 'Secs' ]);
+		$this->add_control(
+			'awea_expire_message',
+			[
+				'label'       => esc_html__( 'Expired Message', 'awesome-widgets-elementor' ),
+				'type'        => Controls_Manager::TEXTAREA,
+				'rows'        => 3,
+				'default'     => esc_html__( 'This event or offer has concluded.', 'awesome-widgets-elementor' ),
+				'dynamic'     => [ 'active' => true ],
+				'condition'   => [ 'awea_expire_type' => 'message' ],
+			]
+		);
 
-        $this->end_controls_section();
+		$this->add_control(
+			'awea_expire_link',
+			[
+				'label'       => esc_html__( 'Redirect URL', 'awesome-widgets-elementor' ),
+				'type'        => Controls_Manager::URL,
+				'dynamic'     => [ 'active' => true ],
+				'placeholder' => 'https://example.com/expired',
+				'condition'   => [ 'awea_expire_type' => 'redirect' ],
+			]
+		);
 
-        // --- SECTION: STYLE LAYOUT ---
-        $this->start_controls_section('awea_style_layout', [
-            'label' => __( 'Layout', 'awesome-widgets-elementor' ),
-            'tab'   => Controls_Manager::TAB_STYLE,
-        ]);
+		$this->end_controls_section();
 
-        $this->start_controls_tabs( 'awea_layout_tabs' );
+		/* ==========================================================================
+		   CONTENT: UNITS & LABELS
+		   ========================================================================== */
+		$this->start_controls_section(
+			'awea_section_units',
+			[
+				'label' => esc_html__( 'Display Units & Labels', 'awesome-widgets-elementor' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
+			]
+		);
 
-        // Normal Tab
-        $this->start_controls_tab( 'awea_layout_normal', [ 'label' => esc_html__( 'Normal', 'awesome-widgets-elementor' ) ] );
+		$this->add_control(
+			'awea_show_days',
+			[
+				'label'        => esc_html__( 'Show Days', 'awesome-widgets-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__( 'Show', 'awesome-widgets-elementor' ),
+				'label_off'    => esc_html__( 'Hide', 'awesome-widgets-elementor' ),
+				'return_value' => 'yes',
+				'default'      => 'yes',
+			]
+		);
 
-        $this->add_control(
-            'awea_cell_bg_color',
-            [
-                'label' => 'Background Color',
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [ '{{WRAPPER}} .time-cell' => 'background-color: {{VALUE}};' ],
-            ]
-        );
+		$this->add_control(
+			'awea_label_days',
+			[
+				'label'     => esc_html__( 'Days Label', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::TEXT,
+				'default'   => esc_html__( 'Days', 'awesome-widgets-elementor' ),
+				'dynamic'   => [ 'active' => true ],
+				'condition' => [ 'awea_show_days' => 'yes' ],
+			]
+		);
 
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'awea_cell_border',
-                'selector' => '{{WRAPPER}} .time-cell',
-            ]
-        );
+		$this->add_control(
+			'awea_show_hours',
+			[
+				'label'        => esc_html__( 'Show Hours', 'awesome-widgets-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__( 'Show', 'awesome-widgets-elementor' ),
+				'label_off'    => esc_html__( 'Hide', 'awesome-widgets-elementor' ),
+				'return_value' => 'yes',
+				'default'      => 'yes',
+				'separator'    => 'before',
+			]
+		);
 
-        $this->add_responsive_control(
-            'awea_cell_padding',
-            [
-                'label' => 'Padding',
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => [ 'px', '%', 'em' ],
-                'selectors' => [ '{{WRAPPER}} .time-cell' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ],
-            ]
-        );
+		$this->add_control(
+			'awea_label_hours',
+			[
+				'label'     => esc_html__( 'Hours Label', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::TEXT,
+				'default'   => esc_html__( 'Hours', 'awesome-widgets-elementor' ),
+				'dynamic'   => [ 'active' => true ],
+				'condition' => [ 'awea_show_hours' => 'yes' ],
+			]
+		);
 
-        $this->add_responsive_control(
-            'awea_cell_radius',
-            [
-                'label' => 'Border Radius',
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => [ 'px', '%' ],
-                'selectors' => [ '{{WRAPPER}} .time-cell' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ],
-            ]
-        );
+		$this->add_control(
+			'awea_show_minutes',
+			[
+				'label'        => esc_html__( 'Show Minutes', 'awesome-widgets-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__( 'Show', 'awesome-widgets-elementor' ),
+				'label_off'    => esc_html__( 'Hide', 'awesome-widgets-elementor' ),
+				'return_value' => 'yes',
+				'default'      => 'yes',
+				'separator'    => 'before',
+			]
+		);
 
-        $this->add_control(
-            'awea_cell_gap',
-            [
-                'label' => 'Gap',
-                'type' => Controls_Manager::SLIDER,
-                'selectors' => [ '{{WRAPPER}} .timer-row' => 'gap: {{SIZE}}{{UNIT}};' ],
-            ]
-        );
+		$this->add_control(
+			'awea_label_minutes',
+			[
+				'label'     => esc_html__( 'Minutes Label', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::TEXT,
+				'default'   => esc_html__( 'Mins', 'awesome-widgets-elementor' ),
+				'dynamic'   => [ 'active' => true ],
+				'condition' => [ 'awea_show_minutes' => 'yes' ],
+			]
+		);
 
-        $this->end_controls_tab();
+		$this->add_control(
+			'awea_show_seconds',
+			[
+				'label'        => esc_html__( 'Show Seconds', 'awesome-widgets-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__( 'Show', 'awesome-widgets-elementor' ),
+				'label_off'    => esc_html__( 'Hide', 'awesome-widgets-elementor' ),
+				'return_value' => 'yes',
+				'default'      => 'yes',
+				'separator'    => 'before',
+			]
+		);
 
-        // Hover Tab
-        $this->start_controls_tab( 'awea_layout_hover', [ 'label' => esc_html__( 'Hover', 'awesome-widgets-elementor' ) ] );
+		$this->add_control(
+			'awea_label_seconds',
+			[
+				'label'     => esc_html__( 'Seconds Label', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::TEXT,
+				'default'   => esc_html__( 'Secs', 'awesome-widgets-elementor' ),
+				'dynamic'   => [ 'active' => true ],
+				'condition' => [ 'awea_show_seconds' => 'yes' ],
+			]
+		);
 
-        $this->add_control(
-            'awea_cell_bg_color_hover',
-            [
-                'label' => 'Background Color',
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [ '{{WRAPPER}} .time-cell:hover' => 'background-color: {{VALUE}};' ],
-            ]
-        );
+		$this->add_control(
+			'awea_show_separators',
+			[
+				'label'        => esc_html__( 'Show Colon Dividers (:)', 'awesome-widgets-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__( 'Yes', 'awesome-widgets-elementor' ),
+				'label_off'    => esc_html__( 'No', 'awesome-widgets-elementor' ),
+				'return_value' => 'yes',
+				'default'      => 'yes',
+				'separator'    => 'before',
+			]
+		);
 
-        $this->add_control(
-            'awea_cell_border_hover',
-            [
-                'label' => 'Border Color',
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [ '{{WRAPPER}} .time-cell:hover' => 'border-color: {{VALUE}};' ],
-            ]
-        );
+		$this->end_controls_section();
 
-        $this->end_controls_tab();
-        $this->end_controls_tabs();
+		/* ==========================================================================
+		   STYLE: TIME CELL CARDS
+		   ========================================================================== */
+		$this->start_controls_section(
+			'awea_section_style_cells',
+			[
+				'label' => esc_html__( 'Time Cells & Containers', 'awesome-widgets-elementor' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
 
-        $this->end_controls_section();
+		$this->add_responsive_control(
+			'awea_cells_alignment',
+			[
+				'label'     => esc_html__( 'Alignment', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'options'   => [
+					'flex-start' => [ 'title' => esc_html__( 'Left', 'awesome-widgets-elementor' ), 'icon' => 'eicon-text-align-left' ],
+					'center'     => [ 'title' => esc_html__( 'Center', 'awesome-widgets-elementor' ), 'icon' => 'eicon-text-align-center' ],
+					'flex-end'   => [ 'title' => esc_html__( 'Right', 'awesome-widgets-elementor' ), 'icon' => 'eicon-text-align-right' ],
+				],
+				'default'   => 'center',
+				'selectors' => [
+					'{{WRAPPER}} .awea-timer-row' => 'justify-content: {{VALUE}};',
+				],
+			]
+		);
 
-        // --- SECTION: STYLE CONTENT ---
-        $this->start_controls_section('awea_style_content', [
-            'label' => __( 'Content', 'awesome-widgets-elementor' ),
-            'tab'   => Controls_Manager::TAB_STYLE,
-        ]);
+		$this->add_responsive_control(
+			'awea_cells_gap',
+			[
+				'label'      => esc_html__( 'Gap Between Cells', 'awesome-widgets-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem' ],
+				'range'      => [ 'px' => [ 'min' => 0, 'max' => 50 ] ],
+				'default'    => [ 'unit' => 'px', 'size' => 16 ],
+				'selectors'  => [
+					'{{WRAPPER}} .awea-timer-row' => 'gap: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
 
-        $this->add_control( 'awea_num_heading', [ 'label' => 'Number Settings', 'type' => Controls_Manager::HEADING, 'separator' => 'before' ] );
-        $this->add_control(
-            'awea_digit_color',
-            [
-                'label' => 'Color',
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [ '{{WRAPPER}} .digit' => 'color: {{VALUE}};' ],
-            ]
-        );
-        $this->add_group_control( Group_Control_Typography::get_type(), [ 'name' => 'awea_digit_typo', 'selector' => '{{WRAPPER}} .digit' ] );
+		$this->add_responsive_control(
+			'awea_cell_min_width',
+			[
+				'label'      => esc_html__( 'Min Width', 'awesome-widgets-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%' ],
+				'range'      => [ 'px' => [ 'min' => 70, 'max' => 250 ] ],
+				'default'    => [ 'unit' => 'px', 'size' => 120 ],
+				'selectors'  => [
+					'{{WRAPPER}} .awea-time-cell' => 'min-width: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
 
-        $this->add_control( 'awea_label_heading', [ 'label' => 'Label Settings', 'type' => Controls_Manager::HEADING, 'separator' => 'before' ] );
-        $this->add_control(
-            'awea_unit_color',
-            [
-                'label' => 'Color',
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [ '{{WRAPPER}} .unit' => 'color: {{VALUE}};' ],
-            ]
-        );
-        $this->add_group_control( Group_Control_Typography::get_type(), [ 'name' => 'awea_unit_typo', 'selector' => '{{WRAPPER}} .unit' ] );
+		$this->add_responsive_control(
+			'awea_cell_padding',
+			[
+				'label'      => esc_html__( 'Cell Padding', 'awesome-widgets-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', 'rem' ],
+				'default'    => [ 'top' => '28', 'right' => '20', 'bottom' => '24', 'left' => '20', 'unit' => 'px', 'isLinked' => false ],
+				'selectors'  => [
+					'{{WRAPPER}} .awea-time-cell' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
 
-        $this->end_controls_section();
-    }
+		$this->add_responsive_control(
+			'awea_cell_radius',
+			[
+				'label'      => esc_html__( 'Corner Radius', 'awesome-widgets-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'rem' ],
+				'default'    => [ 'top' => '24', 'right' => '24', 'bottom' => '24', 'left' => '24', 'unit' => 'px', 'isLinked' => true ],
+				'selectors'  => [
+					'{{WRAPPER}} .awea-time-cell' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
 
-    protected function render() {
-        $settings = $this->get_settings_for_display();
-        $id = 'awea-monolith-' . $this->get_id();
-        ?>
-        <div class="monolith-wrap" id="<?php echo esc_attr($id); ?>">
-            <div class="timer-row main-timer-display">
-                <div class="time-cell"><span class="digit days">00</span><span class="unit"><?php echo esc_html($settings['awea_label_days']); ?></span></div>
-                <div class="time-cell"><span class="digit hours">00</span><span class="unit"><?php echo esc_html($settings['awea_label_hours']); ?></span></div>
-                <div class="time-cell"><span class="digit minutes">00</span><span class="unit"><?php echo esc_html($settings['awea_label_mins']); ?></span></div>
-                <div class="time-cell"><span class="digit seconds">00</span><span class="unit"><?php echo esc_html($settings['awea_label_secs']); ?></span></div>
-            </div>
-            <div class="awea-finished"><?php echo esc_html($settings['awea_expire_message']); ?></div>
-        </div>
+		$this->start_controls_tabs( 'awea_cell_state_tabs' );
 
-        <script>
-        (function($) {
-            const runWidget = () => {
-                const targetDate = new Date("<?php echo esc_js($settings['awea_due_date']); ?>").getTime();
-                const $container = $('#<?php echo esc_attr($id); ?>');
+		// Normal
+		$this->start_controls_tab(
+			'awea_cell_tab_normal',
+			[ 'label' => esc_html__( 'Normal', 'awesome-widgets-elementor' ) ]
+		);
 
-                const interval = setInterval(function() {
-                    const now = new Date().getTime();
-                    const diff = targetDate - now;
+		$this->add_control(
+			'awea_cell_bg_color',
+			[
+				'label'     => esc_html__( 'Background Color', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .awea-time-cell' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
 
-                    if (diff <= 0) {
-                        clearInterval(interval);
-                        <?php if($settings['awea_expire_type'] === 'message'): ?>
-                            $container.find('.main-timer-display').hide();
-                            $container.find('.awea-finished').fadeIn();
-                        <?php else: ?>
-                            window.location.href = "<?php echo esc_url($settings['awea_expire_link']['url']); ?>";
-                        <?php endif; ?>
-                        return;
-                    }
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			[
+				'name'     => 'awea_cell_border',
+				'selector' => '{{WRAPPER}} .awea-time-cell',
+			]
+		);
 
-                    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                    const s = Math.floor((diff % (1000 * 60)) / 1000);
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name'     => 'awea_cell_shadow',
+				'selector' => '{{WRAPPER}} .awea-time-cell',
+			]
+		);
 
-                    $container.find('.days').text(d.toString().padStart(2, '0'));
-                    $container.find('.hours').text(h.toString().padStart(2, '0'));
-                    $container.find('.minutes').text(m.toString().padStart(2, '0'));
-                    $container.find('.seconds').text(s.toString().padStart(2, '0'));
-                }, 1000);
-            };
+		$this->end_controls_tab();
 
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver((entries) => {
-                    if (entries[0].isIntersecting) {
-                        runWidget();
-                        observer.unobserve(entries[0].target);
-                    }
-                }, { threshold: 0.1 });
-                observer.observe(document.getElementById('<?php echo esc_attr($id); ?>'));
-            } else {
-                runWidget();
-            }
-        })(jQuery);
-        </script>
+		// Hover
+		$this->start_controls_tab(
+			'awea_cell_tab_hover',
+			[ 'label' => esc_html__( 'Hover', 'awesome-widgets-elementor' ) ]
+		);
 
-        <?php
-    }
+		$this->add_control(
+			'awea_cell_bg_color_hover',
+			[
+				'label'     => esc_html__( 'Background Color', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .awea-time-cell:hover' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'awea_cell_border_hover',
+			[
+				'label'     => esc_html__( 'Border Color', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .awea-time-cell:hover' => 'border-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name'     => 'awea_cell_shadow_hover',
+				'selector' => '{{WRAPPER}} .awea-time-cell:hover',
+			]
+		);
+
+		$this->add_responsive_control(
+			'awea_cell_hover_lift',
+			[
+				'label'      => esc_html__( 'Hover Lift (Y-Axis)', 'awesome-widgets-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range'      => [ 'px' => [ 'min' => -25, 'max' => 0 ] ],
+				'default'    => [ 'unit' => 'px', 'size' => -6 ],
+				'selectors'  => [
+					'{{WRAPPER}} .awea-time-cell:hover' => 'transform: translateY({{SIZE}}{{UNIT}});',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+		$this->end_controls_tabs();
+
+		$this->end_controls_section();
+
+		/* ==========================================================================
+		   STYLE: DIGITS & LABELS
+		   ========================================================================== */
+		$this->start_controls_section(
+			'awea_section_style_digits_labels',
+			[
+				'label' => esc_html__( 'Digits & Labels', 'awesome-widgets-elementor' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'awea_heading_digits',
+			[
+				'label' => esc_html__( 'Numeric Digits', 'awesome-widgets-elementor' ),
+				'type'  => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_control(
+			'awea_digit_color',
+			[
+				'label'     => esc_html__( 'Digit Color', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .awea-digit' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'awea_digit_typography',
+				'selector' => '{{WRAPPER}} .awea-digit',
+				'global'   => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+		$this->add_control(
+			'awea_heading_labels',
+			[
+				'label'     => esc_html__( 'Unit Labels', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'awea_unit_color',
+			[
+				'label'     => esc_html__( 'Label Color', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .awea-unit' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'awea_unit_typography',
+				'selector' => '{{WRAPPER}} .awea-unit',
+				'global'   => [
+					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
+				],
+			]
+		);
+
+		// Separators
+		$this->add_control(
+			'awea_heading_separator_style',
+			[
+				'label'     => esc_html__( 'Divider Colons (:)', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [ 'awea_show_separators' => 'yes' ],
+			]
+		);
+
+		$this->add_control(
+			'awea_sep_color',
+			[
+				'label'     => esc_html__( 'Divider Color', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .awea-colon-sep' => 'color: {{VALUE}};',
+				],
+				'condition' => [ 'awea_show_separators' => 'yes' ],
+			]
+		);
+
+		$this->add_responsive_control(
+			'awea_sep_size',
+			[
+				'label'      => esc_html__( 'Divider Size', 'awesome-widgets-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'rem' ],
+				'range'      => [ 'px' => [ 'min' => 14, 'max' => 60 ] ],
+				'default'    => [ 'unit' => 'px', 'size' => 28 ],
+				'selectors'  => [
+					'{{WRAPPER}} .awea-colon-sep' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [ 'awea_show_separators' => 'yes' ],
+			]
+		);
+
+		$this->end_controls_section();
+
+		/* ==========================================================================
+		   STYLE: EXPIRED MESSAGE
+		   ========================================================================== */
+		$this->start_controls_section(
+			'awea_section_style_expired',
+			[
+				'label'     => esc_html__( 'Expired Message', 'awesome-widgets-elementor' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
+				'condition' => [ 'awea_expire_type' => 'message' ],
+			]
+		);
+
+		$this->add_control(
+			'awea_expired_color',
+			[
+				'label'     => esc_html__( 'Message Color', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .awea-countdown-expired' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'awea_expired_typography',
+				'selector' => '{{WRAPPER}} .awea-countdown-expired',
+				'global'   => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	protected function render() {
+		$settings       = $this->get_settings_for_display();
+		$due_date_raw   = ! empty( $settings['awea_due_date'] ) ? $settings['awea_due_date'] : '';
+		$widget_id      = $this->get_id();
+
+		// Convert Elementor input string to target timestamp in site's timezone
+		$site_timezone  = wp_timezone();
+		$datetime       = date_create( $due_date_raw, $site_timezone );
+		$target_time    = $datetime ? $datetime->getTimestamp() : strtotime( '+1 month' );
+		$current_time   = wp_date( 'U' );
+		$diff           = max( 0, $target_time - $current_time );
+
+		// Pre-compute server-side numbers to prevent 00:00 flash
+		$days    = floor( $diff / 86400 );
+		$hours   = floor( ( $diff % 86400 ) / 3600 );
+		$minutes = floor( ( $diff % 3600 ) / 60 );
+		$seconds = floor( $diff % 60 );
+
+		$show_days    = 'yes' === ( $settings['awea_show_days'] ?? 'no' );
+		$show_hours   = 'yes' === ( $settings['awea_show_hours'] ?? 'no' );
+		$show_mins    = 'yes' === ( $settings['awea_show_minutes'] ?? 'no' );
+		$show_secs    = 'yes' === ( $settings['awea_show_seconds'] ?? 'no' );
+		$show_seps    = 'yes' === ( $settings['awea_show_separators'] ?? 'no' );
+		$expire_type  = $settings['awea_expire_type'] ?? 'message';
+		$redirect_url = $settings['awea_expire_link']['url'] ?? '';
+
+		$active_units = [];
+		if ( $show_days )  $active_units[] = 'days';
+		if ( $show_hours ) $active_units[] = 'hours';
+		if ( $show_mins )  $active_units[] = 'minutes';
+		if ( $show_secs )  $active_units[] = 'seconds';
+		$last_unit = end( $active_units );
+		?>
+		<div class="awea-countdown-wrapper"
+		     id="awea-countdown-<?php echo esc_attr( $widget_id ); ?>"
+		     data-target="<?php echo esc_attr( (string) $target_time ); ?>"
+		     data-server="<?php echo esc_attr( (string) $current_time ); ?>"
+		     data-expire="<?php echo esc_attr( $expire_type ); ?>"
+		     data-redirect="<?php echo esc_url( $redirect_url ); ?>">
+
+			<div class="awea-timer-row <?php echo ( $diff <= 0 && 'message' === $expire_type ) ? 'awea-is-hidden' : ''; ?>">
+				
+				<?php if ( $show_days ) : ?>
+					<div class="awea-time-cell awea-unit-days">
+						<span class="awea-digit awea-val-days"><?php echo esc_html( sprintf( '%02d', $days ) ); ?></span>
+						<span class="awea-unit"><?php echo esc_html( $settings['awea_label_days'] ); ?></span>
+					</div>
+					<?php if ( $show_seps && 'days' !== $last_unit ) : ?>
+						<span class="awea-colon-sep" aria-hidden="true">:</span>
+					<?php endif; ?>
+				<?php endif; ?>
+
+				<?php if ( $show_hours ) : ?>
+					<div class="awea-time-cell awea-unit-hours">
+						<span class="awea-digit awea-val-hours"><?php echo esc_html( sprintf( '%02d', $hours ) ); ?></span>
+						<span class="awea-unit"><?php echo esc_html( $settings['awea_label_hours'] ); ?></span>
+					</div>
+					<?php if ( $show_seps && 'hours' !== $last_unit ) : ?>
+						<span class="awea-colon-sep" aria-hidden="true">:</span>
+					<?php endif; ?>
+				<?php endif; ?>
+
+				<?php if ( $show_mins ) : ?>
+					<div class="awea-time-cell awea-unit-minutes">
+						<span class="awea-digit awea-val-minutes"><?php echo esc_html( sprintf( '%02d', $minutes ) ); ?></span>
+						<span class="awea-unit"><?php echo esc_html( $settings['awea_label_minutes'] ); ?></span>
+					</div>
+					<?php if ( $show_seps && 'minutes' !== $last_unit ) : ?>
+						<span class="awea-colon-sep" aria-hidden="true">:</span>
+					<?php endif; ?>
+				<?php endif; ?>
+
+				<?php if ( $show_secs ) : ?>
+					<div class="awea-time-cell awea-unit-seconds">
+						<span class="awea-digit awea-val-seconds"><?php echo esc_html( sprintf( '%02d', $seconds ) ); ?></span>
+						<span class="awea-unit"><?php echo esc_html( $settings['awea_label_seconds'] ); ?></span>
+					</div>
+				<?php endif; ?>
+
+			</div>
+
+			<?php if ( 'message' === $expire_type ) : ?>
+				<div class="awea-countdown-expired <?php echo ( $diff <= 0 ) ? 'awea-is-visible' : ''; ?>" aria-live="polite">
+					<?php echo esc_html( $settings['awea_expire_message'] ); ?>
+				</div>
+			<?php endif; ?>
+
+		</div>
+		<?php
+	}
 }

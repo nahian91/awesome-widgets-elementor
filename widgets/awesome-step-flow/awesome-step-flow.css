@@ -1,112 +1,161 @@
+/* ==========================================================================
+   AWEA Step Flow Studio 10/10 Architecture
+   ========================================================================== */
+
 .awea-step-container {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-}
-.awea-step-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    position: relative;
-    z-index: 2;
-}
-.awea-step-box {
-    width: 90px;
-    height: 90px;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    position: relative;
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    border: 1px solid rgba(255, 255, 255, 1);
-    box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05), inset 0 0 0 1px rgba(255,255,255,1);
-    cursor: pointer;
-}
-.awea-step-number {
-    position: absolute;
-    top: -12px;
-    right: -12px;
-    width: 32px;
-    height: 32px;
-    border-radius: 12px;
-    font-size: 13px;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    border: 1px solid #e2e8f0;
-}
-.awea-step-item:hover .awea-step-box {
-    transform: translateY(-15px) scale(1.05);
-    box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.4);
-}
-.awea-flow-connector {
-    flex: 0.5;
-    height: 2px;
-    margin-top: 45px;
-    position: relative;
-    min-width: 50px;
-}
-.awea-flow-connector::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 0;
-    transition: width 0.6s ease;
-}
-.awea-flow-beam {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    animation: awea-flowMove 3s infinite linear;
-    opacity: 0.4;
-}
-@keyframes awea-flowMove {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-}
-.awea-step-item:hover + .awea-flow-connector::after {
-    width: 100%;
-}
-.awea-step-content {
-    margin-top: 25px;
-    padding: 0 15px;
-}
-.awea-step-title {
-    font-size: 1.2rem;
-    font-weight: 800;
-    margin: 0 0 8px 0;
-    letter-spacing: -0.5px;
-}
-.awea-step-desc {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    margin: 0;
-}
-@media (max-width: 850px) {
-    .awea-step-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 40px;
-    }
-    .awea-flow-connector {
-        width: 2px;
-        height: 40px;
-        margin: 0;
-    }
-    .awea-flow-beam { animation: awea-flowMoveVertical 3s infinite linear; }
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-@keyframes awea-flowMoveVertical {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(100%); }
+/* 1. Step Item Node */
+.awea-step-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* 2. Squircle Icon Box & Floating Badge */
+.awea-step-box {
+  width: 84px;
+  height: 84px;
+  border-radius: 26px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              background-color 0.3s ease;
+  will-change: transform;
+}
+
+.awea-step-box i,
+.awea-step-box svg {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+  transition: color 0.3s ease;
+}
+
+.awea-step-number {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--e-global-color-accent, #38bdf8);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ffffff;
+}
+
+.awea-step-item:hover .awea-step-box {
+  transform: translateY(-8px) scale(1.04);
+  border-color: var(--e-global-color-primary, #4f46e5);
+  box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.18);
+}
+
+/* 3. Flow Connector Beams */
+.awea-flow-connector {
+  flex: 0.5;
+  height: 2px;
+  background-color: #e2e8f0;
+  margin-top: 42px;
+  position: relative;
+  min-width: 40px;
+  overflow: hidden;
+}
+
+.awea-flow-beam {
+  position: absolute;
+  inset: 0;
+  background-color: var(--e-global-color-primary, #4f46e5);
+  box-shadow: 0 0 10px var(--e-global-color-primary, #4f46e5);
+  animation: aweaFlowMove 3s infinite linear;
+}
+
+@keyframes aweaFlowMove {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* 4. Content Typography */
+.awea-step-content {
+  margin-top: 22px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.awea-step-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--e-global-color-primary, #0f172a);
+  margin: 0 0 8px 0;
+  word-break: break-word;
+}
+
+.awea-step-desc {
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: var(--e-global-color-text, #64748b);
+  margin: 0;
+}
+
+/* 5. Responsive Vertical Stacking for Mobile / Tablet */
+@media (max-width: 850px) {
+  .awea-step-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+  .awea-step-item {
+    width: 100%;
+  }
+  .awea-flow-connector {
+    width: 2px;
+    height: 36px;
+    margin: 0;
+    flex: none;
+  }
+  .awea-flow-beam {
+    animation: aweaFlowMoveVertical 3s infinite linear;
+  }
+  .awea-step-item:hover .awea-step-box {
+    transform: none;
+  }
+}
+
+@keyframes aweaFlowMoveVertical {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
 }

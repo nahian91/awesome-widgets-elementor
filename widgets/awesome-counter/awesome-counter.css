@@ -1,35 +1,171 @@
-            .counter-card {
-                background: #fff; padding: 50px 25px; text-align: center; border-radius: 28px;
-                position: relative; border: 1px solid var(--border-soft); font-family: sans-serif;
-                transition: transform 0.4s ease;
-            }
-            /* Border trace effect */
-            .counter-card::before, .counter-card::after {
-                content: ''; position: absolute; border-radius: inherit; width: 0; height: 0;
-                border: 2.5px solid transparent; box-sizing: border-box; pointer-events: none;
-            }
-            .counter-card::before { top: -1px; left: -1px; }
-            .counter-card::after { bottom: -1px; right: -1px; }
-            
-            .counter-card:hover::before {
-                width: calc(100% + 2px); height: calc(100% + 2px);
-                border-top-color: var(--primary); border-right-color: var(--primary);
-                transition: width 0.2s linear, height 0.2s linear 0.2s;
-            }
-            .counter-card:hover::after {
-                width: calc(100% + 2px); height: calc(100% + 2px);
-                border-bottom-color: var(--primary); border-left-color: var(--primary);
-                transition: border-color 0s linear 0.4s, width 0.2s linear 0.4s, height 0.2s linear 0.6s;
-            }
-            .counter-card:hover { transform: translateY(-10px); }
-            
-            .icon-box { 
-                width: 50px; height: 50px; background: var(--border-soft); border-radius: 12px; 
-                display: grid; place-items: center; margin: 0 auto 20px; color: var(--gray); transition: 0.3s; 
-            }
-            .icon-box i, .icon-box svg { font-size: 20px; }
-            .counter-card:hover .icon-box { background: var(--primary); color: #fff; }
-            
-            .stat-value { font-size: 50px; font-weight: 800; color: var(--dark); line-height: 1; }
-            .symbol { font-size: 24px; font-weight: 700; color: var(--primary); margin-left: 4px; }
-            .label { font-size: 13px; font-weight: 600; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-top: 15px; }
+/* ==========================================================================
+   AWEA Counter Studio 10/10 Architecture
+   ========================================================================== */
+
+@property --awea-counter-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.awea-counter-card {
+  --awea-beam-color: var(--e-global-color-primary, #4f46e5);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 28px;
+  padding: 44px 32px;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              background-color 0.3s ease;
+  will-change: transform;
+}
+
+.awea-counter-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--e-global-color-primary, #4f46e5);
+  box-shadow: 0 25px 50px -15px rgba(79, 70, 229, 0.16);
+}
+
+/* 1. Kinetic Border Beam Animation */
+.awea-counter-card.awea-has-beam::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(from var(--awea-counter-angle), transparent 70%, var(--awea-beam-color), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+@keyframes aweaCounterSpin {
+  to {
+    --awea-counter-angle: 360deg;
+  }
+}
+
+.awea-counter-card.awea-has-beam:hover::after {
+  opacity: 1;
+  animation: aweaCounterSpin 3.5s linear infinite;
+}
+
+/* 2. Leading Icon Badge */
+.awea-counter-icon-box {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background-color: rgba(79, 70, 229, 0.08);
+  color: var(--e-global-color-primary, #4f46e5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  flex-shrink: 0;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              background-color 0.3s ease,
+              color 0.3s ease;
+}
+
+.awea-counter-icon-box i {
+  font-size: 24px;
+}
+
+.awea-counter-icon-box svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+.awea-counter-card:hover .awea-counter-icon-box {
+  background-color: var(--e-global-color-primary, #4f46e5);
+  color: #ffffff;
+  transform: scale(1.1) rotate(-8deg);
+}
+
+/* 3. Number Metrics Lockup */
+.awea-counter-stat-holder {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.awea-counter-val {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--e-global-color-primary, #0f172a);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.awea-counter-prefix,
+.awea-counter-suffix {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--e-global-color-primary, #4f46e5);
+  line-height: 1;
+}
+
+.awea-counter-prefix {
+  margin-right: 4px;
+}
+
+.awea-counter-suffix {
+  margin-left: 4px;
+}
+
+/* 4. Title Label */
+.awea-counter-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--e-global-color-text, #64748b);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* 5. Responsive Breakpoints */
+@media (max-width: 768px) {
+  .awea-counter-card {
+    padding: 36px 20px;
+    border-radius: 22px;
+  }
+  .awea-counter-val {
+    font-size: 2.75rem;
+  }
+  .awea-counter-prefix,
+  .awea-counter-suffix {
+    font-size: 1.5rem;
+  }
+  .awea-counter-icon-box {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 18px;
+  }
+  .awea-counter-icon-box i {
+    font-size: 20px;
+  }
+  .awea-counter-icon-box svg {
+    width: 20px;
+    height: 20px;
+  }
+}
