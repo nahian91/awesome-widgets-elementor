@@ -1,0 +1,36 @@
+.awea-product-grid {
+	display: flex;
+	flex-direction: column;
+}
+.awea-product-grid > h4 {
+  text-align: center;
+  padding: 10px;
+  background-color: #ddd;
+}
+.single-awea-product-list-box {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	padding: 15px;
+    border: 1px solid #ddd;
+}
+.single-awea-product-list-img {
+  background-size: cover;
+  background-position: center;
+  width: 120px;
+  height: 120px;
+}
+.single-awea-product-list:last-child {
+  margin-bottom: 0;
+}
+.single-awea-product-list-content h4 a {
+  font-size: 22px;
+  margin-bottom: 5px;
+  display: block;
+}
+.single-awea-product-list-meta .awea-product-grid-btn {
+  display: block;
+  margin-top: 12px;
+  font-size: 18px;
+  font-weight: 500;
+}

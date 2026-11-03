@@ -1,0 +1,131 @@
+.awea-business-hours-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 32px;
+    overflow: hidden;
+}
+
+.awea-business-hours-status-side {
+    padding: 60px;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center;
+    position: relative;
+}
+
+.awea-business-hours-badge {
+    display: inline-flex; 
+    align-items: center; 
+    gap: 12px;
+    background: rgba(49, 166, 141, 0.12); 
+    color: #31a68d;
+    padding: 10px 22px; 
+    border-radius: 100px; 
+    font-weight: 800; 
+    font-size: 11px;
+    text-transform: uppercase; 
+    letter-spacing: 0.15em; 
+    margin-bottom: 32px; 
+    width: fit-content;
+    border: 1px solid rgba(49, 166, 141, 0.2);
+}
+
+.awea-business-hours-badge.closed {
+    background: rgba(239, 68, 68, 0.1); 
+    color: #f87171;
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+.awea-business-hours-pulse {
+    width: 10px; 
+    height: 10px; 
+    border-radius: 50%;
+    background: currentColor;
+    position: relative;
+}
+
+.awea-business-hours-pulse::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;
+    background: currentColor;
+    animation: awea-pulse 2.5s cubic-bezier(0.19, 1, 0.22, 1) infinite;
+}
+
+@keyframes awea-pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    70% { transform: scale(2.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 0; }
+}
+
+.awea-business-hours-status-side h2 { 
+    font-size: 52px; 
+    font-weight: 800; 
+    letter-spacing: -0.04em; 
+    line-height: 1.05; 
+    margin: 0 0 24px 0; 
+    color: #ffffff;
+}
+
+.awea-business-hours-status-side p { 
+    color: #94a3b8; 
+    font-size: 18px; 
+    line-height: 1.7; 
+    margin: 0 0 48px 0; 
+    max-width: 400px;
+}
+
+.awea-business-hours-schedule-side { 
+    padding: 60px; 
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.awea-business-hours-row {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    padding: 20px 0; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.awea-business-hours-row:last-child { border-bottom: none; }
+.awea-business-hours-day { font-weight: 600; font-size: 17px; color: #f8fafc; }
+.awea-business-hours-time { font-weight: 500; color: #94a3b8; font-variant-numeric: tabular-nums; }
+
+.awea-business-hours-row.active { 
+    border-bottom-color: #31a68d; 
+    transform: translateX(8px); 
+}
+.awea-business-hours-row.active .awea-business-hours-day { color: #31a68d; font-weight: 700; }
+.awea-business-hours-row.active .awea-business-hours-time { color: #ffffff; font-weight: 700; }
+
+.awea-business-hours-support-label { 
+    color: #31a68d; 
+    font-weight: 800; 
+    text-transform: uppercase; 
+    letter-spacing: 0.1em; 
+    font-size: 11px; 
+}
+
+.awea-business-hours-support-num { 
+    margin-top: 8px; 
+    font-weight: 700; 
+    color: #ffffff; 
+    font-size: 24px; 
+    letter-spacing: -0.02em;
+}
+
+@media (max-width: 1024px) {
+    .awea-business-hours-status-side, .awea-business-hours-schedule-side { padding: 48px; }
+    .awea-business-hours-status-side h2 { font-size: 42px; }
+}
+
+@media (max-width: 900px) {
+    .awea-business-hours-grid { grid-template-columns: 1fr; border-radius: 24px; }
+    .awea-business-hours-status-side { padding: 40px; }
+    .awea-business-hours-schedule-side { padding: 20px 40px 40px 40px; }
+}

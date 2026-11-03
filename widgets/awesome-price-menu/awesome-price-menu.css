@@ -1,0 +1,47 @@
+.awea-price-menu-list {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+.awea-price-menu {
+  display: flex;
+  gap: 16px;
+  padding: 10px;
+  align-items: start;
+}
+.awea-price-menu img {
+  max-width: 100px;
+  height: auto;
+}
+.awea-price-menu-details {
+  flex: 1;
+}
+.awea-price-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px dotted #e3b8b8;
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+}
+
+.awea-price-menu-header h2 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.awea-price {
+  font-weight: bold;
+  color: #000;
+}
+
+.awea-description {
+  margin: 0;
+  color: #666;
+  font-size: 0.95em;
+  line-height: 1.4;
+}

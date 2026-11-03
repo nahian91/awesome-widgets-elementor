@@ -1,0 +1,345 @@
+/* General Admin Styles */
+.awea-dashboard-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f1f1f1;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.awea-dashboard-header h1 {
+    color: #633ff5;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.awea-button {
+    background-color: #633ff5;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.awea-button:hover {
+    background-color: #005a8c;
+}
+
+/* Checkbox Styles */
+.awea-settings-form table.form-table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.awea-settings-form table.form-table th {
+    width: 300px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.awea-checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.awea-checkbox-label {
+    font-size: 16px;
+    color: #333;
+}
+
+.awea-widget-counts{
+    margin: 20px 0; 
+    padding: 15px; 
+    background: #f9f9f9; 
+    border: 1px solid #ddd; 
+    display: flex; 
+    gap: 30px; 
+    font-size: 16px;
+}
+
+/* Custom Awesome Checkbox */
+.awea-checkbox-container input[type="checkbox"] {
+    display: none;
+}
+
+.awea-checkbox-container input[type="checkbox"] + label::before {
+    content: "\f00c"; /* FontAwesome check icon */
+    font-family: 'FontAwesome';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    border: 2px solid #633ff5;
+    border-radius: 4px;
+    background-color: #fff;
+    color: transparent;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.awea-checkbox-container input[type="checkbox"]:checked + label::before {
+    background-color: #633ff5;
+    color: #fff;
+    border-color: #633ff5;
+}
+
+
+/* Modern Switch Styles */
+.awea-switch-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 5px 0;
+}
+
+/* Switch Toggle Styles */
+.awea-switch {
+    position: relative;
+    width: 50px;
+    height: 24px;
+    display: inline-block;
+}
+
+.awea-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.awea-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 24px;
+    transition: 0.4s;
+}
+
+.awea-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+input:checked + .awea-slider {
+    background-color: #633ff5;
+}
+
+input:checked + .awea-slider:before {
+    transform: translateX(26px);
+}
+
+/* Label Styles */
+.awea-switch-label {
+    font-size: 16px;
+    color: #333;
+    user-select: none;
+}
+/* Toggle All Container */
+.awea-toggle-all-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+}
+/* General section styling */
+.general-section {
+    text-align: center;
+    padding: 50px 0;
+    background-color: #f9f9f9;
+}
+
+.section-title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.general-boxes {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.general-box {
+    width: 30%;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.general-box img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.general-box h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.general-box p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #ff6a00;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #e65b00;
+}
+
+
+
+.awea-wrap {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 10px;
+	margin-top: 30px;
+}
+
+.awea-widgets-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  .awea-widgets-list-item {
+    border: 1px solid #eee;
+    padding: 20px;
+    border-radius: 9px;
+    background-color: #f4f4f4;
+  }
+  .awea-switch-label {
+    text-transform: capitalize;
+    font-weight: 500;
+  }
+  
+.awea-wrap table, .awea-wrap table tr, .awea-wrap table td {
+    border: 1px solid #ddd;
+    font-weight: 500;
+  }
+  .awea-wrap table {
+    margin-top: 40px;
+  }
+
+
+
+/* Paragraphs */
+.awea-wrap p {
+    margin-bottom: 15px;
+    font-size: 17px;
+}
+
+/* List styling */
+.awea-wrap ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.awea-wrap ul li {
+	padding: 15px;
+	border: 1px solid #633ff5;
+	display: flex;
+	align-items: center;
+	font-size: 16px;
+	background-color: #f4f4f4;
+}
+
+.awea-widgets-list li .awea-switch-container {
+  display: flex;
+  flex-direction: column;
+}
+.awea-wrap ul li {
+	padding: 10px 25px;
+	width: 185px;
+	display: flex;
+	justify-content: center;
+}
+.awea-widgets-list li label .awea-switch {
+  margin-top: 5px;
+}
+.awea-widgets-list li .awea-switch-label {
+	font-weight: 600;
+	font-family: "Open Sans";
+	text-align: center;
+	font-size: 17px;
+	line-height: 27px;
+}
+.awea-wrap h3::before {
+    content: '✨';
+    margin-right: 8px;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+/* Link styles */
+.awea-wrap a {
+    color: #633ff5;
+    text-decoration: none;
+}
+
+.awea-wrap a:hover {
+    text-decoration: underline;
+}
+
+.awea-wrap.awea-general-page ul li {
+  width: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  margin-bottom: 15px;
+  padding: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .awea-wrap {
+        padding: 15px;
+    }
+
+    .awea-wrap h2 {
+        font-size: 24px;
+    }
+
+    .awea-wrap h3 {
+        font-size: 18px;
+    }
+
+    .awea-wrap ul li {
+        padding: 8px 0;
+    }
+}

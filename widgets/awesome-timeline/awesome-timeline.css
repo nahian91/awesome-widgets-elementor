@@ -1,0 +1,112 @@
+.awea-timeline-container {
+	margin: 0 auto;
+	position: relative;
+}
+.awea-timeline-container::before {
+	content: '';
+	position: absolute;
+	left: 50%;
+	top: 0;
+	width: 2px;
+	height: 100%;
+	background: linear-gradient(to bottom, transparent, #e2e8f0 15%, #e2e8f0 85%, transparent);
+	transform: translateX(-50%);
+}
+
+.awea-timeline-item {
+	display: flex;
+	justify-content: flex-end;
+	padding-right: 50%;
+	position: relative;
+	margin-bottom: 30px;
+	width: 100%;
+	view-timeline-name: --item;
+	view-timeline-axis: block;
+	animation-timeline: --item;
+	animation-name: showItem;
+	animation-range: entry 10% cover 40%;
+	animation-fill-mode: both;
+}
+
+@keyframes showItem {
+	from { opacity: 0; transform: translateY(100px) scale(0.9); }
+	to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.awea-timeline-item:nth-child(even) {
+	justify-content: flex-start;
+	padding-right: 0;
+	padding-left: 50%;
+}
+
+/* Central Dot */
+.awea-timeline-dot {
+	position: absolute;
+	left: 50%;
+	top: 50px;
+	width: 14px;
+	height: 14px;
+	background: #fff;
+	border: 3px solid #31a68d;
+	border-radius: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+	box-shadow: 0 0 0 8px #fff;
+	transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+/* The Card */
+.awea-timeline-content {
+	width: 100%;
+	background: #ffffff;
+	border: 1px solid #f1f5f9;
+	padding: 45px;
+	border-radius: 40px;
+	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+	transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+	position: relative;
+}
+
+.awea-timeline-item:nth-child(odd) .awea-timeline-content { margin-right: 50px; }
+.awea-timeline-item:nth-child(even) .awea-timeline-content { margin-left: 50px; }
+
+.awea-timeline-content:hover {
+	transform: translateY(-10px);
+}
+
+.awea-timeline-item:hover .awea-timeline-dot {
+	transform: translateX(-50%) scale(1.6);
+}
+
+/* Typography */
+.awea-step-tag {
+	display: inline-flex;
+	align-items: center;
+	background: rgba(49, 166, 141, 0.1);
+	color: #31a68d;
+	padding: 8px 20px;
+	border-radius: 100px;
+	margin-bottom: 20px;
+}
+
+.awea-timeline-content h3 {
+	font-size: 1.75rem;
+	font-weight: 800;
+	letter-spacing: -0.5px;
+	margin-bottom: 12px;
+	line-height: 1.2;
+}
+
+.awea-timeline-content p {
+	font-size: 1.05rem;
+	line-height: 1.7;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+	.awea-timeline-container::before { left: 20px; transform: none; }
+	.awea-timeline-item { justify-content: flex-start !important; padding-left: 50px !important; padding-right: 0 !important; margin-bottom: 60px; }
+	.awea-timeline-dot { left: 20px; top: 40px; }
+	.awea-timeline-content { width: 100%; margin: 0 !important; padding: 30px; border-radius: 30px; }
+	.awea-timeline-content h3 { font-size: 1.4rem; }
+}

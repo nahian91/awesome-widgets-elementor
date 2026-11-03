@@ -1,0 +1,42 @@
+.awea-breadcumb {
+  padding: 20px 0;
+    position: relative;
+    overflow: hidden;
+	  z-index: 2;
+    background-color: var(--e-global-color-primary);
+}
+.awea-breadcumb::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+.awea-breadcumb h4{
+  margin-bottom: 15px;
+}
+.awea-breadcumb ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  gap: 25px;
+}
+.awea-breadcumb ul li {
+  position: relative;
+}
+.awea-breadcumb ul li:after {
+  position: absolute;
+  content: "";
+  width: 5px;
+  height: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  right: -15px;
+}
+.awea-breadcumb ul li:last-child::after {
+  display: none;
+}
