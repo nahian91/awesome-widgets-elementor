@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AWEA Counter Studio 10/10 Architecture
+   AWEA Counter Studio Master Architecture (Zero Hover Zoom / No Scale)
    ========================================================================== */
 
 @property --awea-counter-angle {
@@ -10,6 +10,7 @@
 
 .awea-counter-card {
   --awea-beam-color: var(--e-global-color-primary, #4f46e5);
+  --awea-beam-speed: 3.5s;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -17,23 +18,21 @@
   justify-content: center;
   text-align: center;
   background-color: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(15, 23, 42, 0.08);
   border-radius: 28px;
-  padding: 44px 32px;
+  padding: 40px 32px;
   box-sizing: border-box;
   overflow: hidden;
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.3s ease,
-              background-color 0.3s ease;
-  will-change: transform;
+  transform: none; /* Strictly no hover lift */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
+/* Card remains completely locked in place on hover */
 .awea-counter-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--e-global-color-primary, #4f46e5);
-  box-shadow: 0 25px 50px -15px rgba(79, 70, 229, 0.16);
+  transform: none;
 }
 
 /* 1. Kinetic Border Beam Animation */
@@ -43,13 +42,13 @@
   inset: 0;
   border-radius: inherit;
   padding: 2px;
-  background: conic-gradient(from var(--awea-counter-angle), transparent 70%, var(--awea-beam-color), transparent);
+  background: conic-gradient(from var(--awea-counter-angle), transparent 70%, var(--awea-beam-color, #4f46e5), transparent);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.35s ease;
   pointer-events: none;
 }
 
@@ -61,10 +60,10 @@
 
 .awea-counter-card.awea-has-beam:hover::after {
   opacity: 1;
-  animation: aweaCounterSpin 3.5s linear infinite;
+  animation: aweaCounterSpin var(--awea-beam-speed, 3.5s) linear infinite;
 }
 
-/* 2. Leading Icon Badge */
+/* 2. Leading Icon Badge (Zero Hover Zoom / No Scale / No Rotate) */
 .awea-counter-icon-box {
   width: 64px;
   height: 64px;
@@ -76,25 +75,34 @@
   justify-content: center;
   margin-bottom: 24px;
   flex-shrink: 0;
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-              background-color 0.3s ease,
-              color 0.3s ease;
+  border-style: solid;
+  border-width: 0;
+  border-color: transparent;
+  box-sizing: border-box;
+  transform: none; /* Strictly no scale(1.1) rotate(-8deg) */
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
 .awea-counter-icon-box i {
   font-size: 24px;
+  line-height: 1;
 }
 
 .awea-counter-icon-box svg {
   width: 24px;
   height: 24px;
+  display: block;
   fill: currentColor;
 }
 
 .awea-counter-card:hover .awea-counter-icon-box {
+  transform: none; /* Stays locked in place */
   background-color: var(--e-global-color-primary, #4f46e5);
   color: #ffffff;
-  transform: scale(1.1) rotate(-8deg);
+}
+
+.awea-counter-card:hover .awea-counter-icon-box svg {
+  fill: #ffffff;
 }
 
 /* 3. Number Metrics Lockup */
@@ -104,10 +112,11 @@
   justify-content: center;
   line-height: 1;
   margin-bottom: 12px;
+  flex-wrap: wrap;
 }
 
 .awea-counter-val {
-  font-size: 3.5rem;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.04em;
@@ -118,7 +127,7 @@
 
 .awea-counter-prefix,
 .awea-counter-suffix {
-  font-size: 2rem;
+  font-size: clamp(1.4rem, 3vw, 2rem);
   font-weight: 700;
   color: var(--e-global-color-primary, #4f46e5);
   line-height: 1;
@@ -141,31 +150,35 @@
   color: var(--e-global-color-text, #64748b);
   margin: 0;
   line-height: 1.4;
+  word-break: break-word;
 }
 
-/* 5. Responsive Breakpoints */
+/* ==========================================================================
+   Super Mobile Friendly System (<= 768px)
+   ========================================================================== */
 @media (max-width: 768px) {
   .awea-counter-card {
-    padding: 36px 20px;
-    border-radius: 22px;
+    padding: 32px 20px;
+    border-radius: 20px;
   }
-  .awea-counter-val {
-    font-size: 2.75rem;
-  }
-  .awea-counter-prefix,
-  .awea-counter-suffix {
-    font-size: 1.5rem;
-  }
+
   .awea-counter-icon-box {
     width: 52px;
     height: 52px;
     margin-bottom: 18px;
   }
+
   .awea-counter-icon-box i {
     font-size: 20px;
   }
+
   .awea-counter-icon-box svg {
     width: 20px;
     height: 20px;
+  }
+
+  .awea-counter-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
   }
 }

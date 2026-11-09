@@ -1,48 +1,56 @@
-// Initialize when Elementor frontend is ready
 jQuery(window).on('elementor/frontend/init', function () {
-
-    // Team Carousel Widget
     elementorFrontend.hooks.addAction('frontend/element_ready/awesome-team-carousel.default', function ($scope, $) {
-        var team_carousel = $scope.find('.awea-team-carousel');
-        var team_items = team_carousel.attr('awea-team-items');
-        var team_arrows = team_carousel.attr('awea-team-arrows');
-        var team_dots = team_carousel.attr('awea-team-dots');
-        var team_loops = team_carousel.attr('awea-team-loops');
-        var team_pause = team_carousel.attr('awea-team-pause');
-        var team_autoplay = team_carousel.attr('awea-team-autoplay');
-        var team_autoplay_speed = team_carousel.attr('awea-team-autoplay-speed');
-        var team_autoplay_animation = team_carousel.attr('awea-team-autoplay-animation');
+        var $carousel = $scope.find('.awea-team-carousel');
+        if (!$carousel.length) {
+            return;
+        }
 
-        // Initialize Owl Carousel for Team Carousel
-        team_carousel.owlCarousel({
-            dots: team_dots,
-            nav: team_arrows,
-            margin: 30,
-            autoplay: team_autoplay,
-            autoplayTimeout: team_autoplay_animation,
-            autoplaySpeed: team_autoplay_speed,
-            autoplayHoverPause: team_pause,
-            loop: team_loops,
+        var itemsDesktop = parseInt($carousel.data('items-desktop'), 10) || 3;
+        var itemsTablet  = parseInt($carousel.data('items-tablet'), 10) || 2;
+        var itemsMobile  = parseInt($carousel.data('items-mobile'), 10) || 1;
+
+        var gapDesktop   = parseInt($carousel.data('gap-desktop'), 10);
+        var gapTablet    = parseInt($carousel.data('gap-tablet'), 10);
+        var gapMobile    = parseInt($carousel.data('gap-mobile'), 10);
+
+        if (isNaN(gapDesktop)) gapDesktop = 24;
+        if (isNaN(gapTablet)) gapTablet = 20;
+        if (isNaN(gapMobile)) gapMobile = 16;
+
+        var showArrows   = $carousel.data('arrows') === 'yes';
+        var showDots     = $carousel.data('dots') === 'yes';
+        var loop         = $carousel.data('loop') === 'yes';
+        var autoplay     = $carousel.data('autoplay') === 'yes';
+        var pause        = $carousel.data('pause') === 'yes';
+        var animSpeed    = parseInt($carousel.data('speed'), 10) || 450;
+        var autoTimeout  = parseInt($carousel.data('timeout'), 10) || 5000;
+
+        $carousel.owlCarousel({
+            nav: showArrows,
+            dots: showDots,
+            loop: loop,
+            autoplay: autoplay,
+            autoplayTimeout: autoTimeout,
+            smartSpeed: animSpeed,
+            autoplayHoverPause: pause,
             navText: [
-                "<div class='awea-carousel-arrow-border'><i class='fas fa-long-arrow-alt-left'></i></div>",
-                "<div class='awea-carousel-arrow-border'><i class='fas fa-long-arrow-alt-right'></i></div>"
-            ], 
+                '<div class="awea-carousel-arrow-border" aria-label="Previous"><i class="fas fa-chevron-left"></i></div>',
+                '<div class="awea-carousel-arrow-border" aria-label="Next"><i class="fas fa-chevron-right"></i></div>'
+            ],
             responsive: {
                 0: {
-                    items: 1,
-                    nav: false
+                    items: itemsMobile,
+                    margin: gapMobile
                 },
-                600: {
-                    items: 2,
-                    nav: false
+                768: {
+                    items: itemsTablet,
+                    margin: gapTablet
                 },
-                1000: {
-                    items: team_items,
-                    nav: team_arrows,
-                    loop: team_loops,
+                1025: {
+                    items: itemsDesktop,
+                    margin: gapDesktop
                 }
             }
         });
     });
-
 });

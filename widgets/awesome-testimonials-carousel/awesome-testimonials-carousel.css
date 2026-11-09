@@ -1,57 +1,273 @@
-.awea-testimonial-carousel {
-  text-align: center;
-  padding: 30px;
+/* ==========================================================================
+   AWEA Testimonial Carousel Studio Architecture (Zero Hover Zoom / No Scale)
+   ========================================================================== */
+@property --awea-testimonial-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
 }
-.awea-testimonial-carousel-content {
-  margin: 20px 0 30px;
+
+.awea-testimonials-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
 }
-.awea-testimonial-carousel-author {
+
+/* Individual Card Architecture */
+.awea-testimonial-card {
+  --awea-beam-color: #4f46e5;
+  --awea-beam-speed: 3.5s;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  transform: none; /* No hover lift */
+}
+
+/* Strictly locked in place on hover - no scale */
+.awea-testimonial-card:hover {
+  transform: none;
+}
+
+/* Kinetic Border Beam Masking */
+.awea-testimonial-card.awea-has-beam::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--awea-testimonial-angle), transparent 70%, var(--awea-beam-color), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+@keyframes awea-testimonial-spin {
+  to {
+    --awea-testimonial-angle: 360deg;
+  }
+}
+
+.awea-testimonial-card.awea-has-beam:hover::after {
+  opacity: 1;
+  animation: awea-testimonial-spin var(--awea-beam-speed, 3.5s) linear infinite;
+}
+
+/* Watermark Brand Quote (Static on hover - no scale/rotation) */
+.awea-testimonial-quote-brand {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  opacity: 0.08;
+  color: var(--awea-beam-color, #4f46e5);
+  z-index: 1;
+  pointer-events: none;
+  transform: none;
+  transition: opacity 0.3s ease;
+}
+
+.awea-testimonial-card:hover .awea-testimonial-quote-brand {
+  transform: none;
+}
+
+/* Rating Stars */
+.awea-testimonial-stars {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 18px;
+}
+
+/* Review Speech Text */
+.awea-testimonial-text {
+  margin: 0;
+  position: relative;
+  z-index: 2;
+  font-style: italic;
+  word-break: break-word;
+  line-height: 1.65;
+}
+
+/* Author Footer Lockup */
+.awea-testimonial-footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 18px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: rgba(15, 23, 42, 0.06);
+  position: relative;
+  z-index: 2;
+}
+
+/* Avatar Photo (Static on hover - no scale) */
+.awea-testimonial-avatar {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  flex-shrink: 0;
+  transform: none;
+}
+
+.awea-testimonial-card:hover .awea-testimonial-avatar {
+  transform: none;
+}
+
+.awea-testimonial-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0; /* Prevents overflow */
+}
+
+.awea-testimonial-name {
+  margin: 0;
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+.awea-testimonial-desg {
+  font-style: normal;
+  display: block;
+  word-break: break-word;
+}
+
+/* Verified Customer Badge (Static on hover - no scale) */
+.awea-testimonial-verify {
+  margin-left: auto;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #dcfce7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transform: none;
+}
+
+.awea-testimonial-verify svg {
+  width: 13px;
+  height: 13px;
+  color: #15803d;
+}
+
+.awea-testimonial-card:hover .awea-testimonial-verify {
+  transform: none;
+}
+
+/* ==========================================================================
+   Owl Carousel Navigation Controls
+   ========================================================================== */
+.awea-testimonials.owl-carousel .owl-stage-outer {
+  padding: 10px 0; /* Prevents box-shadow cutoffs */
+}
+
+.awea-testimonials .owl-nav {
+  position: static;
+}
+
+.awea-testimonials .owl-nav button.owl-prev,
+.awea-testimonials .owl-nav button.owl-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  z-index: 10;
+  outline: none;
+}
+
+.awea-testimonials .owl-nav button.owl-prev {
+  left: -20px;
+}
+
+.awea-testimonials .owl-nav button.owl-next {
+  right: -20px;
+}
+
+.awea-carousel-arrow-border {
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  transform: none;
+}
+
+.awea-carousel-arrow-border:hover {
+  transform: none; /* No arrow zoom */
+}
+
+/* Dots */
+.awea-testimonials .owl-dots {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 28px;
 }
-.awea-testimonial-carousel-author img {
-  max-width: 70px;
-  border: 1px dashed #ddd;
-  margin-right: 15px;
-}
-.awea-testimonial-carousel-author h4 {
-  font-size: 20px;
-  text-align: left;
-}
-.awea-testimonial-carousel-author h4 span {
-  display: block;
-  margin-top: 2px;
-}
-.awea-testimonials .awea-carousel-arrow-border {
-  background-color: var(--e-global-color-primary);
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
-  border-radius: 50%;
-  z-index: 10;
-  cursor: pointer;
-}
-.awea-testimonials .owl-prev .awea-carousel-arrow-border {
-  margin-left: -20px;
-}
-.awea-testimonials .owl-next .awea-carousel-arrow-border {
-  margin-right: -20px;
-}
-.awea-testimonials .owl-dots {
-  display: flex;
-  justify-content: center;
-}
+
 .awea-testimonials .owl-dots button.owl-dot {
-  width: 12px;
-  height: 12px;
-  background-color: var(--e-global-color-secondary);
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  margin: 0 5px;
+  border: none;
+  margin: 0 6px;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
 .awea-testimonials .owl-dots button.owl-dot.active {
-  background-color: var(--e-global-color-primary);
+  transform: none; /* No dot scale */
 }
-.awea-testimonials .owl-dots {
-  margin-top: 30px;
+
+/* ==========================================================================
+   Super Mobile Friendly (<= 767px)
+   ========================================================================== */
+@media (max-width: 767px) {
+  .awea-testimonials .owl-nav button.owl-prev {
+    left: -8px;
+  }
+  .awea-testimonials .owl-nav button.owl-next {
+    right: -8px;
+  }
+  .awea-carousel-arrow-border {
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+  }
+  .awea-testimonial-quote-brand {
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+  }
+  .awea-testimonial-footer {
+    gap: 12px;
+  }
 }

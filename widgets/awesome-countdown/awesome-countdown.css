@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AWEA Countdown Studio 10/10 Architecture
+   AWEA Countdown Studio Master Architecture (Zero Hover Zoom / No Scale)
    ========================================================================== */
 
 .awea-countdown-wrapper {
@@ -16,21 +16,23 @@
   justify-content: center;
   gap: 16px;
   flex-wrap: wrap;
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s ease;
+  box-sizing: border-box;
 }
 
 .awea-timer-row.awea-is-hidden {
   display: none !important;
 }
 
-/* 2. Micro-Interactive Time Cells */
+/* 2. Micro-Interactive Time Cells (Strictly Stationary on Hover - No Lift) */
 .awea-time-cell {
   flex: 1 1 auto;
   min-width: 120px;
   max-width: 220px;
   padding: 28px 20px 24px 20px;
   background-color: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(15, 23, 42, 0.08);
   border-radius: 24px;
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
   box-sizing: border-box;
@@ -38,23 +40,19 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.3s ease,
-              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.3s ease;
-  will-change: transform;
+  transform: none; /* Strictly no hover lift */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
+/* Cell remains completely locked in place on hover */
 .awea-time-cell:hover {
-  transform: translateY(-6px);
-  border-color: var(--e-global-color-primary, #4f46e5);
-  box-shadow: 0 20px 40px -12px rgba(79, 70, 229, 0.15);
+  transform: none;
 }
 
 /* 3. Tabular Numeric Typography */
 .awea-digit {
   display: block;
-  font-size: 3.5rem;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
   font-weight: 800;
   letter-spacing: -0.04em;
   color: var(--e-global-color-primary, #0f172a);
@@ -71,21 +69,27 @@
   letter-spacing: 0.14em;
   color: var(--e-global-color-text, #64748b);
   line-height: 1;
+  word-break: break-word;
 }
 
-/* 4. Glowing Colon Separators */
+/* 4. Colon Separators (Smooth Opacity Pulse - No Scale Transform) */
 .awea-colon-sep {
   font-size: 28px;
   font-weight: 800;
   color: var(--e-global-color-primary, #4f46e5);
   line-height: 1;
   user-select: none;
+  transform: none; /* Strictly no scale(0.92) */
   animation: aweaColonBlink 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @keyframes aweaColonBlink {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.35; transform: scale(0.92); }
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
 }
 
 /* 5. Expired State Container */
@@ -96,36 +100,43 @@
   font-weight: 800;
   color: var(--e-global-color-primary, #0f172a);
   letter-spacing: -0.02em;
-  animation: aweaFadeIn 0.4s ease forwards;
+  line-height: 1.35;
 }
 
 .awea-countdown-expired.awea-is-visible {
   display: block !important;
 }
 
-@keyframes aweaFadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* 6. Responsive Mobile Viewports */
+/* ==========================================================================
+   Super Mobile Friendly System (<= 768px)
+   ========================================================================== */
 @media (max-width: 768px) {
   .awea-timer-row {
     gap: 10px;
   }
+
   .awea-time-cell {
     min-width: calc(50% - 10px);
+    max-width: calc(50% - 10px);
     padding: 20px 10px;
     border-radius: 18px;
   }
+
   .awea-digit {
     font-size: 2.25rem;
   }
+
   .awea-unit {
     font-size: 0.68rem;
     letter-spacing: 0.08em;
   }
+
   .awea-colon-sep {
     display: none; /* Hide colons on 2x2 mobile wrap */
+  }
+
+  .awea-countdown-expired {
+    padding: 24px 16px;
+    font-size: 1.25rem;
   }
 }

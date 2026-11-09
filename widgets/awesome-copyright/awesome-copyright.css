@@ -1,0 +1,51 @@
+/* ==========================================================================
+   AWEA Copyright Studio 10/10 Architecture (Zero Gradients / Flat)
+   ========================================================================== */
+
+.awea-copyright-wrap {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--e-global-color-text, #64748b);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: inherit;
+  gap: 8px;
+}
+
+.awea-copyright-text p {
+  margin: 0;
+  display: inline;
+}
+
+.awea-copyright-wrap a {
+  color: var(--e-global-color-primary, #0f172a);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.awea-copyright-wrap a:hover {
+  color: var(--e-global-color-accent, #38bdf8);
+}
+
+.awea-copyright-divider {
+  opacity: 0.4;
+  user-select: none;
+}
+
+.awea-copyright-extra {
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .awea-copyright-wrap {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .awea-copyright-divider {
+    display: none;
+  }
+}

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AWEA Price Table Studio 10/10 Architecture
+   AWEA Price Table Studio Master Architecture (Zero Hover Zoom / No Scale)
    ========================================================================== */
 
 .awea-pricing-card {
@@ -7,35 +7,33 @@
   width: 100%;
   box-sizing: border-box;
   background-color: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 32px;
-  padding: 44px 36px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(15, 23, 42, 0.08);
+  border-radius: 28px;
+  padding: 40px 32px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.3s ease,
-              background-color 0.3s ease;
-  will-change: transform;
+  transform: none; /* Strictly no hover lift */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
+/* Card remains completely locked in place on hover */
 .awea-pricing-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--e-global-color-primary, #4f46e5);
-  box-shadow: 0 30px 60px -15px rgba(79, 70, 229, 0.15);
+  transform: none;
 }
 
 /* 1. Featured Tier Styling & Ribbon */
 .awea-pricing-card.awea-is-featured {
   border-color: var(--e-global-color-primary, #4f46e5);
-  box-shadow: 0 20px 45px -10px rgba(79, 70, 229, 0.18);
+  box-shadow: 0 18px 45px -10px rgba(79, 70, 229, 0.16);
 }
 
 .awea-pricing-ribbon {
   position: absolute;
-  top: 24px;
+  top: 22px;
   right: -34px;
   transform: rotate(45deg);
   background-color: var(--e-global-color-primary, #4f46e5);
@@ -48,6 +46,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   pointer-events: none;
   z-index: 5;
+  line-height: 1.2;
 }
 
 /* 2. Header & Pricing Numbers */
@@ -65,7 +64,8 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
+  line-height: 1.2;
 }
 
 .awea-pricing-price-box {
@@ -82,11 +82,12 @@
 }
 
 .awea-pricing-amount {
-  font-size: 3.75rem;
+  font-size: clamp(2.75rem, 5vw, 3.75rem);
   font-weight: 800;
   letter-spacing: -0.04em;
   color: var(--e-global-color-primary, #0f172a);
   font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 
 .awea-pricing-cycle {
@@ -113,10 +114,11 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 0.98rem;
-  line-height: 1.5;
+  font-size: 0.96rem;
+  line-height: 1.45;
   color: var(--e-global-color-text, #475569);
   margin-bottom: 14px;
+  word-break: break-word;
 }
 
 .awea-pricing-feature-item:last-child {
@@ -124,7 +126,7 @@
 }
 
 .awea-pricing-feature-item.is-disabled {
-  opacity: 0.4;
+  opacity: 0.5;
   text-decoration: line-through;
 }
 
@@ -141,9 +143,11 @@
   font-size: 14px;
   width: 14px;
   height: 14px;
+  line-height: 1;
+  fill: currentColor;
 }
 
-/* 4. Action Button */
+/* 4. Action Button (Stationary on Hover - No Lift) */
 .awea-pricing-btn-wrap {
   margin-top: auto;
   width: 100%;
@@ -155,41 +159,53 @@
   justify-content: center;
   width: 100%;
   box-sizing: border-box;
-  padding: 16px 36px;
+  padding: 16px 32px;
   border-radius: 100px;
-  font-size: 1rem;
+  font-size: 0.98rem;
   font-weight: 700;
   letter-spacing: -0.01em;
   text-decoration: none;
   background-color: var(--e-global-color-primary, #4f46e5);
   color: #ffffff;
-  box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.35);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.25s ease,
-              border-color 0.25s ease,
-              color 0.25s ease;
-  will-change: transform;
-  border: 1.5px solid transparent;
+  border-style: solid;
+  border-width: 1.5px;
+  border-color: transparent;
+  box-shadow: 0 8px 20px -4px rgba(79, 70, 229, 0.35);
+  transform: none; /* Strictly no hover lift */
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  line-height: 1.2;
 }
 
 .awea-pricing-btn-cta:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 35px -6px rgba(79, 70, 229, 0.48);
+  transform: none; /* Stays locked in place */
 }
 
-/* 5. Responsive Adjustments */
+/* ==========================================================================
+   Super Mobile Friendly System (<= 768px)
+   ========================================================================== */
 @media (max-width: 768px) {
   .awea-pricing-card {
-    padding: 32px 24px;
-    border-radius: 24px;
+    padding: 30px 20px;
+    border-radius: 22px;
   }
+
+  .awea-pricing-ribbon {
+    right: -32px;
+    padding: 5px 36px;
+    font-size: 0.62rem;
+  }
+
   .awea-pricing-amount {
     font-size: 3rem;
   }
-  .awea-pricing-ribbon {
-    right: -30px;
-    padding: 5px 35px;
-    font-size: 0.6rem;
+
+  .awea-pricing-feature-item {
+    font-size: 0.9rem;
+    gap: 10px;
+  }
+
+  .awea-pricing-btn-cta {
+    padding: 14px 24px;
+    font-size: 0.92rem;
   }
 }

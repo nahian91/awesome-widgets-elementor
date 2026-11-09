@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AWEA Product Category Grid Studio 10/10 Architecture
+   AWEA Product Category Grid Studio Master Architecture (Zero Hover Zoom / No Scale)
    ========================================================================== */
 
 .awea-product-category-grid-wrap {
@@ -11,11 +11,13 @@
 /* 1. Native Responsive Grid Engine */
 .awea-grid-wrapper {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
   width: 100%;
   box-sizing: border-box;
 }
 
-/* 2. Luxury Dark Card Shell */
+/* 2. Luxury Dark Card Shell (Strictly Stationary on Hover - No Lift) */
 .awea-cat-card {
   position: relative;
   overflow: hidden;
@@ -24,16 +26,16 @@
   background-color: #0f172a;
   isolation: isolate;
   border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.12);
-  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
-              box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1),
-              border-color 0.3s ease;
-  will-change: transform;
+  transform: none; /* Strictly no hover lift */
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  box-sizing: border-box;
 }
 
 .awea-cat-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.35);
+  transform: none; /* Stays locked in place */
+  box-shadow: 0 18px 45px -10px rgba(0, 0, 0, 0.35);
 }
 
 /* 3. Gradient Overlay Layer */
@@ -43,33 +45,33 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  transition: opacity 0.8s ease;
   background: linear-gradient(to bottom, transparent 30%, rgba(15, 23, 42, 0.9) 100%);
+  transition: opacity 0.4s ease;
 }
 
-/* 4. Cinematic Image Zoom */
+/* 4. Category Photo (Zero Hover Zoom / No Scale / No Rotate) */
 .awea-cat-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(35%) brightness(0.85);
-  transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1),
-              filter 0.8s ease;
+  filter: grayscale(20%) brightness(0.88);
+  transform: none; /* Strictly no scale(1.08) rotate(0.4deg) */
+  transition: filter 0.4s ease, opacity 0.3s ease;
   display: block;
 }
 
 .awea-cat-card:hover .awea-cat-image {
-  transform: scale(1.08) rotate(0.4deg);
+  transform: none; /* Stays at exact 1:1 scale */
   filter: grayscale(0%) brightness(1);
 }
 
-/* 5. Frosted Glass Info Box */
+/* 5. Frosted Glass Info Box (Strictly No Vertical Shift) */
 .awea-cat-info {
   position: absolute;
-  bottom: 24px;
-  left: 24px;
-  right: 24px;
-  padding: 28px;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  padding: 24px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 20px;
@@ -77,24 +79,28 @@
   box-sizing: border-box;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
-              border-color 0.6s ease,
-              background-color 0.4s ease;
+  transform: none; /* Strictly no translateY(-6px) */
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.awea-cat-card:hover .awea-cat-info {
+  transform: none; /* Stays firmly anchored */
 }
 
 .awea-cat-info span {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-size: 0.72rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: rgba(255, 255, 255, 0.65);
+  line-height: 1.2;
 }
 
 .awea-cat-info h3 {
-  margin: 0;
-  font-size: 1.5rem;
+  margin: 0 0 14px 0;
+  font-size: 1.45rem;
   font-weight: 800;
   line-height: 1.25;
   letter-spacing: -0.02em;
@@ -102,72 +108,92 @@
   word-break: break-word;
 }
 
+/* Explore Link (Fade In without Shift) */
 .awea-view-collection {
   display: inline-flex;
   align-items: center;
-  margin-top: 18px;
   font-weight: 700;
   font-size: 0.85rem;
   color: #ffffff;
-  opacity: 0;
-  transform: translateX(-10px);
-  transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1),
-              transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  opacity: 0.85;
+  transform: none; /* No translateX(-10px) */
+  transition: color 0.25s ease, opacity 0.25s ease;
+  line-height: 1.2;
 }
 
 .awea-view-collection::after {
   content: "→";
   margin-left: 8px;
-  transition: transform 0.3s ease;
-}
-
-/* Hover Interactions */
-.awea-cat-card:hover .awea-cat-info {
-  transform: translateY(-6px);
-  border-color: rgba(255, 255, 255, 0.35);
-  background: rgba(255, 255, 255, 0.14);
+  transform: none; /* No arrow shift */
+  transition: color 0.25s ease;
 }
 
 .awea-cat-card:hover .awea-view-collection {
   opacity: 1;
-  transform: translateX(0);
+  transform: none;
 }
 
 .awea-cat-card:hover .awea-view-collection::after {
-  transform: translateX(5px);
+  transform: none;
 }
 
-/* 6. Radial Glow Effect Layer */
+/* 6. Radial Ambient Glow Layer */
 .awea-cat-card::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 120%, rgba(255, 255, 255, 0.18) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 120%, rgba(255, 255, 255, 0.16) 0%, transparent 70%);
   opacity: 0;
-  transition: opacity 0.8s ease;
+  transition: opacity 0.4s ease;
   pointer-events: none;
   z-index: 3;
 }
 
-.awea-cat-card:hover::after {
-  opacity: 1;
-}
-
-/* 7. Responsive Adaptations */
+/* ==========================================================================
+   Super Mobile Friendly System (<= 1024px & <= 767px)
+   ========================================================================== */
 @media (max-width: 1024px) {
-  .awea-cat-info {
-    padding: 20px;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
+  .awea-grid-wrapper {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
   }
+
+  .awea-cat-info {
+    padding: 18px 20px;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+  }
+
   .awea-cat-info h3 {
     font-size: 1.25rem;
+    margin-bottom: 10px;
   }
 }
 
 @media (max-width: 767px) {
+  .awea-grid-wrapper {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
   .awea-cat-card {
-    height: 420px !important;
+    border-radius: 20px;
+  }
+
+  .awea-cat-info {
+    padding: 16px;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    border-radius: 14px;
+  }
+
+  .awea-cat-info h3 {
+    font-size: 1.15rem;
+  }
+
+  .awea-view-collection {
+    opacity: 1; /* Always visible and clickable on touchscreens */
   }
 }

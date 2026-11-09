@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AWEA Step Flow Studio 10/10 Architecture
+   AWEA Step Flow Studio Master Architecture (Zero Hover Zoom / No Scale)
    ========================================================================== */
 
 .awea-step-container {
@@ -7,6 +7,7 @@
   align-items: flex-start;
   justify-content: center;
   width: 100%;
+  margin: 0 auto;
   box-sizing: border-box;
 }
 
@@ -21,9 +22,14 @@
   z-index: 2;
   min-width: 0;
   box-sizing: border-box;
+  transform: none;
 }
 
-/* 2. Squircle Icon Box & Floating Badge */
+.awea-step-item:hover {
+  transform: none; /* No item lift */
+}
+
+/* 2. Squircle Icon Box & Floating Badge (Stationary on Hover) */
 .awea-step-box {
   width: 84px;
   height: 84px;
@@ -33,46 +39,61 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(15, 23, 42, 0.08);
   box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.3s ease,
-              background-color 0.3s ease;
-  will-change: transform;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  transform: none; /* Strictly no zoom/scale */
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Stationary on hover - purely color, border, and shadow changes */
+.awea-step-item:hover .awea-step-box {
+  transform: none;
 }
 
 .awea-step-box i,
 .awea-step-box svg {
+  display: block;
   font-size: 28px;
   width: 28px;
   height: 28px;
   fill: currentColor;
-  transition: color 0.3s ease;
+  line-height: 1;
+  transform: none;
+  transition: color 0.3s ease, fill 0.3s ease;
 }
 
+.awea-step-item:hover .awea-step-box i,
+.awea-step-item:hover .awea-step-box svg {
+  transform: none;
+}
+
+/* Floating Number Badge */
 .awea-step-number {
   position: absolute;
-  top: -10px;
-  right: -10px;
+  top: -8px;
+  right: -8px;
   width: 32px;
   height: 32px;
   border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: var(--e-global-color-accent, #38bdf8);
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   border: 2px solid #ffffff;
+  box-sizing: border-box;
+  z-index: 3;
+  transform: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.awea-step-item:hover .awea-step-box {
-  transform: translateY(-8px) scale(1.04);
-  border-color: var(--e-global-color-primary, #4f46e5);
-  box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.18);
+.awea-step-item:hover .awea-step-number {
+  transform: none;
 }
 
 /* 3. Flow Connector Beams */
@@ -80,10 +101,12 @@
   flex: 0.5;
   height: 2px;
   background-color: #e2e8f0;
-  margin-top: 42px;
+  margin-top: 42px; /* Auto-calculated in PHP to match half box dimension */
   position: relative;
-  min-width: 40px;
+  min-width: 30px;
   overflow: hidden;
+  align-self: flex-start;
+  box-sizing: border-box;
 }
 
 .awea-flow-beam {
@@ -107,47 +130,55 @@
 .awea-step-content {
   margin-top: 22px;
   padding: 0 12px;
+  width: 100%;
   box-sizing: border-box;
 }
 
 .awea-step-title {
-  font-size: 1.2rem;
-  font-weight: 800;
+  margin-top: 0;
   line-height: 1.25;
   letter-spacing: -0.02em;
-  color: var(--e-global-color-primary, #0f172a);
-  margin: 0 0 8px 0;
   word-break: break-word;
 }
 
 .awea-step-desc {
-  font-size: 0.94rem;
-  line-height: 1.65;
-  color: var(--e-global-color-text, #64748b);
   margin: 0;
+  line-height: 1.65;
+  word-break: break-word;
 }
 
-/* 5. Responsive Vertical Stacking for Mobile / Tablet */
+/* ==========================================================================
+   Super Mobile Friendly System (<= 850px)
+   ========================================================================== */
 @media (max-width: 850px) {
   .awea-step-container {
     flex-direction: column;
     align-items: center;
-    gap: 32px;
+    gap: 0;
   }
+
   .awea-step-item {
     width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
   }
+
+  /* Seamless Vertical Connecting Track */
   .awea-flow-connector {
     width: 2px;
-    height: 36px;
-    margin: 0;
+    height: 38px;
+    margin: 14px auto !important;
+    min-width: 0;
+    align-self: center;
     flex: none;
   }
+
   .awea-flow-beam {
     animation: aweaFlowMoveVertical 3s infinite linear;
   }
-  .awea-step-item:hover .awea-step-box {
-    transform: none;
+
+  .awea-step-content {
+    padding: 0 8px;
   }
 }
 

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AWEA Breadcrumb Studio 10/10 Architecture
+   AWEA Breadcrumb Studio Master Architecture (Zero Hover Zoom / No Scale)
    ========================================================================== */
 
 .awea-breadcrumb-hero {
@@ -11,6 +11,7 @@
   background-size: cover;
   background-position: center;
   z-index: 1;
+  transform: none;
 }
 
 /* 1. Backdrop Overlay */
@@ -29,16 +30,18 @@
   z-index: 2;
   max-width: 1240px;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 /* 2. Page Title Header */
 .awea-breadcrumb-title {
-  font-size: 2.75rem;
+  font-size: clamp(2rem, 5vw, 2.75rem);
   font-weight: 800;
   line-height: 1.15;
   color: #ffffff;
   letter-spacing: -0.03em;
-  margin: 0 0 14px 0;
+  margin-top: 0;
+  margin-bottom: 14px;
   word-break: break-word;
 }
 
@@ -46,6 +49,7 @@
 .awea-breadcrumb-nav {
   display: flex;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .awea-breadcrumb-list {
@@ -61,16 +65,17 @@
 .awea-breadcrumb-item {
   display: inline-flex;
   align-items: center;
-  line-height: 1;
+  line-height: 1.2;
 }
 
 .awea-breadcrumb-item a {
   text-decoration: none;
-  transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s ease;
+  transform: none; /* Strictly no translateY(-1px) */
+  transition: color 0.25s ease;
 }
 
 .awea-breadcrumb-item a:hover {
-  transform: translateY(-1px);
+  transform: none; /* Stays stationary on hover */
 }
 
 .awea-breadcrumb-item.is-current {
@@ -90,6 +95,7 @@
 .awea-breadcrumb-sep svg {
   width: 13px;
   height: 13px;
+  display: block;
 }
 
 .awea-breadcrumb-sep i {
@@ -101,9 +107,12 @@
   .awea-breadcrumb-hero {
     padding: 50px 20px !important;
   }
+
   .awea-breadcrumb-title {
-    font-size: 2rem;
+    font-size: 1.85rem;
+    margin-bottom: 10px;
   }
+
   .awea-breadcrumb-list {
     font-size: 0.85rem;
   }

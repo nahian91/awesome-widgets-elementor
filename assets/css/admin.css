@@ -343,3 +343,41 @@ input:checked + .awea-slider:before {
         padding: 8px 0;
     }
 }
+
+
+/* ==========================================================================
+   AWE Custom Elementor Panel Badge Styling (Top-Right Absolute Position)
+   ========================================================================== */
+
+.elementor-element-wrapper {
+  position: relative !important;
+}
+
+/* Target the icon container inside Elementor's panel card */
+.elementor-element-wrapper .icon,
+.elementor-panel-category .elementor-element-wrapper .icon {
+  position: relative;
+}
+
+.elementor-element-wrapper .icon .awe-panel-badge,
+.elementor-panel-category .elementor-element-wrapper .icon .awe-panel-badge {
+  position: absolute;
+  top: -24px;
+  right: -28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 16px;
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.4);
+  text-transform: uppercase;
+  user-select: none;
+  z-index: 10;
+}

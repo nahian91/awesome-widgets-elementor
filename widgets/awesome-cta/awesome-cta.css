@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AWEA CTA Studio 10/10 Architecture
+   AWEA CTA Studio Master Architecture (Zero Hover Zoom / No Scale)
    ========================================================================== */
 
 .awea-cta-hero-section {
@@ -8,6 +8,7 @@
   box-sizing: border-box;
   overflow: hidden;
   z-index: 1;
+  transform: none;
 }
 
 /* 1. Ambient Glow Engine */
@@ -32,6 +33,7 @@
   z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .awea-cta-align-left .awea-cta-hero-badge {
@@ -72,7 +74,9 @@
   align-items: center;
   gap: 10px;
   border-radius: 100px;
-  border: 1px solid rgba(79, 70, 229, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(79, 70, 229, 0.2);
   background-color: rgba(79, 70, 229, 0.08);
   color: var(--e-global-color-primary, #4f46e5);
   font-size: 0.8rem;
@@ -84,12 +88,16 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 4px 14px rgba(79, 70, 229, 0.08);
+  box-sizing: border-box;
+  transform: none;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 .awea-badge-icon {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  line-height: 1;
 }
 
 .awea-badge-icon svg,
@@ -101,28 +109,25 @@
 
 /* 4. Main Title Typography */
 .awea-cta-hero-title {
-  font-size: clamp(2.5rem, 6vw, 4.75rem);
+  font-size: clamp(2.35rem, 5.5vw, 4.75rem);
   font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1.08;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
   color: var(--e-global-color-primary, #0f172a);
-  margin: 0 0 20px 0;
+  margin-top: 0;
+  margin-bottom: 20px;
   word-break: break-word;
-}
-
-.awea-cta-hero-title span {
-  background: linear-gradient(135deg, var(--e-global-color-primary, #4f46e5) 0%, var(--e-global-color-accent, #38bdf8) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 /* 5. Editorial Description */
 .awea-cta-hero-desc {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
   line-height: 1.7;
   color: var(--e-global-color-text, #64748b);
-  margin: 0 0 44px 0;
+  margin-top: 0;
+  margin-bottom: 44px;
   font-weight: 400;
+  word-break: break-word;
 }
 
 /* 6. Dual-Action Buttons Row */
@@ -133,6 +138,7 @@
   flex-wrap: wrap;
 }
 
+/* Base Button (Strictly No Hover Lift / No Scale) */
 .awea-cta-btn {
   display: inline-flex;
   align-items: center;
@@ -145,31 +151,32 @@
   letter-spacing: -0.01em;
   text-decoration: none;
   cursor: pointer;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.25s ease,
-              border-color 0.25s ease,
-              color 0.25s ease;
-  will-change: transform;
-  border: 1.5px solid transparent;
+  border-style: solid;
+  border-width: 1.5px;
+  border-color: transparent;
+  box-sizing: border-box;
+  transform: none; /* Strictly no translateY(-4px) */
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  line-height: 1.2;
 }
 
 .awea-cta-btn:hover {
-  transform: translateY(-4px);
+  transform: none; /* Stays locked in place */
 }
 
 .awea-btn-icon {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  line-height: 1;
+  transform: none;
 }
 
 .awea-btn-icon svg,
 .awea-btn-icon i {
-  font-size: 15px;
-  width: 15px;
-  height: 15px;
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
 }
 
 /* Primary Button Styling */
@@ -179,16 +186,9 @@
   box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.38);
 }
 
-.awea-cta-btn-primary:hover {
-  box-shadow: 0 16px 35px -6px rgba(79, 70, 229, 0.48);
-}
-
-.awea-cta-btn-primary:hover .awea-icon-right {
-  transform: translateX(4px);
-}
-
+.awea-cta-btn-primary:hover .awea-icon-right,
 .awea-cta-btn-primary:hover .awea-icon-left {
-  transform: translateX(-4px);
+  transform: none; /* Arrow stays stationary */
 }
 
 /* Secondary Button Styling */
@@ -199,31 +199,35 @@
   box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.04);
 }
 
-.awea-cta-btn-secondary:hover {
-  border-color: var(--e-global-color-primary, #4f46e5);
-  box-shadow: 0 12px 25px -4px rgba(15, 23, 42, 0.08);
-}
-
-/* 7. Responsive Adaptations */
+/* ==========================================================================
+   Super Mobile Friendly System (<= 768px)
+   ========================================================================== */
 @media (max-width: 768px) {
   .awea-cta-hero-section {
     padding: 60px 20px !important;
   }
+
   .awea-cta-hero-title {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
     letter-spacing: -0.02em;
+    margin-bottom: 16px;
   }
+
   .awea-cta-hero-desc {
-    font-size: 1.05rem;
+    font-size: 1.02rem;
+    line-height: 1.6;
     margin-bottom: 32px;
   }
+
   .awea-cta-hero-actions {
     flex-direction: column;
     width: 100%;
+    gap: 12px;
   }
+
   .awea-cta-btn {
     width: 100%;
-    padding: 16px 24px;
+    padding: 15px 24px;
     box-sizing: border-box;
   }
 }

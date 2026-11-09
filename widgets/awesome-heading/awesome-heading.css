@@ -1,11 +1,12 @@
 /* ==========================================================================
-   AWEA Heading Studio 10/10 Architecture
+   AWEA Heading Studio Master Architecture (Zero Hover Zoom / No Scale)
    ========================================================================== */
 
 .awea-section-signature {
   width: 100%;
   position: relative;
   box-sizing: border-box;
+  transform: none;
 }
 
 /* 1. Alignment Handling */
@@ -42,7 +43,7 @@
   margin-right: 0;
 }
 
-/* 2. Subheading Pill Badge */
+/* 2. Subheading Pill Badge (Stationary on Hover - No Lift) */
 .awea-section-signature-tag {
   display: inline-flex;
   align-items: center;
@@ -57,28 +58,31 @@
   border: 1px solid rgba(79, 70, 229, 0.16);
   user-select: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.3s ease;
+  transform: none; /* Strictly no translateY(-2px) */
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  line-height: 1.2;
 }
 
 .awea-section-signature-tag:hover {
-  transform: translateY(-2px);
+  transform: none; /* Stays locked in place */
 }
 
 /* 3. Main Heading Typography */
 .awea-section-signature-title {
-  font-size: clamp(2.25rem, 6vw, 4.25rem);
+  font-size: clamp(2rem, 5.5vw, 4.25rem);
   font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: -0.03em;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
   color: var(--e-global-color-primary, #0f172a);
-  margin: 0 0 28px 0;
+  margin-top: 0;
+  margin-bottom: 28px;
   word-break: break-word;
 }
 
 /* 4. Kinetic Flowing Beam Divider */
 .awea-section-signature-divider-wrap {
   width: 100%;
+  margin-bottom: 32px;
 }
 
 .awea-section-signature-divider {
@@ -88,7 +92,6 @@
   background-color: #e2e8f0;
   border-radius: 4px;
   overflow: hidden;
-  margin-bottom: 32px;
 }
 
 .awea-section-signature-divider::after {
@@ -117,13 +120,15 @@
 
 /* 5. Editorial Description */
 .awea-section-signature-desc {
-  font-size: 1.15rem;
+  font-size: 1.12rem;
   line-height: 1.7;
   color: var(--e-global-color-text, #64748b);
-  margin: 0 0 38px 0;
+  margin-top: 0;
+  margin-bottom: 38px;
+  word-break: break-word;
 }
 
-/* 6. Signature Action Button */
+/* 6. Signature Action Button (Stationary on Hover - No Lift/Scale/Offset) */
 .awea-section-signature-btn {
   display: inline-flex;
   align-items: center;
@@ -137,26 +142,24 @@
   text-decoration: none;
   background-color: var(--e-global-color-primary, #4f46e5);
   color: #ffffff;
-  box-shadow: 0 10px 25px -6px rgba(79, 70, 229, 0.35);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.25s ease,
-              color 0.25s ease,
-              border-color 0.25s ease;
-  will-change: transform;
   border: 1.5px solid transparent;
+  box-shadow: 0 10px 25px -6px rgba(79, 70, 229, 0.35);
+  transform: none; /* Strictly no translateY(-4px) scale(1.02) */
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.3s ease;
+  line-height: 1.2;
+  box-sizing: border-box;
 }
 
 .awea-section-signature-btn:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 20px 40px -8px rgba(79, 70, 229, 0.45);
+  transform: none; /* Stays locked in place */
 }
 
 .awea-btn-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  line-height: 1;
+  transform: none;
 }
 
 .awea-btn-icon svg,
@@ -166,34 +169,36 @@
   height: 14px;
 }
 
-.awea-section-signature-btn:hover .awea-icon-right {
-  transform: translate(3px, -3px);
-}
-
+.awea-section-signature-btn:hover .awea-icon-right,
 .awea-section-signature-btn:hover .awea-icon-left {
-  transform: translate(-3px, -3px);
+  transform: none; /* Strictly no translate offset */
 }
 
-/* 7. Responsive Adaptations */
+/* ==========================================================================
+   Super Mobile Friendly System (<= 768px)
+   ========================================================================== */
 @media (max-width: 768px) {
   .awea-section-signature-title {
-    font-size: 2.25rem;
-    letter-spacing: -0.02em;
+    font-size: 2.15rem;
+    margin-bottom: 20px;
+  }
+
+  .awea-section-signature-divider-wrap {
     margin-bottom: 22px;
   }
-  .awea-section-signature-divider {
-    margin-bottom: 24px;
-  }
+
   .awea-section-signature-desc {
-    font-size: 1.02rem;
-    margin-bottom: 30px;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 26px;
   }
+
   .awea-section-signature-btn-wrap {
     width: 100%;
   }
+
   .awea-section-signature-btn {
     width: 100%;
-    padding: 15px 24px;
-    box-sizing: border-box;
+    padding: 14px 24px;
   }
 }

@@ -1,43 +1,54 @@
 jQuery(window).on('elementor/frontend/init', function () {
-
     elementorFrontend.hooks.addAction('frontend/element_ready/awesome-testimonials-carousel.default', function ($scope, $) {
-        var testimonial_widget = $scope.find('.awea-testimonials');
-        var testimonial_items = parseInt(testimonial_widget.attr('awea-testimonial-items')) || 3;
-        var testimonial_arrows = testimonial_widget.attr('awea-testimonial-arrows') === 'yes';
-        var testimonial_dots = testimonial_widget.attr('awea-testimonial-dots') === 'yes';
-        var testimonial_loops = testimonial_widget.attr('awea-testimonial-loops') === 'yes';
-        var testimonial_autoplay = testimonial_widget.attr('awea-testimonial-autoplay') === 'yes';
-        var testimonial_pause = testimonial_widget.attr('awea-testimonial-pause') === 'yes';
-        var testimonial_autoplay_speed = parseInt(testimonial_widget.attr('awea-testimonial-autoplay-speed')) || 5000;
-        var testimonial_autoplay_animation = parseInt(testimonial_widget.attr('awea-testimonial-autoplay-animation')) || 300;
+        var $carousel = $scope.find('.awea-testimonials');
+        if (!$carousel.length) {
+            return;
+        }
 
-        testimonial_widget.owlCarousel({
-            items: testimonial_items,
-            nav: testimonial_arrows,
-            dots: testimonial_dots,
-            autoplay: testimonial_autoplay,
-            autoplayTimeout: testimonial_autoplay_speed,
-            smartSpeed: testimonial_autoplay_animation,  
-            autoplayHoverPause: testimonial_pause,
-            loop: testimonial_loops,
-            items: 3,
-            margin: 30,
+        var itemsDesktop = parseInt($carousel.data('items-desktop'), 10) || 3;
+        var itemsTablet  = parseInt($carousel.data('items-tablet'), 10) || 2;
+        var itemsMobile  = parseInt($carousel.data('items-mobile'), 10) || 1;
+
+        var gapDesktop   = parseInt($carousel.data('gap-desktop'), 10);
+        var gapTablet    = parseInt($carousel.data('gap-tablet'), 10);
+        var gapMobile    = parseInt($carousel.data('gap-mobile'), 10);
+
+        if (isNaN(gapDesktop)) gapDesktop = 24;
+        if (isNaN(gapTablet)) gapTablet = 20;
+        if (isNaN(gapMobile)) gapMobile = 16;
+
+        var showArrows   = $carousel.data('arrows') === 'yes';
+        var showDots     = $carousel.data('dots') === 'yes';
+        var loop         = $carousel.data('loop') === 'yes';
+        var autoplay     = $carousel.data('autoplay') === 'yes';
+        var pause        = $carousel.data('pause') === 'yes';
+        var animSpeed    = parseInt($carousel.data('speed'), 10) || 450;
+        var autoTimeout  = parseInt($carousel.data('timeout'), 10) || 5000;
+
+        $carousel.owlCarousel({
+            nav: showArrows,
+            dots: showDots,
+            loop: loop,
+            autoplay: autoplay,
+            autoplayTimeout: autoTimeout,
+            smartSpeed: animSpeed,
+            autoplayHoverPause: pause,
             navText: [
-                "<div class='awea-carousel-arrow-border'><i class='fas fa-chevron-left'></i></div>",
-                "<div class='awea-carousel-arrow-border'><i class='fas fa-chevron-right'></i></div>"
+                '<div class="awea-carousel-arrow-border" aria-label="Previous"><i class="fas fa-chevron-left"></i></div>',
+                '<div class="awea-carousel-arrow-border" aria-label="Next"><i class="fas fa-chevron-right"></i></div>'
             ],
             responsive: {
                 0: {
-                    items: Math.min(1, testimonial_items),
-                    nav: testimonial_arrows,
+                    items: itemsMobile,
+                    margin: gapMobile
                 },
-                600: {
-                    items: Math.min(2, testimonial_items),
-                    nav: testimonial_arrows,
+                768: {
+                    items: itemsTablet,
+                    margin: gapTablet
                 },
-                1000: {
-                    items: testimonial_items,
-                    nav: testimonial_arrows,
+                1025: {
+                    items: itemsDesktop,
+                    margin: gapDesktop
                 }
             }
         });

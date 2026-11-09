@@ -1,69 +1,57 @@
-// Initialize when Elementor frontend is ready
 jQuery(window).on('elementor/frontend/init', function () {
-
-    // Products Category Carousel Widget
     elementorFrontend.hooks.addAction('frontend/element_ready/awesome-product-category-carousel.default', function ($scope, $) {
-        var product_category_carousel = $scope.find('.awea-product-category-carousel');
-        var product_category_carousel_items = product_category_carousel.attr('awea-product-category-carousel-items');
-        var product_category_carousel_arrows = product_category_carousel.attr('awea-product-category-carousel-arrows');
-        var product_category_carousel_dots = product_category_carousel.attr('awea-product-category-carousel-dots');
-        var product_category_carousel_loops = product_category_carousel.attr('awea-product-category-carousel-loops');
-        var product_category_carousel_pause = product_category_carousel.attr('awea-product-category-carousel-pause');
-        var product_category_carousel_autoplay = product_category_carousel.attr('awea-product-category-carousel-autoplay');
-        var product_category_carousel_autoplay_speed = product_category_carousel.attr('awea-product-category-carousel-autoplay-speed');
-        var product_category_carousel_autoplay_animation = product_category_carousel.attr('awea-product-category-carousel-autoplay-animation');
+        var $carousel = $scope.find('.awea-product-category-carousel');
 
-        // Initialize Owl Carousel for Product Category Carousel Widget
-        product_category_carousel.owlCarousel({
-            nav: product_category_carousel_arrows,
-            dots: product_category_carousel_dots,
-            margin: 30,
-            autoplay: product_category_carousel_autoplay,
-            autoplayTimeout: product_category_carousel_autoplay_animation,
-            autoplaySpeed: product_category_carousel_autoplay_speed,
-            autoplayHoverPause: product_category_carousel_pause,
+        if (!$carousel.length) {
+            return;
+        }
+
+        var itemsDesktop = parseInt($carousel.data('items-desktop'), 10) || 3;
+        var itemsTablet  = parseInt($carousel.data('items-tablet'), 10) || 2;
+        var itemsMobile  = parseInt($carousel.data('items-mobile'), 10) || 1;
+
+        var gapDesktop   = parseInt($carousel.data('gap-desktop'), 10);
+        var gapTablet    = parseInt($carousel.data('gap-tablet'), 10);
+        var gapMobile    = parseInt($carousel.data('gap-mobile'), 10);
+
+        if (isNaN(gapDesktop)) gapDesktop = 24;
+        if (isNaN(gapTablet)) gapTablet = 20;
+        if (isNaN(gapMobile)) gapMobile = 16;
+
+        var showArrows  = $carousel.data('arrows') === 'yes';
+        var showDots    = $carousel.data('dots') === 'yes';
+        var loop        = $carousel.data('loop') === 'yes';
+        var autoplay    = $carousel.data('autoplay') === 'yes';
+        var pauseHover  = $carousel.data('pause') === 'yes';
+        var autoDelay   = parseInt($carousel.data('timeout'), 10) || 5000;
+        var animSpeed   = parseInt($carousel.data('speed'), 10) || 450;
+
+        $carousel.owlCarousel({
+            nav: showArrows,
+            dots: showDots,
+            loop: loop,
+            autoplay: autoplay,
+            autoplayTimeout: autoDelay,
+            smartSpeed: animSpeed,
+            autoplayHoverPause: pauseHover,
             navText: [
-                "<div class='awea-carousel-arrow-border'><i class='fas fa-long-arrow-alt-left'></i></div>",
-                "<div class='awea-carousel-arrow-border'><i class='fas fa-long-arrow-alt-right'></i></div>"
-            ], 
+                '<div class="awea-carousel-arrow-border" aria-label="Previous"><i class="fas fa-chevron-left"></i></div>',
+                '<div class="awea-carousel-arrow-border" aria-label="Next"><i class="fas fa-chevron-right"></i></div>'
+            ],
             responsive: {
                 0: {
-                    items: 1,
-                    nav: false
+                    items: itemsMobile,
+                    margin: gapMobile
                 },
-                600: {
-                    items: 1,
-                    nav: false
+                768: {
+                    items: itemsTablet,
+                    margin: gapTablet
                 },
-                1000: {
-                    items: product_category_carousel_items,
-                    nav: product_category_carousel_arrows,
-                    loop: product_category_carousel_loops,
+                1025: {
+                    items: itemsDesktop,
+                    margin: gapDesktop
                 }
             }
-        });
-
-        function setEqualHeight() {
-            var maxItemHeight = 0;
-            // Reset the height of all product-category items to auto
-            $('.awea-product-category-carousel .awea-product-category').css('height', 'auto');
-            
-            // Loop through each product-category item to find the tallest one
-            $('.awea-product-category-carousel .awea-product-category').each(function() {
-                var currentItemHeight = $(this).outerHeight();
-                // Update the maximum item height if necessary
-                if (currentItemHeight > maxItemHeight) {
-                    maxItemHeight = currentItemHeight;
-                }
-            });
-            
-            // Set the height of all product-category items to the maximum item height
-            $('.awea-product-category-carousel .awea-product-category').css('height', maxItemHeight);
-        }
-    
-        // Call setEqualHeight on window load and resize
-        $(window).on('load resize', function() {
-            setEqualHeight();
         });
     });
 });

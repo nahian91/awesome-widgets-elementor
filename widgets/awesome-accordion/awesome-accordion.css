@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AWEA Accordion Studio 10/10 Hardware-Accelerated Architecture
+   AWEA Accordion Studio Master Architecture (Zero Hover Zoom / No Scale)
    ========================================================================== */
 
 .awea-accordion-container {
@@ -8,24 +8,27 @@
   box-sizing: border-box;
 }
 
-/* 1. Item Shell */
+/* 1. Item Shell (Strictly Stationary on Hover - No Lift) */
 .awea-accordion-item {
   background-color: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(15, 23, 42, 0.08);
   border-radius: 16px;
   margin-bottom: 16px;
   overflow: hidden;
   box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.03);
-  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.3s ease;
+  box-sizing: border-box;
+  transform: none; /* Strictly no hover lift */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .awea-accordion-item:last-child {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
 
 .awea-accordion-item:hover {
+  transform: none; /* Stays locked in place */
   box-shadow: 0 8px 25px -4px rgba(0, 0, 0, 0.06);
 }
 
@@ -44,6 +47,7 @@
   cursor: pointer;
   user-select: none;
   outline: none;
+  box-sizing: border-box;
 }
 
 .awea-accordion-header:focus-visible {
@@ -57,12 +61,14 @@
 }
 
 .awea-accordion-title {
-  margin: 0;
+  margin-top: 0;
+  margin-bottom: 0;
   font-size: 1.1rem;
   font-weight: 700;
   line-height: 1.35;
   color: var(--e-global-color-primary, #0f172a);
   letter-spacing: -0.01em;
+  word-break: break-word;
   transition: color 0.3s ease;
 }
 
@@ -116,6 +122,7 @@
   width: 18px;
   height: 18px;
   stroke: #64748b;
+  display: block;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               stroke 0.3s ease;
 }
@@ -125,11 +132,12 @@
   stroke: var(--e-global-color-primary, #4f46e5);
 }
 
-/* 4. Fluid CSS Grid Transition (No Max-Height Jitter) */
+/* 4. Fluid CSS Grid Transition */
 .awea-accordion-collapse {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
 }
 
 .awea-accordion-item.is-active .awea-accordion-collapse {
@@ -146,10 +154,12 @@
   font-size: 0.98rem;
   line-height: 1.7;
   color: var(--e-global-color-text, #475569);
+  box-sizing: border-box;
 }
 
 .awea-content-inner p {
-  margin: 0 0 12px 0;
+  margin-top: 0;
+  margin-bottom: 12px;
 }
 
 .awea-content-inner p:last-child {
@@ -161,10 +171,12 @@
   .awea-accordion-header {
     padding: 18px 20px;
   }
+
   .awea-content-inner {
     padding: 0 20px 20px 20px;
     font-size: 0.92rem;
   }
+
   .awea-accordion-title {
     font-size: 1rem;
   }

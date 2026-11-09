@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AWEA Product List Studio 10/10 Architecture
+   AWEA Product List Studio Master Architecture (Zero Hover Zoom / No Scale)
    ========================================================================== */
 
 .awea-product-list-wrap {
@@ -7,50 +7,71 @@
   position: relative;
   box-sizing: border-box;
   background-color: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 28px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(15, 23, 42, 0.08);
+  border-radius: 24px;
   padding: 32px;
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+  transform: none;
+}
+
+.awea-product-list-wrap:hover {
+  transform: none;
 }
 
 /* 1. Section Header */
 .awea-product-list-header {
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--e-global-color-primary, #0f172a);
-  margin: 0 0 20px 0;
+  margin-top: 0;
+  margin-bottom: 20px;
+  line-height: 1.25;
+  word-break: break-word;
 }
 
-/* 2. Product Row */
+/* 2. Product Row (Strictly No Translation/Shift on Hover) */
 .awea-product-list-row {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 18px;
   padding-bottom: 16px;
   border-bottom: 1px solid rgba(15, 23, 42, 0.06);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   box-sizing: border-box;
+  transform: none; /* No translateX(6px) */
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .awea-product-list-row:last-child {
-  padding-bottom: 0;
-  border-bottom: none;
+  padding-bottom: 0 !important;
+  border-bottom: none !important;
   margin-bottom: 0 !important;
 }
 
+/* Strictly locked in place on hover */
 .awea-product-list-row:hover {
-  transform: translateX(6px);
+  transform: none;
 }
 
-/* 3. Thumbnail Image */
+/* 3. Thumbnail Image (Strictly No Scale/Zoom on Hover) */
 .awea-product-list-thumb {
-  width: 96px;
-  height: 96px;
-  border-radius: 20px;
+  width: 84px;
+  height: 84px;
+  border-radius: 16px;
   overflow: hidden;
-  background-color: #0f172a;
+  background-color: #f1f5f9;
   flex-shrink: 0;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-sizing: border-box;
+  transform: none;
+}
+
+.awea-product-list-thumb a {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .awea-product-list-thumb img {
@@ -58,11 +79,12 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: none; /* Strictly no scale(1.08) */
+  transition: opacity 0.3s ease;
 }
 
 .awea-product-list-row:hover .awea-product-list-thumb img {
-  transform: scale(1.08);
+  transform: none; /* No zoom */
 }
 
 /* 4. Content & Meta Details */
@@ -76,7 +98,8 @@
   font-weight: 700;
   line-height: 1.35;
   letter-spacing: -0.01em;
-  margin: 0 0 6px 0;
+  margin-top: 0;
+  margin-bottom: 6px;
   word-break: break-word;
 }
 
@@ -87,7 +110,7 @@
 }
 
 .awea-product-list-title a:hover {
-  color: var(--e-global-color-primary, #4f46e5);
+  color: var(--e-global-color-accent, #4f46e5);
 }
 
 .awea-product-list-meta {
@@ -102,6 +125,7 @@
   font-weight: 800;
   color: var(--e-global-color-accent, #38bdf8);
   font-variant-numeric: tabular-nums;
+  line-height: 1.2;
 }
 
 .awea-product-list-price ins {
@@ -110,13 +134,13 @@
 }
 
 .awea-product-list-price del {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: #94a3b8;
-  font-weight: 600;
+  font-weight: 500;
   margin-right: 4px;
 }
 
-/* 5. Action Button Toggle */
+/* 5. Action Button Toggle (No Lift/Transform on Hover) */
 .awea-product-grid-btn {
   display: inline-flex;
   align-items: center;
@@ -129,11 +153,15 @@
   background-color: #f8fafc;
   color: var(--e-global-color-primary, #0f172a);
   border: 1px solid rgba(15, 23, 42, 0.08);
-  transition: all 0.25s ease;
+  box-sizing: border-box;
+  transform: none; /* No hover lift */
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
   white-space: nowrap;
+  line-height: 1.2;
 }
 
 .awea-product-grid-btn:hover {
+  transform: none;
   background-color: var(--e-global-color-primary, #4f46e5);
   color: #ffffff;
   border-color: transparent;
@@ -154,23 +182,34 @@
   display: inline-flex;
 }
 
-/* 6. Responsive Adaptations */
+/* ==========================================================================
+   Super Mobile Friendly System (<= 640px)
+   ========================================================================== */
 @media (max-width: 640px) {
   .awea-product-list-wrap {
-    padding: 24px 20px;
-    border-radius: 20px;
+    padding: 20px 16px;
+    border-radius: 18px;
   }
+
   .awea-product-list-row {
-    gap: 14px;
+    gap: 12px;
   }
+
   .awea-product-list-thumb {
-    width: 76px;
-    height: 76px;
-    border-radius: 16px;
+    width: 68px;
+    height: 68px;
+    border-radius: 12px;
   }
+
   .awea-product-list-meta {
     flex-direction: column;
     align-items: flex-start;
-    gap: 6px;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .awea-product-grid-btn {
+    padding: 6px 12px;
+    font-size: 0.78rem;
   }
 }

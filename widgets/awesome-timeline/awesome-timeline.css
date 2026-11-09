@@ -1,14 +1,13 @@
 /* ==========================================================================
-   AWEA Timeline Studio Master Architecture
+   AWEA Timeline Studio Master Architecture (No Hover Zoom)
    ========================================================================== */
 
 .awea-timeline-container {
   width: 100%;
-  max-width: 1100px;
   margin: 0 auto;
   position: relative;
   box-sizing: border-box;
-  padding: 20px 0;
+  padding: 10px 0;
 }
 
 /* 1. Central Connecting Spine */
@@ -19,28 +18,26 @@
   top: 0;
   width: 2px;
   height: 100%;
-  background: linear-gradient(to bottom, transparent, #4f46e5 12%, #4f46e5 88%, transparent);
   transform: translateX(-50%);
   pointer-events: none;
   z-index: 1;
 }
 
-/* 2. Timeline Item Positioning & Safe Animation Defaults */
+/* 2. Timeline Item Positioning */
 .awea-timeline-item {
   display: flex;
   justify-content: flex-end;
   padding-right: 50%;
   position: relative;
-  margin-bottom: 40px;
   width: 100%;
   box-sizing: border-box;
   opacity: 1;
   transform: none;
-  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.4s ease;
 }
 
 .awea-timeline-item:last-child {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
 
 .awea-timeline-item:nth-child(even) {
@@ -49,7 +46,7 @@
   padding-left: 50%;
 }
 
-/* Progressive Enhancement: Native Scroll-Driven Animations on Supported Browsers */
+/* Scroll-Driven Animations on Initial View Only */
 @supports (animation-timeline: view()) {
   .awea-timeline-item {
     view-timeline-name: --awea-timeline-scroll;
@@ -63,145 +60,115 @@
   @keyframes aweaTimelineFadeUp {
     from {
       opacity: 0;
-      transform: translateY(60px) scale(0.96);
+      transform: translateY(30px);
     }
     to {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translateY(0);
     }
   }
 }
 
-/* 3. Central Node Indicator */
+/* 3. Central Node Indicator (Stationary on Hover - No Scale/Zoom) */
 .awea-timeline-dot {
   position: absolute;
   left: 50%;
-  top: 36px;
-  width: 20px;
-  height: 20px;
   border-radius: 50%;
-  background-color: #ffffff;
-  border: 3px solid #4f46e5;
-  box-shadow: 0 0 0 8px rgba(79, 70, 229, 0.12);
+  border-style: solid;
+  border-width: 3px;
   transform: translateX(-50%);
   z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, box-shadow 0.35s ease;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.35s ease;
+}
+
+/* Node maintains static scale on hover */
+.awea-timeline-item:hover .awea-timeline-dot {
+  transform: translateX(-50%);
 }
 
 .awea-dot-icon {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
-  color: #4f46e5;
+  line-height: 1;
   transition: color 0.3s ease;
 }
 
 .awea-dot-icon svg {
-  width: 12px;
-  height: 12px;
+  display: block;
   fill: currentColor;
 }
 
-.awea-timeline-item:hover .awea-timeline-dot {
-  transform: translateX(-50%) scale(1.35);
-  background-color: #4f46e5;
-  box-shadow: 0 0 0 12px rgba(79, 70, 229, 0.2);
-}
-
-.awea-timeline-item:hover .awea-dot-icon {
-  color: #ffffff;
-}
-
-/* 4. Milestone Card Box */
+/* 4. Milestone Card Box (Stationary on Hover - No Scale/Zoom) */
 .awea-timeline-content {
   width: 100%;
-  background-color: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 24px;
-  padding: 36px;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.4s ease;
-  position: relative;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(15, 23, 42, 0.08);
   box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  position: relative;
+  word-break: break-word;
+  transform: none;
 }
 
-.awea-timeline-item:nth-child(odd) .awea-timeline-content {
-  margin-right: 48px;
-}
-
-.awea-timeline-item:nth-child(even) .awea-timeline-content {
-  margin-left: 48px;
-}
-
+/* Card remains locked in place on hover */
 .awea-timeline-item:hover .awea-timeline-content {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.12);
+  transform: none;
 }
 
 /* 5. Typography & Badges */
 .awea-step-tag {
   display: inline-flex;
   align-items: center;
-  padding: 5px 14px;
-  border-radius: 100px;
-  font-size: 11px;
-  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin-bottom: 16px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .awea-timeline-title {
-  font-size: 1.5rem;
-  font-weight: 800;
-  margin: 0 0 12px 0;
+  margin-top: 0;
   line-height: 1.25;
-  letter-spacing: -0.02em;
 }
 
 .awea-timeline-desc {
-  font-size: 1rem;
-  line-height: 1.65;
   margin: 0;
+  line-height: 1.65;
 }
 
-/* 6. Responsive Viewport Adaptations */
-@media (max-width: 880px) {
+/* ==========================================================================
+   Mobile & Tablet Responsive System (Super Mobile Friendly)
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* Move spine line to the left edge */
   .awea-timeline-container::before {
-    left: 24px;
+    left: 18px;
     transform: none;
   }
 
-  .awea-timeline-item {
+  /* Single-column alignment for all milestones */
+  .awea-timeline-item,
+  .awea-timeline-item:nth-child(even) {
     justify-content: flex-start !important;
-    padding-left: 56px !important;
+    padding-left: 48px !important;
     padding-right: 0 !important;
-    margin-bottom: 32px;
   }
 
-  .awea-timeline-dot {
-    left: 24px;
-    top: 28px;
+  /* Fixed node alignment without hover scaling */
+  .awea-timeline-dot,
+  .awea-timeline-item:hover .awea-timeline-dot {
+    left: 18px !important;
     transform: translateX(-50%) !important;
   }
 
-  .awea-timeline-item:hover .awea-timeline-dot {
-    transform: translateX(-50%) scale(1.25) !important;
-  }
-
+  /* Reset odd/even card offsets on mobile */
   .awea-timeline-item:nth-child(odd) .awea-timeline-content,
   .awea-timeline-item:nth-child(even) .awea-timeline-content {
-    margin: 0 !important;
-    padding: 28px;
-    border-radius: 20px;
-  }
-
-  .awea-timeline-title {
-    font-size: 1.3rem;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 }

@@ -1,0 +1,296 @@
+/* ==========================================================================
+   AWEA Nav Menu Studio Architecture (Ultra-Smooth Hover & Mobile Breakdown)
+   ========================================================================== */
+
+.awea-nav-menu-wrapper {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.awea-nav-menu-container {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Desktop Menu List & Base Links
+   ========================================================================== */
+
+.awea-nav-menu-container ul.menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.awea-nav-menu-container ul.menu li {
+  position: relative;
+  margin: 0;
+  list-style: none;
+}
+
+/* Base Top-Level Links (Strictly Zero Hover Lift) */
+.awea-nav-menu-container ul.menu > li > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-weight: 500;
+  line-height: 1.2;
+  position: relative;
+  transform: none !important;
+  transition: color 0.28s cubic-bezier(0.25, 1, 0.5, 1), 
+              background-color 0.28s cubic-bezier(0.25, 1, 0.5, 1),
+              box-shadow 0.28s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.awea-nav-menu-container ul.menu > li > a:hover {
+  transform: none !important;
+}
+
+/* ==========================================================================
+   Dropdown Icon (Ultra-Smooth Rotate & Alignment)
+   ========================================================================== */
+
+.awea-sub-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  margin-left: 2px;
+  flex-shrink: 0;
+  pointer-events: none;
+  transform: rotate(0deg);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              color 0.25s ease;
+}
+
+.awea-sub-indicator svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  stroke-width: 2.5;
+  transition: stroke 0.25s ease;
+}
+
+/* Smooth Icon Inversion on Item Hover */
+.awea-nav-menu-container ul.menu li:hover > a .awea-sub-indicator {
+  transform: rotate(180deg);
+}
+
+/* ==========================================================================
+   Smooth Desktop Dropdown Submenu (Glass & Soft Reveal)
+   ========================================================================== */
+
+.awea-nav-menu-container ul.menu ul.sub-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 16px 36px -8px rgba(15, 23, 42, 0.08), 
+              0 2px 8px -2px rgba(15, 23, 42, 0.04);
+  list-style: none;
+  margin: 0;
+  z-index: 999;
+  box-sizing: border-box;
+
+  /* Invisible & Slightly Offset by Default */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(10px);
+  transform-origin: top center;
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hover trigger for Submenu */
+.awea-nav-menu-container ul.menu li:hover > ul.sub-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Nested Submenus (Flyout Right) */
+.awea-nav-menu-container ul.menu ul.sub-menu ul.sub-menu {
+  top: 0;
+  left: 100%;
+  margin-top: 0 !important;
+  transform: translateX(-10px);
+}
+
+.awea-nav-menu-container ul.menu ul.sub-menu li:hover > ul.sub-menu {
+  transform: translateX(0);
+}
+
+.awea-nav-menu-container ul.menu ul.sub-menu li {
+  width: 100%;
+}
+
+.awea-nav-menu-container ul.menu ul.sub-menu li a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transform: none !important;
+  transition: background-color 0.2s cubic-bezier(0.25, 1, 0.5, 1), 
+              color 0.2s cubic-bezier(0.25, 1, 0.5, 1),
+              padding-left 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Soft Hover Glide for Submenu Links (Horizontal Micro-Slide Only, No Lift) */
+.awea-nav-menu-container ul.menu ul.sub-menu li a:hover {
+  transform: none !important;
+  padding-left: 20px;
+}
+
+/* ==========================================================================
+   Mobile Toggle Button (Hamburger / Close Icon Swap)
+   ========================================================================== */
+
+.awea-mobile-toggle-wrapper {
+  display: none !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.awea-mobile-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #f1f5f9;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  transform: none !important;
+  transition: background-color 0.25s ease;
+}
+
+.awea-mobile-toggle-btn svg {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Default State: Hamburger Icon visible, Close hidden */
+.awea-mobile-toggle-btn .awea-icon-open {
+  opacity: 1 !important;
+  display: block !important;
+  transform: rotate(0deg) scale(1);
+}
+
+.awea-mobile-toggle-btn .awea-icon-close {
+  opacity: 0 !important;
+  display: block !important;
+  transform: rotate(-90deg) scale(0.6);
+}
+
+/* Active State: Swap smoothly to Close Icon */
+.awea-mobile-toggle-btn[aria-expanded="true"] .awea-icon-open {
+  opacity: 0 !important;
+  transform: rotate(90deg) scale(0.6);
+}
+
+.awea-mobile-toggle-btn[aria-expanded="true"] .awea-icon-close {
+  opacity: 1 !important;
+  transform: rotate(0deg) scale(1);
+}
+
+/* ==========================================================================
+   Strict Device Breakpoint Enforcement
+   ========================================================================== */
+
+/* 1. Desktop & Tablet Screens (Wider than 767px) */
+@media (min-width: 768px) {
+  .awea-mobile-toggle-wrapper {
+    display: none !important;
+  }
+
+  .awea-nav-menu-container {
+    display: block !important;
+    max-height: none !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+  }
+
+  .awea-nav-menu-container ul.menu {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+}
+
+/* 2. Mobile Only (767px and below) */
+@media (max-width: 767px) {
+  .awea-mobile-toggle-wrapper {
+    display: flex !important;
+  }
+
+  /* Smooth collapsible mobile accordion */
+  .awea-nav-menu-container {
+    width: 100%;
+    margin-top: 14px;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.28s ease;
+  }
+
+  .awea-nav-menu-container.awea-menu-open {
+    max-height: 1200px;
+    opacity: 1;
+  }
+
+  .awea-nav-menu-container ul.menu {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+    width: 100%;
+  }
+
+  .awea-nav-menu-container ul.menu li,
+  .awea-nav-menu-container ul.menu li a {
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  /* Submenus open inline on mobile without clipping */
+  .awea-nav-menu-container ul.menu ul.sub-menu {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding-left: 14px !important;
+    background: transparent !important;
+    transform: none !important;
+  }
+
+  .awea-nav-menu-container ul.menu ul.sub-menu li a:hover {
+    padding-left: 16px;
+  }
+}

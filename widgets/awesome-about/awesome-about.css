@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AWEA About Studio Master Architecture
+   AWEA About Studio Master Architecture (Zero Hover Zoom / No Scale)
    ========================================================================== */
 
 .awea-about-master-grid {
@@ -12,6 +12,7 @@
   align-items: center;
   position: relative;
   box-sizing: border-box;
+  transform: none;
 }
 
 /* 1. Visual Framing & Fluid Geometry */
@@ -21,6 +22,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  box-sizing: border-box;
 }
 
 .awea-about-image-frame {
@@ -31,6 +33,7 @@
   background-color: #0f172a;
   border-radius: 80px 24px 24px 80px;
   box-shadow: 0 30px 60px -15px rgba(15, 23, 42, 0.18);
+  box-sizing: border-box;
 }
 
 .awea-about-image-frame img {
@@ -38,14 +41,15 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: none; /* Strictly no scale(1.06) */
+  transition: opacity 0.3s ease;
 }
 
 .awea-about-visual-container:hover .awea-about-image-frame img {
-  transform: scale(1.06);
+  transform: none; /* Stays stationary at 1:1 */
 }
 
-/* Floating Secondary Circle with GPU Animation */
+/* Floating Secondary Circle (Stationary on Hover - No Scale/Lift) */
 .awea-about-floating-circle {
   position: absolute;
   width: 320px;
@@ -57,6 +61,7 @@
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.22);
   overflow: hidden;
   z-index: 5;
+  box-sizing: border-box;
   animation: aweaAboutFloat 6s ease-in-out infinite alternate;
   will-change: transform;
 }
@@ -77,13 +82,13 @@
   }
 }
 
-/* Experience Ribbon Badge */
+/* Experience Ribbon Badge (Stationary on Hover - No Lift) */
 .awea-about-ribbon {
   position: absolute;
   bottom: 8%;
   left: -20px;
   padding: 16px 36px;
-  background-color: #4f46e5;
+  background-color: var(--e-global-color-primary, #4f46e5);
   color: #ffffff;
   font-weight: 800;
   font-size: 1.15rem;
@@ -91,7 +96,10 @@
   border-radius: 8px;
   box-shadow: 0 16px 32px -8px rgba(79, 70, 229, 0.45);
   z-index: 10;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+  transform: none; /* Strictly no translateY(-4px) scale(1.02) */
+  transition: background-color 0.3s ease;
+  line-height: 1.2;
 }
 
 .awea-about-ribbon::before {
@@ -104,13 +112,14 @@
 }
 
 .awea-about-visual-container:hover .awea-about-ribbon {
-  transform: translateY(-4px) scale(1.02);
+  transform: none; /* Stays locked in place */
 }
 
 /* 2. Editorial Content Column */
 .awea-about-text-content {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .awea-about-label-group {
@@ -122,6 +131,7 @@
   text-transform: uppercase;
   letter-spacing: 0.15em;
   margin-bottom: 20px;
+  line-height: 1.2;
 }
 
 .awea-about-label-line {
@@ -129,28 +139,34 @@
   height: 3px;
   border-radius: 10px;
   background-color: currentColor;
+  flex-shrink: 0;
 }
 
 .awea-about-heading {
-  font-size: 2.85rem;
+  font-size: clamp(2.15rem, 5vw, 2.85rem);
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.03em;
-  margin: 0 0 24px 0;
+  margin-top: 0;
+  margin-bottom: 24px;
+  word-break: break-word;
 }
 
 .awea-about-main-desc {
   font-size: 1.05rem;
   line-height: 1.75;
-  margin: 0 0 35px 0;
+  margin-top: 0;
+  margin-bottom: 35px;
+  word-break: break-word;
 }
 
 /* Feature Check Matrix */
 .awea-about-feature-box {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px 20px;
   margin-bottom: 40px;
+  box-sizing: border-box;
 }
 
 .awea-about-check-item {
@@ -159,6 +175,8 @@
   gap: 10px;
   font-size: 0.95rem;
   font-weight: 700;
+  line-height: 1.4;
+  word-break: break-word;
 }
 
 .awea-about-check-item i,
@@ -166,77 +184,82 @@
   width: 18px;
   height: 18px;
   flex-shrink: 0;
+  display: block;
 }
 
-/* 3. Call to Action Controls */
+/* 3. Call to Action Controls (Stationary on Hover - No Lift) */
 .awea-about-cta-wrapper {
   display: flex;
   align-items: center;
   gap: 36px;
   flex-wrap: wrap;
+  box-sizing: border-box;
 }
 
 .awea-about-prime-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   padding: 16px 36px;
   border-radius: 100px;
-  background-color: #4f46e5;
+  background-color: var(--e-global-color-primary, #4f46e5);
   color: #ffffff;
   text-decoration: none;
   font-weight: 700;
   font-size: 0.95rem;
   box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background-color 0.25s ease;
+  transform: none; /* Strictly no translateY(-3px) */
+  transition: background-color 0.25s ease, box-shadow 0.3s ease, color 0.25s ease;
+  line-height: 1.2;
+  box-sizing: border-box;
 }
 
 .awea-about-prime-btn svg {
   width: 16px;
   height: 16px;
-  transition: transform 0.25s ease;
+  transform: none; /* Strictly no translateX(3px) */
+  transition: none;
 }
 
 .awea-about-prime-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 32px -6px rgba(79, 70, 229, 0.5);
+  transform: none; /* Stays locked in place */
 }
 
-.awea-about-prime-btn:hover svg {
-  transform: translateX(3px);
-}
-
-/* Phone Trigger */
+/* Phone Trigger (Stationary on Hover - No Scale/Rotate) */
 .awea-about-phone-call {
   display: inline-flex;
   align-items: center;
   gap: 16px;
   text-decoration: none;
   color: inherit;
-  transition: transform 0.3s ease;
+  transform: none;
 }
 
 .awea-about-icon-circle {
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background-color: #4f46e5;
+  background-color: var(--e-global-color-primary, #4f46e5);
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.35);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+  transform: none; /* Strictly no scale(1.1) rotate(-8deg) */
+  transition: background-color 0.3s ease;
 }
 
 .awea-about-icon-circle svg {
   width: 20px;
   height: 20px;
+  display: block;
 }
 
 .awea-about-phone-call:hover .awea-about-icon-circle {
-  transform: scale(1.1) rotate(-8deg);
+  transform: none; /* Stays stationary */
 }
 
 .awea-about-phone-meta {
@@ -250,12 +273,15 @@
   color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  line-height: 1.2;
 }
 
 .awea-about-phone-number {
   font-size: 1.15rem;
   font-weight: 800;
   letter-spacing: -0.01em;
+  line-height: 1.3;
+  word-break: break-word;
 }
 
 /* 4. Responsive Breakpoints */
@@ -264,18 +290,17 @@
     grid-template-columns: 1fr;
     gap: 50px;
   }
+
   .awea-about-visual-container {
     max-width: 600px;
     margin: 0 auto;
   }
+
   .awea-about-floating-circle {
     width: 240px;
     height: 240px;
     right: 0;
     top: 5%;
-  }
-  .awea-about-heading {
-    font-size: 2.35rem;
   }
 }
 
@@ -284,6 +309,7 @@
     width: 100%;
     border-radius: 40px;
   }
+
   .awea-about-floating-circle {
     width: 180px;
     height: 180px;
@@ -291,18 +317,27 @@
     right: -10px;
     top: -20px;
   }
+
   .awea-about-ribbon {
     left: 0;
     bottom: -15px;
     padding: 12px 24px;
     font-size: 0.95rem;
   }
+
   .awea-about-feature-box {
     grid-template-columns: 1fr;
   }
+
   .awea-about-cta-wrapper {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 20px;
+  }
+
+  .awea-about-prime-btn {
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
   }
 }

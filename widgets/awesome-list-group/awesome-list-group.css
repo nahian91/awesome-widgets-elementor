@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AWEA List Group Studio 10/10 Architecture
+   AWEA List Group Studio Master Architecture (Zero Hover Zoom / No Scale)
    ========================================================================== */
 
 .awea-icon-list-card {
@@ -11,7 +11,9 @@
 /* 1. Connected Feed Mode */
 .awea-icon-list-card.awea-mode-connected {
   background-color: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(15, 23, 42, 0.08);
   border-radius: 28px;
   padding: 40px;
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
@@ -27,8 +29,8 @@
 
 .awea-icon-list-card.awea-mode-connected .awea-icon-list-item:last-child {
   padding-bottom: 0;
-  border-bottom: none;
-  margin-bottom: 0;
+  border-bottom: none !important;
+  margin-bottom: 0 !important;
 }
 
 /* 2. Independent Separated Tiles Mode */
@@ -41,13 +43,15 @@
 
 .awea-icon-list-card.awea-mode-separated .awea-icon-list-item {
   background-color: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(15, 23, 42, 0.08);
   border-radius: 20px;
   padding: 24px 28px;
   box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.03);
 }
 
-/* 3. List Item Row Structure */
+/* 3. List Item Row Structure (Strictly Stationary on Hover - No Lift/Slide) */
 .awea-icon-list-item {
   display: flex;
   align-items: flex-start;
@@ -55,18 +59,16 @@
   text-decoration: none;
   color: inherit;
   box-sizing: border-box;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.25s ease,
-              border-color 0.25s ease,
-              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
+  transform: none; /* Strictly no translateX(8px) */
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
+/* Stays strictly stationary on hover */
 .awea-icon-list-item:hover {
-  transform: translateX(8px);
+  transform: none;
 }
 
-/* 4. Precision Squircle Icon Badge */
+/* 4. Precision Squircle Icon Badge (Zero Rotation / No Scale on Hover) */
 .awea-icon-list-icon-wrap {
   width: 56px;
   height: 56px;
@@ -77,27 +79,30 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-              background-color 0.3s ease,
-              color 0.3s ease,
-              box-shadow 0.35s ease;
+  border-style: solid;
+  border-width: 0;
+  border-color: transparent;
+  box-sizing: border-box;
+  transform: none; /* Strictly no rotation/zoom */
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
 .awea-icon-list-icon-wrap i {
   font-size: 20px;
+  line-height: 1;
 }
 
 .awea-icon-list-icon-wrap svg {
   width: 20px;
   height: 20px;
+  display: block;
   fill: currentColor;
 }
 
 .awea-icon-list-item:hover .awea-icon-list-icon-wrap {
-  transform: rotate(-6deg) scale(1.08);
+  transform: none; /* Stays locked in place */
   background-color: var(--e-global-color-primary, #4f46e5);
   color: #ffffff;
-  box-shadow: 0 10px 22px -4px rgba(79, 70, 229, 0.38);
 }
 
 .awea-icon-list-item:hover .awea-icon-list-icon-wrap svg {
@@ -109,6 +114,7 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .awea-icon-list-title {
@@ -117,9 +123,10 @@
   line-height: 1.25;
   letter-spacing: -0.02em;
   color: var(--e-global-color-primary, #0f172a);
-  margin: 0 0 6px 0;
+  margin-top: 0;
+  margin-bottom: 6px;
   word-break: break-word;
-  transition: color 0.3s ease;
+  transition: color 0.25s ease;
 }
 
 .awea-icon-list-desc {
@@ -127,19 +134,21 @@
   line-height: 1.65;
   color: var(--e-global-color-text, #64748b);
   margin: 0;
+  word-break: break-word;
 }
 
-/* 6. Link Arrow Micro-Indicator */
+/* 6. Link Arrow Micro-Indicator (Fade/Color Transition Only - No Translation) */
 .awea-icon-list-arrow {
   display: flex;
   align-items: center;
   justify-content: center;
   align-self: center;
   margin-left: 8px;
-  color: var(--e-global-color-text, #94a3b8);
-  opacity: 0;
-  transform: translateX(-8px);
-  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s ease;
+  color: #94a3b8;
+  opacity: 0.6;
+  flex-shrink: 0;
+  transform: none; /* Strictly no translateX */
+  transition: opacity 0.25s ease, color 0.25s ease;
 }
 
 .awea-icon-list-arrow svg {
@@ -149,39 +158,54 @@
 
 .awea-icon-list-item:hover .awea-icon-list-arrow {
   opacity: 1;
-  transform: translateX(0);
+  transform: none; /* Arrow stays stationary */
   color: var(--e-global-color-primary, #4f46e5);
 }
 
-/* 7. Responsive Breakpoints */
+/* ==========================================================================
+   Super Mobile Friendly System (<= 640px)
+   ========================================================================== */
 @media (max-width: 640px) {
   .awea-icon-list-card.awea-mode-connected {
-    padding: 28px 20px;
+    padding: 24px 18px;
     border-radius: 20px;
   }
+
+  .awea-icon-list-card.awea-mode-separated .awea-icon-list-item {
+    padding: 18px 20px;
+    border-radius: 16px;
+  }
+
   .awea-icon-list-item {
-    gap: 16px;
+    gap: 14px;
     padding: 16px 0;
   }
+
   .awea-icon-list-icon-wrap {
-    width: 48px;
-    height: 48px;
+    width: 46px;
+    height: 46px;
     border-radius: 14px;
   }
+
   .awea-icon-list-icon-wrap i {
-    font-size: 17px;
+    font-size: 16px;
   }
+
   .awea-icon-list-icon-wrap svg {
-    width: 17px;
-    height: 17px;
+    width: 16px;
+    height: 16px;
   }
+
   .awea-icon-list-title {
     font-size: 1.1rem;
   }
+
   .awea-icon-list-desc {
     font-size: 0.9rem;
+    line-height: 1.55;
   }
-  .awea-icon-list-item:hover {
-    transform: none;
+
+  .awea-icon-list-arrow {
+    opacity: 1; /* Always visible and tap-ready on touch devices */
   }
 }

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AWEA Product Grid Studio 10/10 Architecture
+   AWEA Product Grid Studio Master Architecture (Zero Hover Zoom / No Scale)
    ========================================================================== */
 
 @property --bento-angle {
@@ -8,17 +8,13 @@
   inherits: false;
 }
 
-:root {
-  --awea-ease: cubic-bezier(0.2, 0, 0, 1);
-}
-
 .awea-product-grid-wrap {
   width: 100%;
   position: relative;
   box-sizing: border-box;
 }
 
-/* 1. Grid Row Engine */
+/* 1. Grid Engine */
 .awea-grid-row {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -34,51 +30,53 @@
   box-sizing: border-box;
 }
 
-/* 2. Product Card Shell */
+/* 2. Product Card Shell (Stationary on Hover - No Lift) */
 .awea-card {
+  --awea-beam-color: #4f46e5;
+  --awea-beam-speed: 3s;
   position: relative;
   width: 100%;
-  border-radius: 32px;
+  border-radius: 28px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
   background-color: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(15, 23, 42, 0.08);
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
-  transition: transform 0.6s var(--awea-ease),
-              box-shadow 0.6s var(--awea-ease),
-              border-color 0.3s ease;
+  transform: none; /* Strictly no hover lift */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
   z-index: 1;
   box-sizing: border-box;
 }
 
 .awea-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.12);
+  transform: none; /* Stays stationary */
 }
 
 /* Kinetic Border Glow Beam */
-.awea-card::after {
+.awea-card.awea-has-beam::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  padding: 2.5px;
-  background: conic-gradient(from var(--bento-angle), transparent 70%, var(--e-global-color-primary, #6366f1), transparent);
+  padding: 2px;
+  background: conic-gradient(from var(--bento-angle), transparent 70%, var(--awea-beam-color, #4f46e5), transparent);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.35s ease;
   pointer-events: none;
 }
 
-.awea-card:hover::after {
+.awea-card.awea-has-beam:hover::after {
   opacity: 1;
-  animation: aweaSpin 3s linear infinite;
+  animation: aweaSpin var(--awea-beam-speed, 3s) linear infinite;
 }
 
 @keyframes aweaSpin {
@@ -90,27 +88,35 @@
 /* 3. Sale Badge */
 .awea-badge-sale {
   position: absolute;
-  top: 18px;
-  left: 18px;
+  top: 14px;
+  left: 14px;
   color: #ffffff;
-  padding: 6px 14px;
-  border-radius: 12px;
-  font-size: 0.7rem;
-  font-weight: 900;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   background-color: #ef4444;
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
   z-index: 3;
+  line-height: 1;
 }
 
-/* 4. Image Container */
+/* 4. Image Container (Zero Hover Zoom / No Scale) */
 .awea-image-container {
   width: 100%;
   aspect-ratio: 1 / 1;
   overflow: hidden;
   background-color: #f8fafc;
   box-sizing: border-box;
+  position: relative;
+}
+
+.awea-image-container a {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .awea-image-container img {
@@ -118,16 +124,17 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 1.2s var(--awea-ease);
+  transform: none; /* Strictly no scale */
+  transition: opacity 0.3s ease;
 }
 
 .awea-card:hover .awea-image-container img {
-  transform: scale(1.08);
+  transform: none; /* Stays stationary */
 }
 
 /* 5. Post Content */
 .awea-post-content {
-  padding: 24px;
+  padding: 20px 22px 14px;
   flex-grow: 1;
   box-sizing: border-box;
 }
@@ -137,13 +144,12 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--e-global-color-primary, #6366f1);
-  margin: 0 0 8px 0;
+  color: var(--e-global-color-primary, #4f46e5);
+  margin: 0 0 6px 0;
+  line-height: 1.3;
 }
 
 .awea-product-name {
-  font-size: 1.2rem;
-  font-weight: 700;
   margin: 0;
   line-height: 1.35;
   word-break: break-word;
@@ -155,19 +161,16 @@
   transition: color 0.25s ease;
 }
 
-.awea-product-name a:hover {
-  color: var(--e-global-color-primary, #6366f1);
-}
-
-/* 6. Footer & Expandable Action Button */
+/* 6. Footer & Fixed Action Button */
 .awea-footer {
-  padding: 20px 24px;
+  padding: 16px 22px;
   border-top: 1px solid rgba(15, 23, 42, 0.06);
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #fcfdfe;
   box-sizing: border-box;
+  gap: 12px;
 }
 
 .awea-pricing {
@@ -176,76 +179,69 @@
 }
 
 .awea-old-price {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: #94a3b8;
   text-decoration: line-through;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .awea-current-price {
   font-size: 1.15rem;
-  font-weight: 900;
+  font-weight: 800;
   color: var(--e-global-color-primary, #0f172a);
   font-variant-numeric: tabular-nums;
+  line-height: 1.2;
 }
 
-/* Sliding Expandable Add to Cart Button */
+.awea-current-price ins {
+  text-decoration: none;
+}
+
 .awea-action-container {
   display: flex;
   align-items: center;
 }
 
+/* Full clean action button (Fixed size on hover - No scale / No width expand) */
 .awea-buy-btn {
   background-color: #0f172a;
   color: #ffffff;
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  display: flex;
+  padding: 10px 18px;
+  border-radius: 100px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  transition: width 0.4s var(--awea-ease), background-color 0.3s ease, color 0.3s ease;
-  overflow: hidden;
-  border: none;
+  gap: 8px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: transparent;
   cursor: pointer;
   text-decoration: none;
   box-sizing: border-box;
   flex-shrink: 0;
+  transform: none; /* Strictly no hover lift */
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  line-height: 1;
+}
+
+.awea-buy-btn:hover {
+  transform: none; /* Stays locked in place */
 }
 
 .awea-buy-btn i {
-  font-size: 15px;
-  position: absolute;
-  transition: margin-right 0.3s ease;
+  font-size: 14px;
 }
 
 .awea-btn-label {
-  opacity: 0;
+  font-size: 0.82rem;
   font-weight: 700;
-  font-size: 0.78rem;
   white-space: nowrap;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  transform: translateX(10px);
-}
-
-.awea-card:hover .awea-buy-btn {
-  width: 135px;
-}
-
-.awea-card:hover .awea-buy-btn i {
-  position: relative;
-  margin-right: 8px;
-}
-
-.awea-card:hover .awea-btn-label {
-  opacity: 1;
-  transform: translateX(0);
 }
 
 .awea-view-cart-btn {
   display: none;
   background-color: #10b981 !important;
+  color: #ffffff !important;
 }
 
 .product-in-cart .awea-add-to-cart-btn {
@@ -253,31 +249,31 @@
 }
 
 .product-in-cart .awea-view-cart-btn {
-  display: flex;
+  display: inline-flex;
 }
 
-/* 7. Responsive Adaptations */
-@media (max-width: 1024px) {
-  .awea-grid-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  }
-}
-
-@media (max-width: 640px) {
+/* ==========================================================================
+   Super Mobile Friendly System (<= 767px)
+   ========================================================================== */
+@media (max-width: 767px) {
   .awea-grid-row {
     grid-template-columns: 1fr !important;
+    gap: 18px;
   }
+
   .awea-card {
-    border-radius: 24px;
+    border-radius: 20px;
   }
-  .awea-card:hover .awea-buy-btn {
-    width: 46px;
+
+  .awea-post-content {
+    padding: 16px 18px 12px;
   }
-  .awea-card:hover .awea-buy-btn i {
-    margin-right: 0;
+
+  .awea-footer {
+    padding: 14px 18px;
   }
-  .awea-card:hover .awea-btn-label {
-    opacity: 0;
-    transform: translateX(10px);
+
+  .awea-buy-btn {
+    padding: 8px 14px;
   }
 }

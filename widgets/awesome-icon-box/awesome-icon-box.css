@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AWEA Icon Box Studio 10/10 Architecture
+   AWEA Icon Box Studio Master Architecture (Zero Hover Zoom / No Scale)
    ========================================================================== */
 
 .awea-icon-box {
@@ -7,27 +7,25 @@
   position: relative;
   box-sizing: border-box;
   background-color: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(15, 23, 42, 0.08);
   border-radius: 24px;
   padding: 40px 32px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.03);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.3s ease,
-              background-color 0.3s ease;
-  will-change: transform;
+  transform: none; /* Strictly no hover lift */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
+/* Card remains completely locked in place on hover */
 .awea-icon-box:hover {
-  transform: translateY(-8px);
-  border-color: var(--e-global-color-primary, #4f46e5);
-  box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.12);
+  transform: none;
 }
 
-/* 1. Ambient Corner Spotlight Glow */
+/* 1. Ambient Corner Spotlight Glow (Zero Scale on Hover) */
 .awea-icon-box::after {
   content: "";
   position: absolute;
@@ -39,16 +37,17 @@
   background: radial-gradient(circle at center, rgba(79, 70, 229, 0.2) 0%, transparent 70%);
   pointer-events: none;
   opacity: 0.25;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+  transform: none; /* Strictly no scale(2.2) */
+  transition: opacity 0.4s ease;
   z-index: 1;
 }
 
 .awea-icon-box:hover::after {
-  transform: scale(2.2);
+  transform: none;
   opacity: 0.45;
 }
 
-/* 2. Leading Icon Badge */
+/* 2. Leading Icon Badge (Zero Rotation / No Scale on Hover) */
 .awea-icon-wrapper {
   position: relative;
   z-index: 2;
@@ -62,24 +61,28 @@
   justify-content: center;
   margin-bottom: 24px;
   flex-shrink: 0;
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-              background-color 0.3s ease,
-              color 0.3s ease,
-              border-color 0.3s ease;
+  border-style: solid;
+  border-width: 0;
+  border-color: transparent;
+  box-sizing: border-box;
+  transform: none; /* Strictly no scale(1.1) rotate(-8deg) */
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .awea-icon-wrapper i {
   font-size: 24px;
+  line-height: 1;
 }
 
 .awea-icon-wrapper svg {
   width: 24px;
   height: 24px;
+  display: block;
   fill: currentColor;
 }
 
 .awea-icon-box:hover .awea-icon-wrapper {
-  transform: scale(1.1) rotate(-8deg);
+  transform: none; /* Stays locked in place */
   background-color: var(--e-global-color-primary, #4f46e5);
   color: #ffffff;
 }
@@ -97,7 +100,8 @@
   line-height: 1.25;
   letter-spacing: -0.02em;
   color: var(--e-global-color-primary, #0f172a);
-  margin: 0 0 12px 0;
+  margin-top: 0;
+  margin-bottom: 12px;
   word-break: break-word;
   transition: color 0.3s ease;
 }
@@ -108,10 +112,12 @@
   font-size: 1rem;
   line-height: 1.65;
   color: var(--e-global-color-text, #64748b);
-  margin: 0 0 24px 0;
+  margin-top: 0;
+  margin-bottom: 24px;
+  word-break: break-word;
 }
 
-/* 4. Action Button */
+/* 4. Action Button (Stationary on Hover - No Lift / No Gap Shifts) */
 .awea-btn-link {
   position: relative;
   z-index: 2;
@@ -126,28 +132,27 @@
   font-size: 0.95rem;
   background-color: var(--e-global-color-primary, #4f46e5);
   color: #ffffff;
-  border: 1.5px solid transparent;
+  border-style: solid;
+  border-width: 1.5px;
+  border-color: transparent;
   width: fit-content;
+  box-sizing: border-box;
   box-shadow: 0 4px 14px rgba(79, 70, 229, 0.2);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              gap 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.25s ease,
-              box-shadow 0.3s ease,
-              border-color 0.25s ease,
-              color 0.25s ease;
+  transform: none; /* Strictly no translateY(-2px) */
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  line-height: 1.2;
 }
 
 .awea-btn-link:hover {
-  gap: 12px;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.32);
+  gap: 8px; /* Gap stays static */
+  transform: none;
 }
 
 .awea-btn-icon {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.25s ease;
+  line-height: 1;
 }
 
 .awea-btn-icon svg,
@@ -157,32 +162,43 @@
   height: 13px;
 }
 
-/* 5. Responsive Adjustments */
+/* ==========================================================================
+   Super Mobile Friendly System (<= 768px)
+   ========================================================================== */
 @media (max-width: 768px) {
   .awea-icon-box {
-    padding: 32px 24px;
+    padding: 30px 20px;
     border-radius: 20px;
   }
+
   .awea-icon-wrapper {
-    width: 54px;
-    height: 54px;
-    margin-bottom: 20px;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 18px;
   }
+
   .awea-icon-wrapper i {
     font-size: 20px;
   }
+
   .awea-icon-wrapper svg {
     width: 20px;
     height: 20px;
   }
+
   .awea-icon-box-title {
     font-size: 1.2rem;
   }
+
   .awea-icon-box-desc {
-    font-size: 0.95rem;
+    font-size: 0.94rem;
+    line-height: 1.55;
     margin-bottom: 20px;
   }
+
   .awea-btn-link {
     width: 100%;
+    box-sizing: border-box;
+    padding: 12px 20px;
   }
 }
