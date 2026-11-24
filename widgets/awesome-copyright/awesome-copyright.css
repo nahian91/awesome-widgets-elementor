@@ -1,0 +1,96 @@
+/* ==========================================================================
+   Awesome Copyright Widget (Global Token Edition v2.5.0)
+   ========================================================================== */
+
+.awea-cp-wrap {
+	--awea-cp-primary: var(--e-global-color-primary);
+	--awea-cp-secondary: var(--e-global-color-secondary);
+	--awea-cp-text: var(--e-global-color-text);
+	--awea-cp-accent: var(--e-global-color-accent);
+
+	width: 100%;
+	box-sizing: border-box;
+	color: var(--awea-cp-text);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+}
+
+.awea-cp-wrap *,
+.awea-cp-wrap *::before,
+.awea-cp-wrap *::after {
+	box-sizing: border-box;
+}
+
+.awea-cp-meta-group {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+}
+
+/* Stacked Layout Direction */
+.awea-cp-dir-stack .awea-cp-wrap {
+	flex-direction: column;
+	gap: 6px;
+}
+
+.awea-cp-dir-stack .awea-cp-sep-lead {
+	display: none;
+}
+
+.awea-cp-primary p {
+	margin: 0;
+	display: inline;
+}
+
+.awea-cp-wrap a {
+	color: var(--awea-cp-primary);
+	text-decoration: underline;
+	text-decoration-thickness: 0.08em;
+	text-underline-offset: 3px;
+	transition: color 0.2s ease;
+}
+
+.awea-cp-wrap a:hover,
+.awea-cp-wrap a:focus-visible {
+	color: var(--awea-cp-accent);
+}
+
+.awea-cp-wrap a:focus-visible {
+	outline: 2px solid var(--awea-cp-accent);
+	outline-offset: 2px;
+	border-radius: 3px;
+}
+
+.awea-cp-sep {
+	color: var(--awea-cp-accent);
+	opacity: 0.65;
+	user-select: none;
+	line-height: 1;
+}
+
+.awea-cp-secondary {
+	color: var(--awea-cp-secondary);
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+	.awea-cp-wrap a {
+		transition: none !important;
+	}
+}
+
+/* Mobile Stacking (<= 640px) */
+@media (max-width: 640px) {
+	.awea-cp-dir-inline .awea-cp-wrap {
+		flex-direction: column;
+		gap: 6px;
+	}
+
+	.awea-cp-dir-inline .awea-cp-sep-lead {
+		display: none;
+	}
+}

@@ -1,0 +1,220 @@
+/* ==========================================================================
+   AWEA Testimonials — Zero-Shadow Architectural Repeater Grid
+   ========================================================================== */
+
+@property --awea-tm-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.awea-tm-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  align-items: stretch;
+}
+
+.awea-tm-card {
+  --awea-tm-beam: var(--e-global-color-primary, #4f46e5);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding: 32px 30px;
+  border-radius: 24px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-sizing: border-box;
+  box-shadow: none;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.awea-tm-card:hover {
+  background-color: #f8fafc;
+  border-color: var(--awea-tm-beam);
+  box-shadow: none;
+}
+
+/* Kinetic Border Beam (Zero Shadow) */
+.awea-tm-beam-yes .awea-tm-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--awea-tm-angle), transparent 70%, var(--awea-tm-beam), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+@keyframes aweaTmSpin {
+  to {
+    --awea-tm-angle: 360deg;
+  }
+}
+
+.awea-tm-beam-yes .awea-tm-card:hover::after {
+  opacity: 1;
+  animation: aweaTmSpin 3.5s linear infinite;
+}
+
+/* Quote Watermark */
+.awea-tm-quote-mark {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  opacity: 0.08;
+  color: var(--awea-tm-beam);
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.awea-tm-card:hover .awea-tm-quote-mark {
+  opacity: 0.16;
+}
+
+/* Rating Stars */
+.awea-tm-stars {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 18px;
+}
+
+.awea-tm-stars i {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.awea-star-on {
+  color: #f59e0b;
+}
+
+.awea-star-off {
+  color: #e2e8f0;
+}
+
+/* Review Speech */
+.awea-tm-text {
+  margin: 0 0 24px 0;
+  position: relative;
+  z-index: 2;
+  font-size: 1rem;
+  line-height: 1.68;
+  color: #334155;
+  font-style: italic;
+  word-break: break-word;
+}
+
+/* Author Footer (Bottom-Anchored Across Equal-Height Cards) */
+.awea-tm-footer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid #f1f5f9;
+  position: relative;
+  z-index: 2;
+}
+
+.awea-tm-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 100%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.awea-tm-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.awea-tm-name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #0f172a;
+  word-break: break-word;
+}
+
+.awea-tm-role {
+  font-style: normal;
+  font-size: 0.84rem;
+  line-height: 1.3;
+  color: #64748b;
+  display: block;
+  word-break: break-word;
+}
+
+/* Verified Badge */
+.awea-tm-verify {
+  margin-left: auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #dcfce7;
+  color: #15803d;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.awea-tm-verify svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .awea-tm-beam-yes .awea-tm-card:hover::after {
+    animation: none !important;
+  }
+
+  .awea-tm-card,
+  .awea-tm-quote-mark {
+    transition: none !important;
+  }
+}
+
+/* Mobile (<= 767px) */
+@media (max-width: 767px) {
+  .awea-tm-card {
+    padding: 24px 20px;
+    border-radius: 18px;
+  }
+
+  .awea-tm-quote-mark {
+    top: 18px;
+    right: 18px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .awea-tm-footer {
+    gap: 12px;
+  }
+}

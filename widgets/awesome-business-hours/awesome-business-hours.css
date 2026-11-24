@@ -1,0 +1,408 @@
+/* ==========================================================================
+   Awesome Business Hours Widget (Global Token Edition v2.5.0)
+   ========================================================================== */
+
+.awea-bh-root {
+	--awea-bh-primary: var(--e-global-color-primary);
+	--awea-bh-secondary: var(--e-global-color-secondary);
+	--awea-bh-text: var(--e-global-color-text);
+	--awea-bh-accent: var(--e-global-color-accent);
+	--awea-bh-bar-size: 4px;
+
+	/* Default: Theme Colors (Auto) */
+	--awea-bh-bg: color-mix(in srgb, currentColor 3%, transparent);
+	--awea-bh-panel-bg: color-mix(in srgb, currentColor 4%, transparent);
+	--awea-bh-border: color-mix(in srgb, currentColor 12%, transparent);
+	--awea-bh-divider: color-mix(in srgb, currentColor 10%, transparent);
+	--awea-bh-title: var(--awea-bh-primary);
+	--awea-bh-desc: var(--awea-bh-text);
+	--awea-bh-muted: var(--awea-bh-secondary);
+	--awea-bh-day: var(--awea-bh-primary);
+	--awea-bh-time: var(--awea-bh-text);
+	--awea-bh-today-time: var(--awea-bh-primary);
+	--awea-bh-ico-bg: color-mix(in srgb, var(--awea-bh-accent) 10%, transparent);
+	--awea-bh-ico-border: color-mix(in srgb, var(--awea-bh-accent) 20%, transparent);
+	--awea-bh-ico-color: var(--awea-bh-accent);
+
+	width: 100%;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.awea-bh-root *,
+.awea-bh-root *::before,
+.awea-bh-root *::after {
+	box-sizing: border-box;
+}
+
+/* Dark Slate Preset */
+.awea-bh-theme-dark .awea-bh-root {
+	--awea-bh-bg: #0f172a;
+	--awea-bh-panel-bg: rgba(255, 255, 255, 0.03);
+	--awea-bh-border: rgba(255, 255, 255, 0.1);
+	--awea-bh-divider: rgba(255, 255, 255, 0.08);
+	--awea-bh-title: #ffffff;
+	--awea-bh-desc: #94a3b8;
+	--awea-bh-muted: #64748b;
+	--awea-bh-day: #f1f5f9;
+	--awea-bh-time: #94a3b8;
+	--awea-bh-today-time: #ffffff;
+	--awea-bh-ico-bg: rgba(255, 255, 255, 0.06);
+	--awea-bh-ico-border: rgba(255, 255, 255, 0.12);
+	--awea-bh-ico-color: #ffffff;
+}
+
+/* Clean Light Preset */
+.awea-bh-theme-light .awea-bh-root {
+	--awea-bh-bg: #ffffff;
+	--awea-bh-panel-bg: #f8fafc;
+	--awea-bh-border: #e2e8f0;
+	--awea-bh-divider: #e2e8f0;
+	--awea-bh-title: #0f172a;
+	--awea-bh-desc: #475569;
+	--awea-bh-muted: #64748b;
+	--awea-bh-day: #0f172a;
+	--awea-bh-time: #475569;
+	--awea-bh-today-time: #0f172a;
+	--awea-bh-ico-bg: #f1f5f9;
+	--awea-bh-ico-border: #e2e8f0;
+	--awea-bh-ico-color: #0f172a;
+}
+
+.awea-bh-card {
+	position: relative;
+	display: grid;
+	grid-template-columns: 1fr 1.15fr;
+	background-color: var(--awea-bh-bg);
+	border: 1px solid var(--awea-bh-border);
+	border-radius: 20px;
+	overflow: hidden;
+}
+
+/* Accent Line Indicator */
+.awea-bh-accent-bar {
+	display: none;
+	position: absolute;
+	z-index: 3;
+	background-color: var(--awea-bh-accent);
+	pointer-events: none;
+}
+
+.awea-bh-bar-top-always .awea-bh-accent-bar {
+	display: block;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: var(--awea-bh-bar-size);
+}
+
+.awea-bh-bar-bottom-always .awea-bh-accent-bar {
+	display: block;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: var(--awea-bh-bar-size);
+}
+
+.awea-bh-bar-left-always .awea-bh-accent-bar {
+	display: block;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: var(--awea-bh-bar-size);
+}
+
+/* Stacked Single-Column Mode */
+.awea-bh-mode-stacked .awea-bh-card {
+	grid-template-columns: 1fr;
+}
+
+/* --------------------------------------------------------------------------
+   1. Left Status Panel
+   -------------------------------------------------------------------------- */
+.awea-bh-left {
+	padding: 44px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.awea-bh-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 9px;
+	padding: 7px 16px;
+	border-radius: 100px;
+	margin-bottom: 22px;
+	width: fit-content;
+	user-select: none;
+	line-height: 1.2;
+}
+
+.awea-bh-badge.is-open {
+	background-color: rgba(34, 197, 94, 0.14);
+	color: #16a34a;
+	border: 1px solid rgba(34, 197, 94, 0.28);
+}
+
+.awea-bh-theme-dark .awea-bh-badge.is-open {
+	color: #4ade80;
+}
+
+.awea-bh-badge.is-closed {
+	background-color: rgba(239, 68, 68, 0.12);
+	color: #dc2626;
+	border: 1px solid rgba(239, 68, 68, 0.26);
+}
+
+.awea-bh-theme-dark .awea-bh-badge.is-closed {
+	color: #f87171;
+}
+
+.awea-bh-pulse {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: currentColor;
+	position: relative;
+	flex-shrink: 0;
+}
+
+.awea-bh-pulse::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: 50%;
+	background-color: currentColor;
+	animation: aweaBhPulse 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes aweaBhPulse {
+	0% {
+		transform: scale(1);
+		opacity: 0.85;
+	}
+	70% {
+		transform: scale(2.6);
+		opacity: 0;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 0;
+	}
+}
+
+.awea-bh-subtitle {
+	display: block;
+	margin: 0 0 8px 0;
+	color: var(--awea-bh-accent);
+}
+
+.awea-bh-title {
+	margin: 0 0 14px 0;
+	color: var(--awea-bh-title);
+	word-break: break-word;
+}
+
+.awea-bh-desc {
+	margin: 0 0 32px 0;
+	max-width: 440px;
+	color: var(--awea-bh-desc);
+	word-break: break-word;
+}
+
+/* Direct Support Phone */
+.awea-bh-phone {
+	margin-top: auto;
+	padding-top: 8px;
+}
+
+.awea-bh-phone-label {
+	display: block;
+	color: var(--awea-bh-muted);
+	margin-bottom: 8px;
+}
+
+.awea-bh-phone-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	text-decoration: none;
+	color: inherit;
+	transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.awea-bh-phone-link:hover {
+	opacity: 0.88;
+}
+
+.awea-bh-phone-link:focus-visible {
+	outline: 2px solid var(--awea-bh-accent);
+	outline-offset: 4px;
+	border-radius: 10px;
+}
+
+.awea-bh-phone-ico {
+	width: 42px;
+	height: 42px;
+	border-radius: 12px;
+	background-color: var(--awea-bh-ico-bg);
+	border: 1px solid var(--awea-bh-ico-border);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--awea-bh-ico-color);
+	flex-shrink: 0;
+	transition: transform 0.25s ease;
+}
+
+.awea-bh-phone-link:hover .awea-bh-phone-ico {
+	transform: scale(1.05);
+}
+
+.awea-bh-phone-ico svg {
+	width: 17px;
+	height: 17px;
+	fill: currentColor;
+	display: block;
+}
+
+.awea-bh-phone-ico i {
+	font-size: 16px;
+	line-height: 1;
+}
+
+.awea-bh-phone-num {
+	color: var(--awea-bh-title);
+}
+
+/* --------------------------------------------------------------------------
+   2. Right Weekly Schedule
+   -------------------------------------------------------------------------- */
+.awea-bh-right {
+	padding: 44px;
+	background-color: var(--awea-bh-panel-bg);
+	border-left: 1px solid var(--awea-bh-divider);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.awea-bh-mode-stacked .awea-bh-right {
+	border-left: none;
+	border-top: 1px solid var(--awea-bh-divider);
+}
+
+.awea-bh-list {
+	display: flex;
+	flex-direction: column;
+}
+
+.awea-bh-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 16px;
+	padding: 15px 0;
+	border-bottom: 1px solid var(--awea-bh-divider);
+	transition: border-color 0.25s ease;
+}
+
+.awea-bh-row:first-child {
+	padding-top: 0;
+}
+
+.awea-bh-row:last-child {
+	border-bottom: none;
+	padding-bottom: 0;
+}
+
+.awea-bh-day-wrap {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.awea-bh-dot {
+	display: none;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background-color: var(--awea-bh-accent);
+	flex-shrink: 0;
+}
+
+.awea-bh-row.is-today .awea-bh-dot {
+	display: inline-block;
+}
+
+.awea-bh-day {
+	color: var(--awea-bh-day);
+}
+
+.awea-bh-time {
+	color: var(--awea-bh-time);
+	font-variant-numeric: tabular-nums;
+	text-align: right;
+}
+
+/* Active Current Day */
+.awea-bh-row.is-today {
+	border-bottom-color: var(--awea-bh-accent);
+}
+
+.awea-bh-row.is-today .awea-bh-day {
+	font-weight: 800;
+	color: var(--awea-bh-accent);
+}
+
+.awea-bh-row.is-today .awea-bh-time {
+	color: var(--awea-bh-today-time);
+	font-weight: 700;
+}
+
+/* Closed Day */
+.awea-bh-row.is-closed .awea-bh-day {
+	opacity: 0.55;
+}
+
+.awea-bh-row.is-closed .awea-bh-time {
+	color: #dc2626;
+	font-weight: 700;
+}
+
+.awea-bh-theme-dark .awea-bh-row.is-closed .awea-bh-time {
+	color: #f87171;
+}
+
+.awea-bh-tz {
+	margin-top: 20px;
+	font-size: 0.82em;
+	color: var(--awea-bh-muted);
+}
+
+/* --------------------------------------------------------------------------
+   3. Accessibility & Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.awea-bh-pulse::after {
+		animation: none !important;
+	}
+}
+
+@media (max-width: 900px) {
+	.awea-bh-card {
+		grid-template-columns: 1fr;
+		border-radius: 16px;
+	}
+
+	.awea-bh-left {
+		padding: 32px 24px;
+	}
+
+	.awea-bh-right {
+		padding: 28px 24px 32px 24px;
+		border-left: none;
+		border-top: 1px solid var(--awea-bh-divider);
+	}
+}

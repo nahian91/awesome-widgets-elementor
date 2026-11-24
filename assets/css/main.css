@@ -1,0 +1,101 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* CSS to ensure equal height for columns */
+.awea-post-carousel .single-post {
+  display: flex;
+  flex-direction: column;
+}
+
+.awea-post-carousel .post-content {
+  flex-grow: 1;
+}
+
+.awea-post-carousel .post-img {
+  flex-shrink: 0;
+}
+
+/* Ensure images cover the container */
+.awea-post-carousel .post-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.awea-single-filter-gallery {
+  position: relative;
+}
+.awea-filter-img {
+  padding-top: 100%;
+  background-position: center;
+  background-size: cover;
+}
+
+.awea-filter-img-overlay {
+  background-size: cover;
+  background-position: center;
+  width: 50px;
+  height: 50px;
+}
+.awea-image-overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: .3s;
+  transform: scale(0);
+  opacity: 0;
+  visibility: hidden;
+}
+.awea-image-overlay:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: #333;
+  opacity: .8;
+  z-index: -1;
+}
+.awea-single-filter-gallery:hover .awea-image-overlay {
+  opacity: 1;
+  transform: scale(1);
+  visibility: visible;
+}
+.awea-image-overlay .elementor-lightbox svg path{
+  fill: #fff;
+}
+.awea-image-overlay img {
+	width: 35px;
+}
+.awea-post-content .awea-btn-line {
+	display: inline-block;
+	margin-top: 20px;
+}
+
+
+.owl-carousel .owl-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.owl-carousel .owl-nav button.owl-prev,
+.owl-carousel .owl-nav button.owl-next {
+    pointer-events: all;
+    position: relative;
+    z-index: 10;
+}

@@ -1,0 +1,220 @@
+/* ==========================================================================
+   Awesome Price Menu Widget (Global Token Edition v2.5.0)
+   ========================================================================== */
+
+.awea-price-menu-list {
+	--awea-pm-primary: var(--e-global-color-primary);
+	--awea-pm-secondary: var(--e-global-color-secondary);
+	--awea-pm-text: var(--e-global-color-text);
+	--awea-pm-accent: var(--e-global-color-accent);
+	--awea-pm-border: color-mix(in srgb, currentColor 12%, transparent);
+
+	display: grid;
+	grid-template-columns: repeat(1, minmax(0, 1fr));
+	column-gap: 36px;
+	row-gap: 24px;
+	list-style: none;
+	padding: 36px;
+	margin: 0 auto;
+	width: 100%;
+	box-sizing: border-box;
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
+	border: 1px solid var(--awea-pm-border);
+	border-radius: 20px;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.25s ease;
+}
+
+.awea-price-menu-list *,
+.awea-price-menu-list *::before,
+.awea-price-menu-list *::after {
+	box-sizing: border-box;
+}
+
+.awea-price-menu-list:hover {
+	border-color: var(--awea-pm-accent);
+}
+
+/* --------------------------------------------------------------------------
+   1. Menu Row Item
+   -------------------------------------------------------------------------- */
+.awea-price-menu {
+	--awea-pm-active-accent: var(--awea-pm-item-accent, var(--awea-pm-accent));
+	--awea-pm-soft-tint: color-mix(in srgb, var(--awea-pm-active-accent) 10%, transparent);
+
+	display: flex;
+	gap: 20px;
+	align-items: flex-start;
+	padding-bottom: 24px;
+	border-bottom: 1px solid color-mix(in srgb, currentColor 8%, transparent);
+	transition: background-color 0.25s ease;
+}
+
+.awea-price-menu.awea-pm-featured {
+	padding: 16px;
+	border-radius: 14px;
+	background-color: color-mix(in srgb, var(--awea-pm-active-accent) 5%, transparent);
+	border-bottom-color: transparent;
+}
+
+.awea-pm-cols-1 .awea-price-menu:last-child {
+	padding-bottom: 0;
+	border-bottom: none;
+}
+
+.awea-pm-cols-1 .awea-price-menu.awea-pm-featured:last-child {
+	padding-bottom: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   2. Thumbnail Image
+   -------------------------------------------------------------------------- */
+.awea-price-menu-thumb {
+	width: 76px;
+	height: 76px;
+	border-radius: 14px;
+	overflow: hidden;
+	background-color: color-mix(in srgb, currentColor 6%, transparent);
+	flex-shrink: 0;
+	border: 1px solid var(--awea-pm-border);
+}
+
+.awea-price-menu-thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-price-menu:hover .awea-price-menu-thumb img {
+	transform: scale(1.04);
+}
+
+/* --------------------------------------------------------------------------
+   3. Details & Fluid Dotted Leader Header
+   -------------------------------------------------------------------------- */
+.awea-price-menu-details {
+	flex-grow: 1;
+	min-width: 0;
+}
+
+.awea-price-menu-header {
+	display: flex;
+	align-items: baseline;
+	gap: 10px;
+	position: relative;
+	width: 100%;
+}
+
+.awea-price-menu-title {
+	order: 1;
+	flex-shrink: 1;
+	min-width: 0;
+	margin: 0;
+	color: var(--awea-pm-primary);
+	word-break: break-word;
+	transition: color 0.25s ease;
+}
+
+.awea-price-menu-title a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.awea-price-menu-title a:focus-visible {
+	outline: 2px solid var(--awea-pm-active-accent);
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
+.awea-price-menu:hover .awea-price-menu-title,
+.awea-price-menu:hover .awea-price-menu-title a {
+	color: var(--awea-pm-active-accent);
+}
+
+.awea-price-menu-badge {
+	display: inline-flex;
+	align-items: center;
+	vertical-align: middle;
+	margin-inline-start: 8px;
+	padding: 2px 9px;
+	border-radius: 100px;
+	background-color: var(--awea-pm-soft-tint);
+	border: 1px solid color-mix(in srgb, var(--awea-pm-active-accent) 20%, transparent);
+	color: var(--awea-pm-active-accent);
+	font-size: 0.7em;
+	line-height: 1.4;
+}
+
+.awea-price-menu-header::after {
+	content: "";
+	order: 2;
+	flex: 1 1 auto;
+	border-bottom-style: dotted;
+	border-bottom-width: 2px;
+	border-bottom-color: color-mix(in srgb, currentColor 18%, transparent);
+	margin: 0 4px;
+	min-width: 16px;
+}
+
+.awea-price-group {
+	order: 3;
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: baseline;
+	gap: 6px;
+}
+
+.awea-price-original {
+	font-size: 0.85em;
+	color: var(--awea-pm-text);
+	opacity: 0.55;
+}
+
+.awea-price {
+	color: var(--awea-pm-active-accent);
+	font-variant-numeric: tabular-nums;
+	line-height: 1.3;
+}
+
+.awea-description {
+	margin: 6px 0 0 0;
+	color: var(--awea-pm-text);
+	word-break: break-word;
+}
+
+/* --------------------------------------------------------------------------
+   4. Accessibility & Responsive
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.awea-price-menu-list,
+	.awea-price-menu-thumb img,
+	.awea-price-menu-title {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+@media (max-width: 640px) {
+	.awea-price-menu-list {
+		padding: 24px 18px;
+		border-radius: 16px;
+	}
+
+	.awea-price-menu {
+		gap: 14px;
+	}
+
+	.awea-price-menu-thumb {
+		width: 60px;
+		height: 60px;
+		border-radius: 12px;
+	}
+
+	.awea-price-menu-header {
+		gap: 8px;
+	}
+}

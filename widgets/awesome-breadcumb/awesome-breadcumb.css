@@ -1,0 +1,224 @@
+/* ==========================================================================
+   Awesome Breadcrumb Widget (Global Token Edition v2.5.0)
+   ========================================================================== */
+
+.awea-bc-hero {
+	--awea-bc-primary: var(--e-global-color-primary);
+	--awea-bc-secondary: var(--e-global-color-secondary);
+	--awea-bc-text: var(--e-global-color-text);
+	--awea-bc-accent: var(--e-global-color-accent);
+	--awea-bc-border: color-mix(in srgb, currentColor 14%, transparent);
+	--awea-bc-bar-size: 4px;
+	--awea-bc-justify: center;
+	--awea-bc-ml: auto;
+	--awea-bc-mr: auto;
+
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
+	background-size: cover;
+	background-position: center;
+	z-index: 1;
+	box-sizing: border-box;
+}
+
+.awea-bc-hero *,
+.awea-bc-hero *::before,
+.awea-bc-hero *::after {
+	box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   1. Backdrop Overlay & Accent Line
+   -------------------------------------------------------------------------- */
+.awea-bc-hero::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-color: var(--awea-bc-primary);
+	opacity: 0;
+	pointer-events: none;
+	z-index: -1;
+	transition: opacity 0.3s ease;
+}
+
+.awea-bc-accent-bar {
+	display: none;
+	position: absolute;
+	z-index: 3;
+	left: 0;
+	right: 0;
+	height: var(--awea-bc-bar-size);
+	background: var(--awea-bc-accent);
+	pointer-events: none;
+}
+
+.awea-bc-bar-bottom-always .awea-bc-accent-bar {
+	display: block;
+	bottom: 0;
+}
+
+.awea-bc-bar-top-always .awea-bc-accent-bar {
+	display: block;
+	top: 0;
+}
+
+.awea-bc-inner {
+	position: relative;
+	z-index: 2;
+	width: 100%;
+	max-width: 1240px;
+	margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   2. Page Title & Subtitle
+   -------------------------------------------------------------------------- */
+.awea-bc-header {
+	margin-bottom: 16px;
+}
+
+.awea-bc-eyebrow {
+	display: block;
+	margin: 0 0 8px 0;
+	color: var(--awea-bc-accent);
+}
+
+.awea-bc-title {
+	margin: 0;
+	color: var(--awea-bc-primary);
+	word-break: break-word;
+}
+
+.awea-bc-subtitle {
+	max-width: 640px;
+	margin: 10px var(--awea-bc-mr, auto) 0 var(--awea-bc-ml, auto);
+	color: var(--awea-bc-text);
+	word-break: break-word;
+}
+
+/* --------------------------------------------------------------------------
+   3. Breadcrumb Navigation Trail
+   -------------------------------------------------------------------------- */
+.awea-bc-nav {
+	display: flex;
+	align-items: center;
+	justify-content: var(--awea-bc-justify, center);
+}
+
+.awea-bc-nav-top {
+	margin-bottom: 16px;
+}
+
+.awea-bc-list {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: var(--awea-bc-justify, center);
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.awea-bc-pill-yes .awea-bc-list {
+	padding: 8px 18px;
+	border-radius: 100px;
+	background-color: color-mix(in srgb, currentColor 5%, transparent);
+	border: 1px solid var(--awea-bc-border);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+}
+
+.awea-bc-item {
+	display: inline-flex;
+	align-items: center;
+}
+
+.awea-bc-item a,
+.awea-bc-text {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.awea-bc-item a {
+	color: var(--awea-bc-text);
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.awea-bc-item a:hover,
+.awea-bc-item a:focus-visible {
+	color: var(--awea-bc-accent);
+}
+
+.awea-bc-item a:focus-visible {
+	outline: 2px solid var(--awea-bc-accent);
+	outline-offset: 3px;
+	border-radius: 4px;
+}
+
+.awea-bc-home-ico {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	flex-shrink: 0;
+}
+
+.awea-bc-home-ico svg {
+	width: 13px;
+	height: 13px;
+	fill: currentColor;
+	display: block;
+}
+
+.awea-bc-home-ico i {
+	font-size: 13px;
+	line-height: 1;
+}
+
+.awea-bc-item.is-current {
+	color: var(--awea-bc-primary);
+}
+
+/* --------------------------------------------------------------------------
+   4. Separators
+   -------------------------------------------------------------------------- */
+.awea-bc-sep {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 10px;
+	color: var(--awea-bc-accent);
+	opacity: 0.75;
+	user-select: none;
+	line-height: 1;
+	flex-shrink: 0;
+}
+
+.awea-bc-sep svg {
+	width: 13px;
+	height: 13px;
+	display: block;
+}
+
+.awea-bc-sep i {
+	font-size: 12px;
+	line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   5. Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+	.awea-bc-list {
+		row-gap: 4px;
+	}
+
+	.awea-bc-pill-yes .awea-bc-list {
+		padding: 7px 14px;
+		border-radius: 16px;
+	}
+}

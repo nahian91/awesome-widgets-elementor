@@ -1,0 +1,177 @@
+.awea-grid-row {
+    margin: -15px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.awea-single-post {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ensure the column takes up 100% height */
+}
+
+.awea-post-content {
+    flex-grow: 1; /* Allow the content to take up remaining space */
+}
+
+/* Add the following style to ensure equal height for columns */
+.awea-grid-row > div[class^="awea-grid-desktop-"] .awea-single-post  {
+    flex: 1;
+}
+.awea-grid-row.align-center {
+	align-items: center;
+}
+.awea-grid-row.align-end {
+	align-items: flex-end;
+}
+
+.awea-grid-desktop-1{
+    width: 8.33%;
+    padding: 15px;
+}
+.awea-grid-desktop-2{
+    width: 16.66%;
+    padding: 15px;
+}
+.awea-grid-desktop-3{
+    width: 25%;
+    padding: 15px;
+}
+.awea-grid-desktop-4{
+    width: 33.33%;
+    padding: 15px;
+}
+.awea-grid-desktop-5{
+    width: 41.67%;
+    padding: 15px;
+}
+.awea-grid-desktop-6{
+    width: 50%;
+    padding: 15px;
+}
+.awea-grid-desktop-7{
+    width: 58.33%;
+    padding: 15px;
+}
+.awea-grid-desktop-8{
+    width: 66.67%;
+    padding: 15px;
+}
+.awea-grid-desktop-9{
+    width: 75%;
+    padding: 15px;
+}
+.awea-grid-desktop-10{
+    width: 83.33%;
+    padding: 15px;
+}
+.awea-grid-desktop-11{
+    width: 91.67%;
+    padding: 15px;
+}
+.awea-grid-desktop-12{
+    width: 100%;
+    padding: 15px;
+}
+
+@media screen and (max-width: 991px) {
+    .awea-grid-tablet-1{
+        width: 8.33%;
+        padding: 15px;
+    }
+    .awea-grid-tablet-2{
+        width: 16.67%;
+        padding: 15px;
+    }
+    .awea-grid-tablet-3{
+        width: 25%;
+        padding: 15px;
+    }
+    .awea-grid-tablet-4{
+        width: 33.33%;
+        padding: 15px;
+    }
+    .awea-grid-tablet-5{
+        width: 41.67%;
+        padding: 15px;
+    }
+    .awea-grid-tablet-6{
+        width: 50%;
+        padding: 15px;
+    }
+    .awea-grid-tablet-7{
+        width: 58.33%;
+        padding: 15px;
+    }
+    .awea-grid-tablet-8{
+        width: 66.67%;
+        padding: 15px;
+    }
+    .awea-grid-tablet-9{
+        width: 75%;
+        padding: 15px;
+    }
+    .awea-grid-tablet-10{
+        width: 83.33%;
+        padding: 15px;
+    }
+    .awea-grid-tablet-11{
+        width: 91.67%;
+        padding: 15px;
+    }
+    .awea-grid-tablet-12{
+        width: 100%;
+        padding: 15px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .awea-grid-mobile-1{
+        width: 8.33%;
+        padding: 15px;
+    }
+    .awea-grid-mobile-2{
+        width: 16.67%;
+        padding: 15px;
+    }
+    .awea-grid-mobile-3{
+        width: 25%;
+        padding: 15px;
+    }
+    .awea-grid-mobile-4{
+        width: 33.33%;
+        padding: 15px;
+    }
+    .awea-grid-mobile-5{
+        width: 41.67%;
+        padding: 15px;
+    }
+    .awea-grid-mobile-6{
+        width: 50%;
+        padding: 15px;
+    }
+    .awea-grid-mobile-7{
+        width: 58.33%;
+        padding: 15px;
+    }
+    .awea-grid-mobile-8{
+        width: 66.67%;
+        padding: 15px;
+    }
+    .awea-grid-mobile-9{
+        width: 75%;
+        padding: 15px;
+    }
+    .awea-grid-mobile-10{
+        width: 83.33%;
+        padding: 15px;
+    }
+    .awea-grid-mobile-11{
+        width: 91.67%;
+        padding: 15px;
+    }
+    .awea-grid-mobile-12{
+        width: 100%;
+        padding: 15px;
+    }
+}

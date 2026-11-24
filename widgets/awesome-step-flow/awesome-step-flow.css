@@ -1,0 +1,310 @@
+/* ==========================================================================
+   Awesome Step Flow Widget
+   ========================================================================== */
+
+.awea-sf-wrap {
+	--awea-sf-primary: var(--e-global-color-primary, #4f46e5);
+	--awea-sf-heading: #0f172a;
+	--awea-sf-text: #475569;
+	--awea-sf-border: #e2e8f0;
+	--awea-sf-line-size: 2px;
+
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	width: 100%;
+	max-width: 1140px;
+	margin: 0 auto;
+	box-sizing: border-box;
+}
+
+.awea-sf-wrap *,
+.awea-sf-wrap *::before,
+.awea-sf-wrap *::after {
+	box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   1. Step Node
+   -------------------------------------------------------------------------- */
+.awea-sf-item {
+	flex: 1 1 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	position: relative;
+	z-index: 2;
+	min-width: 0;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.25s ease;
+}
+
+/* Optional Card Container Mode */
+.awea-sf-card-yes .awea-sf-item {
+	background-color: #ffffff;
+	border: 1px solid var(--awea-sf-border);
+	border-radius: 22px;
+	padding: 28px 24px;
+}
+
+.awea-sf-card-yes .awea-sf-item:hover {
+	background-color: #f8fafc;
+	border-color: var(--awea-sf-primary);
+}
+
+/* --------------------------------------------------------------------------
+   2. Icon Box & Floating Number Badge
+   -------------------------------------------------------------------------- */
+.awea-sf-box {
+	position: relative;
+	width: 76px;
+	height: 76px;
+	border-radius: 22px;
+	background-color: #ffffff;
+	border: 1px solid var(--awea-sf-border);
+	color: var(--awea-sf-primary);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		color 0.25s ease;
+}
+
+.awea-sf-box i {
+	font-size: 24px;
+	line-height: 1;
+}
+
+.awea-sf-box svg {
+	width: 24px;
+	height: 24px;
+	display: block;
+	fill: currentColor;
+}
+
+.awea-sf-item:hover .awea-sf-box {
+	background-color: var(--awea-sf-primary);
+	border-color: var(--awea-sf-primary);
+	color: #ffffff;
+}
+
+.awea-sf-item:hover .awea-sf-box svg {
+	fill: #ffffff;
+}
+
+/* Floating Badge Pill */
+.awea-sf-num {
+	position: absolute;
+	top: -7px;
+	right: -7px;
+	width: 28px;
+	height: 28px;
+	border-radius: 100px;
+	background-color: var(--awea-sf-heading);
+	color: #ffffff;
+	border: 2px solid #ffffff;
+	font-size: 0.72rem;
+	font-weight: 800;
+	font-variant-numeric: tabular-nums;
+	line-height: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 3;
+	transition: background-color 0.25s ease;
+}
+
+.awea-sf-item:hover .awea-sf-num {
+	background-color: var(--awea-sf-primary);
+}
+
+/* --------------------------------------------------------------------------
+   3. Connecting Lines (Horizontal Default)
+   -------------------------------------------------------------------------- */
+.awea-sf-line {
+	flex: 0.45;
+	height: var(--awea-sf-line-size);
+	background-color: var(--awea-sf-border);
+	margin-top: 38px;
+	position: relative;
+	min-width: 28px;
+	overflow: hidden;
+	align-self: flex-start;
+}
+
+.awea-sf-line-dashed .awea-sf-line {
+	background-color: transparent !important;
+	border-top: var(--awea-sf-line-size) dashed #cbd5e1;
+	height: 0 !important;
+}
+
+.awea-sf-line-solid .awea-sf-line {
+	background-color: var(--awea-sf-primary);
+}
+
+.awea-sf-beam {
+	position: absolute;
+	inset: 0;
+	background-color: var(--awea-sf-primary);
+	animation: aweaSfFlowH 3s infinite cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes aweaSfFlowH {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(100%);
+	}
+}
+
+/* --------------------------------------------------------------------------
+   4. Typography Body
+   -------------------------------------------------------------------------- */
+.awea-sf-body {
+	margin-top: 20px;
+	padding: 0 10px;
+	width: 100%;
+}
+
+.awea-sf-title {
+	margin: 0 0 8px 0;
+	font-size: 1.22rem;
+	font-weight: 800;
+	color: var(--awea-sf-heading);
+	line-height: 1.28;
+	letter-spacing: -0.02em;
+	word-break: break-word;
+	transition: color 0.25s ease;
+}
+
+.awea-sf-title a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.awea-sf-title a:focus-visible {
+	outline: 2px solid var(--awea-sf-primary);
+	outline-offset: 3px;
+	border-radius: 4px;
+}
+
+.awea-sf-item:hover .awea-sf-title,
+.awea-sf-item:hover .awea-sf-title a {
+	color: var(--awea-sf-primary);
+}
+
+.awea-sf-desc {
+	margin: 0;
+	font-size: 0.94rem;
+	color: var(--awea-sf-text);
+	line-height: 1.62;
+	word-break: break-word;
+}
+
+/* --------------------------------------------------------------------------
+   5. Vertical Roadmap Direction Mode
+   -------------------------------------------------------------------------- */
+.awea-sf-dir-vertical .awea-sf-wrap {
+	flex-direction: column;
+	align-items: stretch;
+	max-width: 680px;
+}
+
+.awea-sf-dir-vertical .awea-sf-item {
+	flex: none;
+	flex-direction: row;
+	align-items: flex-start;
+	text-align: left;
+	gap: 20px;
+}
+
+.awea-sf-dir-vertical .awea-sf-body {
+	margin-top: 4px;
+	padding: 0;
+}
+
+.awea-sf-dir-vertical .awea-sf-line {
+	flex: none;
+	width: var(--awea-sf-line-size);
+	height: 36px;
+	min-width: 0;
+	margin: 10px 0 10px 37px;
+	align-self: flex-start;
+}
+
+.awea-sf-dir-vertical.awea-sf-card-yes .awea-sf-line {
+	margin-left: 61px;
+}
+
+.awea-sf-dir-vertical.awea-sf-line-dashed .awea-sf-line {
+	border-top: none;
+	border-left: var(--awea-sf-line-size) dashed #cbd5e1;
+	width: 0 !important;
+}
+
+.awea-sf-dir-vertical .awea-sf-beam {
+	animation: aweaSfFlowV 3s infinite cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes aweaSfFlowV {
+	0% {
+		transform: translateY(-100%);
+	}
+	100% {
+		transform: translateY(100%);
+	}
+}
+
+/* --------------------------------------------------------------------------
+   6. Accessibility & Responsive Stacking
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.awea-sf-beam {
+		animation: none !important;
+	}
+
+	.awea-sf-item,
+	.awea-sf-box,
+	.awea-sf-num {
+		transition: none !important;
+	}
+}
+
+@media (max-width: 850px) {
+	.awea-sf-dir-horizontal .awea-sf-wrap {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.awea-sf-dir-horizontal .awea-sf-item {
+		flex: none;
+		width: 100%;
+		max-width: 440px;
+	}
+
+	.awea-sf-dir-horizontal .awea-sf-line {
+		flex: none;
+		width: var(--awea-sf-line-size);
+		height: 34px;
+		margin: 12px auto !important;
+		min-width: 0;
+		align-self: center;
+	}
+
+	.awea-sf-dir-horizontal.awea-sf-line-dashed .awea-sf-line {
+		border-top: none;
+		border-left: var(--awea-sf-line-size) dashed #cbd5e1;
+		width: 0 !important;
+	}
+
+	.awea-sf-dir-horizontal .awea-sf-beam {
+		animation: aweaSfFlowV 3s infinite cubic-bezier(0.22, 1, 0.36, 1);
+	}
+}

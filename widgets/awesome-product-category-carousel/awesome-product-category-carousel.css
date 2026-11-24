@@ -1,0 +1,238 @@
+/* ==========================================================================
+   Awesome Product Category Carousel Widget
+   ========================================================================== */
+
+.awea-product-category-carousel-wrap {
+	width: 100%;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.awea-product-category-carousel-wrap *,
+.awea-product-category-carousel-wrap *::before,
+.awea-product-category-carousel-wrap *::after {
+	box-sizing: border-box;
+}
+
+.awea-product-category-carousel {
+	width: 100%;
+	position: relative;
+}
+
+/* Category Card Shell */
+.awea-product-category {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 4 / 5;
+	border-radius: 24px;
+	overflow: hidden;
+	background-color: #0f172a;
+	border: 1px solid #e2e8f0;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.25s ease;
+}
+
+.awea-product-category:hover {
+	border-color: var(--e-global-color-primary, #4f46e5);
+}
+
+/* Thumbnail Image Canvas */
+.awea-product-category-img-link {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.awea-product-category-img-link:focus-visible {
+	outline: 2px solid var(--e-global-color-primary, #4f46e5);
+	outline-offset: -2px;
+}
+
+.awea-product-category-img-link img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-product-category:hover .awea-product-category-img-link img {
+	transform: scale(1.03);
+}
+
+/* Frosted Floating Info Dock */
+.awea-product-category-content {
+	position: absolute;
+	inset-inline-start: 12px;
+	inset-inline-end: 12px;
+	bottom: 12px;
+	background-color: rgba(15, 23, 42, 0.78);
+	backdrop-filter: blur(14px);
+	-webkit-backdrop-filter: blur(14px);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 16px;
+	padding: 14px 18px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	z-index: 2;
+	transition: background-color 0.3s ease;
+}
+
+.awea-product-category-link {
+	text-decoration: none;
+	font-size: 1.05rem;
+	font-weight: 800;
+	color: #ffffff;
+	letter-spacing: -0.01em;
+	line-height: 1.25;
+	transition: color 0.25s ease;
+	word-break: break-word;
+}
+
+.awea-product-category-link:focus-visible {
+	outline: 2px solid #ffffff;
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
+.awea-product-category-link:hover {
+	color: var(--e-global-color-accent, #38bdf8);
+}
+
+.awea-category-count {
+	font-size: 0.88rem;
+	font-weight: 700;
+	color: #94a3b8;
+	flex-shrink: 0;
+	font-variant-numeric: tabular-nums;
+}
+
+/* Owl Carousel Navigation & Pagination Dots */
+.awea-product-category-carousel.owl-carousel .owl-stage-outer {
+	padding: 8px 0;
+}
+
+.awea-product-category-carousel .owl-nav {
+	position: static;
+}
+
+.awea-product-category-carousel .owl-nav button.owl-prev,
+.awea-product-category-carousel .owl-nav button.owl-next {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background: transparent !important;
+	border: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	z-index: 10;
+	outline: none;
+}
+
+.awea-product-category-carousel .owl-nav button.owl-prev {
+	inset-inline-start: -20px;
+}
+
+.awea-product-category-carousel .owl-nav button.owl-next {
+	inset-inline-end: -20px;
+}
+
+.awea-carousel-arrow-border {
+	width: 42px;
+	height: 42px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #ffffff;
+	border: 1px solid #e2e8f0;
+	cursor: pointer;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		color 0.25s ease,
+		box-shadow 0.25s ease;
+}
+
+.awea-carousel-arrow-border:focus-visible {
+	outline: 2px solid var(--e-global-color-primary, #4f46e5);
+	outline-offset: 2px;
+}
+
+.awea-carousel-arrow-border:hover,
+.awea-carousel-arrow-border:focus-visible {
+	background-color: var(--e-global-color-primary, #4f46e5);
+	border-color: var(--e-global-color-primary, #4f46e5);
+	color: #ffffff;
+}
+
+.awea-product-category-carousel .owl-dots {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 24px;
+}
+
+.awea-product-category-carousel .owl-dots button.owl-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: #cbd5e1;
+	border: none;
+	margin: 0 5px;
+	padding: 0;
+	outline: none;
+	cursor: pointer;
+	transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.awea-product-category-carousel .owl-dots button.owl-dot:focus-visible {
+	outline: 2px solid var(--e-global-color-primary, #4f46e5);
+	outline-offset: 2px;
+}
+
+.awea-product-category-carousel .owl-dots button.owl-dot.active {
+	background-color: var(--e-global-color-primary, #4f46e5);
+	transform: scale(1.25);
+}
+
+/* Accessibility & Responsive */
+@media (prefers-reduced-motion: reduce) {
+	.awea-product-category,
+	.awea-product-category-img-link img,
+	.awea-carousel-arrow-border,
+	.awea-product-category-carousel .owl-dots button.owl-dot {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+@media (max-width: 768px) {
+	.awea-product-category-carousel .owl-nav button.owl-prev {
+		inset-inline-start: -6px;
+	}
+	.awea-product-category-carousel .owl-nav button.owl-next {
+		inset-inline-end: -6px;
+	}
+	.awea-carousel-arrow-border {
+		width: 36px;
+		height: 36px;
+	}
+	.awea-product-category {
+		border-radius: 18px;
+	}
+	.awea-product-category-content {
+		inset-inline-start: 8px;
+		inset-inline-end: 8px;
+		bottom: 8px;
+		padding: 10px 14px;
+		border-radius: 12px;
+	}
+	.awea-product-category-link {
+		font-size: 0.95rem;
+	}
+}

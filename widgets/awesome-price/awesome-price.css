@@ -1,0 +1,305 @@
+/* ==========================================================================
+   Awesome Price Table Widget (Global Token Edition v2.5.0)
+   ========================================================================== */
+
+.awea-pricing-grid {
+	--awea-pt-primary: var(--e-global-color-primary);
+	--awea-pt-secondary: var(--e-global-color-secondary);
+	--awea-pt-text: var(--e-global-color-text);
+	--awea-pt-accent: var(--e-global-color-accent);
+	--awea-pt-border: color-mix(in srgb, currentColor 12%, transparent);
+	--awea-pt-price-justify: flex-start;
+
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	column-gap: 24px;
+	row-gap: 24px;
+	width: 100%;
+	box-sizing: border-box;
+	align-items: stretch;
+}
+
+.awea-pricing-grid *,
+.awea-pricing-grid *::before,
+.awea-pricing-grid *::after {
+	box-sizing: border-box;
+}
+
+.awea-pricing-card {
+	--awea-pt-active-accent: var(--awea-pt-item-accent, var(--awea-pt-accent));
+	--awea-pt-soft-tint: color-mix(in srgb, var(--awea-pt-active-accent) 10%, transparent);
+
+	position: relative;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
+	border: 1px solid var(--awea-pt-border);
+	border-radius: 20px;
+	padding: 40px 32px;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.3s ease,
+		transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-pricing-card:hover {
+	border-color: var(--awea-pt-active-accent);
+	box-shadow: 0 20px 40px -15px color-mix(in srgb, var(--awea-pt-primary) 12%, transparent);
+}
+
+.awea-pt-motion-lift .awea-pricing-card:hover {
+	transform: translateY(-6px);
+}
+
+.awea-pt-motion-scale .awea-pricing-card:hover {
+	transform: scale(1.02);
+}
+
+/* Featured Tier Styling & Ribbon */
+.awea-pricing-card.awea-is-featured {
+	border-color: var(--awea-pt-active-accent);
+	box-shadow: 0 18px 36px -14px color-mix(in srgb, var(--awea-pt-active-accent) 22%, transparent);
+}
+
+.awea-pricing-ribbon {
+	position: absolute;
+	top: 22px;
+	right: -34px;
+	transform: rotate(45deg);
+	background-color: var(--awea-pt-active-accent);
+	color: var(--e-global-color-background, #ffffff);
+	padding: 6px 40px;
+	font-size: 0.7em;
+	pointer-events: none;
+	z-index: 5;
+	line-height: 1.2;
+}
+
+.awea-pt-rib-pill .awea-pricing-ribbon {
+	top: 20px;
+	right: 20px;
+	transform: none;
+	padding: 5px 12px;
+	border-radius: 100px;
+}
+
+/* Header & Pricing Numbers */
+.awea-pricing-card-header {
+	width: 100%;
+	margin-bottom: 24px;
+}
+
+.awea-pt-div-yes .awea-pricing-card-header {
+	padding-bottom: 24px;
+	border-bottom: 1px solid var(--awea-pt-border);
+}
+
+.awea-pricing-plan-tag {
+	display: inline-block;
+	padding: 6px 16px;
+	border-radius: 100px;
+	background-color: var(--awea-pt-soft-tint);
+	color: var(--awea-pt-active-accent);
+	margin-bottom: 16px;
+	line-height: 1.2;
+}
+
+.awea-pricing-price-box {
+	display: flex;
+	align-items: baseline;
+	justify-content: var(--awea-pt-price-justify, flex-start);
+	line-height: 1;
+	flex-wrap: wrap;
+}
+
+.awea-pricing-original {
+	font-size: 1.15em;
+	color: var(--awea-pt-text);
+	opacity: 0.55;
+	margin-right: 8px;
+}
+
+.awea-pricing-currency {
+	font-size: 1.4em;
+	color: var(--awea-pt-primary);
+	margin-right: 2px;
+}
+
+.awea-pricing-amount {
+	color: var(--awea-pt-primary);
+	font-variant-numeric: tabular-nums;
+	line-height: 1;
+}
+
+.awea-pricing-cycle {
+	color: var(--awea-pt-secondary);
+	margin-left: 4px;
+}
+
+.awea-pricing-desc {
+	margin: 14px 0 0 0;
+	color: var(--awea-pt-text);
+	word-break: break-word;
+}
+
+/* Features Checklist */
+.awea-pricing-card-body {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	width: 100%;
+}
+
+.awea-pricing-feature-list {
+	list-style: none;
+	padding: 0;
+	margin: 0 0 32px 0;
+	width: 100%;
+}
+
+.awea-pricing-feature-item {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	color: var(--awea-pt-text);
+	margin-bottom: 14px;
+	word-break: break-word;
+}
+
+.awea-pricing-feature-item:last-child {
+	margin-bottom: 0;
+}
+
+.awea-pricing-feature-item.is-disabled {
+	opacity: 0.45;
+	text-decoration: line-through;
+}
+
+.awea-feature-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	color: var(--awea-pt-active-accent);
+}
+
+.awea-feature-icon i,
+.awea-feature-icon svg {
+	font-size: 14px;
+	width: 14px;
+	height: 14px;
+	line-height: 1;
+	fill: currentColor;
+}
+
+/* Action Button */
+.awea-pricing-btn-wrap {
+	margin-top: auto;
+	width: 100%;
+}
+
+.awea-pricing-btn-cta {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 16px 28px;
+	border-radius: 12px;
+	text-decoration: none;
+	background-color: var(--awea-pt-primary);
+	color: var(--e-global-color-background, #ffffff);
+	border: 1.5px solid transparent;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		color 0.25s ease,
+		transform 0.2s ease;
+	line-height: 1.2;
+}
+
+.awea-is-featured .awea-pricing-btn-cta {
+	background-color: var(--awea-pt-active-accent);
+}
+
+.awea-pricing-btn-cta:focus-visible {
+	outline: 2px solid var(--awea-pt-active-accent);
+	outline-offset: 3px;
+}
+
+.awea-pricing-btn-cta:hover,
+.awea-pricing-btn-cta:focus-visible {
+	background-color: var(--awea-pt-active-accent);
+	color: var(--e-global-color-background, #ffffff);
+	transform: translateY(-2px);
+}
+
+.awea-pt-btn-ico {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	flex-shrink: 0;
+	transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-pricing-btn-cta:hover .awea-pt-ico-right {
+	transform: translateX(4px);
+}
+
+.awea-pricing-btn-cta:hover .awea-pt-ico-left {
+	transform: translateX(-4px);
+}
+
+.awea-pt-btn-ico svg {
+	width: 13px;
+	height: 13px;
+	fill: currentColor;
+	display: block;
+}
+
+.awea-pt-btn-ico i {
+	font-size: 13px;
+	line-height: 1;
+}
+
+.awea-pricing-note {
+	display: block;
+	text-align: center;
+	margin-top: 10px;
+	font-size: 0.8em;
+	color: var(--awea-pt-text);
+	opacity: 0.72;
+}
+
+/* Accessibility & Responsive */
+@media (prefers-reduced-motion: reduce) {
+	.awea-pricing-card,
+	.awea-pricing-btn-cta,
+	.awea-pt-btn-ico {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+@media (max-width: 768px) {
+	.awea-pricing-card {
+		padding: 30px 20px;
+		border-radius: 16px;
+	}
+
+	.awea-pricing-ribbon {
+		right: -32px;
+		padding: 5px 36px;
+	}
+
+	.awea-pricing-btn-cta {
+		padding: 14px 24px;
+	}
+}

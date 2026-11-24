@@ -1,0 +1,377 @@
+/* ==========================================================================
+   Awesome Contact Info Widget (Global Token Edition v2.5.0)
+   ========================================================================== */
+
+.awea-ci-wrap {
+	--awea-ci-primary: var(--e-global-color-primary);
+	--awea-ci-secondary: var(--e-global-color-secondary);
+	--awea-ci-text: var(--e-global-color-text);
+	--awea-ci-accent: var(--e-global-color-accent);
+	--awea-ci-border: color-mix(in srgb, currentColor 12%, transparent);
+
+	width: 100%;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.awea-ci-wrap *,
+.awea-ci-wrap *::before,
+.awea-ci-wrap *::after {
+	box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   1. Directory Header
+   -------------------------------------------------------------------------- */
+.awea-ci-header {
+	margin-bottom: 28px;
+	border-left: 3px solid var(--awea-ci-accent);
+	padding-left: 16px;
+}
+
+.awea-ci-header.awea-ci-no-bar {
+	border-left: none;
+	padding-left: 0;
+}
+
+.awea-ci-eyebrow {
+	display: block;
+	margin: 0 0 6px 0;
+	color: var(--awea-ci-accent);
+}
+
+.awea-ci-title {
+	margin: 0;
+	color: var(--awea-ci-primary);
+	word-break: break-word;
+}
+
+.awea-ci-subtitle {
+	margin: 6px 0 0 0;
+	color: var(--awea-ci-text);
+	word-break: break-word;
+}
+
+/* --------------------------------------------------------------------------
+   2. Responsive Contact Grid & Cards
+   -------------------------------------------------------------------------- */
+.awea-ci-grid {
+	display: grid;
+	grid-template-columns: repeat(1, minmax(0, 1fr));
+	column-gap: 14px;
+	row-gap: 14px;
+	width: 100%;
+	align-items: stretch;
+}
+
+.awea-ci-row {
+	--awea-ci-active-accent: var(--awea-ci-item-accent, var(--awea-ci-accent));
+	--awea-ci-soft-tint: color-mix(in srgb, var(--awea-ci-active-accent) 10%, transparent);
+
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	height: 100%;
+	padding: 20px 22px;
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
+	border: 1px solid var(--awea-ci-border);
+	border-radius: 16px;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.3s ease,
+		transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Featured Card State */
+.awea-ci-row.awea-ci-featured {
+	border-color: var(--awea-ci-active-accent);
+	box-shadow: 0 14px 30px -12px color-mix(in srgb, var(--awea-ci-active-accent) 20%, transparent);
+}
+
+/* Card Hover Motion Variants */
+.awea-ci-motion-lift .awea-ci-row:hover {
+	transform: translateY(-4px);
+}
+
+.awea-ci-motion-scale .awea-ci-row:hover {
+	transform: scale(1.015);
+}
+
+/* Vertical Card Layout Mode */
+.awea-ci-dir-vertical .awea-ci-row {
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.awea-ci-dir-vertical .awea-ci-actions {
+	margin-top: auto;
+	padding-top: 6px;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.awea-ci-row:hover {
+	border-color: var(--awea-ci-active-accent);
+	box-shadow: 0 16px 32px -14px color-mix(in srgb, var(--awea-ci-primary) 12%, transparent);
+}
+
+.awea-ci-has-link,
+.awea-ci-row-copy {
+	cursor: pointer;
+}
+
+.awea-ci-row-copy:focus-visible {
+	outline: 2px solid var(--awea-ci-active-accent);
+	outline-offset: 2px;
+}
+
+/* Full-Card Link Overlay */
+.awea-ci-cover-link {
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	text-decoration: none;
+	border-radius: inherit;
+}
+
+.awea-ci-cover-link:focus-visible {
+	outline: 2px solid var(--awea-ci-active-accent);
+	outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   3. Leading Icon Box & Styles
+   -------------------------------------------------------------------------- */
+.awea-ci-icon {
+	position: relative;
+	z-index: 1;
+	width: 50px;
+	height: 50px;
+	border-radius: 14px;
+	background-color: var(--awea-ci-soft-tint);
+	border: 1px solid color-mix(in srgb, var(--awea-ci-active-accent) 18%, transparent);
+	color: var(--awea-ci-active-accent);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		color 0.25s ease,
+		transform 0.25s ease;
+}
+
+.awea-ci-icon-solid .awea-ci-icon {
+	background-color: var(--awea-ci-active-accent);
+	border-color: var(--awea-ci-active-accent);
+	color: var(--e-global-color-background, #ffffff);
+}
+
+.awea-ci-icon-outlined .awea-ci-icon {
+	background-color: transparent;
+	border-width: 1.5px;
+	border-color: var(--awea-ci-active-accent);
+	color: var(--awea-ci-active-accent);
+}
+
+.awea-ci-icon i {
+	font-size: 18px;
+	line-height: 1;
+}
+
+.awea-ci-icon svg {
+	width: 18px;
+	height: 18px;
+	display: block;
+	fill: currentColor;
+}
+
+.awea-ci-row:hover .awea-ci-icon {
+	background-color: var(--awea-ci-active-accent);
+	border-color: var(--awea-ci-active-accent);
+	color: var(--e-global-color-background, #ffffff);
+}
+
+.awea-ci-row:hover .awea-ci-icon svg {
+	fill: currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   4. Text Body
+   -------------------------------------------------------------------------- */
+.awea-ci-body {
+	position: relative;
+	z-index: 1;
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	min-width: 0;
+}
+
+.awea-ci-label {
+	display: block;
+	color: var(--awea-ci-secondary);
+}
+
+.awea-ci-value {
+	display: block;
+	color: var(--awea-ci-primary);
+	word-break: break-word;
+	transition: color 0.25s ease;
+}
+
+.awea-ci-row:hover .awea-ci-value {
+	color: var(--awea-ci-active-accent);
+}
+
+.awea-ci-subtext {
+	display: block;
+	color: var(--awea-ci-text);
+	opacity: 0.78;
+}
+
+/* --------------------------------------------------------------------------
+   5. Trailing Actions (Copy Button + External Arrow)
+   -------------------------------------------------------------------------- */
+.awea-ci-actions {
+	position: relative;
+	z-index: 3;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	flex-shrink: 0;
+}
+
+.awea-ci-copy-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	height: 34px;
+	min-width: 34px;
+	margin: 0;
+	padding: 0 10px;
+	border-radius: 10px;
+	background-color: color-mix(in srgb, currentColor 6%, transparent);
+	border: 1px solid var(--awea-ci-border);
+	color: var(--awea-ci-text);
+	font-family: inherit;
+	font-size: 0.75rem;
+	font-weight: 700;
+	line-height: 1;
+	cursor: pointer;
+	appearance: none;
+	-webkit-appearance: none;
+	transition:
+		background-color 0.2s ease,
+		border-color 0.2s ease,
+		color 0.2s ease;
+}
+
+.awea-ci-copy-btn:hover {
+	background-color: var(--awea-ci-active-accent);
+	border-color: var(--awea-ci-active-accent);
+	color: var(--e-global-color-background, #ffffff);
+}
+
+.awea-ci-copy-btn:focus-visible {
+	outline: 2px solid var(--awea-ci-active-accent);
+	outline-offset: 2px;
+}
+
+.awea-ci-copy-btn svg {
+	width: 14px;
+	height: 14px;
+	flex-shrink: 0;
+}
+
+.awea-ci-ico-check,
+.awea-ci-copy-label {
+	display: none;
+}
+
+.awea-ci-row.is-copied .awea-ci-ico-copy {
+	display: none;
+}
+
+.awea-ci-row.is-copied .awea-ci-ico-check,
+.awea-ci-row.is-copied .awea-ci-copy-label {
+	display: inline-block;
+}
+
+.awea-ci-row.is-copied .awea-ci-copy-btn {
+	background-color: var(--awea-ci-active-accent);
+	border-color: var(--awea-ci-active-accent);
+	color: var(--e-global-color-background, #ffffff);
+}
+
+.awea-ci-arrow {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	border-radius: 10px;
+	color: var(--awea-ci-text);
+	opacity: 0.65;
+	transition:
+		color 0.25s ease,
+		opacity 0.25s ease,
+		transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-ci-arrow svg {
+	width: 18px;
+	height: 18px;
+}
+
+.awea-ci-row:hover .awea-ci-arrow {
+	color: var(--awea-ci-active-accent);
+	opacity: 1;
+	transform: translate(2px, -2px);
+}
+
+/* --------------------------------------------------------------------------
+   6. Accessibility & Responsive
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.awea-ci-row,
+	.awea-ci-icon,
+	.awea-ci-arrow,
+	.awea-ci-copy-btn {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+@media (max-width: 640px) {
+	.awea-ci-header {
+		margin-bottom: 22px;
+		padding-left: 14px;
+	}
+
+	.awea-ci-row {
+		padding: 16px;
+		border-radius: 14px;
+		gap: 12px;
+	}
+
+	.awea-ci-icon {
+		width: 42px;
+		height: 42px;
+		border-radius: 12px;
+	}
+
+	.awea-ci-icon i {
+		font-size: 16px;
+	}
+
+	.awea-ci-icon svg {
+		width: 16px;
+		height: 16px;
+	}
+}

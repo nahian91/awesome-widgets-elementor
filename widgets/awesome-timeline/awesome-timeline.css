@@ -1,0 +1,340 @@
+/* ==========================================================================
+   Awesome Timeline Widget
+   ========================================================================== */
+
+.awea-tl-wrap {
+	--awea-tl-primary: var(--e-global-color-primary, #4f46e5);
+	--awea-tl-heading: #0f172a;
+	--awea-tl-text: #475569;
+	--awea-tl-border: #e2e8f0;
+	--awea-tl-halo: #ffffff;
+
+	width: 100%;
+	max-width: 1060px;
+	margin: 0 auto;
+	position: relative;
+	box-sizing: border-box;
+	padding: 8px 0;
+}
+
+.awea-tl-wrap *,
+.awea-tl-wrap *::before,
+.awea-tl-wrap *::after {
+	box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   1. Connecting Spine Line
+   -------------------------------------------------------------------------- */
+.awea-tl-wrap::before {
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: 0;
+	width: 2px;
+	height: 100%;
+	background-color: #cbd5e1;
+	transform: translateX(-50%);
+	pointer-events: none;
+	z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   2. Alternating Item Positioning (Default)
+   -------------------------------------------------------------------------- */
+.awea-tl-item {
+	display: flex;
+	justify-content: flex-end;
+	padding-right: 50%;
+	margin-bottom: 32px;
+	position: relative;
+	width: 100%;
+}
+
+.awea-tl-item:last-child {
+	margin-bottom: 0 !important;
+}
+
+.awea-tl-mode-alternating .awea-tl-item:nth-child(even) {
+	justify-content: flex-start;
+	padding-right: 0;
+	padding-left: 50%;
+}
+
+.awea-tl-mode-alternating .awea-tl-item:nth-child(odd) .awea-tl-card {
+	margin-right: 38px;
+}
+
+.awea-tl-mode-alternating .awea-tl-item:nth-child(even) .awea-tl-card {
+	margin-left: 38px;
+}
+
+/* Left Spine Layout Mode */
+.awea-tl-mode-left .awea-tl-wrap::before {
+	left: 18px;
+	transform: translateX(-50%);
+}
+
+.awea-tl-mode-left .awea-tl-item {
+	justify-content: flex-start;
+	padding-left: 56px;
+	padding-right: 0;
+}
+
+.awea-tl-mode-left .awea-tl-dot {
+	left: 18px;
+	transform: translateX(-50%);
+}
+
+/* Right Spine Layout Mode */
+.awea-tl-mode-right .awea-tl-wrap::before {
+	left: auto;
+	right: 18px;
+	transform: translateX(50%);
+}
+
+.awea-tl-mode-right .awea-tl-item {
+	justify-content: flex-end;
+	padding-right: 56px;
+	padding-left: 0;
+	text-align: right;
+}
+
+.awea-tl-mode-right .awea-tl-dot {
+	left: auto;
+	right: 18px;
+	transform: translateX(50%);
+}
+
+/* Progressive Scroll Reveal */
+@supports (animation-timeline: view()) {
+	.awea-tl-anim-yes .awea-tl-item {
+		view-timeline-name: --awea-tl-scroll;
+		view-timeline-axis: block;
+		animation-timeline: --awea-tl-scroll;
+		animation-name: aweaTlReveal;
+		animation-range: entry 10% cover 32%;
+		animation-fill-mode: both;
+	}
+
+	@keyframes aweaTlReveal {
+		from {
+			opacity: 0;
+			transform: translateY(24px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+}
+
+/* --------------------------------------------------------------------------
+   3. Node Circles
+   -------------------------------------------------------------------------- */
+.awea-tl-dot {
+	position: absolute;
+	left: 50%;
+	top: 28px;
+	width: 34px;
+	height: 34px;
+	border-radius: 50%;
+	background-color: #ffffff;
+	border: 2px solid var(--awea-tl-primary);
+	outline: 5px solid var(--awea-tl-halo);
+	color: var(--awea-tl-primary);
+	transform: translateX(-50%);
+	z-index: 3;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		color 0.25s ease;
+}
+
+.awea-tl-dot i {
+	font-size: 13px;
+	line-height: 1;
+}
+
+.awea-tl-dot svg {
+	width: 13px;
+	height: 13px;
+	display: block;
+	fill: currentColor;
+}
+
+.awea-tl-dot-core {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: currentColor;
+}
+
+.awea-tl-item:hover .awea-tl-dot {
+	background-color: var(--awea-tl-primary);
+	border-color: var(--awea-tl-primary);
+	color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   4. Milestone Card Box
+   -------------------------------------------------------------------------- */
+.awea-tl-card {
+	width: 100%;
+	background-color: #ffffff;
+	border: 1px solid var(--awea-tl-border);
+	border-radius: 20px;
+	padding: 28px;
+	position: relative;
+	word-break: break-word;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.25s ease;
+}
+
+.awea-tl-item:hover .awea-tl-card {
+	background-color: #f8fafc;
+	border-color: var(--awea-tl-primary);
+}
+
+/* --------------------------------------------------------------------------
+   5. Tag Badge, Typography, Media & Action Link
+   -------------------------------------------------------------------------- */
+.awea-tl-tag {
+	display: inline-flex;
+	align-items: center;
+	padding: 4px 12px;
+	border-radius: 100px;
+	background-color: rgba(79, 70, 229, 0.08);
+	color: var(--awea-tl-primary);
+	font-size: 0.72rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	line-height: 1.2;
+	margin-bottom: 12px;
+}
+
+.awea-tl-title {
+	margin: 0 0 10px 0;
+	font-size: 1.25rem;
+	font-weight: 800;
+	color: var(--awea-tl-heading);
+	line-height: 1.28;
+	letter-spacing: -0.02em;
+}
+
+.awea-tl-desc {
+	margin: 0;
+	font-size: 0.94rem;
+	line-height: 1.62;
+	color: var(--awea-tl-text);
+}
+
+.awea-tl-media {
+	margin-top: 16px;
+	border-radius: 12px;
+	overflow: hidden;
+	border: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.awea-tl-media img {
+	width: 100%;
+	height: auto;
+	display: block;
+	object-fit: cover;
+}
+
+.awea-tl-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-top: 16px;
+	font-size: 0.88rem;
+	font-weight: 700;
+	color: var(--awea-tl-primary);
+	text-decoration: none;
+	line-height: 1.2;
+	transition: color 0.25s ease;
+}
+
+.awea-tl-link:focus-visible {
+	outline: 2px solid var(--awea-tl-primary);
+	outline-offset: 3px;
+	border-radius: 4px;
+}
+
+.awea-tl-link svg {
+	width: 14px;
+	height: 14px;
+	transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-tl-link:hover,
+.awea-tl-link:focus-visible {
+	color: var(--awea-tl-heading);
+}
+
+.awea-tl-link:hover svg {
+	transform: translateX(4px);
+}
+
+/* --------------------------------------------------------------------------
+   6. Accessibility & Responsive
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.awea-tl-anim-yes .awea-tl-item {
+		animation: none !important;
+		opacity: 1 !important;
+		transform: none !important;
+	}
+
+	.awea-tl-dot,
+	.awea-tl-card,
+	.awea-tl-link svg {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+@media (max-width: 767px) {
+	.awea-tl-wrap::before,
+	.awea-tl-mode-left .awea-tl-wrap::before,
+	.awea-tl-mode-right .awea-tl-wrap::before {
+		left: 18px;
+		right: auto;
+		transform: translateX(-50%);
+	}
+
+	.awea-tl-item,
+	.awea-tl-mode-alternating .awea-tl-item:nth-child(even),
+	.awea-tl-mode-right .awea-tl-item {
+		justify-content: flex-start !important;
+		padding-left: 52px !important;
+		padding-right: 0 !important;
+		text-align: left;
+	}
+
+	.awea-tl-dot,
+	.awea-tl-mode-left .awea-tl-dot,
+	.awea-tl-mode-right .awea-tl-dot {
+		left: 18px !important;
+		right: auto !important;
+		transform: translateX(-50%) !important;
+	}
+
+	.awea-tl-mode-alternating .awea-tl-item:nth-child(odd) .awea-tl-card,
+	.awea-tl-mode-alternating .awea-tl-item:nth-child(even) .awea-tl-card {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
+
+	.awea-tl-card {
+		padding: 22px 20px;
+		border-radius: 16px;
+	}
+}

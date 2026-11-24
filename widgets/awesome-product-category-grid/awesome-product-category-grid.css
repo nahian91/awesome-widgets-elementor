@@ -1,0 +1,209 @@
+/* ==========================================================================
+   Awesome Product Category Grid Widget
+   ========================================================================== */
+
+.awea-product-category-grid-wrap {
+	width: 100%;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.awea-product-category-grid-wrap *,
+.awea-product-category-grid-wrap *::before,
+.awea-product-category-grid-wrap *::after {
+	box-sizing: border-box;
+}
+
+.awea-grid-wrapper {
+	display: grid !important;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 24px;
+	width: 100%;
+	align-items: stretch;
+}
+
+.awea-grid-item {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+/* Luxury Dark Card Shell */
+.awea-cat-card {
+	position: relative;
+	overflow: hidden;
+	text-decoration: none;
+	display: block;
+	width: 100%;
+	height: 540px;
+	background-color: #0f172a;
+	isolation: isolate;
+	border-radius: 28px;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.25s ease;
+}
+
+.awea-cat-card:focus-visible {
+	outline: 2px solid var(--e-global-color-primary, #4f46e5);
+	outline-offset: 2px;
+}
+
+.awea-cat-card:hover {
+	border-color: var(--e-global-color-primary, #4f46e5);
+}
+
+/* Gradient Overlay Layer */
+.awea-cat-card::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+	background: linear-gradient(to bottom, transparent 30%, rgba(15, 23, 42, 0.9) 100%);
+	transition: opacity 0.4s ease;
+}
+
+/* Category Photo */
+.awea-cat-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	filter: grayscale(20%) brightness(0.88);
+	transition: filter 0.4s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+	display: block;
+}
+
+.awea-cat-card:hover .awea-cat-image {
+	filter: grayscale(0%) brightness(1);
+	transform: scale(1.03);
+}
+
+/* Frosted Glass Info Box */
+.awea-cat-info {
+	position: absolute;
+	bottom: 20px;
+	inset-inline-start: 20px;
+	inset-inline-end: 20px;
+	padding: 24px;
+	background: rgba(255, 255, 255, 0.06);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 20px;
+	z-index: 2;
+	backdrop-filter: blur(16px);
+	-webkit-backdrop-filter: blur(16px);
+	transition:
+		background-color 0.3s ease,
+		border-color 0.3s ease;
+}
+
+.awea-cat-card:hover .awea-cat-info {
+	background: rgba(255, 255, 255, 0.12);
+	border-color: rgba(255, 255, 255, 0.3);
+}
+
+.awea-cat-info span {
+	display: block;
+	margin-bottom: 6px;
+	font-size: 0.72rem;
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: 0.15em;
+	color: rgba(255, 255, 255, 0.65);
+	line-height: 1.2;
+}
+
+.awea-cat-info h3 {
+	margin: 0 0 14px 0;
+	font-size: 1.45rem;
+	font-weight: 800;
+	line-height: 1.25;
+	letter-spacing: -0.02em;
+	color: #ffffff;
+	word-break: break-word;
+}
+
+/* Explore Link */
+.awea-view-collection {
+	display: inline-flex;
+	align-items: center;
+	font-weight: 700;
+	font-size: 0.85rem;
+	color: #ffffff;
+	opacity: 0.85;
+	transition:
+		opacity 0.25s ease,
+		transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+	line-height: 1.2;
+}
+
+.awea-view-collection::after {
+	content: "→";
+	margin-inline-start: 8px;
+	transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-cat-card:hover .awea-view-collection {
+	opacity: 1;
+}
+
+.awea-cat-card:hover .awea-view-collection::after {
+	transform: translateX(4px);
+}
+
+/* Radial Ambient Glow Layer */
+.awea-cat-card::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: radial-gradient(circle at 50% 120%, rgba(255, 255, 255, 0.16) 0%, transparent 70%);
+	opacity: 0;
+	transition: opacity 0.4s ease;
+	pointer-events: none;
+	z-index: 3;
+}
+
+.awea-cat-card:hover::after {
+	opacity: 1;
+}
+
+/* Accessibility & Responsive */
+@media (prefers-reduced-motion: reduce) {
+	.awea-cat-card,
+	.awea-cat-image,
+	.awea-cat-info,
+	.awea-view-collection::after {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+@media (max-width: 767px) {
+	.awea-grid-wrapper {
+		grid-template-columns: 1fr !important;
+		gap: 16px;
+	}
+
+	.awea-cat-card {
+		border-radius: 20px;
+		height: 420px;
+	}
+
+	.awea-cat-info {
+		padding: 16px;
+		bottom: 12px;
+		inset-inline-start: 12px;
+		inset-inline-end: 12px;
+		border-radius: 14px;
+	}
+
+	.awea-cat-info h3 {
+		font-size: 1.15rem;
+	}
+
+	.awea-view-collection {
+		opacity: 1;
+	}
+}

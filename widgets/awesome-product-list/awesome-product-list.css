@@ -1,0 +1,268 @@
+/* ==========================================================================
+   Awesome Product List Widget
+   ========================================================================== */
+
+.awea-product-list-wrap {
+	--awea-pl-primary: var(--e-global-color-primary, #4f46e5);
+	--awea-pl-heading: #0f172a;
+	--awea-pl-muted: #94a3b8;
+	--awea-pl-border: #e2e8f0;
+
+	width: 100%;
+	position: relative;
+	box-sizing: border-box;
+	background-color: #ffffff;
+	border: 1px solid var(--awea-pl-border);
+	border-radius: 24px;
+	padding: 32px;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.25s ease;
+}
+
+.awea-product-list-wrap *,
+.awea-product-list-wrap *::before,
+.awea-product-list-wrap *::after {
+	box-sizing: border-box;
+}
+
+.awea-product-list-wrap:hover {
+	border-color: var(--awea-pl-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Section Header
+   -------------------------------------------------------------------------- */
+.awea-product-list-header {
+	margin-top: 0;
+	margin-bottom: 20px;
+	font-size: 1.35rem;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	color: var(--awea-pl-heading);
+	line-height: 1.25;
+	word-break: break-word;
+}
+
+/* --------------------------------------------------------------------------
+   Product Rows Container
+   -------------------------------------------------------------------------- */
+.awea-product-list-items {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.awea-product-list-row {
+	display: flex;
+	align-items: center;
+	gap: 18px;
+	padding-bottom: 16px;
+	border-bottom: 1px solid #f1f5f9;
+	transition: border-color 0.25s ease;
+}
+
+.awea-product-list-row:last-child {
+	padding-bottom: 0 !important;
+	border-bottom: none !important;
+	margin-bottom: 0 !important;
+}
+
+/* --------------------------------------------------------------------------
+   Thumbnail Image
+   -------------------------------------------------------------------------- */
+.awea-product-list-thumb {
+	width: 84px;
+	height: 84px;
+	border-radius: 16px;
+	overflow: hidden;
+	background-color: #f1f5f9;
+	flex-shrink: 0;
+	border: 1px solid var(--awea-pl-border);
+}
+
+.awea-product-list-thumb a {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.awea-product-list-thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-product-list-row:hover .awea-product-list-thumb img {
+	transform: scale(1.03);
+}
+
+/* --------------------------------------------------------------------------
+   Content & Meta Details
+   -------------------------------------------------------------------------- */
+.awea-product-list-content {
+	flex-grow: 1;
+	min-width: 0;
+}
+
+.awea-product-list-title {
+	margin-top: 0;
+	margin-bottom: 6px;
+	font-size: 1.05rem;
+	font-weight: 700;
+	line-height: 1.35;
+	letter-spacing: -0.01em;
+	word-break: break-word;
+}
+
+.awea-product-list-title a {
+	text-decoration: none;
+	color: var(--awea-pl-heading);
+	transition: color 0.25s ease;
+}
+
+.awea-product-list-title a:focus-visible {
+	outline: 2px solid var(--awea-pl-primary);
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
+.awea-product-list-row:hover .awea-product-list-title a {
+	color: var(--awea-pl-primary);
+}
+
+.awea-product-list-rating {
+	margin-bottom: 6px;
+	font-size: 0.78rem;
+}
+
+.awea-product-list-meta {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.awea-product-list-price {
+	font-size: 1rem;
+	font-weight: 800;
+	color: var(--awea-pl-primary);
+	font-variant-numeric: tabular-nums;
+	line-height: 1.2;
+}
+
+.awea-product-list-price ins {
+	text-decoration: none;
+	color: inherit;
+}
+
+.awea-product-list-price del {
+	font-size: 0.82rem;
+	color: var(--awea-pl-muted);
+	font-weight: 500;
+	margin-inline-end: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Action Button Toggle
+   -------------------------------------------------------------------------- */
+.awea-product-list-action {
+	display: inline-flex;
+	align-items: center;
+	flex-shrink: 0;
+}
+
+.awea-product-list-action .added_to_cart {
+	display: none !important;
+}
+
+.awea-product-grid-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 8px 16px;
+	border-radius: 100px;
+	font-weight: 700;
+	font-size: 0.82rem;
+	text-decoration: none;
+	background-color: #f8fafc;
+	color: var(--awea-pl-heading);
+	border: 1px solid var(--awea-pl-border);
+	transition:
+		background-color 0.25s ease,
+		color 0.25s ease,
+		border-color 0.25s ease;
+	white-space: nowrap;
+	line-height: 1.2;
+}
+
+.awea-product-grid-btn:focus-visible {
+	outline: 2px solid var(--awea-pl-primary);
+	outline-offset: 2px;
+}
+
+.awea-product-grid-btn:hover,
+.awea-product-grid-btn:focus-visible {
+	background-color: var(--awea-pl-primary);
+	color: #ffffff;
+	border-color: transparent;
+}
+
+.awea-view-cart {
+	display: none;
+	background-color: #10b981 !important;
+	color: #ffffff !important;
+	border-color: transparent !important;
+}
+
+.product-in-cart .awea-add-to-cart {
+	display: none;
+}
+
+.product-in-cart .awea-view-cart {
+	display: inline-flex;
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility & Responsive
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.awea-product-list-wrap,
+	.awea-product-list-thumb img,
+	.awea-product-grid-btn {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+@media (max-width: 640px) {
+	.awea-product-list-wrap {
+		padding: 20px 16px;
+		border-radius: 18px;
+	}
+
+	.awea-product-list-row {
+		gap: 12px;
+	}
+
+	.awea-product-list-thumb {
+		width: 68px;
+		height: 68px;
+		border-radius: 12px;
+	}
+
+	.awea-product-list-meta {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+		margin-top: 4px;
+	}
+
+	.awea-product-grid-btn {
+		padding: 6px 12px;
+		font-size: 0.78rem;
+	}
+}

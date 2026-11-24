@@ -1,0 +1,436 @@
+/* ==========================================================================
+   Awesome CTA Widget (Global Token Edition v2.5.0)
+   ========================================================================== */
+
+.awea-cta-box {
+	--awea-cta-primary: var(--e-global-color-primary);
+	--awea-cta-secondary: var(--e-global-color-secondary);
+	--awea-cta-text: var(--e-global-color-text);
+	--awea-cta-accent: var(--e-global-color-accent);
+	--awea-cta-border: color-mix(in srgb, currentColor 12%, transparent);
+	--awea-cta-bar-size: 4px;
+	--awea-cta-justify: center;
+	--awea-cta-ml: auto;
+	--awea-cta-mr: auto;
+
+	position: relative;
+	width: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
+	border: 1px solid var(--awea-cta-border);
+	border-radius: 20px;
+	padding: 64px 48px;
+	text-align: center;
+	transition:
+		background-color 0.3s ease,
+		border-color 0.3s ease,
+		box-shadow 0.35s ease;
+}
+
+.awea-cta-box *,
+.awea-cta-box *::before,
+.awea-cta-box *::after {
+	box-sizing: border-box;
+}
+
+.awea-cta-inner {
+	position: relative;
+	z-index: 2;
+	width: 100%;
+	max-width: 1160px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+}
+
+/* --------------------------------------------------------------------------
+   Accent Line Indicator
+   -------------------------------------------------------------------------- */
+.awea-cta-accent-bar {
+	display: none;
+	position: absolute;
+	z-index: 3;
+	background: var(--awea-cta-accent);
+	pointer-events: none;
+	transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+}
+
+.awea-cta-bar-top-always .awea-cta-accent-bar,
+.awea-cta-bar-top-hover .awea-cta-accent-bar {
+	display: block;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: var(--awea-cta-bar-size);
+}
+
+.awea-cta-bar-top-hover .awea-cta-accent-bar {
+	transform: scaleX(0);
+	transform-origin: left center;
+}
+
+.awea-cta-bar-top-hover .awea-cta-box:hover .awea-cta-accent-bar {
+	transform: scaleX(1);
+}
+
+.awea-cta-bar-bottom-always .awea-cta-accent-bar {
+	display: block;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: var(--awea-cta-bar-size);
+}
+
+.awea-cta-bar-left-always .awea-cta-accent-bar {
+	display: block;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: var(--awea-cta-bar-size);
+}
+
+/* --------------------------------------------------------------------------
+   Split Row Layout Mode
+   -------------------------------------------------------------------------- */
+.awea-cta-mode-split .awea-cta-box {
+	text-align: left;
+	--awea-cta-justify: flex-start;
+	--awea-cta-ml: 0;
+	--awea-cta-mr: auto;
+}
+
+.awea-cta-mode-split .awea-cta-inner {
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	gap: 36px;
+}
+
+.awea-cta-mode-split .awea-cta-copy {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.awea-cta-mode-split .awea-cta-desc {
+	margin-bottom: 0;
+}
+
+.awea-cta-mode-split .awea-cta-action-col {
+	flex-shrink: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.awea-cta-mode-split .awea-cta-actions {
+	justify-content: flex-end;
+}
+
+/* --------------------------------------------------------------------------
+   1. Tag Pill Badge
+   -------------------------------------------------------------------------- */
+.awea-cta-badge-wrap {
+	display: flex;
+	align-items: center;
+	justify-content: var(--awea-cta-justify, center);
+	margin-bottom: 22px;
+}
+
+.awea-cta-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 7px 16px;
+	border-radius: 100px;
+	border: 1px solid color-mix(in srgb, var(--awea-cta-accent) 20%, transparent);
+	background-color: color-mix(in srgb, var(--awea-cta-accent) 8%, transparent);
+	color: var(--awea-cta-accent);
+	line-height: 1.2;
+	user-select: none;
+}
+
+.awea-cta-pulse {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background-color: currentColor;
+	flex-shrink: 0;
+	animation: aweaCtaPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes aweaCtaPulse {
+	0%, 100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 0.45;
+		transform: scale(0.8);
+	}
+}
+
+.awea-cta-badge-ico {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	flex-shrink: 0;
+}
+
+.awea-cta-badge-ico svg {
+	width: 12px;
+	height: 12px;
+	fill: currentColor;
+	display: block;
+}
+
+.awea-cta-badge-ico i {
+	font-size: 12px;
+	line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   2. Headings & Highlight Modes
+   -------------------------------------------------------------------------- */
+.awea-cta-subtitle {
+	display: block;
+	margin: 0 0 10px 0;
+	color: var(--awea-cta-secondary);
+}
+
+.awea-cta-title {
+	margin: 0 0 16px 0;
+	color: var(--awea-cta-primary);
+	word-break: break-word;
+}
+
+.awea-cta-hl {
+	--awea-cta-hl: var(--awea-cta-accent);
+	--awea-cta-hl-2: var(--awea-cta-primary);
+	color: var(--awea-cta-hl);
+}
+
+/* Highlight: Color Gradient */
+.awea-cta-hl-gradient .awea-cta-hl {
+	background: linear-gradient(120deg, var(--awea-cta-hl), var(--awea-cta-hl-2));
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+/* Highlight: Clean Underline */
+.awea-cta-hl-underline .awea-cta-hl {
+	display: inline-block;
+	text-decoration: underline;
+	text-decoration-color: var(--awea-cta-hl);
+	text-decoration-thickness: 0.09em;
+	text-underline-offset: 0.14em;
+}
+
+/* Highlight: Soft Marker */
+.awea-cta-hl-marker .awea-cta-hl {
+	display: inline-block;
+	padding: 0.02em 0.24em;
+	border-radius: 0.2em;
+	background-color: color-mix(in srgb, var(--awea-cta-hl) 12%, transparent);
+}
+
+/* Highlight: Tinted Pill Box */
+.awea-cta-hl-box .awea-cta-hl {
+	display: inline-block;
+	padding: 0.04em 0.28em;
+	border-radius: 0.28em;
+	background-color: color-mix(in srgb, var(--awea-cta-hl) 12%, transparent);
+	border: 1px solid color-mix(in srgb, var(--awea-cta-hl) 26%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   3. Description
+   -------------------------------------------------------------------------- */
+.awea-cta-desc {
+	max-width: 640px;
+	margin-top: 0;
+	margin-bottom: 34px;
+	margin-inline-start: var(--awea-cta-ml, auto);
+	margin-inline-end: var(--awea-cta-mr, auto);
+	color: var(--awea-cta-text);
+	word-break: break-word;
+}
+
+/* --------------------------------------------------------------------------
+   4. Dual-Action Buttons
+   -------------------------------------------------------------------------- */
+.awea-cta-actions {
+	display: flex;
+	align-items: center;
+	justify-content: var(--awea-cta-justify, center);
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.awea-cta-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 15px 30px;
+	border-radius: 12px;
+	line-height: 1.2;
+	text-decoration: none;
+	cursor: pointer;
+	border: 1px solid transparent;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.25s ease,
+		color 0.25s ease,
+		transform 0.2s ease;
+}
+
+.awea-cta-btn:focus-visible {
+	outline: 2px solid var(--awea-cta-accent);
+	outline-offset: 3px;
+}
+
+.awea-cta-btn-primary {
+	background-color: var(--awea-cta-primary);
+	color: var(--e-global-color-background, #ffffff);
+}
+
+.awea-cta-btn-primary:hover,
+.awea-cta-btn-primary:focus-visible {
+	background-color: var(--awea-cta-accent);
+	color: var(--e-global-color-background, #ffffff);
+	transform: translateY(-2px);
+}
+
+.awea-cta-btn-secondary {
+	background-color: transparent;
+	color: var(--awea-cta-primary);
+	border-color: var(--awea-cta-border);
+}
+
+.awea-cta-btn-secondary:hover,
+.awea-cta-btn-secondary:focus-visible {
+	background-color: color-mix(in srgb, var(--awea-cta-accent) 8%, transparent);
+	border-color: var(--awea-cta-accent);
+	color: var(--awea-cta-accent);
+	transform: translateY(-2px);
+}
+
+.awea-cta-ico {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	flex-shrink: 0;
+	transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-cta-btn:hover .awea-cta-ico-right {
+	transform: translateX(4px);
+}
+
+.awea-cta-btn:hover .awea-cta-ico-left {
+	transform: translateX(-4px);
+}
+
+.awea-cta-ico svg {
+	width: 13px;
+	height: 13px;
+	fill: currentColor;
+	display: block;
+}
+
+.awea-cta-ico i {
+	font-size: 13px;
+	line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   5. Bottom Note
+   -------------------------------------------------------------------------- */
+.awea-cta-note {
+	display: inline-flex;
+	align-items: center;
+	justify-content: var(--awea-cta-justify, center);
+	gap: 6px;
+	margin: 16px 0 0 0;
+	color: var(--awea-cta-text);
+	opacity: 0.8;
+	word-break: break-word;
+}
+
+.awea-cta-note-ico {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--awea-cta-accent);
+	flex-shrink: 0;
+}
+
+.awea-cta-note-ico svg {
+	width: 13px;
+	height: 13px;
+	fill: currentColor;
+	display: block;
+}
+
+.awea-cta-note-ico i {
+	font-size: 13px;
+	line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   6. Accessibility & Responsive
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.awea-cta-pulse,
+	.awea-cta-accent-bar,
+	.awea-cta-btn,
+	.awea-cta-ico {
+		animation: none !important;
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+@media (max-width: 880px) {
+	.awea-cta-mode-split .awea-cta-inner {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 28px;
+	}
+
+	.awea-cta-mode-split .awea-cta-action-col {
+		align-items: flex-start;
+		width: 100%;
+	}
+
+	.awea-cta-mode-split .awea-cta-actions {
+		justify-content: flex-start;
+	}
+}
+
+@media (max-width: 640px) {
+	.awea-cta-box {
+		padding: 40px 22px;
+		border-radius: 16px;
+	}
+
+	.awea-cta-desc {
+		margin-bottom: 26px;
+	}
+
+	.awea-cta-actions {
+		flex-direction: column;
+		width: 100%;
+		gap: 10px;
+	}
+
+	.awea-cta-btn {
+		width: 100%;
+		padding: 14px 20px;
+	}
+}

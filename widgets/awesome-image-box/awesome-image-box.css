@@ -1,0 +1,414 @@
+/* ==========================================================================
+   Awesome Image Box Widget (Global Token Edition v2.5.0)
+   ========================================================================== */
+
+.awea-ib-grid {
+	--awea-ib-primary: var(--e-global-color-primary);
+	--awea-ib-secondary: var(--e-global-color-secondary);
+	--awea-ib-text: var(--e-global-color-text);
+	--awea-ib-accent: var(--e-global-color-accent);
+	--awea-ib-border: color-mix(in srgb, currentColor 12%, transparent);
+	--awea-ib-btn-align: flex-start;
+	--awea-ib-bar-size: 4px;
+	--awea-ib-stagger: 28px;
+
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	column-gap: 24px;
+	row-gap: 24px;
+	width: 100%;
+	box-sizing: border-box;
+	align-items: stretch;
+}
+
+.awea-ib-grid *,
+.awea-ib-grid *::before,
+.awea-ib-grid *::after {
+	box-sizing: border-box;
+}
+
+/* Staggered Even Columns on Desktop */
+@media (min-width: 1025px) {
+	.awea-ib-stagger-yes .awea-ib-card:nth-child(even) {
+		transform: translateY(var(--awea-ib-stagger));
+	}
+	.awea-ib-stagger-yes.awea-ib-motion-lift .awea-ib-card:nth-child(even):hover {
+		transform: translateY(calc(var(--awea-ib-stagger) - 6px));
+	}
+	.awea-ib-stagger-yes.awea-ib-motion-scale .awea-ib-card:nth-child(even):hover {
+		transform: translateY(var(--awea-ib-stagger)) scale(1.02);
+	}
+}
+
+.awea-ib-card {
+	--awea-ib-card-bg: color-mix(in srgb, currentColor 3%, transparent);
+	--awea-ib-active-accent: var(--awea-ib-item-accent, var(--awea-ib-accent));
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	text-align: left;
+	gap: 20px;
+	height: 100%;
+	width: 100%;
+	background-color: var(--awea-ib-card-bg);
+	border: 1px solid var(--awea-ib-border);
+	border-radius: 16px;
+	padding: 22px;
+	overflow: hidden;
+	transition:
+		background-color 0.3s ease,
+		border-color 0.3s ease,
+		box-shadow 0.35s ease,
+		transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-ib-card:hover {
+	border-color: var(--awea-ib-active-accent);
+	box-shadow: 0 20px 40px -15px color-mix(in srgb, var(--awea-ib-primary) 12%, transparent);
+}
+
+/* Featured Card State */
+.awea-ib-card.awea-ib-featured {
+	border-color: var(--awea-ib-active-accent);
+	box-shadow: 0 18px 36px -14px color-mix(in srgb, var(--awea-ib-active-accent) 20%, transparent);
+}
+
+/* Card Hover Motion Variants */
+.awea-ib-motion-lift .awea-ib-card:hover {
+	transform: translateY(-6px);
+}
+
+.awea-ib-motion-scale .awea-ib-card:hover {
+	transform: scale(1.02);
+}
+
+/* --------------------------------------------------------------------------
+   Accent Line Indicator
+   -------------------------------------------------------------------------- */
+.awea-ib-accent-bar {
+	display: none;
+	position: absolute;
+	z-index: 3;
+	background: var(--awea-ib-active-accent);
+	pointer-events: none;
+	transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+}
+
+.awea-ib-bar-top-hover .awea-ib-accent-bar,
+.awea-ib-bar-top-always .awea-ib-accent-bar {
+	display: block;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: var(--awea-ib-bar-size);
+}
+
+.awea-ib-bar-top-hover .awea-ib-accent-bar {
+	transform: scaleX(0);
+	transform-origin: left center;
+}
+
+.awea-ib-bar-top-hover .awea-ib-card:hover .awea-ib-accent-bar {
+	transform: scaleX(1);
+}
+
+.awea-ib-bar-bottom-hover .awea-ib-accent-bar {
+	display: block;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: var(--awea-ib-bar-size);
+	transform: scaleX(0);
+	transform-origin: center;
+}
+
+.awea-ib-bar-bottom-hover .awea-ib-card:hover .awea-ib-accent-bar {
+	transform: scaleX(1);
+}
+
+.awea-ib-bar-left-hover .awea-ib-accent-bar {
+	display: block;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: var(--awea-ib-bar-size);
+	transform: scaleY(0);
+	transform-origin: top center;
+}
+
+.awea-ib-bar-left-hover .awea-ib-card:hover .awea-ib-accent-bar {
+	transform: scaleY(1);
+}
+
+/* Whole-Card Overlay Link */
+.awea-ib-card-clickable {
+	cursor: pointer;
+}
+
+.awea-ib-cover-link {
+	position: absolute;
+	inset: 0;
+	z-index: 4;
+	text-decoration: none;
+	border-radius: inherit;
+}
+
+.awea-ib-cover-link:focus-visible {
+	outline: 2px solid var(--awea-ib-active-accent);
+	outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Media Frame, Overlay & Hover Effects
+   -------------------------------------------------------------------------- */
+.awea-ib-media {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 16 / 10;
+	border-radius: 12px;
+	overflow: hidden;
+	background-color: color-mix(in srgb, currentColor 6%, transparent);
+	border: 1px solid color-mix(in srgb, currentColor 8%, transparent);
+	flex-shrink: 0;
+}
+
+.awea-ib-media::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	background-color: transparent;
+	pointer-events: none;
+	transition: background-color 0.35s ease;
+}
+
+.awea-ib-media img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
+}
+
+/* Image Hover Effects */
+.awea-ib-imganim-zoom-in .awea-ib-card:hover .awea-ib-media img {
+	transform: scale(1.06);
+}
+
+.awea-ib-imganim-zoom-out .awea-ib-media img {
+	transform: scale(1.08);
+}
+
+.awea-ib-imganim-zoom-out .awea-ib-card:hover .awea-ib-media img {
+	transform: scale(1);
+}
+
+.awea-ib-imganim-tilt .awea-ib-card:hover .awea-ib-media img {
+	transform: scale(1.07) rotate(-1.5deg);
+}
+
+/* Corner Badge Pill */
+.awea-ib-badge {
+	position: absolute;
+	top: 12px;
+	left: 12px;
+	z-index: 2;
+	padding: 5px 12px;
+	border-radius: 100px;
+	background-color: var(--awea-ib-active-accent);
+	border: 1px solid color-mix(in srgb, var(--e-global-color-background, #ffffff) 20%, transparent);
+	color: var(--e-global-color-background, #ffffff);
+	font-size: 0.72em;
+	line-height: 1.2;
+	user-select: none;
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+}
+
+/* --------------------------------------------------------------------------
+   Content Body, Subtitle, Title, Description, Checklist & Action Button
+   -------------------------------------------------------------------------- */
+.awea-ib-body {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	flex: 1 1 auto;
+	min-width: 0;
+	height: 100%;
+	width: 100%;
+}
+
+.awea-ib-subtitle {
+	display: inline-block;
+	margin: 0 0 6px 0;
+	color: var(--awea-ib-secondary);
+}
+
+.awea-ib-title {
+	margin: 0 0 10px 0;
+	color: var(--awea-ib-primary);
+	word-break: break-word;
+	transition: color 0.25s ease;
+}
+
+.awea-ib-title a {
+	color: inherit;
+	text-decoration: none;
+	transition: color 0.25s ease;
+}
+
+.awea-ib-title a:focus-visible {
+	outline: 2px solid var(--awea-ib-active-accent);
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
+.awea-ib-card:hover .awea-ib-title,
+.awea-ib-card:hover .awea-ib-title a {
+	color: var(--awea-ib-active-accent);
+}
+
+.awea-ib-desc {
+	margin: 0 0 20px 0;
+	color: var(--awea-ib-text);
+	word-break: break-word;
+}
+
+/* Feature Checklist */
+.awea-ib-features {
+	list-style: none;
+	margin: 0 0 22px 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	width: 100%;
+}
+
+.awea-ib-features li {
+	display: inline-flex;
+	align-items: center;
+	gap: 9px;
+	color: var(--awea-ib-text);
+}
+
+.awea-ib-feat-ico {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	color: var(--awea-ib-active-accent);
+}
+
+.awea-ib-feat-ico i {
+	font-size: 14px;
+	line-height: 1;
+}
+
+.awea-ib-feat-ico svg {
+	width: 14px;
+	height: 14px;
+	fill: currentColor;
+	display: block;
+}
+
+/* Bottom-Anchored Action Button */
+.awea-ib-btn-wrap {
+	width: 100%;
+	margin-top: auto;
+	display: flex;
+	justify-content: var(--awea-ib-btn-align, flex-start);
+}
+
+.awea-ib-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 11px 20px;
+	border-radius: 10px;
+	background-color: var(--awea-ib-primary);
+	color: var(--e-global-color-background, #ffffff);
+	border: 1px solid transparent;
+	text-decoration: none;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.25s ease,
+		color 0.25s ease;
+}
+
+.awea-ib-btn:focus-visible {
+	outline: 2px solid var(--awea-ib-active-accent);
+	outline-offset: 2px;
+}
+
+.awea-ib-btn:hover,
+.awea-ib-card:hover .awea-ib-btn {
+	background-color: var(--awea-ib-active-accent);
+	color: var(--e-global-color-background, #ffffff);
+}
+
+.awea-ib-ico {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	flex-shrink: 0;
+	transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-ib-btn:hover .awea-ib-ico-right,
+.awea-ib-card:hover .awea-ib-ico-right {
+	transform: translateX(4px);
+}
+
+.awea-ib-btn:hover .awea-ib-ico-left,
+.awea-ib-card:hover .awea-ib-ico-left {
+	transform: translateX(-4px);
+}
+
+.awea-ib-ico svg {
+	width: 12px;
+	height: 12px;
+	fill: currentColor;
+	display: block;
+}
+
+.awea-ib-ico i {
+	font-size: 12px;
+	line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility & Responsive
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.awea-ib-card,
+	.awea-ib-media img,
+	.awea-ib-ico,
+	.awea-ib-accent-bar {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+@media (max-width: 768px) {
+	.awea-ib-card {
+		padding: 18px;
+		border-radius: 14px;
+		gap: 16px;
+	}
+
+	.awea-ib-desc {
+		margin-bottom: 18px;
+	}
+
+	.awea-ib-btn {
+		width: 100%;
+	}
+}

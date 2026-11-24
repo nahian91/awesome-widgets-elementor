@@ -1,0 +1,373 @@
+/* ==========================================================================
+   Awesome Heading Widget (Global Token Edition v2.5.0)
+   ========================================================================== */
+
+.awea-hd-wrap {
+	--awea-hd-primary: var(--e-global-color-primary);
+	--awea-hd-secondary: var(--e-global-color-secondary);
+	--awea-hd-text: var(--e-global-color-text);
+	--awea-hd-accent: var(--e-global-color-accent);
+	--awea-hd-border: color-mix(in srgb, currentColor 14%, transparent);
+	--awea-hd-justify: center;
+	--awea-hd-ml: auto;
+	--awea-hd-mr: auto;
+
+	width: 100%;
+	max-width: 820px;
+	margin-inline-start: var(--awea-hd-ml, auto);
+	margin-inline-end: var(--awea-hd-mr, auto);
+	text-align: center;
+	box-sizing: border-box;
+}
+
+.awea-hd-wrap *,
+.awea-hd-wrap *::before,
+.awea-hd-wrap *::after {
+	box-sizing: border-box;
+}
+
+.awea-hd-badge-wrap,
+.awea-hd-div-wrap,
+.awea-hd-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: var(--awea-hd-justify, center);
+}
+
+/* --------------------------------------------------------------------------
+   1. Tag Pill Badge
+   -------------------------------------------------------------------------- */
+.awea-hd-badge-wrap {
+	margin-bottom: 20px;
+}
+
+.awea-hd-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 7px 16px;
+	border-radius: 100px;
+	background-color: color-mix(in srgb, var(--awea-hd-accent) 8%, transparent);
+	border: 1px solid color-mix(in srgb, var(--awea-hd-accent) 20%, transparent);
+	color: var(--awea-hd-accent);
+	line-height: 1.2;
+	user-select: none;
+}
+
+.awea-hd-pulse {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background-color: currentColor;
+	flex-shrink: 0;
+	animation: aweaHdPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes aweaHdPulse {
+	0%, 100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 0.45;
+		transform: scale(0.8);
+	}
+}
+
+.awea-hd-badge-ico {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	flex-shrink: 0;
+}
+
+.awea-hd-badge-ico svg {
+	width: 12px;
+	height: 12px;
+	fill: currentColor;
+	display: block;
+}
+
+.awea-hd-badge-ico i {
+	font-size: 12px;
+	line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   2. Headings & Highlight Modes
+   -------------------------------------------------------------------------- */
+.awea-hd-subtitle {
+	display: block;
+	margin: 0 0 10px 0;
+	color: var(--awea-hd-secondary);
+}
+
+.awea-hd-title {
+	margin: 0 0 22px 0;
+	color: var(--awea-hd-primary);
+	word-break: break-word;
+}
+
+.awea-hd-title a {
+	color: inherit;
+	text-decoration: none;
+	transition: color 0.25s ease;
+}
+
+.awea-hd-title a:hover,
+.awea-hd-title a:focus-visible {
+	color: var(--awea-hd-accent);
+}
+
+.awea-hd-hl {
+	--awea-hl-accent: var(--awea-hd-accent);
+	--awea-hl-accent-2: var(--awea-hd-primary);
+	color: var(--awea-hl-accent);
+}
+
+/* Highlight: Color Gradient */
+.awea-hd-hl-gradient .awea-hd-hl {
+	background: linear-gradient(120deg, var(--awea-hl-accent), var(--awea-hl-accent-2));
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+/* Highlight: Clean Underline */
+.awea-hd-hl-underline .awea-hd-hl {
+	position: relative;
+	display: inline-block;
+	text-decoration: underline;
+	text-decoration-color: var(--awea-hl-accent);
+	text-decoration-thickness: 0.09em;
+	text-underline-offset: 0.14em;
+}
+
+/* Highlight: Soft Marker */
+.awea-hd-hl-marker .awea-hd-hl {
+	display: inline-block;
+	padding: 0.02em 0.24em;
+	border-radius: 0.2em;
+	background-color: color-mix(in srgb, var(--awea-hl-accent) 12%, transparent);
+}
+
+/* Highlight: Tinted Pill Box */
+.awea-hd-hl-box .awea-hd-hl {
+	display: inline-block;
+	padding: 0.04em 0.28em;
+	border-radius: 0.28em;
+	background-color: color-mix(in srgb, var(--awea-hl-accent) 12%, transparent);
+	border: 1px solid color-mix(in srgb, var(--awea-hl-accent) 26%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   3. Dividers (Animated Beam / Solid / Gradient / Three Dots)
+   -------------------------------------------------------------------------- */
+.awea-hd-div-wrap {
+	width: 100%;
+	margin-bottom: 24px;
+}
+
+.awea-hd-div {
+	--awea-hd-div-start: var(--awea-hd-accent);
+	--awea-hd-div-end: var(--awea-hd-primary);
+	position: relative;
+	width: 96px;
+	height: 2px;
+	background-color: var(--awea-hd-border);
+	border-radius: 100px;
+	overflow: hidden;
+}
+
+.awea-hd-div-solid .awea-hd-div {
+	background-color: var(--awea-hd-accent);
+}
+
+.awea-hd-div-gradient .awea-hd-div {
+	background: linear-gradient(90deg, var(--awea-hd-div-start), var(--awea-hd-div-end));
+}
+
+.awea-hd-div-beam .awea-hd-div::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background-color: var(--awea-hd-accent);
+	animation: aweaHdBeam 3s infinite cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes aweaHdBeam {
+	0% {
+		left: -100%;
+	}
+	50% {
+		left: 0%;
+	}
+	100% {
+		left: 100%;
+	}
+}
+
+.awea-hd-dots {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.awea-hd-dot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background-color: var(--awea-hd-accent);
+}
+
+.awea-hd-dot:nth-child(2) {
+	opacity: 0.55;
+}
+
+.awea-hd-dot:nth-child(3) {
+	opacity: 0.25;
+}
+
+/* --------------------------------------------------------------------------
+   4. Description
+   -------------------------------------------------------------------------- */
+.awea-hd-desc {
+	max-width: 660px;
+	margin-top: 0;
+	margin-bottom: 32px;
+	margin-inline-start: var(--awea-hd-ml, auto);
+	margin-inline-end: var(--awea-hd-mr, auto);
+	color: var(--awea-hd-text);
+	word-break: break-word;
+}
+
+/* --------------------------------------------------------------------------
+   5. Action Buttons
+   -------------------------------------------------------------------------- */
+.awea-hd-actions {
+	gap: 12px;
+}
+
+.awea-hd-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 14px 28px;
+	border-radius: 12px;
+	line-height: 1.2;
+	text-decoration: none;
+	border: 1px solid transparent;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.25s ease,
+		color 0.25s ease,
+		transform 0.2s ease;
+}
+
+.awea-hd-btn:focus-visible {
+	outline: 2px solid var(--awea-hd-accent);
+	outline-offset: 3px;
+}
+
+.awea-hd-btn-primary {
+	background-color: var(--awea-hd-primary);
+	color: var(--e-global-color-background, #ffffff);
+}
+
+.awea-hd-btn-primary:hover,
+.awea-hd-btn-primary:focus-visible {
+	background-color: var(--awea-hd-accent);
+	color: var(--e-global-color-background, #ffffff);
+	transform: translateY(-2px);
+}
+
+.awea-hd-btn-secondary {
+	background-color: transparent;
+	color: var(--awea-hd-primary);
+	border-color: var(--awea-hd-border);
+}
+
+.awea-hd-btn-secondary:hover,
+.awea-hd-btn-secondary:focus-visible {
+	background-color: color-mix(in srgb, var(--awea-hd-accent) 8%, transparent);
+	border-color: var(--awea-hd-accent);
+	color: var(--awea-hd-accent);
+	transform: translateY(-2px);
+}
+
+.awea-hd-btn-ico {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	flex-shrink: 0;
+	transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-hd-btn:hover .awea-hd-ico-right {
+	transform: translateX(4px);
+}
+
+.awea-hd-btn:hover .awea-hd-ico-left {
+	transform: translateX(-4px);
+}
+
+.awea-hd-btn-ico svg {
+	width: 13px;
+	height: 13px;
+	fill: currentColor;
+	display: block;
+}
+
+.awea-hd-btn-ico i {
+	font-size: 13px;
+	line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   6. Accessibility & Responsive
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.awea-hd-pulse,
+	.awea-hd-div-beam .awea-hd-div::after {
+		animation: none !important;
+		left: 0 !important;
+	}
+
+	.awea-hd-btn,
+	.awea-hd-btn-ico {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+@media (max-width: 768px) {
+	.awea-hd-title {
+		margin-bottom: 18px;
+	}
+
+	.awea-hd-div-wrap {
+		margin-bottom: 20px;
+	}
+
+	.awea-hd-desc {
+		margin-bottom: 26px;
+	}
+
+	.awea-hd-actions {
+		width: 100%;
+		flex-direction: column;
+	}
+
+	.awea-hd-btn {
+		width: 100%;
+		padding: 13px 22px;
+	}
+}

@@ -1,0 +1,575 @@
+/* ==========================================================================
+   Awesome Number Box Widget (Global Token Edition v2.5.0)
+   ========================================================================== */
+
+.awea-nb-grid {
+	--awea-nb-primary: var(--e-global-color-primary);
+	--awea-nb-secondary: var(--e-global-color-secondary);
+	--awea-nb-text: var(--e-global-color-text);
+	--awea-nb-accent: var(--e-global-color-accent);
+	--awea-nb-border: color-mix(in srgb, currentColor 12%, transparent);
+	--awea-nb-conn-color: color-mix(in srgb, var(--awea-nb-accent) 30%, transparent);
+	--awea-nb-btn-align: flex-start;
+	--awea-nb-bar-size: 4px;
+	--awea-nb-stagger: 28px;
+
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	column-gap: 24px;
+	row-gap: 24px;
+	width: 100%;
+	box-sizing: border-box;
+	align-items: stretch;
+}
+
+.awea-nb-grid *,
+.awea-nb-grid *::before,
+.awea-nb-grid *::after {
+	box-sizing: border-box;
+}
+
+/* Staggered Even Columns on Desktop */
+@media (min-width: 1025px) {
+	.awea-nb-stagger-yes .awea-nb-card:nth-child(even) {
+		transform: translateY(var(--awea-nb-stagger));
+	}
+	.awea-nb-stagger-yes.awea-nb-motion-lift .awea-nb-card:nth-child(even):hover {
+		transform: translateY(calc(var(--awea-nb-stagger) - 6px));
+	}
+	.awea-nb-stagger-yes.awea-nb-motion-scale .awea-nb-card:nth-child(even):hover {
+		transform: translateY(var(--awea-nb-stagger)) scale(1.02);
+	}
+}
+
+.awea-nb-card {
+	--awea-nb-card-bg: color-mix(in srgb, currentColor 3%, transparent);
+	--awea-nb-active-accent: var(--awea-nb-item-accent, var(--awea-nb-accent));
+	--awea-nb-soft-tint: color-mix(in srgb, var(--awea-nb-active-accent) 12%, transparent);
+	--awea-nb-wm-left: auto;
+	--awea-nb-wm-right: 16px;
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	text-align: left;
+	gap: 22px;
+	height: 100%;
+	width: 100%;
+	background-color: var(--awea-nb-card-bg);
+	border: 1px solid var(--awea-nb-border);
+	border-radius: 16px;
+	padding: 32px 28px;
+	overflow: hidden;
+	transition:
+		background-color 0.3s ease,
+		border-color 0.3s ease,
+		box-shadow 0.35s ease,
+		transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-nb-card:hover {
+	border-color: var(--awea-nb-active-accent);
+	box-shadow: 0 20px 40px -15px color-mix(in srgb, var(--awea-nb-primary) 12%, transparent);
+}
+
+/* Featured Card State */
+.awea-nb-card.awea-nb-featured {
+	border-color: var(--awea-nb-active-accent);
+	box-shadow: 0 18px 36px -14px color-mix(in srgb, var(--awea-nb-active-accent) 20%, transparent);
+}
+
+/* Card Hover Motion Variants */
+.awea-nb-motion-lift .awea-nb-card:hover {
+	transform: translateY(-6px);
+}
+
+.awea-nb-motion-scale .awea-nb-card:hover {
+	transform: scale(1.02);
+}
+
+/* Split Side Layout Mode */
+.awea-nb-mode-split .awea-nb-card {
+	flex-direction: row;
+	align-items: flex-start;
+}
+
+/* --------------------------------------------------------------------------
+   Step Connector Line (Desktop)
+   -------------------------------------------------------------------------- */
+@media (min-width: 1025px) {
+	.awea-nb-conn-dashed .awea-nb-card:not(:last-child)::after,
+	.awea-nb-conn-solid .awea-nb-card:not(:last-child)::after,
+	.awea-nb-conn-dotted .awea-nb-card:not(:last-child)::after {
+		content: "";
+		position: absolute;
+		top: 58px;
+		right: 0;
+		width: 32px;
+		height: 0;
+		border-top-width: 2px;
+		border-top-color: var(--awea-nb-conn-color);
+		pointer-events: none;
+		z-index: 2;
+	}
+
+	.awea-nb-conn-dashed .awea-nb-card:not(:last-child)::after {
+		border-top-style: dashed;
+	}
+
+	.awea-nb-conn-solid .awea-nb-card:not(:last-child)::after {
+		border-top-style: solid;
+	}
+
+	.awea-nb-conn-dotted .awea-nb-card:not(:last-child)::after {
+		border-top-style: dotted;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   Accent Line Indicator
+   -------------------------------------------------------------------------- */
+.awea-nb-accent-bar {
+	display: none;
+	position: absolute;
+	z-index: 3;
+	background: var(--awea-nb-active-accent);
+	pointer-events: none;
+	transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+}
+
+.awea-nb-bar-top-hover .awea-nb-accent-bar,
+.awea-nb-bar-top-always .awea-nb-accent-bar {
+	display: block;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: var(--awea-nb-bar-size);
+}
+
+.awea-nb-bar-top-hover .awea-nb-accent-bar {
+	transform: scaleX(0);
+	transform-origin: left center;
+}
+
+.awea-nb-bar-top-hover .awea-nb-card:hover .awea-nb-accent-bar {
+	transform: scaleX(1);
+}
+
+.awea-nb-bar-bottom-hover .awea-nb-accent-bar {
+	display: block;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: var(--awea-nb-bar-size);
+	transform: scaleX(0);
+	transform-origin: center;
+}
+
+.awea-nb-bar-bottom-hover .awea-nb-card:hover .awea-nb-accent-bar {
+	transform: scaleX(1);
+}
+
+.awea-nb-bar-left-hover .awea-nb-accent-bar {
+	display: block;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: var(--awea-nb-bar-size);
+	transform: scaleY(0);
+	transform-origin: top center;
+}
+
+.awea-nb-bar-left-hover .awea-nb-card:hover .awea-nb-accent-bar {
+	transform: scaleY(1);
+}
+
+/* Whole-Card Overlay Link */
+.awea-nb-card-clickable {
+	cursor: pointer;
+}
+
+.awea-nb-cover-link {
+	position: absolute;
+	inset: 0;
+	z-index: 4;
+	text-decoration: none;
+	border-radius: inherit;
+}
+
+.awea-nb-cover-link:focus-visible {
+	outline: 2px solid var(--awea-nb-active-accent);
+	outline-offset: 2px;
+}
+
+/* Corner Badge Pill */
+.awea-nb-corner {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	z-index: 3;
+	padding: 4px 10px;
+	border-radius: 100px;
+	background-color: var(--awea-nb-soft-tint);
+	border: 1px solid color-mix(in srgb, var(--awea-nb-active-accent) 20%, transparent);
+	color: var(--awea-nb-active-accent);
+	font-size: 0.72em;
+	line-height: 1.2;
+	user-select: none;
+}
+
+/* --------------------------------------------------------------------------
+   1. Number Box (Solid / Soft / Outlined / Split) & Shapes
+   -------------------------------------------------------------------------- */
+.awea-nb-badge-wrap {
+	position: relative;
+	z-index: 2;
+	flex-shrink: 0;
+}
+
+.awea-nb-badge {
+	position: relative;
+	width: 54px;
+	height: 54px;
+	border-radius: 16px;
+	background-color: var(--awea-nb-active-accent);
+	border: 1.5px solid var(--awea-nb-active-accent);
+	color: var(--e-global-color-background, #ffffff);
+	font-variant-numeric: tabular-nums;
+	line-height: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	user-select: none;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		color 0.25s ease,
+		box-shadow 0.3s ease,
+		transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-nb-card:hover .awea-nb-badge {
+	background-color: var(--awea-nb-primary);
+	border-color: var(--awea-nb-primary);
+	color: var(--e-global-color-background, #ffffff);
+}
+
+/* Soft Tinted Mode Variant */
+.awea-nb-mode-soft .awea-nb-badge {
+	background-color: var(--awea-nb-soft-tint);
+	border-color: transparent;
+	color: var(--awea-nb-active-accent);
+}
+
+.awea-nb-mode-soft .awea-nb-card:hover .awea-nb-badge {
+	background-color: var(--awea-nb-active-accent);
+	color: var(--e-global-color-background, #ffffff);
+}
+
+/* Outlined Mode Variant */
+.awea-nb-mode-outlined .awea-nb-badge {
+	background-color: transparent;
+	color: var(--awea-nb-active-accent);
+}
+
+.awea-nb-mode-outlined .awea-nb-card:hover .awea-nb-badge {
+	background-color: var(--awea-nb-active-accent);
+	border-color: var(--awea-nb-active-accent);
+	color: var(--e-global-color-background, #ffffff);
+}
+
+/* SHAPES */
+.awea-nb-shape-circle .awea-nb-badge {
+	border-radius: 50% !important;
+}
+
+.awea-nb-shape-square .awea-nb-badge {
+	border-radius: 0 !important;
+}
+
+.awea-nb-shape-rounded .awea-nb-badge {
+	border-radius: 16px;
+}
+
+.awea-nb-shape-squircle .awea-nb-badge {
+	border-radius: 38% 62% 63% 37% / 41% 44% 56% 59% !important;
+}
+
+.awea-nb-shape-hexagon .awea-nb-badge {
+	border-radius: 0 !important;
+	border: none !important;
+	clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+}
+
+/* Outlined Hexagon: Outer Border Polygon + Card-Matched Inner Cutout */
+.awea-nb-mode-outlined.awea-nb-shape-hexagon .awea-nb-badge {
+	background-color: var(--awea-nb-active-accent);
+}
+
+.awea-nb-mode-outlined.awea-nb-shape-hexagon .awea-nb-badge::before {
+	content: "";
+	position: absolute;
+	inset: 2px;
+	background-color: var(--awea-nb-card-bg);
+	clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+	z-index: -1;
+	transition: background-color 0.3s ease;
+}
+
+.awea-nb-mode-outlined.awea-nb-shape-hexagon .awea-nb-card:hover .awea-nb-badge::before {
+	background-color: var(--awea-nb-active-accent);
+}
+
+/* Number Hover Animations */
+.awea-nb-nanim-scale .awea-nb-card:hover .awea-nb-badge {
+	transform: scale(1.07);
+}
+
+.awea-nb-nanim-rotate .awea-nb-card:hover .awea-nb-badge {
+	transform: rotate(-8deg) scale(1.05);
+}
+
+.awea-nb-nanim-float .awea-nb-card:hover .awea-nb-badge {
+	transform: translateY(-5px);
+}
+
+.awea-nb-nanim-pulse .awea-nb-card:hover .awea-nb-badge {
+	box-shadow: 0 0 0 8px color-mix(in srgb, var(--awea-nb-active-accent) 16%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   2. Ghost Watermark Mode
+   -------------------------------------------------------------------------- */
+.awea-nb-watermark {
+	position: absolute;
+	top: -10px;
+	left: var(--awea-nb-wm-left, auto);
+	right: var(--awea-nb-wm-right, 16px);
+	font-size: 7.5rem;
+	font-weight: 900;
+	line-height: 1;
+	color: var(--awea-nb-active-accent);
+	opacity: 0.08;
+	pointer-events: none;
+	user-select: none;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: -0.05em;
+	z-index: 1;
+	transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-nb-card:hover .awea-nb-watermark {
+	opacity: 0.14;
+	transform: scale(1.04);
+}
+
+/* --------------------------------------------------------------------------
+   3. Content Body, Small Heading, Main Heading, Description & Bullets
+   -------------------------------------------------------------------------- */
+.awea-nb-body {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	flex: 1 1 auto;
+	height: 100%;
+	width: 100%;
+	min-width: 0;
+}
+
+.awea-nb-tag {
+	display: inline-block;
+	color: var(--awea-nb-secondary);
+	margin: 0 0 6px 0;
+	line-height: 1.2;
+}
+
+.awea-nb-title {
+	margin: 0 0 10px 0;
+	color: var(--awea-nb-primary);
+	word-break: break-word;
+	transition: color 0.25s ease;
+}
+
+.awea-nb-title a {
+	color: inherit;
+	text-decoration: none;
+	transition: color 0.25s ease;
+}
+
+.awea-nb-title a:focus-visible {
+	outline: 2px solid var(--awea-nb-active-accent);
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
+.awea-nb-card:hover .awea-nb-title,
+.awea-nb-card:hover .awea-nb-title a {
+	color: var(--awea-nb-active-accent);
+}
+
+.awea-nb-desc {
+	margin: 0 0 20px 0;
+	color: var(--awea-nb-text);
+	word-break: break-word;
+}
+
+/* Feature Checklist */
+.awea-nb-features {
+	list-style: none;
+	margin: 0 0 22px 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	width: 100%;
+}
+
+.awea-nb-features li {
+	display: inline-flex;
+	align-items: center;
+	gap: 9px;
+	color: var(--awea-nb-text);
+}
+
+.awea-nb-feat-ico {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	color: var(--awea-nb-active-accent);
+}
+
+.awea-nb-feat-ico i {
+	font-size: 14px;
+	line-height: 1;
+}
+
+.awea-nb-feat-ico svg {
+	width: 14px;
+	height: 14px;
+	fill: currentColor;
+	display: block;
+}
+
+/* --------------------------------------------------------------------------
+   4. Bottom-Anchored Action Link & Button Mode
+   -------------------------------------------------------------------------- */
+.awea-nb-btn-wrap {
+	width: 100%;
+	margin-top: auto;
+	display: flex;
+	justify-content: var(--awea-nb-btn-align, flex-start);
+}
+
+.awea-nb-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 7px;
+	text-decoration: none;
+	color: var(--awea-nb-active-accent);
+	line-height: 1.2;
+	transition:
+		color 0.25s ease,
+		background-color 0.25s ease,
+		border-color 0.25s ease;
+}
+
+.awea-nb-act-button .awea-nb-btn {
+	padding: 11px 20px;
+	border-radius: 10px;
+	background-color: var(--awea-nb-primary);
+	color: var(--e-global-color-background, #ffffff);
+	border: 1px solid transparent;
+}
+
+.awea-nb-act-button .awea-nb-btn:hover,
+.awea-nb-act-button .awea-nb-card:hover .awea-nb-btn {
+	background-color: var(--awea-nb-active-accent);
+	color: var(--e-global-color-background, #ffffff);
+}
+
+.awea-nb-btn:focus-visible {
+	outline: 2px solid var(--awea-nb-active-accent);
+	outline-offset: 3px;
+	border-radius: 4px;
+}
+
+.awea-nb-btn-ico {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	flex-shrink: 0;
+	transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-nb-btn-ico svg {
+	width: 13px;
+	height: 13px;
+	fill: currentColor;
+	display: block;
+}
+
+.awea-nb-btn-ico i {
+	font-size: 13px;
+	line-height: 1;
+}
+
+.awea-nb-act-link .awea-nb-btn:hover,
+.awea-nb-act-link .awea-nb-btn:focus-visible {
+	color: var(--awea-nb-primary);
+}
+
+.awea-nb-btn:hover .awea-nb-ico-right,
+.awea-nb-card:hover .awea-nb-ico-right {
+	transform: translateX(4px);
+}
+
+.awea-nb-btn:hover .awea-nb-ico-left,
+.awea-nb-card:hover .awea-nb-ico-left {
+	transform: translateX(-4px);
+}
+
+/* --------------------------------------------------------------------------
+   5. Accessibility & Responsive
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.awea-nb-card,
+	.awea-nb-badge,
+	.awea-nb-watermark,
+	.awea-nb-btn-ico,
+	.awea-nb-accent-bar {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+@media (max-width: 768px) {
+	.awea-nb-mode-split .awea-nb-card {
+		flex-direction: column;
+	}
+
+	.awea-nb-card {
+		padding: 24px 20px;
+		border-radius: 14px;
+		gap: 18px;
+	}
+
+	.awea-nb-badge {
+		width: 48px;
+		height: 48px;
+	}
+
+	.awea-nb-watermark {
+		font-size: 5.5rem;
+		top: -6px;
+	}
+
+	.awea-nb-act-button .awea-nb-btn {
+		width: 100%;
+	}
+}

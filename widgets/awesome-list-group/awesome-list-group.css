@@ -1,0 +1,299 @@
+/* ==========================================================================
+   Awesome List Group Widget (Global Token Edition v2.5.0)
+   ========================================================================== */
+
+.awea-lg-wrap {
+	--awea-lg-primary: var(--e-global-color-primary);
+	--awea-lg-secondary: var(--e-global-color-secondary);
+	--awea-lg-text: var(--e-global-color-text);
+	--awea-lg-accent: var(--e-global-color-accent);
+	--awea-lg-border: color-mix(in srgb, currentColor 12%, transparent);
+
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(1, minmax(0, 1fr));
+	box-sizing: border-box;
+	align-items: stretch;
+}
+
+.awea-lg-wrap *,
+.awea-lg-wrap *::before,
+.awea-lg-wrap *::after {
+	box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   1. Single Box (Grouped Rows) Mode
+   -------------------------------------------------------------------------- */
+.awea-lg-mode-connected .awea-lg-wrap {
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
+	border: 1px solid var(--awea-lg-border);
+	border-radius: 20px;
+	padding: 12px;
+	gap: 0;
+}
+
+.awea-lg-mode-connected .awea-lg-item {
+	border-bottom: 1px solid color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.awea-lg-mode-connected .awea-lg-item:last-child {
+	border-bottom: none;
+}
+
+/* --------------------------------------------------------------------------
+   2. Separate Cards Mode
+   -------------------------------------------------------------------------- */
+.awea-lg-mode-separated .awea-lg-wrap {
+	column-gap: 14px;
+	row-gap: 14px;
+	background: transparent;
+	border: none;
+	padding: 0;
+}
+
+.awea-lg-mode-separated .awea-lg-item {
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
+	border: 1px solid var(--awea-lg-border);
+	border-radius: 16px;
+}
+
+.awea-lg-mode-separated .awea-lg-item:hover {
+	border-color: var(--awea-lg-active-accent);
+	box-shadow: 0 16px 32px -14px color-mix(in srgb, var(--awea-lg-primary) 12%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   3. List Row Structure & Hover Effects
+   -------------------------------------------------------------------------- */
+.awea-lg-item {
+	--awea-lg-active-accent: var(--awea-lg-item-accent, var(--awea-lg-accent));
+	--awea-lg-soft-tint: color-mix(in srgb, var(--awea-lg-active-accent) 10%, transparent);
+
+	display: flex;
+	align-items: center;
+	gap: 18px;
+	height: 100%;
+	padding: 20px 22px;
+	border-radius: 16px;
+	text-decoration: none;
+	color: inherit;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.3s ease,
+		transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-lg-item.awea-lg-featured {
+	background-color: color-mix(in srgb, var(--awea-lg-active-accent) 5%, transparent);
+}
+
+.awea-lg-mode-separated .awea-lg-item.awea-lg-featured {
+	border-color: var(--awea-lg-active-accent);
+	box-shadow: 0 14px 30px -12px color-mix(in srgb, var(--awea-lg-active-accent) 20%, transparent);
+}
+
+.awea-lg-item:hover {
+	background-color: color-mix(in srgb, currentColor 5%, transparent);
+}
+
+.awea-lg-motion-slide .awea-lg-item:hover {
+	transform: translateX(4px);
+}
+
+.awea-lg-motion-lift .awea-lg-item:hover {
+	transform: translateY(-4px);
+}
+
+.awea-lg-item:focus-visible {
+	outline: 2px solid var(--awea-lg-active-accent);
+	outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   4. Icon Box (Soft / Solid / Framed / Minimal)
+   -------------------------------------------------------------------------- */
+.awea-lg-icon {
+	width: 50px;
+	height: 50px;
+	border-radius: 14px;
+	background-color: var(--awea-lg-soft-tint);
+	border: 1px solid transparent;
+	color: var(--awea-lg-active-accent);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		color 0.25s ease;
+}
+
+.awea-lg-icon-solid .awea-lg-icon {
+	background-color: var(--awea-lg-active-accent);
+	color: var(--e-global-color-background, #ffffff);
+}
+
+.awea-lg-icon-framed .awea-lg-icon {
+	background-color: transparent;
+	border-width: 1.5px;
+	border-color: var(--awea-lg-active-accent);
+}
+
+.awea-lg-icon-minimal .awea-lg-icon {
+	width: auto;
+	height: auto;
+	background: transparent !important;
+	border: none !important;
+	border-radius: 0 !important;
+}
+
+.awea-lg-icon i {
+	font-size: 18px;
+	line-height: 1;
+}
+
+.awea-lg-icon svg {
+	width: 18px;
+	height: 18px;
+	display: block;
+	fill: currentColor;
+}
+
+.awea-lg-item:hover .awea-lg-icon {
+	background-color: var(--awea-lg-active-accent);
+	border-color: var(--awea-lg-active-accent);
+	color: var(--e-global-color-background, #ffffff);
+}
+
+.awea-lg-icon-minimal .awea-lg-item:hover .awea-lg-icon {
+	background: transparent !important;
+	color: var(--awea-lg-active-accent);
+}
+
+.awea-lg-item:hover .awea-lg-icon svg {
+	fill: currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   5. Typography Spine
+   -------------------------------------------------------------------------- */
+.awea-lg-body {
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.awea-lg-subtitle {
+	display: block;
+	margin: 0 0 3px 0;
+	color: var(--awea-lg-secondary);
+}
+
+.awea-lg-title {
+	margin: 0 0 4px 0;
+	color: var(--awea-lg-primary);
+	word-break: break-word;
+	transition: color 0.25s ease;
+}
+
+.awea-lg-item:hover .awea-lg-title {
+	color: var(--awea-lg-active-accent);
+}
+
+.awea-lg-desc {
+	margin: 0;
+	color: var(--awea-lg-text);
+	word-break: break-word;
+}
+
+/* --------------------------------------------------------------------------
+   6. Trailing Tag Pill & Chevron Arrow
+   -------------------------------------------------------------------------- */
+.awea-lg-meta {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	flex-shrink: 0;
+	margin-inline-start: 8px;
+}
+
+.awea-lg-badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 4px 10px;
+	border-radius: 100px;
+	background-color: var(--awea-lg-soft-tint);
+	border: 1px solid color-mix(in srgb, var(--awea-lg-active-accent) 20%, transparent);
+	color: var(--awea-lg-active-accent);
+	font-size: 0.72em;
+	line-height: 1.2;
+	user-select: none;
+}
+
+.awea-lg-arrow {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--awea-lg-text);
+	opacity: 0.65;
+	transition:
+		color 0.25s ease,
+		opacity 0.25s ease,
+		transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-lg-arrow svg {
+	width: 17px;
+	height: 17px;
+}
+
+.awea-lg-item:hover .awea-lg-arrow {
+	color: var(--awea-lg-active-accent);
+	opacity: 1;
+	transform: translateX(3px);
+}
+
+/* --------------------------------------------------------------------------
+   7. Accessibility & Responsive
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.awea-lg-item,
+	.awea-lg-icon,
+	.awea-lg-arrow {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+@media (max-width: 640px) {
+	.awea-lg-mode-connected .awea-lg-wrap {
+		padding: 8px;
+		border-radius: 14px;
+	}
+
+	.awea-lg-item {
+		padding: 16px;
+		gap: 14px;
+		border-radius: 12px;
+		flex-wrap: wrap;
+	}
+
+	.awea-lg-icon {
+		width: 42px;
+		height: 42px;
+		border-radius: 12px;
+	}
+
+	.awea-lg-icon i {
+		font-size: 16px;
+	}
+
+	.awea-lg-icon svg {
+		width: 16px;
+		height: 16px;
+	}
+}

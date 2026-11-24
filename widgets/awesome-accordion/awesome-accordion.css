@@ -1,0 +1,251 @@
+/* ==========================================================================
+   Awesome Accordion Widget
+   ========================================================================== */
+
+.awea-accordion-wrap {
+	--awea-acc-primary: var(--e-global-color-primary, #4f46e5);
+	--awea-acc-heading: #0f172a;
+	--awea-acc-text: #475569;
+	--awea-acc-border: #e2e8f0;
+
+	width: 100%;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.awea-accordion-wrap *,
+.awea-accordion-wrap *::before,
+.awea-accordion-wrap *::after {
+	box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   1. Item Card Shell
+   -------------------------------------------------------------------------- */
+.awea-accordion-item {
+	background-color: #ffffff;
+	border: 1px solid var(--awea-acc-border);
+	border-radius: 16px;
+	margin-bottom: 14px;
+	overflow: hidden;
+	transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.awea-accordion-item:last-child {
+	margin-bottom: 0 !important;
+}
+
+.awea-accordion-item:hover {
+	border-color: #cbd5e1;
+}
+
+.awea-accordion-item.is-active {
+	border-color: var(--awea-acc-primary);
+}
+
+/* --------------------------------------------------------------------------
+   2. Semantic Heading & Button Reset
+   -------------------------------------------------------------------------- */
+.awea-accordion-heading-wrap {
+	margin: 0;
+	padding: 0;
+	font-size: inherit;
+	font-weight: inherit;
+	line-height: inherit;
+}
+
+.awea-accordion-header {
+	width: 100%;
+	margin: 0;
+	padding: 20px 24px;
+	border: 0;
+	background: transparent;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	text-align: left;
+	cursor: pointer;
+	user-select: none;
+	appearance: none;
+	-webkit-appearance: none;
+	transition: background-color 0.25s ease;
+}
+
+.awea-accordion-header:hover,
+.awea-accordion-header:focus {
+	background: transparent;
+}
+
+.awea-accordion-header:focus-visible {
+	outline: 2px solid var(--awea-acc-primary);
+	outline-offset: -2px;
+}
+
+/* Left Icon Alignment */
+.awea-icon-pos-left .awea-accordion-header {
+	flex-direction: row-reverse;
+	justify-content: flex-end;
+}
+
+.awea-accordion-title-group {
+	display: flex;
+	align-items: baseline;
+	gap: 12px;
+	flex: 1;
+	min-width: 0;
+}
+
+.awea-accordion-index {
+	font-size: 0.875rem;
+	font-weight: 800;
+	color: var(--awea-acc-primary);
+	letter-spacing: 0.04em;
+	flex-shrink: 0;
+	opacity: 0.85;
+}
+
+.awea-accordion-title {
+	margin: 0;
+	font-size: 1.075rem;
+	font-weight: 700;
+	line-height: 1.38;
+	color: var(--awea-acc-heading);
+	letter-spacing: -0.01em;
+	word-break: break-word;
+	transition: color 0.25s ease;
+}
+
+.awea-accordion-header:hover .awea-accordion-title,
+.awea-accordion-item.is-active .awea-accordion-title {
+	color: var(--awea-acc-primary);
+}
+
+/* --------------------------------------------------------------------------
+   3. Toggle Icons
+   -------------------------------------------------------------------------- */
+.awea-icon-box {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background-color: #f8fafc;
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+/* Plus / Minus Morph */
+.awea-icon-line {
+	position: absolute;
+	background-color: #64748b;
+	border-radius: 2px;
+	transition:
+		transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+		opacity 0.25s ease,
+		background-color 0.25s ease;
+}
+
+.awea-icon-line.h {
+	width: 15px;
+	height: 2px;
+}
+
+.awea-icon-line.v {
+	width: 2px;
+	height: 15px;
+}
+
+.awea-accordion-item.is-active .awea-icon-line.v {
+	transform: rotate(90deg);
+	opacity: 0;
+}
+
+.awea-accordion-item.is-active .awea-icon-line.h {
+	transform: rotate(180deg);
+	background-color: var(--awea-acc-primary);
+}
+
+/* Chevron Rotate */
+.awea-icon-chevron {
+	width: 15px;
+	height: 15px;
+	stroke: #64748b;
+	display: block;
+	transition:
+		transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+		stroke 0.25s ease;
+}
+
+.awea-accordion-item.is-active .awea-icon-chevron {
+	transform: rotate(180deg);
+	stroke: var(--awea-acc-primary);
+}
+
+/* --------------------------------------------------------------------------
+   4. Fluid Collapse Panel
+   -------------------------------------------------------------------------- */
+.awea-accordion-collapse {
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.awea-accordion-item.is-active .awea-accordion-collapse {
+	grid-template-rows: 1fr;
+}
+
+.awea-accordion-overflow {
+	overflow: hidden;
+	min-height: 0;
+}
+
+.awea-content-inner {
+	padding: 0 24px 24px 24px;
+	font-size: 0.96rem;
+	line-height: 1.68;
+	color: var(--awea-acc-text);
+	word-break: break-word;
+}
+
+.awea-content-inner p {
+	margin-top: 0;
+	margin-bottom: 12px;
+}
+
+.awea-content-inner p:last-child {
+	margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   5. Accessibility & Responsive
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.awea-accordion-item,
+	.awea-accordion-header,
+	.awea-accordion-title,
+	.awea-accordion-collapse,
+	.awea-icon-box,
+	.awea-icon-line,
+	.awea-icon-chevron {
+		transition: none !important;
+	}
+}
+
+@media (max-width: 640px) {
+	.awea-accordion-header {
+		padding: 16px 18px;
+		gap: 12px;
+	}
+
+	.awea-content-inner {
+		padding: 0 18px 18px 18px;
+		font-size: 0.92rem;
+	}
+
+	.awea-accordion-title {
+		font-size: 1rem;
+	}
+}

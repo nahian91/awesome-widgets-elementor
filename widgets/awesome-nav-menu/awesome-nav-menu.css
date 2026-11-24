@@ -1,0 +1,451 @@
+/* ==========================================================================
+   Awesome Navigation Menu Widget (Global Token Edition v2.5.0)
+   ========================================================================== */
+
+.awea-nav-menu-wrapper {
+	--awea-nm-primary: var(--e-global-color-primary);
+	--awea-nm-secondary: var(--e-global-color-secondary);
+	--awea-nm-text: var(--e-global-color-text);
+	--awea-nm-accent: var(--e-global-color-accent);
+	--awea-nm-surface: var(--e-global-color-background, #ffffff);
+	--awea-nm-border: color-mix(in srgb, currentColor 12%, transparent);
+	--awea-nm-soft-tint: color-mix(in srgb, var(--awea-nm-accent) 10%, transparent);
+
+	--awea-nm-drawer-offset: 12px;
+	--awea-nm-drawer-bg: var(--awea-nm-surface);
+	--awea-nm-drawer-padding: 12px;
+	--awea-nm-drawer-radius: 16px;
+	--awea-nm-drawer-border: var(--awea-nm-border);
+
+	width: 100%;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.awea-nav-menu-wrapper *,
+.awea-nav-menu-wrapper *::before,
+.awea-nav-menu-wrapper *::after {
+	box-sizing: border-box;
+}
+
+.awea-nav-menu-container {
+	width: 100%;
+	position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   1. Desktop Menu List & Base Links
+   -------------------------------------------------------------------------- */
+.awea-nav-menu-container ul.menu {
+	display: flex;
+	flex-direction: row;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	align-items: center;
+}
+
+.awea-nav-menu-container ul.menu li {
+	position: relative;
+	margin: 0;
+	list-style: none;
+}
+
+.awea-nav-menu-container ul.menu > li > a {
+	display: inline-flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 6px;
+	text-decoration: none;
+	color: var(--awea-nm-primary);
+	line-height: 1.2;
+	position: relative;
+	overflow: hidden;
+	transition:
+		color 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+		background-color 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.awea-nav-layout-column .awea-nav-menu-container ul.menu > li > a {
+	width: 100%;
+}
+
+/* Hover Style: Soft Tinted Pill */
+.awea-nav-hover-pill .awea-nav-menu-container ul.menu > li > a:hover,
+.awea-nav-hover-pill .awea-nav-menu-container ul.menu > li:hover > a,
+.awea-nav-hover-pill .awea-nav-menu-container ul.menu > li.current-menu-item > a {
+	background-color: var(--awea-nm-soft-tint);
+}
+
+/* Hover Style: Animated Bottom / Top Line */
+.awea-nav-hover-underline .awea-nav-menu-container ul.menu > li > a::after,
+.awea-nav-hover-overline .awea-nav-menu-container ul.menu > li > a::after {
+	content: "";
+	position: absolute;
+	left: 16px;
+	right: 16px;
+	height: 2px;
+	background-color: var(--awea-nm-accent);
+	transform: scaleX(0);
+	transform-origin: left center;
+	transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-nav-hover-underline .awea-nav-menu-container ul.menu > li > a::after {
+	bottom: 2px;
+}
+
+.awea-nav-hover-overline .awea-nav-menu-container ul.menu > li > a::after {
+	top: 2px;
+}
+
+.awea-nav-hover-underline .awea-nav-menu-container ul.menu > li > a:hover::after,
+.awea-nav-hover-underline .awea-nav-menu-container ul.menu > li.current-menu-item > a::after,
+.awea-nav-hover-overline .awea-nav-menu-container ul.menu > li > a:hover::after,
+.awea-nav-hover-overline .awea-nav-menu-container ul.menu > li.current-menu-item > a::after {
+	transform: scaleX(1);
+}
+
+.awea-nav-menu-container ul.menu > li > a:hover,
+.awea-nav-menu-container ul.menu > li:hover > a,
+.awea-nav-menu-container ul.menu > li.current-menu-item > a,
+.awea-nav-menu-container ul.menu > li.current-menu-ancestor > a {
+	color: var(--awea-nm-accent);
+}
+
+.awea-nav-menu-container ul.menu a:focus-visible {
+	outline: 2px solid var(--awea-nm-accent);
+	outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   2. Submenu Indicator Chevron
+   -------------------------------------------------------------------------- */
+.awea-sub-indicator {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 14px;
+	height: 14px;
+	flex-shrink: 0;
+	pointer-events: none;
+	transform: rotate(0deg);
+	transition:
+		transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+		color 0.2s ease;
+}
+
+.awea-sub-indicator svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+	stroke-width: 2.5;
+}
+
+.awea-nav-menu-container ul.menu li:hover > a .awea-sub-indicator,
+.awea-nav-menu-container ul.menu li:focus-within > a .awea-sub-indicator,
+.awea-nav-menu-container ul.menu li.awea-sub-open > a .awea-sub-indicator {
+	transform: rotate(180deg);
+}
+
+/* --------------------------------------------------------------------------
+   3. Desktop Dropdown Submenu
+   -------------------------------------------------------------------------- */
+.awea-nav-menu-container ul.menu ul.sub-menu {
+	position: absolute;
+	top: 100%;
+	inset-inline-start: 0;
+	background-color: var(--awea-nm-surface);
+	border: 1px solid var(--awea-nm-border);
+	box-shadow:
+		0 16px 36px -8px color-mix(in srgb, var(--awea-nm-primary) 12%, transparent),
+		0 2px 8px -2px color-mix(in srgb, var(--awea-nm-primary) 6%, transparent);
+	list-style: none;
+	margin: 0;
+	z-index: 999;
+
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transform: translateY(8px);
+	transform-origin: top center;
+	transition:
+		opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+		transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+		visibility 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Vertical Layout Top-Level Flyout */
+.awea-nav-layout-column .awea-nav-menu-container ul.menu > li > ul.sub-menu {
+	top: 0;
+	inset-inline-start: 100%;
+	margin-top: 0;
+	transform: translateX(-8px);
+}
+
+.awea-nav-layout-column .awea-nav-menu-container ul.menu > li:hover > ul.sub-menu,
+.awea-nav-layout-column .awea-nav-menu-container ul.menu > li:focus-within > ul.sub-menu {
+	transform: translateX(0);
+}
+
+.awea-nav-menu-container ul.menu li:hover > ul.sub-menu,
+.awea-nav-menu-container ul.menu li:focus-within > ul.sub-menu {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+	transform: translateY(0);
+}
+
+/* Nested Submenus (Flyout Side) */
+.awea-nav-menu-container ul.menu ul.sub-menu ul.sub-menu {
+	top: 0;
+	inset-inline-start: 100%;
+	margin-top: 0 !important;
+	transform: translateX(-8px);
+}
+
+.awea-nav-menu-container ul.menu ul.sub-menu li:hover > ul.sub-menu,
+.awea-nav-menu-container ul.menu ul.sub-menu li:focus-within > ul.sub-menu {
+	transform: translateX(0);
+}
+
+.awea-nav-menu-container ul.menu ul.sub-menu li {
+	width: 100%;
+}
+
+.awea-nav-menu-container ul.menu ul.sub-menu li a {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	padding: 10px 16px;
+	color: var(--awea-nm-text);
+	text-decoration: none;
+	border-radius: 8px;
+	transition:
+		background-color 0.2s cubic-bezier(0.25, 1, 0.5, 1),
+		color 0.2s cubic-bezier(0.25, 1, 0.5, 1),
+		padding-inline-start 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.awea-nav-menu-container ul.menu ul.sub-menu li a:hover,
+.awea-nav-menu-container ul.menu ul.sub-menu li a:focus-visible,
+.awea-nav-menu-container ul.menu ul.sub-menu li.current-menu-item > a {
+	background-color: var(--awea-nm-soft-tint);
+	color: var(--awea-nm-accent);
+	padding-inline-start: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   4. Mobile Toggle Button
+   -------------------------------------------------------------------------- */
+.awea-mobile-toggle-wrapper {
+	display: none;
+	width: 100%;
+}
+
+.awea-mobile-toggle-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	margin: 0;
+	padding: 10px;
+	border: 1px solid var(--awea-nm-border);
+	cursor: pointer;
+	background-color: color-mix(in srgb, currentColor 5%, transparent);
+	border-radius: 10px;
+	position: relative;
+	overflow: hidden;
+	appearance: none;
+	-webkit-appearance: none;
+	transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.awea-mobile-toggle-btn:focus-visible {
+	outline: 2px solid var(--awea-nm-accent);
+	outline-offset: 2px;
+}
+
+.awea-mobile-toggle-btn svg {
+	position: absolute;
+	width: 22px;
+	height: 22px;
+	stroke: var(--awea-nm-primary);
+	transition:
+		opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+		transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+		stroke 0.25s ease;
+}
+
+.awea-mobile-toggle-btn[aria-expanded="true"] {
+	background-color: var(--awea-nm-accent);
+	border-color: var(--awea-nm-accent);
+}
+
+.awea-mobile-toggle-btn[aria-expanded="true"] svg {
+	stroke: var(--awea-nm-surface);
+}
+
+.awea-mobile-toggle-btn .awea-icon-open {
+	opacity: 1;
+	transform: rotate(0deg) scale(1);
+}
+
+.awea-mobile-toggle-btn .awea-icon-close {
+	opacity: 0;
+	transform: rotate(-90deg) scale(0.6);
+}
+
+.awea-mobile-toggle-btn[aria-expanded="true"] .awea-icon-open {
+	opacity: 0;
+	transform: rotate(90deg) scale(0.6);
+}
+
+.awea-mobile-toggle-btn[aria-expanded="true"] .awea-icon-close {
+	opacity: 1;
+	transform: rotate(0deg) scale(1);
+}
+
+/* --------------------------------------------------------------------------
+   5. Accessibility & Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.awea-nav-menu-container ul.menu > li > a,
+	.awea-nav-menu-container ul.menu > li > a::after,
+	.awea-nav-menu-container ul.menu ul.sub-menu,
+	.awea-sub-indicator,
+	.awea-mobile-toggle-btn svg,
+	.awea-nav-menu-container {
+		transition: none !important;
+	}
+}
+
+@media (max-width: 767px) {
+	.awea-nav-breakpoint-mobile .awea-mobile-toggle-wrapper {
+		display: flex;
+	}
+
+	.awea-nav-breakpoint-mobile .awea-nav-menu-container {
+		width: 100%;
+		margin-top: 0;
+		padding: 0;
+		background-color: var(--awea-nm-drawer-bg);
+		border: 0 solid var(--awea-nm-drawer-border);
+		border-radius: var(--awea-nm-drawer-radius);
+		overflow: hidden;
+		max-height: 0;
+		opacity: 0;
+		transition:
+			max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+			opacity 0.25s ease,
+			padding 0.25s ease,
+			margin-top 0.25s ease;
+	}
+
+	.awea-nav-breakpoint-mobile .awea-nav-menu-container.awea-menu-open {
+		margin-top: var(--awea-nm-drawer-offset);
+		padding: var(--awea-nm-drawer-padding);
+		border-width: 1px;
+		box-shadow:
+			0 16px 36px -8px color-mix(in srgb, var(--awea-nm-primary) 12%, transparent),
+			0 2px 8px -2px color-mix(in srgb, var(--awea-nm-primary) 6%, transparent);
+		max-height: 1400px;
+		opacity: 1;
+	}
+
+	.awea-nav-breakpoint-mobile .awea-nav-menu-container ul.menu {
+		flex-direction: column !important;
+		align-items: stretch !important;
+		gap: 4px !important;
+		width: 100%;
+	}
+
+	.awea-nav-breakpoint-mobile .awea-nav-menu-container ul.menu li,
+	.awea-nav-breakpoint-mobile .awea-nav-menu-container ul.menu li a {
+		width: 100%;
+	}
+
+	.awea-nav-breakpoint-mobile .awea-nav-menu-container ul.menu ul.sub-menu {
+		display: none;
+		position: static;
+		opacity: 1;
+		visibility: visible;
+		pointer-events: auto;
+		box-shadow: none;
+		border: none;
+		padding: 4px 0 4px 14px;
+		margin: 0 !important;
+		background: transparent;
+		transform: none;
+	}
+
+	.awea-nav-breakpoint-mobile .awea-nav-menu-container ul.menu li.awea-sub-open > ul.sub-menu {
+		display: block;
+	}
+}
+
+@media (max-width: 991px) {
+	.awea-nav-breakpoint-tablet .awea-mobile-toggle-wrapper {
+		display: flex;
+	}
+
+	.awea-nav-breakpoint-tablet .awea-nav-menu-container {
+		width: 100%;
+		margin-top: 0;
+		padding: 0;
+		background-color: var(--awea-nm-drawer-bg);
+		border: 0 solid var(--awea-nm-drawer-border);
+		border-radius: var(--awea-nm-drawer-radius);
+		overflow: hidden;
+		max-height: 0;
+		opacity: 0;
+		transition:
+			max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+			opacity 0.25s ease,
+			padding 0.25s ease,
+			margin-top 0.25s ease;
+	}
+
+	.awea-nav-breakpoint-tablet .awea-nav-menu-container.awea-menu-open {
+		margin-top: var(--awea-nm-drawer-offset);
+		padding: var(--awea-nm-drawer-padding);
+		border-width: 1px;
+		box-shadow:
+			0 16px 36px -8px color-mix(in srgb, var(--awea-nm-primary) 12%, transparent),
+			0 2px 8px -2px color-mix(in srgb, var(--awea-nm-primary) 6%, transparent);
+		max-height: 1400px;
+		opacity: 1;
+	}
+
+	.awea-nav-breakpoint-tablet .awea-nav-menu-container ul.menu {
+		flex-direction: column !important;
+		align-items: stretch !important;
+		gap: 4px !important;
+		width: 100%;
+	}
+
+	.awea-nav-breakpoint-tablet .awea-nav-menu-container ul.menu li,
+	.awea-nav-breakpoint-tablet .awea-nav-menu-container ul.menu li a {
+		width: 100%;
+	}
+
+	.awea-nav-breakpoint-tablet .awea-nav-menu-container ul.menu ul.sub-menu {
+		display: none;
+		position: static;
+		opacity: 1;
+		visibility: visible;
+		pointer-events: auto;
+		box-shadow: none;
+		border: none;
+		padding: 4px 0 4px 14px;
+		margin: 0 !important;
+		background: transparent;
+		transform: none;
+	}
+
+	.awea-nav-breakpoint-tablet .awea-nav-menu-container ul.menu li.awea-sub-open > ul.sub-menu {
+		display: block;
+	}
+}

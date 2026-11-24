@@ -1,0 +1,386 @@
+/* ==========================================================================
+   Awesome About Widget
+   ========================================================================== */
+
+.awea-about-grid {
+	--awea-about-primary: var(--e-global-color-primary, #4f46e5);
+	--awea-about-accent: var(--e-global-color-accent, #38bdf8);
+	--awea-about-heading: #0f172a;
+	--awea-about-text: #475569;
+	--awea-about-muted: #64748b;
+
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 64px;
+	align-items: center;
+	box-sizing: border-box;
+}
+
+.awea-about-grid *,
+.awea-about-grid *::before,
+.awea-about-grid *::after {
+	box-sizing: border-box;
+}
+
+/* Media Right Alignment Swap */
+.awea-about-pos-right .awea-about-visual {
+	order: 2;
+}
+
+.awea-about-pos-right .awea-about-content {
+	order: 1;
+}
+
+.awea-about-pos-right .awea-about-main-img {
+	margin-left: auto;
+}
+
+.awea-about-pos-right .awea-about-float-img {
+	right: auto;
+	left: 0;
+}
+
+.awea-about-pos-right .awea-about-badge {
+	left: auto;
+	right: -12px;
+}
+
+/* --------------------------------------------------------------------------
+   1. Visual Column
+   -------------------------------------------------------------------------- */
+.awea-about-visual {
+	position: relative;
+	width: 100%;
+}
+
+.awea-about-main-img {
+	width: 92%;
+	aspect-ratio: 4 / 5;
+	border-radius: 64px 20px 20px 64px;
+	overflow: hidden;
+	background-color: #e2e8f0;
+}
+
+.awea-about-main-img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.awea-about-visual:hover .awea-about-main-img img {
+	transform: scale(1.03);
+}
+
+.awea-about-float-img {
+	position: absolute;
+	width: 38%;
+	aspect-ratio: 1 / 1;
+	right: 0;
+	bottom: 10%;
+	z-index: 2;
+	border-radius: 50%;
+	border: 8px solid #ffffff;
+	overflow: hidden;
+	background-color: #cbd5e1;
+}
+
+.awea-about-float-img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.awea-about-badge {
+	position: absolute;
+	top: 8%;
+	left: -12px;
+	z-index: 3;
+	padding: 12px 22px;
+	border-radius: 100px;
+	background-color: var(--awea-about-primary);
+	color: #ffffff;
+	font-size: 0.8125rem;
+	font-weight: 700;
+	line-height: 1.2;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+}
+
+/* --------------------------------------------------------------------------
+   2. Editorial Content Column
+   -------------------------------------------------------------------------- */
+.awea-about-content {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.awea-about-sub {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 16px;
+	font-size: 0.8125rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
+	line-height: 1.3;
+	color: var(--awea-about-accent);
+}
+
+.awea-about-line {
+	width: 28px;
+	height: 2px;
+	border-radius: 2px;
+	background-color: currentColor;
+	flex-shrink: 0;
+}
+
+.awea-about-title {
+	margin: 0 0 20px 0;
+	font-size: clamp(1.875rem, 3.8vw, 3rem);
+	font-weight: 800;
+	line-height: 1.15;
+	letter-spacing: -0.025em;
+	color: var(--awea-about-heading);
+	word-break: break-word;
+}
+
+.awea-about-desc {
+	margin: 0 0 28px 0;
+	font-size: 1.03125rem;
+	line-height: 1.72;
+	color: var(--awea-about-text);
+	word-break: break-word;
+}
+
+.awea-about-desc p {
+	margin: 0 0 1em 0;
+}
+
+.awea-about-desc p:last-child {
+	margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. Highlights / Features Matrix
+   -------------------------------------------------------------------------- */
+.awea-about-feats {
+	width: 100%;
+	list-style: none;
+	margin: 0 0 36px 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 14px 20px;
+}
+
+.awea-about-feat {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	line-height: 1.45;
+	color: var(--awea-about-heading);
+	word-break: break-word;
+}
+
+.awea-about-feat-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 2px;
+	font-size: 18px;
+	color: var(--awea-about-primary);
+	flex-shrink: 0;
+}
+
+.awea-about-feat-icon svg {
+	width: 18px;
+	height: 18px;
+	fill: currentColor;
+	display: block;
+}
+
+/* --------------------------------------------------------------------------
+   4. Call to Action & Direct Phone
+   -------------------------------------------------------------------------- */
+.awea-about-actions {
+	display: flex;
+	align-items: center;
+	gap: 28px;
+	flex-wrap: wrap;
+}
+
+.awea-about-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	padding: 15px 30px;
+	border: 1px solid transparent;
+	border-radius: 12px;
+	background-color: var(--awea-about-primary);
+	color: #ffffff;
+	font-size: 0.9375rem;
+	font-weight: 700;
+	line-height: 1.2;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+
+.awea-about-btn:hover,
+.awea-about-btn:focus-visible {
+	background-color: var(--awea-about-heading);
+	color: #ffffff;
+	transform: translateY(-2px);
+}
+
+.awea-about-btn-icon {
+	display: inline-flex;
+	align-items: center;
+	transition: transform 0.25s ease;
+}
+
+.awea-about-btn-icon svg {
+	width: 14px;
+	height: 14px;
+	fill: currentColor;
+}
+
+.awea-about-btn:hover .awea-about-btn-icon {
+	transform: translateX(3px);
+}
+
+/* Direct Contact Link */
+.awea-about-phone-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 14px;
+	text-decoration: none;
+	color: inherit;
+	transition: opacity 0.2s ease;
+}
+
+.awea-about-phone-link:hover {
+	opacity: 0.85;
+}
+
+.awea-about-phone-ico {
+	position: relative;
+	width: 46px;
+	height: 46px;
+	border-radius: 12px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--awea-about-primary);
+	background-color: #f1f5f9;
+	border: 1px solid #e2e8f0;
+	flex-shrink: 0;
+	transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+.awea-about-phone-ico svg {
+	width: 18px;
+	height: 18px;
+	fill: currentColor;
+}
+
+.awea-about-phone-link:hover .awea-about-phone-ico {
+	background-color: var(--awea-about-primary);
+	border-color: var(--awea-about-primary);
+	color: #ffffff;
+	transform: scale(1.05);
+}
+
+.awea-about-phone-meta {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.awea-about-phone-lbl {
+	font-size: 0.75rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	line-height: 1.2;
+	color: var(--awea-about-muted);
+}
+
+.awea-about-phone-num {
+	font-size: 1.0625rem;
+	font-weight: 800;
+	line-height: 1.3;
+	letter-spacing: -0.01em;
+	color: var(--awea-about-heading);
+}
+
+/* --------------------------------------------------------------------------
+   5. Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+	.awea-about-grid {
+		grid-template-columns: 1fr;
+		gap: 44px;
+	}
+
+	.awea-about-pos-right .awea-about-visual,
+	.awea-about-pos-right .awea-about-content {
+		order: initial;
+	}
+
+	.awea-about-visual {
+		max-width: 580px;
+		margin: 0 auto;
+	}
+
+	.awea-about-badge,
+	.awea-about-pos-right .awea-about-badge {
+		left: 12px;
+		right: auto;
+	}
+}
+
+@media (max-width: 640px) {
+	.awea-about-main-img {
+		width: 100%;
+		border-radius: 28px;
+	}
+
+	.awea-about-float-img,
+	.awea-about-pos-right .awea-about-float-img {
+		width: 34%;
+		right: 12px;
+		left: auto;
+		bottom: 12px;
+		border-width: 5px;
+	}
+
+	.awea-about-badge,
+	.awea-about-pos-right .awea-about-badge {
+		top: 12px;
+		left: 12px;
+		right: auto;
+		padding: 8px 14px;
+		font-size: 0.72rem;
+	}
+
+	.awea-about-actions {
+		flex-direction: column;
+		align-items: stretch;
+		width: 100%;
+		gap: 18px;
+	}
+
+	.awea-about-btn {
+		width: 100%;
+	}
+}

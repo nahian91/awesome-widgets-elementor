@@ -1,0 +1,280 @@
+/* ==========================================================================
+   Awesome Counter Widget (Global Token Edition v2.5.0)
+   ========================================================================== */
+
+@property --awea-cnt-angle {
+	syntax: "<angle>";
+	initial-value: 0deg;
+	inherits: false;
+}
+
+.awea-cnt-grid {
+	--awea-cnt-primary: var(--e-global-color-primary);
+	--awea-cnt-secondary: var(--e-global-color-secondary);
+	--awea-cnt-text: var(--e-global-color-text);
+	--awea-cnt-accent: var(--e-global-color-accent);
+	--awea-cnt-border: color-mix(in srgb, currentColor 12%, transparent);
+
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	column-gap: 24px;
+	row-gap: 24px;
+	width: 100%;
+	box-sizing: border-box;
+	align-items: stretch;
+}
+
+.awea-cnt-grid *,
+.awea-cnt-grid *::before,
+.awea-cnt-grid *::after {
+	box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   1. Counter Card Shell
+   -------------------------------------------------------------------------- */
+.awea-cnt-card {
+	--awea-cnt-active-accent: var(--awea-cnt-item-accent, var(--awea-cnt-accent));
+	--awea-cnt-soft-tint: color-mix(in srgb, var(--awea-cnt-active-accent) 10%, transparent);
+	--awea-cnt-beam: var(--awea-cnt-active-accent);
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	height: 100%;
+	width: 100%;
+	padding: 36px 28px;
+	border-radius: 16px;
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
+	border: 1px solid var(--awea-cnt-border);
+	overflow: hidden;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.3s ease,
+		transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-cnt-card.awea-cnt-featured {
+	border-color: var(--awea-cnt-active-accent);
+	box-shadow: 0 16px 34px -12px color-mix(in srgb, var(--awea-cnt-active-accent) 22%, transparent);
+}
+
+.awea-cnt-motion-lift .awea-cnt-card:hover {
+	transform: translateY(-5px);
+}
+
+.awea-cnt-motion-scale .awea-cnt-card:hover {
+	transform: scale(1.02);
+}
+
+/* Horizontal Card Layout Mode */
+.awea-cnt-dir-horizontal .awea-cnt-card {
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+	text-align: left;
+	gap: 20px;
+}
+
+.awea-cnt-dir-horizontal .awea-cnt-icon {
+	margin-bottom: 0;
+}
+
+.awea-cnt-dir-horizontal .awea-cnt-stats {
+	justify-content: flex-start;
+}
+
+.awea-cnt-card:hover {
+	border-color: var(--awea-cnt-active-accent);
+	box-shadow: 0 18px 36px -14px color-mix(in srgb, var(--awea-cnt-primary) 12%, transparent);
+}
+
+/* Kinetic Border Beam */
+.awea-cnt-beam-yes .awea-cnt-card::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	padding: 1.5px;
+	background: conic-gradient(from var(--awea-cnt-angle), transparent 70%, var(--awea-cnt-beam), transparent);
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+	pointer-events: none;
+}
+
+@keyframes aweaCntSpin {
+	to {
+		--awea-cnt-angle: 360deg;
+	}
+}
+
+.awea-cnt-beam-yes .awea-cnt-card:hover::after {
+	opacity: 1;
+	animation: aweaCntSpin 3.5s linear infinite;
+}
+
+/* --------------------------------------------------------------------------
+   2. Leading Icon Box & Styles
+   -------------------------------------------------------------------------- */
+.awea-cnt-icon {
+	width: 58px;
+	height: 58px;
+	border-radius: 14px;
+	background-color: var(--awea-cnt-soft-tint);
+	color: var(--awea-cnt-active-accent);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 20px;
+	flex-shrink: 0;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		color 0.25s ease,
+		transform 0.25s ease;
+}
+
+.awea-cnt-icon-solid .awea-cnt-icon {
+	background-color: var(--awea-cnt-active-accent);
+	color: var(--e-global-color-background, #ffffff);
+}
+
+.awea-cnt-icon-outlined .awea-cnt-icon {
+	background-color: transparent;
+	border: 1.5px solid var(--awea-cnt-active-accent);
+	color: var(--awea-cnt-active-accent);
+}
+
+.awea-cnt-icon-minimal .awea-cnt-icon {
+	width: auto;
+	height: auto;
+	background: transparent !important;
+	border: none !important;
+	border-radius: 0 !important;
+}
+
+.awea-cnt-icon i {
+	font-size: 22px;
+	line-height: 1;
+}
+
+.awea-cnt-icon svg {
+	width: 22px;
+	height: 22px;
+	display: block;
+	fill: currentColor;
+}
+
+.awea-cnt-card:hover .awea-cnt-icon {
+	background-color: var(--awea-cnt-active-accent);
+	color: var(--e-global-color-background, #ffffff);
+}
+
+.awea-cnt-icon-minimal .awea-cnt-card:hover .awea-cnt-icon {
+	background: transparent !important;
+	color: var(--awea-cnt-active-accent);
+}
+
+.awea-cnt-card:hover .awea-cnt-icon svg {
+	fill: currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   3. Number Metrics & Labels
+   -------------------------------------------------------------------------- */
+.awea-cnt-content {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.awea-cnt-stats {
+	display: inline-flex;
+	align-items: baseline;
+	justify-content: center;
+	line-height: 1;
+	margin-bottom: 8px;
+	flex-wrap: wrap;
+}
+
+.awea-cnt-val {
+	line-height: 1;
+	color: var(--awea-cnt-primary);
+	font-variant-numeric: tabular-nums;
+	font-feature-settings: "tnum";
+}
+
+.awea-cnt-pre,
+.awea-cnt-suf {
+	color: var(--awea-cnt-active-accent);
+	line-height: 1;
+}
+
+.awea-cnt-pre {
+	margin-right: 3px;
+}
+
+.awea-cnt-suf {
+	margin-left: 3px;
+}
+
+.awea-cnt-lbl {
+	margin: 0;
+	color: var(--awea-cnt-secondary);
+	line-height: 1.4;
+	word-break: break-word;
+}
+
+.awea-cnt-subtext {
+	display: block;
+	margin-top: 4px;
+	color: var(--awea-cnt-text);
+	opacity: 0.78;
+	line-height: 1.4;
+}
+
+/* --------------------------------------------------------------------------
+   4. Accessibility & Responsive
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.awea-cnt-beam-yes .awea-cnt-card:hover::after {
+		animation: none !important;
+	}
+
+	.awea-cnt-card,
+	.awea-cnt-icon {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+@media (max-width: 768px) {
+	.awea-cnt-card {
+		padding: 28px 20px;
+		border-radius: 14px;
+	}
+
+	.awea-cnt-icon {
+		width: 48px;
+		height: 48px;
+		margin-bottom: 16px;
+		border-radius: 12px;
+	}
+
+	.awea-cnt-icon i {
+		font-size: 18px;
+	}
+
+	.awea-cnt-icon svg {
+		width: 18px;
+		height: 18px;
+	}
+}

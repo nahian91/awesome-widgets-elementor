@@ -1,0 +1,114 @@
+/* ==========================================================================
+   Awesome Site Logo — Zero-Shadow Architectural Branding (v2.5.0)
+   ========================================================================== */
+
+.awea-site-logo-outer {
+	--awea-sl-primary: var(--e-global-color-primary);
+	--awea-sl-secondary: var(--e-global-color-secondary);
+	--awea-sl-text: var(--e-global-color-text);
+	--awea-sl-accent: var(--e-global-color-accent);
+	--awea-sl-align: flex-start;
+
+	width: 100%;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.awea-site-logo-outer *,
+.awea-site-logo-outer *::before,
+.awea-site-logo-outer *::after {
+	box-sizing: border-box;
+}
+
+.awea-site-logo-wrap {
+	display: inline-flex;
+	vertical-align: middle;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.awea-site-logo-wrap .awe-logo-link {
+	display: inline-flex;
+	align-items: center;
+	text-decoration: none;
+	outline: none;
+	transform: none !important;
+}
+
+.awea-site-logo-wrap a.awe-logo-link:focus-visible {
+	outline: 2px solid var(--awea-sl-accent);
+	outline-offset: 4px;
+	border-radius: 6px;
+}
+
+/* Image Framing & Zero Lift */
+.awea-site-logo-wrap .awe-image-logo-group {
+	display: inline-flex;
+	align-items: center;
+	position: relative;
+	overflow: visible;
+}
+
+.awea-site-logo-wrap img,
+.awea-site-logo-wrap svg {
+	display: block;
+	height: auto;
+	max-width: 100%;
+	transform: none !important;
+	transition: opacity 0.25s ease, filter 0.25s ease;
+}
+
+/* Dual / Hover Logo Swap Mechanism */
+.awea-site-logo-wrap .has-hover-logo {
+	position: relative;
+}
+
+.awea-site-logo-wrap .has-hover-logo .awe-hover-logo {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.awea-site-logo-wrap .has-hover-logo:hover img:first-child,
+.awea-site-logo-wrap .has-hover-logo:hover .awe-primary-logo {
+	opacity: 0;
+}
+
+.awea-site-logo-wrap .has-hover-logo:hover .awe-hover-logo {
+	opacity: 1;
+}
+
+/* Text Logo & Tagline Styles */
+.awea-site-logo-wrap .awe-text-logo-group {
+	display: flex;
+	flex-direction: column;
+	align-items: var(--awea-sl-align, flex-start);
+}
+
+.awea-site-logo-wrap .awe-logo-title {
+	line-height: 1.1;
+	color: var(--awea-sl-primary);
+	transition: color 0.25s ease;
+}
+
+.awea-site-logo-wrap .awe-logo-tagline {
+	color: var(--awea-sl-text);
+	opacity: 0.8;
+	margin-top: 4px;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+	.awea-site-logo-wrap img,
+	.awea-site-logo-wrap svg,
+	.awea-site-logo-wrap .has-hover-logo .awe-hover-logo,
+	.awea-site-logo-wrap .awe-logo-title {
+		transition: none !important;
+	}
+}
