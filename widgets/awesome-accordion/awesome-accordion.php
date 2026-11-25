@@ -3,13 +3,21 @@
  * Awesome Accordion Widget.
  *
  * @package AwesomeWidgetsElementor
- * @since   2.0.0
+ * @since   2.5.0
  */
 
 namespace Elementor;
 
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Controls_Manager;
+use Elementor\Group_Control_Border;
+use Elementor\Group_Control_Background;
+use Elementor\Group_Control_Box_Shadow;
+use Elementor\Group_Control_Typography;
+use Elementor\Widget_Base;
+use Elementor\Repeater;
+use Elementor\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -34,38 +42,38 @@ class Widget_Awesome_Accordion extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'awea', 'accordion', 'faq', 'toggle', 'collapse', 'qna' ];
+		return [ 'awea', 'accordion', 'faq', 'toggle', 'collapse', 'qna', 'answers' ];
 	}
 
 	protected function register_controls() {
 
 		/* ==========================================================================
-		   CONTENT: 1. ITEMS (REPEATER)
+		   CONTENT: 1. FAQ & ACCORDION ITEMS (REPEATER)
 		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_section_items',
+			'awea_ac_section_items',
 			[
-				'label' => esc_html__( 'Items', 'awesome-widgets-elementor' ),
+				'label' => esc_html__( 'FAQ & Accordion Items', 'awesome-widgets-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
 
 		$repeater = new Repeater();
 
-		$repeater->start_controls_tabs( 'awea_item_tabs' );
+		$repeater->start_controls_tabs( 'awea_ac_item_tabs' );
 
-		// --- TAB 1: CONTENT ---
+		// --- TAB 1: QUESTION & ANSWER ---
 		$repeater->start_controls_tab(
-			'awea_tab_content',
+			'awea_ac_tab_content',
 			[
-				'label' => esc_html__( 'Content', 'awesome-widgets-elementor' ),
+				'label' => esc_html__( 'Question & Answer', 'awesome-widgets-elementor' ),
 			]
 		);
 
 		$repeater->add_control(
-			'awea_title',
+			'awea_ac_title',
 			[
-				'label'       => esc_html__( 'Title', 'awesome-widgets-elementor' ),
+				'label'       => esc_html__( 'Question Text', 'awesome-widgets-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => esc_html__( 'Where can I find your warranty policy?', 'awesome-widgets-elementor' ),
 				'dynamic'     => [ 'active' => true ],
@@ -74,9 +82,9 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'awea_content',
+			'awea_ac_content',
 			[
-				'label'   => esc_html__( 'Description', 'awesome-widgets-elementor' ),
+				'label'   => esc_html__( 'Answer Text', 'awesome-widgets-elementor' ),
 				'type'    => Controls_Manager::WYSIWYG,
 				'default' => esc_html__( 'Our standard commercial warranty covers all manufacturing defects and operational failures for 24 months from the purchase date.', 'awesome-widgets-elementor' ),
 				'dynamic' => [ 'active' => true ],
@@ -85,18 +93,18 @@ class Widget_Awesome_Accordion extends Widget_Base {
 
 		$repeater->end_controls_tab();
 
-		// --- TAB 2: SETTINGS ---
+		// --- TAB 2: OPEN SETTINGS ---
 		$repeater->start_controls_tab(
-			'awea_tab_settings',
+			'awea_ac_tab_settings',
 			[
-				'label' => esc_html__( 'Settings', 'awesome-widgets-elementor' ),
+				'label' => esc_html__( 'Open Settings', 'awesome-widgets-elementor' ),
 			]
 		);
 
 		$repeater->add_control(
-			'awea_active',
+			'awea_ac_active',
 			[
-				'label'        => esc_html__( 'Open by Default', 'awesome-widgets-elementor' ),
+				'label'        => esc_html__( 'Open Initially', 'awesome-widgets-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'label_on'     => esc_html__( 'Yes', 'awesome-widgets-elementor' ),
 				'label_off'    => esc_html__( 'No', 'awesome-widgets-elementor' ),
@@ -105,30 +113,41 @@ class Widget_Awesome_Accordion extends Widget_Base {
 			]
 		);
 
+		$repeater->add_control(
+			'awea_ac_item_accent',
+			[
+				'label'     => esc_html__( 'Main Theme Color', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}}' => '--awea-ac-item-accent: {{VALUE}};',
+				],
+			]
+		);
+
 		$repeater->end_controls_tab();
 
 		$repeater->end_controls_tabs();
 
 		$this->add_control(
-			'awea_items',
+			'awea_ac_items',
 			[
-				'label'       => esc_html__( 'Accordion Items', 'awesome-widgets-elementor' ),
+				'label'       => esc_html__( 'Items List', 'awesome-widgets-elementor' ),
 				'type'        => Controls_Manager::REPEATER,
 				'fields'      => $repeater->get_controls(),
-				'title_field' => '{{{ awea_title }}}',
+				'title_field' => '{{{ awea_ac_title }}}',
 				'default'     => [
 					[
-						'awea_title'   => esc_html__( 'Where can I find your warranty policy?', 'awesome-widgets-elementor' ),
-						'awea_content' => esc_html__( 'Our standard commercial warranty covers all manufacturing defects and operational failures for 24 months from the purchase date.', 'awesome-widgets-elementor' ),
-						'awea_active'  => 'yes',
+						'awea_ac_title'   => esc_html__( 'Where can I find your warranty policy?', 'awesome-widgets-elementor' ),
+						'awea_ac_content' => esc_html__( 'Our standard commercial warranty covers all manufacturing defects and operational failures for 24 months from the purchase date.', 'awesome-widgets-elementor' ),
+						'awea_ac_active'  => 'yes',
 					],
 					[
-						'awea_title'   => esc_html__( 'Do you support automated custom integrations?', 'awesome-widgets-elementor' ),
-						'awea_content' => esc_html__( 'Yes, our platform provides comprehensive REST API endpoints and webhooks for seamless custom pipeline synchronization.', 'awesome-widgets-elementor' ),
+						'awea_ac_title'   => esc_html__( 'Do you support automated custom integrations?', 'awesome-widgets-elementor' ),
+						'awea_ac_content' => esc_html__( 'Yes, our platform provides comprehensive REST API endpoints and webhooks for seamless custom pipeline synchronization.', 'awesome-widgets-elementor' ),
 					],
 					[
-						'awea_title'   => esc_html__( 'What is your average response turnaround?', 'awesome-widgets-elementor' ),
-						'awea_content' => esc_html__( 'Priority support queries are reviewed and answered within 2 to 4 business hours by our lead technical team.', 'awesome-widgets-elementor' ),
+						'awea_ac_title'   => esc_html__( 'What is your average response turnaround?', 'awesome-widgets-elementor' ),
+						'awea_ac_content' => esc_html__( 'Priority support queries are reviewed and answered within 2 to 4 business hours by our lead technical team.', 'awesome-widgets-elementor' ),
 					],
 				],
 			]
@@ -137,18 +156,33 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		$this->end_controls_section();
 
 		/* ==========================================================================
-		   CONTENT: 2. SETTINGS
+		   CONTENT: 2. ACCORDION OPTIONS
 		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_section_settings',
+			'awea_ac_section_settings',
 			[
-				'label' => esc_html__( 'Settings', 'awesome-widgets-elementor' ),
+				'label' => esc_html__( 'Accordion Options', 'awesome-widgets-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
 
 		$this->add_control(
-			'awea_multiple_open',
+			'awea_ac_box_style',
+			[
+				'label'        => esc_html__( 'List Style', 'awesome-widgets-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'default'      => 'cards',
+				'options'      => [
+					'cards'     => esc_html__( 'Separate Boxes', 'awesome-widgets-elementor' ),
+					'connected' => esc_html__( 'Single Grouped Box', 'awesome-widgets-elementor' ),
+					'minimal'   => esc_html__( 'Clean Underline Rows', 'awesome-widgets-elementor' ),
+				],
+				'prefix_class' => 'awea-ac-style-',
+			]
+		);
+
+		$this->add_control(
+			'awea_ac_multiple_open',
 			[
 				'label'        => esc_html__( 'Allow Multiple Open', 'awesome-widgets-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
@@ -160,9 +194,9 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		);
 
 		$this->add_control(
-			'awea_show_index',
+			'awea_ac_show_index',
 			[
-				'label'        => esc_html__( 'Show Item Numbers', 'awesome-widgets-elementor' ),
+				'label'        => esc_html__( 'Show Numbers (01, 02)', 'awesome-widgets-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'label_on'     => esc_html__( 'Yes', 'awesome-widgets-elementor' ),
 				'label_off'    => esc_html__( 'No', 'awesome-widgets-elementor' ),
@@ -172,9 +206,9 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		);
 
 		$this->add_control(
-			'awea_title_tag',
+			'awea_ac_title_tag',
 			[
-				'label'   => esc_html__( 'Title HTML Tag', 'awesome-widgets-elementor' ),
+				'label'   => esc_html__( 'Question Heading Tag', 'awesome-widgets-elementor' ),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'h4',
 				'options' => [
@@ -192,7 +226,7 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		);
 
 		$this->add_control(
-			'awea_icon_style',
+			'awea_ac_icon_style',
 			[
 				'label'     => esc_html__( 'Toggle Icon', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::SELECT,
@@ -200,16 +234,16 @@ class Widget_Awesome_Accordion extends Widget_Base {
 				'separator' => 'before',
 				'options'   => [
 					'plus-minus' => esc_html__( 'Plus / Minus', 'awesome-widgets-elementor' ),
-					'chevron'    => esc_html__( 'Chevron', 'awesome-widgets-elementor' ),
+					'chevron'    => esc_html__( 'Chevron Arrow', 'awesome-widgets-elementor' ),
 					'none'       => esc_html__( 'None', 'awesome-widgets-elementor' ),
 				],
 			]
 		);
 
 		$this->add_control(
-			'awea_icon_align',
+			'awea_ac_icon_align',
 			[
-				'label'     => esc_html__( 'Icon Position', 'awesome-widgets-elementor' ),
+				'label'     => esc_html__( 'Icon Side', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::CHOOSE,
 				'options'   => [
 					'left'  => [
@@ -222,18 +256,34 @@ class Widget_Awesome_Accordion extends Widget_Base {
 					],
 				],
 				'default'   => 'right',
-				'condition' => [ 'awea_icon_style!' => 'none' ],
+				'condition' => [ 'awea_ac_icon_style!' => 'none' ],
 			]
 		);
 
 		$this->add_control(
-			'awea_faq_schema',
+			'awea_ac_accent_bar',
 			[
-				'label'        => esc_html__( 'FAQ Schema (JSON-LD)', 'awesome-widgets-elementor' ),
-				'description'  => esc_html__( 'Outputs Google FAQPage structured data for SEO rich snippets.', 'awesome-widgets-elementor' ),
+				'label'        => esc_html__( 'Active Color Line', 'awesome-widgets-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'default'      => 'none',
+				'options'      => [
+					'none' => esc_html__( 'None', 'awesome-widgets-elementor' ),
+					'left' => esc_html__( 'Left Line', 'awesome-widgets-elementor' ),
+					'top'  => esc_html__( 'Top Line', 'awesome-widgets-elementor' ),
+				],
+				'prefix_class' => 'awea-ac-bar-',
+				'separator'    => 'before',
+			]
+		);
+
+		$this->add_control(
+			'awea_ac_faq_schema',
+			[
+				'label'        => esc_html__( 'Add Google FAQ Schema', 'awesome-widgets-elementor' ),
+				'description'  => esc_html__( 'Outputs FAQPage JSON-LD data for search engine rich results.', 'awesome-widgets-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
-				'label_on'     => esc_html__( 'On', 'awesome-widgets-elementor' ),
-				'label_off'    => esc_html__( 'Off', 'awesome-widgets-elementor' ),
+				'label_on'     => esc_html__( 'Yes', 'awesome-widgets-elementor' ),
+				'label_off'    => esc_html__( 'No', 'awesome-widgets-elementor' ),
 				'return_value' => 'yes',
 				'default'      => 'no',
 				'separator'    => 'before',
@@ -243,20 +293,20 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		$this->end_controls_section();
 
 		/* ==========================================================================
-		   STYLE: 1. ITEM CARD
+		   STYLE: 1. ITEM BOX
 		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_style_card',
+			'awea_ac_style_card',
 			[
-				'label' => esc_html__( 'Item Card', 'awesome-widgets-elementor' ),
+				'label' => esc_html__( 'Item Box', 'awesome-widgets-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_responsive_control(
-			'awea_item_gap',
+			'awea_ac_item_gap',
 			[
-				'label'      => esc_html__( 'Item Spacing', 'awesome-widgets-elementor' ),
+				'label'      => esc_html__( 'Space Between Items', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'rem' ],
 				'range'      => [
@@ -264,6 +314,7 @@ class Widget_Awesome_Accordion extends Widget_Base {
 					'rem' => [ 'min' => 0, 'max' => 3 ],
 				],
 				'default'    => [ 'unit' => 'px', 'size' => 14 ],
+				'condition'  => [ 'awea_ac_box_style!' => 'connected' ],
 				'selectors'  => [
 					'{{WRAPPER}} .awea-accordion-item' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
@@ -271,9 +322,9 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'awea_card_radius',
+			'awea_ac_card_radius',
 			[
-				'label'      => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
+				'label'      => esc_html__( 'Corner Roundness', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default'    => [
@@ -284,111 +335,102 @@ class Widget_Awesome_Accordion extends Widget_Base {
 					'unit'     => 'px',
 					'isLinked' => true,
 				],
+				'condition'  => [ 'awea_ac_box_style!' => 'minimal' ],
 				'selectors'  => [
-					'{{WRAPPER}} .awea-accordion-item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.awea-ac-style-cards .awea-accordion-item, {{WRAPPER}}.awea-ac-style-connected .awea-accordion-wrap' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
 
-		$this->start_controls_tabs( 'awea_card_tabs' );
+		$this->add_control(
+			'awea_ac_accent_bar_color',
+			[
+				'label'     => esc_html__( 'Color Line', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => [ 'default' => Global_Colors::COLOR_ACCENT ],
+				'condition' => [ 'awea_ac_accent_bar!' => 'none' ],
+				'selectors' => [
+					'{{WRAPPER}} .awea-ac-accent-bar' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
 
-		// Normal
+		$this->start_controls_tabs( 'awea_ac_card_tabs' );
+
 		$this->start_controls_tab(
-			'awea_card_normal',
+			'awea_ac_card_normal',
 			[ 'label' => esc_html__( 'Normal', 'awesome-widgets-elementor' ) ]
 		);
 
-		$this->add_control(
-			'awea_card_bg',
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
 			[
-				'label'     => esc_html__( 'Background', 'awesome-widgets-elementor' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '#ffffff',
-				'selectors' => [
-					'{{WRAPPER}} .awea-accordion-item' => 'background-color: {{VALUE}};',
-				],
+				'name'     => 'awea_ac_card_bg_group',
+				'types'    => [ 'classic', 'gradient' ],
+				'selector' => '{{WRAPPER}}.awea-ac-style-cards .awea-accordion-item, {{WRAPPER}}.awea-ac-style-connected .awea-accordion-wrap',
 			]
 		);
 
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			[
-				'name'           => 'awea_card_border',
-				'selector'       => '{{WRAPPER}} .awea-accordion-item',
-				'fields_options' => [
-					'border' => [ 'default' => 'solid' ],
-					'width'  => [
-						'default' => [
-							'top'      => '1',
-							'right'    => '1',
-							'bottom'   => '1',
-							'left'     => '1',
-							'isLinked' => true,
-						],
-					],
-					'color'  => [ 'default' => '#e2e8f0' ],
-				],
+				'name'     => 'awea_ac_card_border',
+				'selector' => '{{WRAPPER}}.awea-ac-style-cards .awea-accordion-item, {{WRAPPER}}.awea-ac-style-connected .awea-accordion-wrap',
 			]
 		);
 
 		$this->end_controls_tab();
 
-		// Hover
 		$this->start_controls_tab(
-			'awea_card_hover',
+			'awea_ac_card_hover',
 			[ 'label' => esc_html__( 'Hover', 'awesome-widgets-elementor' ) ]
 		);
 
-		$this->add_control(
-			'awea_card_bg_hover',
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
 			[
-				'label'     => esc_html__( 'Background', 'awesome-widgets-elementor' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .awea-accordion-item:hover' => 'background-color: {{VALUE}};',
-				],
+				'name'     => 'awea_ac_card_bg_hover_group',
+				'types'    => [ 'classic', 'gradient' ],
+				'selector' => '{{WRAPPER}}.awea-ac-style-cards .awea-accordion-item:hover, {{WRAPPER}}.awea-ac-style-connected .awea-accordion-item:hover',
 			]
 		);
 
 		$this->add_control(
-			'awea_card_border_hover',
+			'awea_ac_card_border_hover',
 			[
 				'label'     => esc_html__( 'Border Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'global'    => [ 'default' => Global_Colors::COLOR_PRIMARY ],
+				'global'    => [ 'default' => Global_Colors::COLOR_ACCENT ],
 				'selectors' => [
-					'{{WRAPPER}} .awea-accordion-item:hover' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}}.awea-ac-style-cards .awea-accordion-item:hover' => 'border-color: var(--awea-ac-item-accent, {{VALUE}});',
 				],
 			]
 		);
 
 		$this->end_controls_tab();
 
-		// Active
 		$this->start_controls_tab(
-			'awea_card_active',
-			[ 'label' => esc_html__( 'Active', 'awesome-widgets-elementor' ) ]
+			'awea_ac_card_active',
+			[ 'label' => esc_html__( 'Open', 'awesome-widgets-elementor' ) ]
 		);
 
-		$this->add_control(
-			'awea_card_bg_active',
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
 			[
-				'label'     => esc_html__( 'Background', 'awesome-widgets-elementor' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .awea-accordion-item.is-active' => 'background-color: {{VALUE}};',
-				],
+				'name'     => 'awea_ac_card_bg_active_group',
+				'types'    => [ 'classic', 'gradient' ],
+				'selector' => '{{WRAPPER}} .awea-accordion-item.is-active',
 			]
 		);
 
 		$this->add_control(
-			'awea_card_border_active',
+			'awea_ac_card_border_active',
 			[
 				'label'     => esc_html__( 'Border Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'global'    => [ 'default' => Global_Colors::COLOR_PRIMARY ],
+				'global'    => [ 'default' => Global_Colors::COLOR_ACCENT ],
 				'selectors' => [
-					'{{WRAPPER}} .awea-accordion-item.is-active' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}}.awea-ac-style-cards .awea-accordion-item.is-active' => 'border-color: var(--awea-ac-item-accent, {{VALUE}});',
 				],
 			]
 		);
@@ -399,8 +441,8 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			[
-				'name'      => 'awea_card_shadow',
-				'selector'  => '{{WRAPPER}} .awea-accordion-item',
+				'name'      => 'awea_ac_card_shadow',
+				'selector'  => '{{WRAPPER}}.awea-ac-style-cards .awea-accordion-item, {{WRAPPER}}.awea-ac-style-connected .awea-accordion-wrap',
 				'separator' => 'before',
 			]
 		);
@@ -408,20 +450,20 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		$this->end_controls_section();
 
 		/* ==========================================================================
-		   STYLE: 2. HEADER & TITLE
+		   STYLE: 2. QUESTION HEADER
 		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_style_header',
+			'awea_ac_style_header',
 			[
-				'label' => esc_html__( 'Header & Title', 'awesome-widgets-elementor' ),
+				'label' => esc_html__( 'Question Header', 'awesome-widgets-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_responsive_control(
-			'awea_header_padding',
+			'awea_ac_header_padding',
 			[
-				'label'      => esc_html__( 'Padding', 'awesome-widgets-elementor' ),
+				'label'      => esc_html__( 'Inner Spacing', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'rem' ],
 				'default'    => [
@@ -439,9 +481,9 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'awea_header_gap',
+			'awea_ac_header_gap',
 			[
-				'label'      => esc_html__( 'Title / Icon Gap', 'awesome-widgets-elementor' ),
+				'label'      => esc_html__( 'Space Next to Icon', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range'      => [ 'px' => [ 'min' => 8, 'max' => 40 ] ],
@@ -455,26 +497,25 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'awea_title_typo',
+				'name'     => 'awea_ac_title_typo',
 				'selector' => '{{WRAPPER}} .awea-accordion-title',
 				'global'   => [ 'default' => Global_Typography::TYPOGRAPHY_PRIMARY ],
 			]
 		);
 
-		$this->start_controls_tabs( 'awea_title_tabs' );
+		$this->start_controls_tabs( 'awea_ac_title_tabs' );
 
-		// Normal
 		$this->start_controls_tab(
-			'awea_title_normal',
+			'awea_ac_title_normal',
 			[ 'label' => esc_html__( 'Normal', 'awesome-widgets-elementor' ) ]
 		);
 
 		$this->add_control(
-			'awea_title_color',
+			'awea_ac_title_color',
 			[
-				'label'     => esc_html__( 'Title Color', 'awesome-widgets-elementor' ),
+				'label'     => esc_html__( 'Question Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#0f172a',
+				'global'    => [ 'default' => Global_Colors::COLOR_PRIMARY ],
 				'selectors' => [
 					'{{WRAPPER}} .awea-accordion-title' => 'color: {{VALUE}};',
 				],
@@ -482,7 +523,7 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		);
 
 		$this->add_control(
-			'awea_header_bg',
+			'awea_ac_header_bg',
 			[
 				'label'     => esc_html__( 'Header Background', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
@@ -494,26 +535,25 @@ class Widget_Awesome_Accordion extends Widget_Base {
 
 		$this->end_controls_tab();
 
-		// Hover
 		$this->start_controls_tab(
-			'awea_title_hover',
+			'awea_ac_title_hover',
 			[ 'label' => esc_html__( 'Hover', 'awesome-widgets-elementor' ) ]
 		);
 
 		$this->add_control(
-			'awea_title_color_hover',
+			'awea_ac_title_color_hover',
 			[
-				'label'     => esc_html__( 'Title Color', 'awesome-widgets-elementor' ),
+				'label'     => esc_html__( 'Question Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'global'    => [ 'default' => Global_Colors::COLOR_PRIMARY ],
+				'global'    => [ 'default' => Global_Colors::COLOR_ACCENT ],
 				'selectors' => [
-					'{{WRAPPER}} .awea-accordion-header:hover .awea-accordion-title' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .awea-accordion-header:hover .awea-accordion-title' => 'color: var(--awea-ac-item-accent, {{VALUE}});',
 				],
 			]
 		);
 
 		$this->add_control(
-			'awea_header_bg_hover',
+			'awea_ac_header_bg_hover',
 			[
 				'label'     => esc_html__( 'Header Background', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
@@ -525,26 +565,25 @@ class Widget_Awesome_Accordion extends Widget_Base {
 
 		$this->end_controls_tab();
 
-		// Active
 		$this->start_controls_tab(
-			'awea_title_active',
-			[ 'label' => esc_html__( 'Active', 'awesome-widgets-elementor' ) ]
+			'awea_ac_title_active',
+			[ 'label' => esc_html__( 'Open', 'awesome-widgets-elementor' ) ]
 		);
 
 		$this->add_control(
-			'awea_title_color_active',
+			'awea_ac_title_color_active',
 			[
-				'label'     => esc_html__( 'Title Color', 'awesome-widgets-elementor' ),
+				'label'     => esc_html__( 'Question Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'global'    => [ 'default' => Global_Colors::COLOR_PRIMARY ],
+				'global'    => [ 'default' => Global_Colors::COLOR_ACCENT ],
 				'selectors' => [
-					'{{WRAPPER}} .awea-accordion-item.is-active .awea-accordion-title' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .awea-accordion-item.is-active .awea-accordion-title' => 'color: var(--awea-ac-item-accent, {{VALUE}});',
 				],
 			]
 		);
 
 		$this->add_control(
-			'awea_header_bg_active',
+			'awea_ac_header_bg_active',
 			[
 				'label'     => esc_html__( 'Header Background', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
@@ -559,53 +598,54 @@ class Widget_Awesome_Accordion extends Widget_Base {
 
 		/* Item Number Styling */
 		$this->add_control(
-			'awea_index_heading',
+			'awea_ac_index_heading',
 			[
 				'label'     => esc_html__( 'Item Number', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
-				'condition' => [ 'awea_show_index' => 'yes' ],
+				'condition' => [ 'awea_ac_show_index' => 'yes' ],
 			]
 		);
 
 		$this->add_control(
-			'awea_index_color',
+			'awea_ac_index_color',
 			[
 				'label'     => esc_html__( 'Number Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'global'    => [ 'default' => Global_Colors::COLOR_PRIMARY ],
+				'global'    => [ 'default' => Global_Colors::COLOR_ACCENT ],
 				'selectors' => [
-					'{{WRAPPER}} .awea-accordion-index' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .awea-accordion-index' => 'color: var(--awea-ac-item-accent, {{VALUE}});',
 				],
-				'condition' => [ 'awea_show_index' => 'yes' ],
+				'condition' => [ 'awea_ac_show_index' => 'yes' ],
 			]
 		);
 
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'      => 'awea_index_typo',
+				'name'      => 'awea_ac_index_typo',
 				'selector'  => '{{WRAPPER}} .awea-accordion-index',
-				'condition' => [ 'awea_show_index' => 'yes' ],
+				'global'    => [ 'default' => Global_Typography::TYPOGRAPHY_SECONDARY ],
+				'condition' => [ 'awea_ac_show_index' => 'yes' ],
 			]
 		);
 
 		$this->end_controls_section();
 
 		/* ==========================================================================
-		   STYLE: 3. ICON
+		   STYLE: 3. TOGGLE ICON
 		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_style_icon',
+			'awea_ac_style_icon',
 			[
 				'label'     => esc_html__( 'Toggle Icon', 'awesome-widgets-elementor' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
-				'condition' => [ 'awea_icon_style!' => 'none' ],
+				'condition' => [ 'awea_ac_icon_style!' => 'none' ],
 			]
 		);
 
 		$this->add_responsive_control(
-			'awea_icon_size',
+			'awea_ac_icon_size',
 			[
 				'label'      => esc_html__( 'Icon Size', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
@@ -621,9 +661,9 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'awea_icon_box_size',
+			'awea_ac_icon_box_size',
 			[
-				'label'      => esc_html__( 'Wrapper Size', 'awesome-widgets-elementor' ),
+				'label'      => esc_html__( 'Circle Size', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range'      => [ 'px' => [ 'min' => 20, 'max' => 56 ] ],
@@ -635,9 +675,9 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'awea_icon_box_radius',
+			'awea_ac_icon_box_radius',
 			[
-				'label'      => esc_html__( 'Wrapper Radius', 'awesome-widgets-elementor' ),
+				'label'      => esc_html__( 'Circle Roundness', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default'    => [
@@ -654,20 +694,19 @@ class Widget_Awesome_Accordion extends Widget_Base {
 			]
 		);
 
-		$this->start_controls_tabs( 'awea_icon_tabs' );
+		$this->start_controls_tabs( 'awea_ac_icon_tabs' );
 
-		// Normal
 		$this->start_controls_tab(
-			'awea_icon_normal',
+			'awea_ac_icon_normal',
 			[ 'label' => esc_html__( 'Normal', 'awesome-widgets-elementor' ) ]
 		);
 
 		$this->add_control(
-			'awea_icon_color',
+			'awea_ac_icon_color',
 			[
 				'label'     => esc_html__( 'Icon Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#64748b',
+				'global'    => [ 'default' => Global_Colors::COLOR_SECONDARY ],
 				'selectors' => [
 					'{{WRAPPER}} .awea-icon-line'    => 'background-color: {{VALUE}};',
 					'{{WRAPPER}} .awea-icon-chevron' => 'stroke: {{VALUE}};',
@@ -676,11 +715,10 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		);
 
 		$this->add_control(
-			'awea_icon_box_bg',
+			'awea_ac_icon_box_bg',
 			[
-				'label'     => esc_html__( 'Wrapper Background', 'awesome-widgets-elementor' ),
+				'label'     => esc_html__( 'Circle Background', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#f8fafc',
 				'selectors' => [
 					'{{WRAPPER}} .awea-icon-box' => 'background-color: {{VALUE}};',
 				],
@@ -689,29 +727,28 @@ class Widget_Awesome_Accordion extends Widget_Base {
 
 		$this->end_controls_tab();
 
-		// Active
 		$this->start_controls_tab(
-			'awea_icon_active',
-			[ 'label' => esc_html__( 'Active', 'awesome-widgets-elementor' ) ]
+			'awea_ac_icon_active',
+			[ 'label' => esc_html__( 'Open', 'awesome-widgets-elementor' ) ]
 		);
 
 		$this->add_control(
-			'awea_icon_color_active',
+			'awea_ac_icon_color_active',
 			[
 				'label'     => esc_html__( 'Icon Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'global'    => [ 'default' => Global_Colors::COLOR_PRIMARY ],
+				'global'    => [ 'default' => Global_Colors::COLOR_ACCENT ],
 				'selectors' => [
-					'{{WRAPPER}} .awea-accordion-item.is-active .awea-icon-line'    => 'background-color: {{VALUE}};',
-					'{{WRAPPER}} .awea-accordion-item.is-active .awea-icon-chevron' => 'stroke: {{VALUE}};',
+					'{{WRAPPER}} .awea-accordion-item.is-active .awea-icon-line'    => 'background-color: var(--awea-ac-item-accent, {{VALUE}});',
+					'{{WRAPPER}} .awea-accordion-item.is-active .awea-icon-chevron' => 'stroke: var(--awea-ac-item-accent, {{VALUE}});',
 				],
 			]
 		);
 
 		$this->add_control(
-			'awea_icon_box_bg_active',
+			'awea_ac_icon_box_bg_active',
 			[
-				'label'     => esc_html__( 'Wrapper Background', 'awesome-widgets-elementor' ),
+				'label'     => esc_html__( 'Circle Background', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .awea-accordion-item.is-active .awea-icon-box' => 'background-color: {{VALUE}};',
@@ -725,20 +762,20 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		$this->end_controls_section();
 
 		/* ==========================================================================
-		   STYLE: 4. CONTENT PANEL
+		   STYLE: 4. ANSWER BOX
 		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_style_content',
+			'awea_ac_style_content',
 			[
-				'label' => esc_html__( 'Content Panel', 'awesome-widgets-elementor' ),
+				'label' => esc_html__( 'Answer Box', 'awesome-widgets-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_responsive_control(
-			'awea_content_padding',
+			'awea_ac_content_padding',
 			[
-				'label'      => esc_html__( 'Padding', 'awesome-widgets-elementor' ),
+				'label'      => esc_html__( 'Inner Spacing', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'rem' ],
 				'default'    => [
@@ -758,18 +795,18 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'awea_content_typo',
+				'name'     => 'awea_ac_content_typo',
 				'selector' => '{{WRAPPER}} .awea-content-inner',
 				'global'   => [ 'default' => Global_Typography::TYPOGRAPHY_TEXT ],
 			]
 		);
 
 		$this->add_control(
-			'awea_content_color',
+			'awea_ac_content_color',
 			[
 				'label'     => esc_html__( 'Text Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#475569',
+				'global'    => [ 'default' => Global_Colors::COLOR_TEXT ],
 				'selectors' => [
 					'{{WRAPPER}} .awea-content-inner' => 'color: {{VALUE}};',
 				],
@@ -777,9 +814,9 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		);
 
 		$this->add_control(
-			'awea_content_bg',
+			'awea_ac_content_bg',
 			[
-				'label'     => esc_html__( 'Background', 'awesome-widgets-elementor' ),
+				'label'     => esc_html__( 'Background Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .awea-content-inner' => 'background-color: {{VALUE}};',
@@ -790,8 +827,8 @@ class Widget_Awesome_Accordion extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			[
-				'name'      => 'awea_content_top_border',
-				'label'     => esc_html__( 'Top Divider', 'awesome-widgets-elementor' ),
+				'name'      => 'awea_ac_content_top_border',
+				'label'     => esc_html__( 'Divider Line', 'awesome-widgets-elementor' ),
 				'selector'  => '{{WRAPPER}} .awea-content-inner',
 				'separator' => 'before',
 			]
@@ -802,13 +839,13 @@ class Widget_Awesome_Accordion extends Widget_Base {
 
 	protected function render() {
 		$settings    = $this->get_settings_for_display();
-		$items       = $settings['awea_items'] ?? [];
-		$is_multiple = 'yes' === ( $settings['awea_multiple_open'] ?? 'no' );
-		$show_index  = 'yes' === ( $settings['awea_show_index'] ?? 'no' );
-		$icon_style  = $settings['awea_icon_style'] ?? 'plus-minus';
-		$icon_align  = $settings['awea_icon_align'] ?? 'right';
-		$title_tag   = Utils::validate_html_tag( $settings['awea_title_tag'] ?? 'h4' );
-		$faq_schema  = 'yes' === ( $settings['awea_faq_schema'] ?? 'no' );
+		$items       = $settings['awea_ac_items'] ?? [];
+		$is_multiple = 'yes' === ( $settings['awea_ac_multiple_open'] ?? 'no' );
+		$show_index  = 'yes' === ( $settings['awea_ac_show_index'] ?? 'no' );
+		$icon_style  = $settings['awea_ac_icon_style'] ?? 'plus-minus';
+		$icon_align  = $settings['awea_ac_icon_align'] ?? 'right';
+		$title_tag   = Utils::validate_html_tag( $settings['awea_ac_title_tag'] ?? 'h4' );
+		$faq_schema  = 'yes' === ( $settings['awea_ac_faq_schema'] ?? 'no' );
 		$widget_id   = $this->get_id();
 
 		if ( empty( $items ) ) {
@@ -820,7 +857,7 @@ class Widget_Awesome_Accordion extends Widget_Base {
 			$container_classes[] = 'awea-icon-pos-left';
 		}
 
-		$has_opened_one = false;
+		$has_opened_one  = false;
 		$schema_entities = [];
 		?>
 		<div class="<?php echo esc_attr( implode( ' ', $container_classes ) ); ?>"
@@ -829,9 +866,9 @@ class Widget_Awesome_Accordion extends Widget_Base {
 
 			<?php foreach ( $items as $index => $item ) :
 				$id        = $item['_id'] ?? $index;
-				$title     = $item['awea_title'] ?? '';
-				$content   = $item['awea_content'] ?? '';
-				$want_open = 'yes' === ( $item['awea_active'] ?? '' );
+				$title     = $item['awea_ac_title'] ?? '';
+				$content   = $item['awea_ac_content'] ?? '';
+				$want_open = 'yes' === ( $item['awea_ac_active'] ?? '' );
 
 				if ( $want_open && ( $is_multiple || ! $has_opened_one ) ) {
 					$is_active      = true;
@@ -860,6 +897,7 @@ class Widget_Awesome_Accordion extends Widget_Base {
 				}
 				?>
 				<div class="<?php echo esc_attr( implode( ' ', $item_classes ) ); ?>">
+					<span class="awea-ac-accent-bar" aria-hidden="true"></span>
 
 					<<?php Utils::print_validated_html_tag( $title_tag ); ?> class="awea-accordion-heading-wrap">
 						<button type="button"
@@ -925,9 +963,9 @@ class Widget_Awesome_Accordion extends Widget_Base {
 				root.dataset.aweaBound = '1';
 
 				var isMultiple = root.getAttribute('data-multiple') === 'true';
-				var headers = root.querySelectorAll('.awea-accordion-header');
+				var headers = Array.from(root.querySelectorAll('.awea-accordion-header'));
 
-				headers.forEach(function(header) {
+				headers.forEach(function(header, idx) {
 					header.addEventListener('click', function() {
 						var item = header.closest('.awea-accordion-item');
 						var panel = item ? item.querySelector('.awea-accordion-collapse') : null;
@@ -950,6 +988,23 @@ class Widget_Awesome_Accordion extends Widget_Base {
 							item.classList.add('is-active');
 							header.setAttribute('aria-expanded', 'true');
 							if (panel) panel.setAttribute('aria-hidden', 'false');
+						}
+					});
+
+					header.addEventListener('keydown', function(e) {
+						var targetIdx = -1;
+						if (e.key === 'ArrowDown') {
+							targetIdx = (idx + 1) % headers.length;
+						} else if (e.key === 'ArrowUp') {
+							targetIdx = (idx - 1 + headers.length) % headers.length;
+						} else if (e.key === 'Home') {
+							targetIdx = 0;
+						} else if (e.key === 'End') {
+							targetIdx = headers.length - 1;
+						}
+						if (targetIdx !== -1) {
+							e.preventDefault();
+							headers[targetIdx].focus();
 						}
 					});
 				});

@@ -1,280 +1,402 @@
 /* ==========================================================================
-   AWEA Team Carousel — Zero-Shadow Architectural Slider
+   Awesome Team Carousel Widget (Global Token Edition v2.5.0)
    ========================================================================== */
 
 .awea-team-carousel-wrapper {
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
+	--awea-tc-primary: var(--e-global-color-primary);
+	--awea-tc-secondary: var(--e-global-color-secondary);
+	--awea-tc-text: var(--e-global-color-text);
+	--awea-tc-accent: var(--e-global-color-accent);
+	--awea-tc-surface: var(--e-global-color-background, #ffffff);
+	--awea-tc-border: color-mix(in srgb, currentColor 12%, transparent);
+
+	position: relative;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.awea-team-carousel-wrapper *,
+.awea-team-carousel-wrapper *::before,
+.awea-team-carousel-wrapper *::after {
+	box-sizing: border-box;
 }
 
 .awea-team-carousel {
-  width: 100%;
-  position: relative;
-  box-sizing: border-box;
+	width: 100%;
+	position: relative;
+	box-sizing: border-box;
 }
 
 /* Master Team Card Architecture */
 .awea-team-master-card {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  box-sizing: border-box;
-  width: 100%;
-  background-color: #090d16;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: none;
-  transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease;
+	--awea-tc-active-accent: var(--awea-tc-item-accent, var(--awea-tc-accent));
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 12px;
+	border-radius: 20px;
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
+	border: 1px solid var(--awea-tc-border);
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.3s ease;
 }
 
 .awea-team-master-card:hover {
-  border-color: var(--e-global-color-primary, #4f46e5);
+	border-color: var(--awea-tc-active-accent);
+	box-shadow: 0 18px 36px -14px color-mix(in srgb, var(--awea-tc-primary) 14%, transparent);
 }
 
 /* Photo Canvas & Cinematic Scrim */
 .awea-team-img-container {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  background-color: #0f172a;
+	position: relative;
+	width: 100%;
+	aspect-ratio: 4 / 5;
+	border-radius: 14px;
+	overflow: hidden;
+	background-color: color-mix(in srgb, currentColor 6%, transparent);
+	flex-shrink: 0;
 }
 
 .awea-team-img-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
 }
 
 .awea-team-master-card:hover .awea-team-img-container img {
-  transform: scale(1.03);
+	transform: scale(1.03);
 }
 
-.awea-team-scrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(9, 13, 22, 0) 40%, rgba(9, 13, 22, 0.88) 100%);
-  pointer-events: none;
-  z-index: 1;
+/* Department Pill Badge */
+.awea-team-badge {
+	position: absolute;
+	top: 12px;
+	inset-inline-start: 12px;
+	z-index: 2;
+	padding: 5px 12px;
+	border-radius: 100px;
+	background-color: var(--awea-tc-primary);
+	border: 1px solid color-mix(in srgb, var(--awea-tc-surface) 18%, transparent);
+	color: var(--awea-tc-surface);
+	font-size: 0.72em;
+	line-height: 1.2;
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	user-select: none;
 }
 
-/* Frosted Floating Info Dock */
-.awea-team-info-panel {
-  position: absolute;
-  left: 20px;
-  right: 20px;
-  bottom: 20px;
-  padding: 18px;
-  border-radius: 20px;
-  background-color: rgba(15, 23, 42, 0.76);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  text-align: center;
-  z-index: 2;
-  box-sizing: border-box;
-  box-shadow: none;
+.awea-team-name a {
+	color: inherit;
+	text-decoration: none;
+	transition: color 0.25s ease;
 }
 
-.awea-team-name {
-  margin: 0 0 4px 0;
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: #ffffff;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
-  word-break: break-word;
+.awea-team-name a:hover,
+.awea-team-name a:focus-visible {
+	color: var(--awea-tc-active-accent);
 }
 
-.awea-team-role {
-  display: block;
-  color: var(--e-global-color-accent, #38bdf8);
-  font-size: 0.74rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  line-height: 1.3;
-  margin-bottom: 8px;
-  word-break: break-word;
+/* ==========================================================================
+   MODE 1: Overlay Info Box (Default)
+   ========================================================================== */
+.awea-tc-style-overlay .awea-team-scrim {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(15, 23, 42, 0) 40%, rgba(15, 23, 42, 0.88) 100%);
+	pointer-events: none;
+	z-index: 1;
 }
 
-.awea-team-bio {
-  margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.75);
-  word-break: break-word;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.awea-tc-style-overlay .awea-team-info-panel {
+	position: absolute;
+	left: 20px;
+	right: 20px;
+	bottom: 20px;
+	padding: 18px;
+	border-radius: 14px;
+	background-color: rgba(15, 23, 42, 0.76);
+	backdrop-filter: blur(16px);
+	-webkit-backdrop-filter: blur(16px);
+	border: 1px solid rgba(255, 255, 255, 0.14);
+	text-align: center;
+	z-index: 2;
+	box-sizing: border-box;
 }
 
-/* Social Interaction Dock */
+.awea-tc-style-overlay .awea-team-name {
+	margin: 0 0 4px 0;
+	color: #ffffff;
+	line-height: 1.25;
+	word-break: break-word;
+}
+
+.awea-tc-style-overlay .awea-team-role {
+	display: block;
+	color: var(--awea-tc-active-accent);
+	line-height: 1.3;
+	margin-bottom: 8px;
+	word-break: break-word;
+}
+
+.awea-tc-style-overlay .awea-team-bio {
+	margin: 0;
+	color: rgba(255, 255, 255, 0.8);
+	word-break: break-word;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.awea-tc-style-overlay .awea-team-social-dock {
+	max-height: 0;
+	opacity: 0;
+	overflow: hidden;
+	margin-top: 0;
+	transition:
+		max-height 0.35s ease,
+		opacity 0.3s ease,
+		margin-top 0.35s ease;
+}
+
+.awea-tc-style-overlay .awea-team-master-card:hover .awea-team-social-dock,
+.awea-tc-style-overlay .awea-team-master-card:focus-within .awea-team-social-dock,
+.awea-tc-style-overlay .awea-team-master-card.awea-social-always-visible .awea-team-social-dock {
+	max-height: 50px;
+	opacity: 1;
+	margin-top: 14px;
+}
+
+.awea-tc-style-overlay .awea-team-social-btn {
+	background-color: rgba(255, 255, 255, 0.12);
+	border-color: rgba(255, 255, 255, 0.18);
+	color: #ffffff;
+}
+
+/* ==========================================================================
+   MODE 2: Clean Card (Text Below Photo)
+   ========================================================================== */
+.awea-tc-style-editorial .awea-team-scrim {
+	display: none;
+}
+
+.awea-tc-style-editorial .awea-team-info-panel {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+	padding: 20px 10px 10px 10px;
+	text-align: left;
+	box-sizing: border-box;
+}
+
+.awea-tc-style-editorial .awea-team-name {
+	margin: 0 0 4px 0;
+	color: var(--awea-tc-primary);
+	line-height: 1.25;
+}
+
+.awea-tc-style-editorial .awea-team-role {
+	display: block;
+	color: var(--awea-tc-active-accent);
+	margin-bottom: 10px;
+}
+
+.awea-tc-style-editorial .awea-team-bio {
+	color: var(--awea-tc-text);
+	margin: 0 0 18px 0;
+}
+
+.awea-tc-style-editorial .awea-team-social-dock {
+	justify-content: flex-start;
+	margin-top: auto;
+}
+
+.awea-tc-style-editorial .awea-team-social-btn {
+	background-color: color-mix(in srgb, currentColor 6%, transparent);
+	border-color: var(--awea-tc-border);
+	color: var(--awea-tc-primary);
+}
+
+/* ==========================================================================
+   Shared Social Buttons
+   ========================================================================== */
 .awea-team-social-dock {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  margin-top: 0;
-  transition:
-    max-height 0.35s ease,
-    opacity 0.3s ease,
-    margin-top 0.35s ease;
-}
-
-.awea-team-master-card:hover .awea-team-social-dock,
-.awea-team-master-card.awea-social-always-visible .awea-team-social-dock {
-  max-height: 50px;
-  opacity: 1;
-  margin-top: 14px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
 }
 
 .awea-team-social-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: #ffffff;
-  box-sizing: border-box;
-  box-shadow: none;
-  transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease,
-    color 0.25s ease;
+	width: 36px;
+	height: 36px;
+	border-radius: 10px;
+	border: 1px solid transparent;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+	box-sizing: border-box;
+	flex-shrink: 0;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		color 0.25s ease;
+}
+
+.awea-team-social-btn:focus-visible {
+	outline: 2px solid var(--awea-tc-active-accent);
+	outline-offset: 2px;
 }
 
 .awea-team-social-btn i,
 .awea-team-social-btn svg {
-  font-size: 14px;
-  width: 14px;
-  height: 14px;
-  display: block;
-  fill: currentColor;
-  line-height: 1;
+	font-size: 14px;
+	width: 14px;
+	height: 14px;
+	display: block;
+	fill: currentColor;
+	line-height: 1;
 }
 
-.awea-team-social-btn:hover {
-  background-color: var(--awea-social-brand, var(--e-global-color-primary, #4f46e5));
-  border-color: transparent;
-  color: #ffffff;
+.awea-team-social-btn:hover,
+.awea-team-social-btn:focus-visible {
+	background-color: var(--awea-social-brand, var(--awea-tc-active-accent));
+	border-color: transparent;
+	color: #ffffff;
 }
 
 /* ==========================================================================
    Owl Carousel Navigation Controls
    ========================================================================== */
 .awea-team-carousel.owl-carousel .owl-stage-outer {
-  padding: 8px 0;
+	padding: 8px 0;
 }
 
 .awea-team-carousel .owl-nav {
-  position: static;
+	position: static;
 }
 
 .awea-team-carousel .owl-nav button.owl-prev,
 .awea-team-carousel .owl-nav button.owl-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent !important;
-  border: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  z-index: 10;
-  outline: none;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background: transparent !important;
+	border: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	z-index: 10;
+	outline: none;
 }
 
 .awea-team-carousel .owl-nav button.owl-prev {
-  left: -20px;
+	left: -20px;
 }
 
 .awea-team-carousel .owl-nav button.owl-next {
-  right: -20px;
+	right: -20px;
 }
 
 .awea-carousel-arrow-border {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  cursor: pointer;
-  box-shadow: none;
-  transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease,
-    color 0.25s ease;
+	width: 42px;
+	height: 42px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--awea-tc-surface);
+	border: 1px solid var(--awea-tc-border);
+	cursor: pointer;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		color 0.25s ease;
+}
+
+.awea-carousel-arrow-border i {
+	color: var(--awea-tc-primary);
+	transition: color 0.25s ease;
 }
 
 .awea-carousel-arrow-border:hover {
-  background-color: var(--e-global-color-primary, #4f46e5);
-  border-color: var(--e-global-color-primary, #4f46e5);
-  color: #ffffff;
+	background-color: var(--awea-tc-accent);
+	border-color: var(--awea-tc-accent);
+	color: var(--awea-tc-surface);
+}
+
+.awea-carousel-arrow-border:hover i {
+	color: var(--awea-tc-surface);
 }
 
 .awea-team-carousel .owl-dots {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 24px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 24px;
 }
 
 .awea-team-carousel .owl-dots button.owl-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #cbd5e1;
-  border: none;
-  margin: 0 5px;
-  padding: 0;
-  outline: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: color-mix(in srgb, currentColor 20%, transparent);
+	border: none;
+	margin: 0 5px;
+	padding: 0;
+	outline: none;
+	cursor: pointer;
+	transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .awea-team-carousel .owl-dots button.owl-dot.active {
-  background-color: var(--e-global-color-primary, #4f46e5);
-  transform: scale(1.25);
+	background-color: var(--awea-tc-accent);
+	transform: scale(1.25);
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+	.awea-team-master-card,
+	.awea-team-img-container img,
+	.awea-team-social-dock,
+	.awea-team-social-btn,
+	.awea-carousel-arrow-border {
+		transition: none !important;
+		transform: none !important;
+	}
 }
 
 /* Mobile (<= 767px) */
 @media (max-width: 767px) {
-  .awea-team-info-panel {
-    left: 12px !important;
-    right: 12px !important;
-    bottom: 12px !important;
-    padding: 14px 12px !important;
-  }
+	.awea-tc-style-overlay .awea-team-info-panel {
+		left: 12px !important;
+		right: 12px !important;
+		bottom: 12px !important;
+		padding: 14px 12px !important;
+	}
 
-  .awea-team-social-dock {
-    max-height: 50px !important;
-    opacity: 1 !important;
-    margin-top: 10px !important;
-  }
+	.awea-tc-style-overlay .awea-team-social-dock {
+		max-height: 50px !important;
+		opacity: 1 !important;
+		margin-top: 10px !important;
+	}
 
-  .awea-team-carousel .owl-nav button.owl-prev {
-    left: -6px;
-  }
-  .awea-team-carousel .owl-nav button.owl-next {
-    right: -6px;
-  }
-  .awea-carousel-arrow-border {
-    width: 36px;
-    height: 36px;
-  }
+	.awea-team-carousel .owl-nav button.owl-prev {
+		left: -6px;
+	}
+	.awea-team-carousel .owl-nav button.owl-next {
+		right: -6px;
+	}
+	.awea-carousel-arrow-border {
+		width: 36px;
+		height: 36px;
+	}
 }

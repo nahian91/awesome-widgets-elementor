@@ -1,12 +1,14 @@
 /* ==========================================================================
-   Awesome Accordion Widget
+   Awesome Accordion Widget (Global Token Edition v2.5.0)
    ========================================================================== */
 
 .awea-accordion-wrap {
-	--awea-acc-primary: var(--e-global-color-primary, #4f46e5);
-	--awea-acc-heading: #0f172a;
-	--awea-acc-text: #475569;
-	--awea-acc-border: #e2e8f0;
+	--awea-ac-primary: var(--e-global-color-primary);
+	--awea-ac-secondary: var(--e-global-color-secondary);
+	--awea-ac-text: var(--e-global-color-text);
+	--awea-ac-accent: var(--e-global-color-accent);
+	--awea-ac-border: color-mix(in srgb, currentColor 12%, transparent);
+	--awea-ac-bar-size: 4px;
 
 	width: 100%;
 	position: relative;
@@ -20,27 +22,94 @@
 }
 
 /* --------------------------------------------------------------------------
-   1. Item Card Shell
+   1. List Style Modes (Separate Boxes / Single Grouped Box / Clean Underline)
    -------------------------------------------------------------------------- */
-.awea-accordion-item {
-	background-color: #ffffff;
-	border: 1px solid var(--awea-acc-border);
+.awea-ac-style-cards .awea-accordion-item {
+	--awea-ac-active-accent: var(--awea-ac-item-accent, var(--awea-ac-accent));
+
+	position: relative;
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
+	border: 1px solid var(--awea-ac-border);
 	border-radius: 16px;
 	margin-bottom: 14px;
 	overflow: hidden;
 	transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.awea-accordion-item:last-child {
+.awea-ac-style-cards .awea-accordion-item:last-child {
 	margin-bottom: 0 !important;
 }
 
-.awea-accordion-item:hover {
-	border-color: #cbd5e1;
+.awea-ac-style-cards .awea-accordion-item:hover {
+	border-color: var(--awea-ac-active-accent);
 }
 
-.awea-accordion-item.is-active {
-	border-color: var(--awea-acc-primary);
+.awea-ac-style-cards .awea-accordion-item.is-active {
+	border-color: var(--awea-ac-active-accent);
+}
+
+/* Single Grouped Box Mode */
+.awea-ac-style-connected .awea-accordion-wrap {
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
+	border: 1px solid var(--awea-ac-border);
+	border-radius: 16px;
+	overflow: hidden;
+}
+
+.awea-ac-style-connected .awea-accordion-item {
+	--awea-ac-active-accent: var(--awea-ac-item-accent, var(--awea-ac-accent));
+	position: relative;
+	border-bottom: 1px solid color-mix(in srgb, currentColor 8%, transparent);
+	transition: background-color 0.25s ease;
+}
+
+.awea-ac-style-connected .awea-accordion-item:last-child {
+	border-bottom: none;
+}
+
+/* Clean Underline Rows Mode */
+.awea-ac-style-minimal .awea-accordion-item {
+	--awea-ac-active-accent: var(--awea-ac-item-accent, var(--awea-ac-accent));
+	position: relative;
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid var(--awea-ac-border);
+	border-radius: 0;
+}
+
+.awea-ac-style-minimal .awea-accordion-item:last-child {
+	border-bottom: none;
+}
+
+/* Active Color Line Indicator */
+.awea-ac-accent-bar {
+	display: none;
+	position: absolute;
+	z-index: 3;
+	background-color: var(--awea-ac-active-accent);
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.25s ease;
+}
+
+.awea-accordion-item.is-active .awea-ac-accent-bar {
+	opacity: 1;
+}
+
+.awea-ac-bar-left .awea-ac-accent-bar {
+	display: block;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: var(--awea-ac-bar-size);
+}
+
+.awea-ac-bar-top .awea-ac-accent-bar {
+	display: block;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: var(--awea-ac-bar-size);
 }
 
 /* --------------------------------------------------------------------------
@@ -78,7 +147,7 @@
 }
 
 .awea-accordion-header:focus-visible {
-	outline: 2px solid var(--awea-acc-primary);
+	outline: 2px solid var(--awea-ac-active-accent, var(--awea-ac-accent));
 	outline-offset: -2px;
 }
 
@@ -97,28 +166,24 @@
 }
 
 .awea-accordion-index {
-	font-size: 0.875rem;
+	font-size: 0.875em;
 	font-weight: 800;
-	color: var(--awea-acc-primary);
+	color: var(--awea-ac-active-accent, var(--awea-ac-accent));
 	letter-spacing: 0.04em;
 	flex-shrink: 0;
-	opacity: 0.85;
 }
 
 .awea-accordion-title {
 	margin: 0;
-	font-size: 1.075rem;
-	font-weight: 700;
 	line-height: 1.38;
-	color: var(--awea-acc-heading);
-	letter-spacing: -0.01em;
+	color: var(--awea-ac-primary);
 	word-break: break-word;
 	transition: color 0.25s ease;
 }
 
 .awea-accordion-header:hover .awea-accordion-title,
 .awea-accordion-item.is-active .awea-accordion-title {
-	color: var(--awea-acc-primary);
+	color: var(--awea-ac-active-accent, var(--awea-ac-accent));
 }
 
 /* --------------------------------------------------------------------------
@@ -128,7 +193,7 @@
 	width: 32px;
 	height: 32px;
 	border-radius: 50%;
-	background-color: #f8fafc;
+	background-color: color-mix(in srgb, currentColor 6%, transparent);
 	position: relative;
 	display: inline-flex;
 	align-items: center;
@@ -137,10 +202,14 @@
 	transition: background-color 0.25s ease, transform 0.25s ease;
 }
 
+.awea-accordion-item.is-active .awea-icon-box {
+	background-color: color-mix(in srgb, var(--awea-ac-active-accent, var(--awea-ac-accent)) 12%, transparent);
+}
+
 /* Plus / Minus Morph */
 .awea-icon-line {
 	position: absolute;
-	background-color: #64748b;
+	background-color: var(--awea-ac-secondary);
 	border-radius: 2px;
 	transition:
 		transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
@@ -165,14 +234,14 @@
 
 .awea-accordion-item.is-active .awea-icon-line.h {
 	transform: rotate(180deg);
-	background-color: var(--awea-acc-primary);
+	background-color: var(--awea-ac-active-accent, var(--awea-ac-accent));
 }
 
 /* Chevron Rotate */
 .awea-icon-chevron {
 	width: 15px;
 	height: 15px;
-	stroke: #64748b;
+	stroke: var(--awea-ac-secondary);
 	display: block;
 	transition:
 		transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
@@ -181,7 +250,7 @@
 
 .awea-accordion-item.is-active .awea-icon-chevron {
 	transform: rotate(180deg);
-	stroke: var(--awea-acc-primary);
+	stroke: var(--awea-ac-active-accent, var(--awea-ac-accent));
 }
 
 /* --------------------------------------------------------------------------
@@ -204,9 +273,7 @@
 
 .awea-content-inner {
 	padding: 0 24px 24px 24px;
-	font-size: 0.96rem;
-	line-height: 1.68;
-	color: var(--awea-acc-text);
+	color: var(--awea-ac-text);
 	word-break: break-word;
 }
 
@@ -229,7 +296,8 @@
 	.awea-accordion-collapse,
 	.awea-icon-box,
 	.awea-icon-line,
-	.awea-icon-chevron {
+	.awea-icon-chevron,
+	.awea-ac-accent-bar {
 		transition: none !important;
 	}
 }
@@ -242,10 +310,5 @@
 
 	.awea-content-inner {
 		padding: 0 18px 18px 18px;
-		font-size: 0.92rem;
-	}
-
-	.awea-accordion-title {
-		font-size: 1rem;
 	}
 }

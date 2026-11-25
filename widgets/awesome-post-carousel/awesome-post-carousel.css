@@ -1,290 +1,365 @@
 /* ==========================================================================
-   AWEA Post Carousel — Zero-Shadow Architectural Feed
+   Awesome Post Carousel Widget (Global Token Edition v2.5.0)
    ========================================================================== */
 
 .awea-post-carousel-wrap {
-  width: 100%;
-  position: relative;
-  box-sizing: border-box;
+	--awea-pc-primary: var(--e-global-color-primary);
+	--awea-pc-secondary: var(--e-global-color-secondary);
+	--awea-pc-text: var(--e-global-color-text);
+	--awea-pc-accent: var(--e-global-color-accent);
+	--awea-pc-surface: var(--e-global-color-background, #ffffff);
+	--awea-pc-border: color-mix(in srgb, currentColor 12%, transparent);
+	--awea-pc-bar-size: 4px;
+
+	width: 100%;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.awea-post-carousel-wrap *,
+.awea-post-carousel-wrap *::before,
+.awea-post-carousel-wrap *::after {
+	box-sizing: border-box;
 }
 
 .awea-post-carousel {
-  width: 100%;
-  position: relative;
-  box-sizing: border-box;
+	width: 100%;
+	position: relative;
+	box-sizing: border-box;
 }
 
 /* 1. Blog Card Shell */
-.awea-blog-card {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 24px;
-  padding: 24px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  box-shadow: none;
-  transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease;
+.awea-post-carousel-wrap .awea-blog-card {
+	position: relative;
+	overflow: hidden;
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
+	border: 1px solid var(--awea-pc-border);
+	border-radius: 16px;
+	padding: 24px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100%;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.3s ease;
 }
 
-.awea-blog-card:hover {
-  background-color: #f8fafc;
-  border-color: var(--e-global-color-primary, #4f46e5);
+.awea-post-carousel-wrap .awea-blog-card:hover {
+	border-color: var(--awea-pc-accent);
+	box-shadow: 0 20px 40px -15px color-mix(in srgb, var(--awea-pc-primary) 12%, transparent);
+}
+
+/* Accent Line Indicator */
+.awea-pc-accent-bar {
+	display: none;
+	position: absolute;
+	z-index: 3;
+	left: 0;
+	right: 0;
+	height: var(--awea-pc-bar-size);
+	background-color: var(--awea-pc-accent);
+	pointer-events: none;
+	transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-pc-bar-top-always .awea-pc-accent-bar,
+.awea-pc-bar-top-hover .awea-pc-accent-bar {
+	display: block;
+	top: 0;
+}
+
+.awea-pc-bar-top-hover .awea-pc-accent-bar {
+	transform: scaleX(0);
+	transform-origin: left center;
+}
+
+.awea-pc-bar-top-hover .awea-blog-card:hover .awea-pc-accent-bar {
+	transform: scaleX(1);
+}
+
+.awea-pc-bar-bottom-hover .awea-pc-accent-bar {
+	display: block;
+	bottom: 0;
+	transform: scaleX(0);
+	transform-origin: center;
+}
+
+.awea-pc-bar-bottom-hover .awea-blog-card:hover .awea-pc-accent-bar {
+	transform: scaleX(1);
 }
 
 /* 2. Featured Image Frame */
-.awea-blog-img-wrap {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  border-radius: 16px;
-  overflow: hidden;
-  background-color: #f1f5f9;
-  margin-bottom: 18px;
-  box-sizing: border-box;
+.awea-post-carousel-wrap .awea-blog-img-wrap {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 16 / 10;
+	border-radius: 12px;
+	overflow: hidden;
+	background-color: color-mix(in srgb, currentColor 6%, transparent);
+	margin-bottom: 18px;
+	box-sizing: border-box;
 }
 
-.awea-blog-img-link {
-  display: block;
-  width: 100%;
-  height: 100%;
+.awea-post-carousel-wrap .awea-blog-img-link {
+	display: block;
+	width: 100%;
+	height: 100%;
 }
 
-.awea-blog-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+.awea-post-carousel-wrap .awea-blog-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
 }
 
-.awea-blog-card:hover .awea-blog-img {
-  transform: scale(1.03);
+.awea-post-carousel-wrap .awea-blog-card:hover .awea-blog-img {
+	transform: scale(1.04);
 }
 
-.awea-blog-badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  z-index: 2;
-  padding: 5px 12px;
-  border-radius: 100px;
-  background-color: rgba(15, 23, 42, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  color: #ffffff;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  line-height: 1.2;
+.awea-post-carousel-wrap .awea-blog-badge {
+	position: absolute;
+	top: 12px;
+	inset-inline-start: 12px;
+	z-index: 2;
+	padding: 5px 12px;
+	border-radius: 100px;
+	background-color: var(--awea-pc-accent);
+	border: 1px solid color-mix(in srgb, var(--awea-pc-surface) 20%, transparent);
+	color: var(--awea-pc-surface);
+	text-decoration: none;
+	font-size: 0.72em;
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	line-height: 1.2;
+}
+
+.awea-post-carousel-wrap .awea-blog-badge:hover,
+.awea-post-carousel-wrap .awea-blog-badge:focus-visible {
+	opacity: 0.92;
 }
 
 /* 3. Card Body & Typography */
-.awea-blog-body {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+.awea-post-carousel-wrap .awea-blog-body {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
 }
 
-.awea-blog-meta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.76rem;
-  font-weight: 700;
-  color: #64748b;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 10px;
-  line-height: 1.2;
+.awea-post-carousel-wrap .awea-blog-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	color: var(--awea-pc-secondary);
+	margin-bottom: 10px;
+	line-height: 1.2;
 }
 
-.awea-meta-dot {
-  opacity: 0.4;
+.awea-post-carousel-wrap .awea-meta-dot {
+	opacity: 0.4;
 }
 
-.awea-blog-title {
-  margin-top: 0;
-  margin-bottom: 12px;
-  line-height: 1.3;
-  letter-spacing: -0.02em;
-  word-break: break-word;
+.awea-post-carousel-wrap .awea-blog-title {
+	margin-top: 0;
+	margin-bottom: 12px;
+	word-break: break-word;
 }
 
-.awea-blog-title a {
-  text-decoration: none;
-  color: #0f172a;
-  transition: color 0.25s ease;
+.awea-post-carousel-wrap .awea-blog-title a {
+	text-decoration: none;
+	color: var(--awea-pc-primary);
+	transition: color 0.25s ease;
 }
 
-.awea-blog-title a:hover {
-  color: var(--e-global-color-primary, #4f46e5);
+.awea-post-carousel-wrap .awea-blog-card:hover .awea-blog-title a,
+.awea-post-carousel-wrap .awea-blog-title a:hover {
+	color: var(--awea-pc-accent);
 }
 
-.awea-blog-desc {
-  font-size: 0.94rem;
-  line-height: 1.62;
-  color: #475569;
-  margin-top: 0;
-  margin-bottom: 20px;
-  word-break: break-word;
+.awea-post-carousel-wrap .awea-blog-desc {
+	color: var(--awea-pc-text);
+	margin-top: 0;
+	margin-bottom: 20px;
+	word-break: break-word;
 }
 
 /* 4. Card Footer Lockup */
-.awea-blog-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 16px;
-  border-top: 1px solid #f1f5f9;
-  margin-top: auto;
-  gap: 12px;
+.awea-post-carousel-wrap .awea-blog-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-top: 16px;
+	border-top: 1px solid color-mix(in srgb, currentColor 8%, transparent);
+	margin-top: auto;
+	gap: 12px;
 }
 
-.awea-blog-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 0.88rem;
-  padding: 8px 16px;
-  border-radius: 100px;
-  background-color: #f1f5f9;
-  color: #0f172a;
-  border: 1px solid transparent;
-  transition:
-    background-color 0.25s ease,
-    color 0.25s ease;
-  line-height: 1;
+.awea-post-carousel-wrap .awea-blog-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+	text-decoration: none;
+	padding: 8px 16px;
+	border-radius: 100px;
+	background-color: color-mix(in srgb, currentColor 6%, transparent);
+	color: var(--awea-pc-primary);
+	border: 1px solid transparent;
+	transition:
+		background-color 0.25s ease,
+		color 0.25s ease;
+	line-height: 1;
 }
 
-.awea-blog-link svg {
-  width: 13px;
-  height: 13px;
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+.awea-post-carousel-wrap .awea-blog-link:focus-visible {
+	outline: 2px solid var(--awea-pc-accent);
+	outline-offset: 2px;
 }
 
-.awea-blog-card:hover .awea-blog-link {
-  background-color: var(--e-global-color-primary, #4f46e5);
-  color: #ffffff;
+.awea-post-carousel-wrap .awea-blog-link svg {
+	width: 13px;
+	height: 13px;
+	transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.awea-blog-card:hover .awea-blog-link svg {
-  transform: translateX(3px);
+.awea-post-carousel-wrap .awea-blog-card:hover .awea-blog-link,
+.awea-post-carousel-wrap .awea-blog-link:hover,
+.awea-post-carousel-wrap .awea-blog-link:focus-visible {
+	background-color: var(--awea-pc-accent);
+	color: var(--awea-pc-surface);
 }
 
-.awea-blog-num {
-  font-size: 1.1rem;
-  font-weight: 900;
-  color: #cbd5e1;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.03em;
-  line-height: 1;
+.awea-post-carousel-wrap .awea-blog-card:hover .awea-blog-link svg {
+	transform: translateX(3px);
+}
+
+.awea-post-carousel-wrap .awea-blog-num {
+	color: var(--awea-pc-secondary);
+	opacity: 0.45;
+	font-variant-numeric: tabular-nums;
+	line-height: 1;
 }
 
 /* 5. Carousel Navigation & Dots */
 .awea-post-carousel.owl-carousel .owl-stage-outer {
-  padding: 8px 0;
+	padding: 8px 0;
 }
 
 .awea-post-carousel .owl-nav {
-  position: static;
+	position: static;
 }
 
 .awea-post-carousel .owl-nav button.owl-prev,
 .awea-post-carousel .owl-nav button.owl-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent !important;
-  border: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  z-index: 10;
-  outline: none;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background: transparent !important;
+	border: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	z-index: 10;
+	outline: none;
 }
 
 .awea-post-carousel .owl-nav button.owl-prev {
-  left: -20px;
+	left: -20px;
 }
 
 .awea-post-carousel .owl-nav button.owl-next {
-  right: -20px;
+	right: -20px;
 }
 
 .awea-carousel-arrow-border {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  cursor: pointer;
-  box-shadow: none;
-  transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease,
-    color 0.25s ease;
+	width: 42px;
+	height: 42px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--awea-pc-surface);
+	border: 1px solid var(--awea-pc-border);
+	cursor: pointer;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		color 0.25s ease;
+}
+
+.awea-carousel-arrow-border i {
+	color: var(--awea-pc-primary);
+	transition: color 0.25s ease;
 }
 
 .awea-carousel-arrow-border:hover {
-  background-color: var(--e-global-color-primary, #4f46e5);
-  border-color: var(--e-global-color-primary, #4f46e5);
-  color: #ffffff;
+	background-color: var(--awea-pc-accent);
+	border-color: var(--awea-pc-accent);
+	color: var(--awea-pc-surface);
+}
+
+.awea-carousel-arrow-border:hover i {
+	color: var(--awea-pc-surface);
 }
 
 .awea-post-carousel .owl-dots {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 24px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 24px;
 }
 
 .awea-post-carousel .owl-dots button.owl-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #cbd5e1;
-  border: none;
-  margin: 0 5px;
-  padding: 0;
-  outline: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: color-mix(in srgb, currentColor 20%, transparent);
+	border: none;
+	margin: 0 5px;
+	padding: 0;
+	outline: none;
+	cursor: pointer;
+	transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .awea-post-carousel .owl-dots button.owl-dot.active {
-  background-color: var(--e-global-color-primary, #4f46e5);
-  transform: scale(1.25);
+	background-color: var(--awea-pc-accent);
+	transform: scale(1.25);
 }
 
-/* Mobile (<= 768px) */
+/* Accessibility & Mobile */
+@media (prefers-reduced-motion: reduce) {
+	.awea-post-carousel-wrap .awea-blog-card,
+	.awea-post-carousel-wrap .awea-blog-img,
+	.awea-post-carousel-wrap .awea-blog-link,
+	.awea-post-carousel-wrap .awea-blog-link svg,
+	.awea-pc-accent-bar,
+	.awea-carousel-arrow-border {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
 @media (max-width: 768px) {
-  .awea-post-carousel .owl-nav button.owl-prev {
-    left: -6px;
-  }
-  .awea-post-carousel .owl-nav button.owl-next {
-    right: -6px;
-  }
-  .awea-carousel-arrow-border {
-    width: 36px;
-    height: 36px;
-  }
-  .awea-blog-card {
-    padding: 18px;
-    border-radius: 18px;
-  }
-  .awea-blog-img-wrap {
-    border-radius: 12px;
-    margin-bottom: 14px;
-  }
+	.awea-post-carousel .owl-nav button.owl-prev {
+		left: -6px;
+	}
+	.awea-post-carousel .owl-nav button.owl-next {
+		right: -6px;
+	}
+	.awea-carousel-arrow-border {
+		width: 36px;
+		height: 36px;
+	}
+	.awea-post-carousel-wrap .awea-blog-card {
+		padding: 18px;
+		border-radius: 14px;
+	}
+	.awea-post-carousel-wrap .awea-blog-img-wrap {
+		border-radius: 10px;
+		margin-bottom: 14px;
+	}
 }

@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Awesome Widgets for Elementor
  * Description:       Easily create stunning websites with advanced design options and increased functionality.
- * Version:           1.6.0
+ * Version:           1.6.1
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            Abdullah Nahian

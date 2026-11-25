@@ -1,283 +1,313 @@
 /* ==========================================================================
-   AWEA Team — Zero-Shadow Architectural Repeater Grid
+   Awesome Team Widget (Global Token Edition v2.5.0)
    ========================================================================== */
 
 .awea-tm-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-  width: 100%;
-  box-sizing: border-box;
-  align-items: stretch;
+	--awea-tm-primary: var(--e-global-color-primary);
+	--awea-tm-secondary: var(--e-global-color-secondary);
+	--awea-tm-text: var(--e-global-color-text);
+	--awea-tm-accent: var(--e-global-color-accent);
+	--awea-tm-border: color-mix(in srgb, currentColor 12%, transparent);
+
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	column-gap: 24px;
+	row-gap: 24px;
+	width: 100%;
+	box-sizing: border-box;
+	align-items: stretch;
+}
+
+.awea-tm-grid *,
+.awea-tm-grid *::before,
+.awea-tm-grid *::after {
+	box-sizing: border-box;
 }
 
 .awea-tm-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  padding: 12px;
-  border-radius: 26px;
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  overflow: hidden;
-  box-sizing: border-box;
-  box-shadow: none;
-  transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease;
+	--awea-tm-active-accent: var(--awea-tm-item-accent, var(--awea-tm-accent));
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+	padding: 12px;
+	border-radius: 20px;
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
+	border: 1px solid var(--awea-tm-border);
+	overflow: hidden;
+	box-sizing: border-box;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.3s ease,
+		transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-tm-card.awea-tm-featured {
+	border-color: var(--awea-tm-active-accent);
+	box-shadow: 0 16px 34px -12px color-mix(in srgb, var(--awea-tm-active-accent) 22%, transparent);
 }
 
 .awea-tm-card:hover {
-  background-color: #f8fafc;
-  border-color: var(--e-global-color-primary, #4f46e5);
-  box-shadow: none;
+	border-color: var(--awea-tm-active-accent);
+	box-shadow: 0 18px 36px -14px color-mix(in srgb, var(--awea-tm-primary) 14%, transparent);
+}
+
+.awea-tm-motion-lift .awea-tm-card:hover {
+	transform: translateY(-6px);
+}
+
+.awea-tm-motion-scale .awea-tm-card:hover {
+	transform: scale(1.02);
 }
 
 /* 1. Photo Canvas */
 .awea-tm-media {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  border-radius: 18px;
-  overflow: hidden;
-  background-color: #0f172a;
-  flex-shrink: 0;
+	position: relative;
+	width: 100%;
+	aspect-ratio: 4 / 5;
+	border-radius: 14px;
+	overflow: hidden;
+	background-color: color-mix(in srgb, currentColor 6%, transparent);
+	flex-shrink: 0;
 }
 
 .awea-tm-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
+}
+
+.awea-tm-card:hover .awea-tm-media img {
+	transform: scale(1.03);
 }
 
 /* Department Pill Badge */
 .awea-tm-badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  z-index: 2;
-  padding: 5px 12px;
-  border-radius: 100px;
-  background-color: rgba(15, 23, 42, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  color: #ffffff;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  line-height: 1.2;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  user-select: none;
+	position: absolute;
+	top: 12px;
+	inset-inline-start: 12px;
+	z-index: 2;
+	padding: 5px 12px;
+	border-radius: 100px;
+	background-color: var(--awea-tm-primary);
+	border: 1px solid color-mix(in srgb, var(--e-global-color-background, #ffffff) 18%, transparent);
+	color: var(--e-global-color-background, #ffffff);
+	font-size: 0.72em;
+	line-height: 1.2;
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	user-select: none;
+}
+
+.awea-tm-name a {
+	color: inherit;
+	text-decoration: none;
+	transition: color 0.25s ease;
+}
+
+.awea-tm-name a:hover,
+.awea-tm-name a:focus-visible {
+	color: var(--awea-tm-active-accent);
 }
 
 /* ==========================================================================
-   MODE 1: Glass Overlay Card (Default)
+   MODE 1: Overlay Info Box (Default)
    ========================================================================== */
 .awea-tm-style-overlay .awea-tm-scrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0) 42%, rgba(15, 23, 42, 0.86) 100%);
-  pointer-events: none;
-  z-index: 1;
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(15, 23, 42, 0) 42%, rgba(15, 23, 42, 0.86) 100%);
+	pointer-events: none;
+	z-index: 1;
 }
 
 .awea-tm-style-overlay .awea-tm-panel {
-  position: absolute;
-  left: 22px;
-  right: 22px;
-  bottom: 22px;
-  padding: 18px;
-  border-radius: 18px;
-  background-color: rgba(15, 23, 42, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  text-align: center;
-  z-index: 2;
-  box-sizing: border-box;
-  box-shadow: none;
-  transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease;
+	position: absolute;
+	left: 22px;
+	right: 22px;
+	bottom: 22px;
+	padding: 18px;
+	border-radius: 14px;
+	background-color: rgba(15, 23, 42, 0.78);
+	border: 1px solid rgba(255, 255, 255, 0.16);
+	backdrop-filter: blur(14px);
+	-webkit-backdrop-filter: blur(14px);
+	text-align: center;
+	z-index: 2;
+	box-sizing: border-box;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease;
 }
 
 .awea-tm-style-overlay .awea-tm-name {
-  color: #ffffff;
-  font-size: 1.22rem;
-  font-weight: 800;
-  margin: 0 0 4px 0;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
+	color: #ffffff;
+	margin: 0 0 4px 0;
+	line-height: 1.25;
 }
 
 .awea-tm-style-overlay .awea-tm-role {
-  display: block;
-  color: #93c5fd;
-  font-size: 0.74rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  margin-bottom: 8px;
+	display: block;
+	color: var(--awea-tm-active-accent);
+	margin-bottom: 8px;
 }
 
 .awea-tm-style-overlay .awea-tm-bio {
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 0.86rem;
-  line-height: 1.5;
-  margin: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+	color: rgba(255, 255, 255, 0.82);
+	margin: 0;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
 }
 
 .awea-tm-style-overlay .awea-tm-socials {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  margin-top: 0;
-  transition:
-    max-height 0.35s ease,
-    opacity 0.3s ease,
-    margin-top 0.35s ease;
+	max-height: 0;
+	opacity: 0;
+	overflow: hidden;
+	margin-top: 0;
+	transition:
+		max-height 0.35s ease,
+		opacity 0.3s ease,
+		margin-top 0.35s ease;
 }
 
 .awea-tm-style-overlay .awea-tm-card:hover .awea-tm-socials,
+.awea-tm-style-overlay .awea-tm-card:focus-within .awea-tm-socials,
 .awea-tm-style-overlay.awea-tm-dock-open-yes .awea-tm-socials {
-  max-height: 54px;
-  opacity: 1;
-  margin-top: 14px;
+	max-height: 54px;
+	opacity: 1;
+	margin-top: 14px;
 }
 
 .awea-tm-style-overlay .awea-tm-soc-btn {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.18);
-  color: #ffffff;
+	background-color: rgba(255, 255, 255, 0.12);
+	border-color: rgba(255, 255, 255, 0.2);
+	color: #ffffff;
 }
 
 /* ==========================================================================
-   MODE 2: Editorial Card (Clean Light Surface Body Below Photo)
+   MODE 2: Clean Card (Text Below Photo)
    ========================================================================== */
 .awea-tm-style-editorial .awea-tm-scrim {
-  display: none;
+	display: none;
 }
 
 .awea-tm-style-editorial .awea-tm-panel {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  padding: 20px 10px 10px 10px;
-  text-align: left;
-  box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+	padding: 20px 10px 10px 10px;
+	text-align: left;
+	box-sizing: border-box;
 }
 
 .awea-tm-style-editorial .awea-tm-name {
-  color: #0f172a;
-  font-size: 1.24rem;
-  font-weight: 800;
-  margin: 0 0 4px 0;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
+	color: var(--awea-tm-primary);
+	margin: 0 0 4px 0;
+	line-height: 1.25;
 }
 
 .awea-tm-style-editorial .awea-tm-role {
-  display: block;
-  color: var(--e-global-color-primary, #4f46e5);
-  font-size: 0.76rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 10px;
+	display: block;
+	color: var(--awea-tm-active-accent);
+	margin-bottom: 10px;
 }
 
 .awea-tm-style-editorial .awea-tm-bio {
-  color: #475569;
-  font-size: 0.92rem;
-  line-height: 1.6;
-  margin: 0 0 18px 0;
+	color: var(--awea-tm-text);
+	margin: 0 0 18px 0;
 }
 
 .awea-tm-style-editorial .awea-tm-socials {
-  justify-content: flex-start;
-  margin-top: auto;
+	justify-content: flex-start;
+	margin-top: auto;
 }
 
 .awea-tm-style-editorial .awea-tm-soc-btn {
-  background-color: #f1f5f9;
-  border-color: #e2e8f0;
-  color: #0f172a;
+	background-color: color-mix(in srgb, currentColor 6%, transparent);
+	border-color: var(--awea-tm-border);
+	color: var(--awea-tm-primary);
 }
 
 /* ==========================================================================
    Shared Social Buttons
    ========================================================================== */
 .awea-tm-socials {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
 }
 
 .awea-tm-soc-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  border: 1px solid transparent;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  box-sizing: border-box;
-  flex-shrink: 0;
-  box-shadow: none;
-  transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease,
-    color 0.25s ease;
+	width: 36px;
+	height: 36px;
+	border-radius: 10px;
+	border: 1px solid transparent;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+	box-sizing: border-box;
+	flex-shrink: 0;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		color 0.25s ease;
+}
+
+.awea-tm-soc-btn:focus-visible {
+	outline: 2px solid var(--awea-tm-active-accent);
+	outline-offset: 2px;
 }
 
 .awea-tm-soc-btn i,
 .awea-tm-soc-btn svg {
-  width: 14px;
-  height: 14px;
-  font-size: 14px;
-  display: block;
-  fill: currentColor;
-  line-height: 1;
+	width: 14px;
+	height: 14px;
+	font-size: 14px;
+	display: block;
+	fill: currentColor;
+	line-height: 1;
 }
 
-.awea-tm-soc-btn:hover {
-  background-color: var(--e-global-color-primary, #4f46e5);
-  border-color: var(--e-global-color-primary, #4f46e5);
-  color: #ffffff;
+.awea-tm-soc-btn:hover,
+.awea-tm-soc-btn:focus-visible {
+	background-color: var(--awea-tm-active-accent);
+	border-color: var(--awea-tm-active-accent);
+	color: var(--e-global-color-background, #ffffff);
 }
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  .awea-tm-card,
-  .awea-tm-panel,
-  .awea-tm-socials,
-  .awea-tm-soc-btn {
-    transition: none !important;
-  }
+	.awea-tm-card,
+	.awea-tm-media img,
+	.awea-tm-panel,
+	.awea-tm-socials,
+	.awea-tm-soc-btn {
+		transition: none !important;
+		transform: none !important;
+	}
 }
 
 /* Mobile (<= 767px) */
 @media (max-width: 767px) {
-  .awea-tm-style-overlay .awea-tm-panel {
-    left: 18px;
-    right: 18px;
-    bottom: 18px;
-    padding: 14px;
-  }
+	.awea-tm-style-overlay .awea-tm-panel {
+		left: 18px;
+		right: 18px;
+		bottom: 18px;
+		padding: 14px;
+	}
 
-  .awea-tm-style-overlay .awea-tm-socials {
-    max-height: 50px !important;
-    opacity: 1 !important;
-    margin-top: 10px !important;
-  }
+	.awea-tm-style-overlay .awea-tm-socials {
+		max-height: 50px !important;
+		opacity: 1 !important;
+		margin-top: 10px !important;
+	}
 }

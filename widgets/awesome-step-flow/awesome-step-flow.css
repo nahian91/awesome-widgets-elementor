@@ -1,12 +1,14 @@
 /* ==========================================================================
-   Awesome Step Flow Widget
+   Awesome Step Flow Widget (Global Token Edition v2.5.0)
    ========================================================================== */
 
 .awea-sf-wrap {
-	--awea-sf-primary: var(--e-global-color-primary, #4f46e5);
-	--awea-sf-heading: #0f172a;
-	--awea-sf-text: #475569;
-	--awea-sf-border: #e2e8f0;
+	--awea-sf-primary: var(--e-global-color-primary);
+	--awea-sf-secondary: var(--e-global-color-secondary);
+	--awea-sf-text: var(--e-global-color-text);
+	--awea-sf-accent: var(--e-global-color-accent);
+	--awea-sf-surface: var(--e-global-color-background, #ffffff);
+	--awea-sf-border: color-mix(in srgb, currentColor 12%, transparent);
 	--awea-sf-line-size: 2px;
 
 	display: flex;
@@ -25,9 +27,12 @@
 }
 
 /* --------------------------------------------------------------------------
-   1. Step Node
+   1. Step Node & Hover Effects
    -------------------------------------------------------------------------- */
 .awea-sf-item {
+	--awea-sf-active-accent: var(--awea-sf-item-accent, var(--awea-sf-accent));
+	--awea-sf-soft-tint: color-mix(in srgb, var(--awea-sf-active-accent) 10%, transparent);
+
 	flex: 1 1 0;
 	display: flex;
 	flex-direction: column;
@@ -39,20 +44,34 @@
 	transition:
 		background-color 0.25s ease,
 		border-color 0.25s ease,
-		box-shadow 0.25s ease;
+		box-shadow 0.3s ease,
+		transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-sf-motion-lift .awea-sf-item:hover {
+	transform: translateY(-5px);
+}
+
+.awea-sf-motion-scale .awea-sf-item:hover {
+	transform: scale(1.02);
 }
 
 /* Optional Card Container Mode */
 .awea-sf-card-yes .awea-sf-item {
-	background-color: #ffffff;
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
 	border: 1px solid var(--awea-sf-border);
-	border-radius: 22px;
+	border-radius: 16px;
 	padding: 28px 24px;
 }
 
+.awea-sf-card-yes .awea-sf-item.awea-sf-featured {
+	border-color: var(--awea-sf-active-accent);
+	box-shadow: 0 16px 34px -12px color-mix(in srgb, var(--awea-sf-active-accent) 22%, transparent);
+}
+
 .awea-sf-card-yes .awea-sf-item:hover {
-	background-color: #f8fafc;
-	border-color: var(--awea-sf-primary);
+	border-color: var(--awea-sf-active-accent);
+	box-shadow: 0 18px 36px -14px color-mix(in srgb, var(--awea-sf-primary) 12%, transparent);
 }
 
 /* --------------------------------------------------------------------------
@@ -62,10 +81,10 @@
 	position: relative;
 	width: 76px;
 	height: 76px;
-	border-radius: 22px;
-	background-color: #ffffff;
-	border: 1px solid var(--awea-sf-border);
-	color: var(--awea-sf-primary);
+	border-radius: 18px;
+	background-color: var(--awea-sf-soft-tint);
+	border: 1px solid color-mix(in srgb, var(--awea-sf-active-accent) 18%, transparent);
+	color: var(--awea-sf-active-accent);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -74,6 +93,19 @@
 		background-color 0.25s ease,
 		border-color 0.25s ease,
 		color 0.25s ease;
+}
+
+.awea-sf-icon-solid .awea-sf-box {
+	background-color: var(--awea-sf-active-accent);
+	border-color: var(--awea-sf-active-accent);
+	color: var(--awea-sf-surface);
+}
+
+.awea-sf-icon-outlined .awea-sf-box {
+	background-color: var(--awea-sf-surface);
+	border-width: 1.5px;
+	border-color: var(--awea-sf-active-accent);
+	color: var(--awea-sf-active-accent);
 }
 
 .awea-sf-box i {
@@ -89,28 +121,27 @@
 }
 
 .awea-sf-item:hover .awea-sf-box {
-	background-color: var(--awea-sf-primary);
-	border-color: var(--awea-sf-primary);
-	color: #ffffff;
+	background-color: var(--awea-sf-active-accent);
+	border-color: var(--awea-sf-active-accent);
+	color: var(--awea-sf-surface);
 }
 
 .awea-sf-item:hover .awea-sf-box svg {
-	fill: #ffffff;
+	fill: currentColor;
 }
 
 /* Floating Badge Pill */
 .awea-sf-num {
 	position: absolute;
 	top: -7px;
-	right: -7px;
+	inset-inline-end: -7px;
 	width: 28px;
 	height: 28px;
 	border-radius: 100px;
-	background-color: var(--awea-sf-heading);
-	color: #ffffff;
-	border: 2px solid #ffffff;
-	font-size: 0.72rem;
-	font-weight: 800;
+	background-color: var(--awea-sf-primary);
+	color: var(--awea-sf-surface);
+	border: 2px solid var(--awea-sf-surface);
+	font-size: 0.75em;
 	font-variant-numeric: tabular-nums;
 	line-height: 1;
 	display: flex;
@@ -121,7 +152,7 @@
 }
 
 .awea-sf-item:hover .awea-sf-num {
-	background-color: var(--awea-sf-primary);
+	background-color: var(--awea-sf-active-accent);
 }
 
 /* --------------------------------------------------------------------------
@@ -140,18 +171,18 @@
 
 .awea-sf-line-dashed .awea-sf-line {
 	background-color: transparent !important;
-	border-top: var(--awea-sf-line-size) dashed #cbd5e1;
+	border-top: var(--awea-sf-line-size) dashed color-mix(in srgb, currentColor 22%, transparent);
 	height: 0 !important;
 }
 
 .awea-sf-line-solid .awea-sf-line {
-	background-color: var(--awea-sf-primary);
+	background-color: var(--awea-sf-accent);
 }
 
 .awea-sf-beam {
 	position: absolute;
 	inset: 0;
-	background-color: var(--awea-sf-primary);
+	background-color: var(--awea-sf-accent);
 	animation: aweaSfFlowH 3s infinite cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -175,11 +206,7 @@
 
 .awea-sf-title {
 	margin: 0 0 8px 0;
-	font-size: 1.22rem;
-	font-weight: 800;
-	color: var(--awea-sf-heading);
-	line-height: 1.28;
-	letter-spacing: -0.02em;
+	color: var(--awea-sf-primary);
 	word-break: break-word;
 	transition: color 0.25s ease;
 }
@@ -190,21 +217,19 @@
 }
 
 .awea-sf-title a:focus-visible {
-	outline: 2px solid var(--awea-sf-primary);
+	outline: 2px solid var(--awea-sf-active-accent);
 	outline-offset: 3px;
 	border-radius: 4px;
 }
 
 .awea-sf-item:hover .awea-sf-title,
 .awea-sf-item:hover .awea-sf-title a {
-	color: var(--awea-sf-primary);
+	color: var(--awea-sf-active-accent);
 }
 
 .awea-sf-desc {
 	margin: 0;
-	font-size: 0.94rem;
 	color: var(--awea-sf-text);
-	line-height: 1.62;
 	word-break: break-word;
 }
 
@@ -240,12 +265,12 @@
 }
 
 .awea-sf-dir-vertical.awea-sf-card-yes .awea-sf-line {
-	margin-left: 61px;
+	margin-inline-start: 61px;
 }
 
 .awea-sf-dir-vertical.awea-sf-line-dashed .awea-sf-line {
 	border-top: none;
-	border-left: var(--awea-sf-line-size) dashed #cbd5e1;
+	border-left: var(--awea-sf-line-size) dashed color-mix(in srgb, currentColor 22%, transparent);
 	width: 0 !important;
 }
 
@@ -274,6 +299,7 @@
 	.awea-sf-box,
 	.awea-sf-num {
 		transition: none !important;
+		transform: none !important;
 	}
 }
 
@@ -300,7 +326,7 @@
 
 	.awea-sf-dir-horizontal.awea-sf-line-dashed .awea-sf-line {
 		border-top: none;
-		border-left: var(--awea-sf-line-size) dashed #cbd5e1;
+		border-left: var(--awea-sf-line-size) dashed color-mix(in srgb, currentColor 22%, transparent);
 		width: 0 !important;
 	}
 

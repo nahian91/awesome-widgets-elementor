@@ -3,7 +3,7 @@
  * Awesome Timeline Widget.
  *
  * @package AwesomeWidgetsElementor
- * @since   2.0.0
+ * @since   2.5.0
  */
 
 namespace Elementor;
@@ -16,12 +16,15 @@ use Elementor\Controls_Manager;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Image_Size;
+use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
+use Elementor\Group_Control_Text_Shadow;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Widget_Base;
 use Elementor\Repeater;
 use Elementor\Icons_Manager;
+use Elementor\Utils;
 
 class Widget_Awesome_Timeline extends Widget_Base {
 
@@ -51,7 +54,7 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		   CONTENT: 1. MILESTONES (REPEATER)
 		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_section_items',
+			'awea_tl_section_items',
 			[
 				'label' => esc_html__( 'Milestones', 'awesome-widgets-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
@@ -60,18 +63,18 @@ class Widget_Awesome_Timeline extends Widget_Base {
 
 		$repeater = new Repeater();
 
-		$repeater->start_controls_tabs( 'awea_item_tabs' );
+		$repeater->start_controls_tabs( 'awea_tl_item_tabs' );
 
-		// --- TAB 1: CONTENT ---
+		// --- TAB 1: TEXT & LINK ---
 		$repeater->start_controls_tab(
-			'awea_tab_content',
-			[ 'label' => esc_html__( 'Content', 'awesome-widgets-elementor' ) ]
+			'awea_tl_tab_content',
+			[ 'label' => esc_html__( 'Text & Link', 'awesome-widgets-elementor' ) ]
 		);
 
 		$repeater->add_control(
-			'awea_tag',
+			'awea_tl_tag',
 			[
-				'label'       => esc_html__( 'Tag / Date', 'awesome-widgets-elementor' ),
+				'label'       => esc_html__( 'Date or Step Tag', 'awesome-widgets-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => esc_html__( 'Phase 01', 'awesome-widgets-elementor' ),
 				'dynamic'     => [ 'active' => true ],
@@ -80,9 +83,9 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'awea_title',
+			'awea_tl_title',
 			[
-				'label'       => esc_html__( 'Title', 'awesome-widgets-elementor' ),
+				'label'       => esc_html__( 'Main Heading', 'awesome-widgets-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => esc_html__( 'Discovery & Deep Audit', 'awesome-widgets-elementor' ),
 				'dynamic'     => [ 'active' => true ],
@@ -91,20 +94,20 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'awea_desc',
+			'awea_tl_desc',
 			[
 				'label'   => esc_html__( 'Description', 'awesome-widgets-elementor' ),
 				'type'    => Controls_Manager::TEXTAREA,
-				'rows'    => 4,
+				'rows'    => 3,
 				'default' => esc_html__( 'Exhaustive architectural review across existing database schemas, APIs, and frontend rendering pipelines.', 'awesome-widgets-elementor' ),
 				'dynamic' => [ 'active' => true ],
 			]
 		);
 
 		$repeater->add_control(
-			'awea_link_text',
+			'awea_tl_link_text',
 			[
-				'label'       => esc_html__( 'Link Label', 'awesome-widgets-elementor' ),
+				'label'       => esc_html__( 'Link Text', 'awesome-widgets-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => '',
 				'placeholder' => esc_html__( 'View Details', 'awesome-widgets-elementor' ),
@@ -113,26 +116,26 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'awea_link_url',
+			'awea_tl_link_url',
 			[
 				'label'       => esc_html__( 'Link URL', 'awesome-widgets-elementor' ),
 				'type'        => Controls_Manager::URL,
 				'dynamic'     => [ 'active' => true ],
 				'placeholder' => 'https://example.com',
-				'condition'   => [ 'awea_link_text!' => '' ],
+				'condition'   => [ 'awea_tl_link_text!' => '' ],
 			]
 		);
 
 		$repeater->end_controls_tab();
 
-		// --- TAB 2: MEDIA & ICON ---
+		// --- TAB 2: ICON & PHOTO ---
 		$repeater->start_controls_tab(
-			'awea_tab_media',
-			[ 'label' => esc_html__( 'Media', 'awesome-widgets-elementor' ) ]
+			'awea_tl_tab_media',
+			[ 'label' => esc_html__( 'Icon & Photo', 'awesome-widgets-elementor' ) ]
 		);
 
 		$repeater->add_control(
-			'awea_icon',
+			'awea_tl_icon',
 			[
 				'label'   => esc_html__( 'Node Icon', 'awesome-widgets-elementor' ),
 				'type'    => Controls_Manager::ICONS,
@@ -144,9 +147,9 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'awea_image',
+			'awea_tl_image',
 			[
-				'label'   => esc_html__( 'Card Image', 'awesome-widgets-elementor' ),
+				'label'   => esc_html__( 'Step Photo', 'awesome-widgets-elementor' ),
 				'type'    => Controls_Manager::MEDIA,
 				'dynamic' => [ 'active' => true ],
 			]
@@ -154,26 +157,48 @@ class Widget_Awesome_Timeline extends Widget_Base {
 
 		$repeater->end_controls_tab();
 
-		// --- TAB 3: HIGHLIGHT ---
+		// --- TAB 3: COLORS ---
 		$repeater->start_controls_tab(
-			'awea_tab_highlight',
-			[ 'label' => esc_html__( 'Highlight', 'awesome-widgets-elementor' ) ]
+			'awea_tl_tab_highlight',
+			[ 'label' => esc_html__( 'Colors', 'awesome-widgets-elementor' ) ]
 		);
 
 		$repeater->add_control(
-			'awea_item_accent',
+			'awea_tl_item_featured',
 			[
-				'label'     => esc_html__( 'Accent Color', 'awesome-widgets-elementor' ),
+				'label'        => esc_html__( 'Highlight This Step', 'awesome-widgets-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__( 'Yes', 'awesome-widgets-elementor' ),
+				'label_off'    => esc_html__( 'No', 'awesome-widgets-elementor' ),
+				'return_value' => 'yes',
+				'default'      => '',
+			]
+		);
+
+		$repeater->add_control(
+			'awea_tl_item_accent',
+			[
+				'label'     => esc_html__( 'Main Theme Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}} .awea-tl-tag' => 'color: {{VALUE}};',
-					'{{WRAPPER}} {{CURRENT_ITEM}} .awea-tl-dot' => 'border-color: {{VALUE}}; color: {{VALUE}};',
+					'{{WRAPPER}} {{CURRENT_ITEM}}' => '--awea-tl-item-accent: {{VALUE}};',
 				],
 			]
 		);
 
 		$repeater->add_control(
-			'awea_item_border',
+			'awea_tl_item_bg',
+			[
+				'label'     => esc_html__( 'Card Background', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}} .awea-tl-card' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'awea_tl_item_border',
 			[
 				'label'     => esc_html__( 'Card Border', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
@@ -188,30 +213,31 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		$repeater->end_controls_tabs();
 
 		$this->add_control(
-			'awea_items',
+			'awea_tl_items',
 			[
 				'label'       => esc_html__( 'Milestones List', 'awesome-widgets-elementor' ),
 				'type'        => Controls_Manager::REPEATER,
 				'fields'      => $repeater->get_controls(),
-				'title_field' => '{{{ awea_tag }}} — {{{ awea_title }}}',
+				'title_field' => '{{{ awea_tl_tag }}} — {{{ awea_tl_title }}}',
 				'default'     => [
 					[
-						'awea_tag'   => esc_html__( 'Phase 01', 'awesome-widgets-elementor' ),
-						'awea_title' => esc_html__( 'Discovery & Deep Audit', 'awesome-widgets-elementor' ),
-						'awea_desc'  => esc_html__( 'Exhaustive architectural review across existing database schemas, APIs, and frontend rendering pipelines.', 'awesome-widgets-elementor' ),
-						'awea_icon'  => [ 'value' => 'fas fa-search', 'library' => 'fa-solid' ],
+						'awea_tl_tag'   => esc_html__( 'Phase 01', 'awesome-widgets-elementor' ),
+						'awea_tl_title' => esc_html__( 'Discovery & Deep Audit', 'awesome-widgets-elementor' ),
+						'awea_tl_desc'  => esc_html__( 'Exhaustive architectural review across existing database schemas, APIs, and frontend rendering pipelines.', 'awesome-widgets-elementor' ),
+						'awea_tl_icon'  => [ 'value' => 'fas fa-search', 'library' => 'fa-solid' ],
 					],
 					[
-						'awea_tag'   => esc_html__( 'Phase 02', 'awesome-widgets-elementor' ),
-						'awea_title' => esc_html__( 'Structural Logic Mapping', 'awesome-widgets-elementor' ),
-						'awea_desc'  => esc_html__( 'Defining modular application foundations, relational schemas, user journey nodes, and service connectivity.', 'awesome-widgets-elementor' ),
-						'awea_icon'  => [ 'value' => 'fas fa-layer-group', 'library' => 'fa-solid' ],
+						'awea_tl_tag'           => esc_html__( 'Phase 02', 'awesome-widgets-elementor' ),
+						'awea_tl_title'         => esc_html__( 'Structural Logic Mapping', 'awesome-widgets-elementor' ),
+						'awea_tl_desc'          => esc_html__( 'Defining modular application foundations, relational schemas, user journey nodes, and service connectivity.', 'awesome-widgets-elementor' ),
+						'awea_tl_icon'          => [ 'value' => 'fas fa-layer-group', 'library' => 'fa-solid' ],
+						'awea_tl_item_featured' => 'yes',
 					],
 					[
-						'awea_tag'   => esc_html__( 'Phase 03', 'awesome-widgets-elementor' ),
-						'awea_title' => esc_html__( 'System Deployment & QA', 'awesome-widgets-elementor' ),
-						'awea_desc'  => esc_html__( 'Zero-downtime transition to production infrastructure backed by automated stress and security audits.', 'awesome-widgets-elementor' ),
-						'awea_icon'  => [ 'value' => 'fas fa-rocket', 'library' => 'fa-solid' ],
+						'awea_tl_tag'   => esc_html__( 'Phase 03', 'awesome-widgets-elementor' ),
+						'awea_tl_title' => esc_html__( 'System Deployment & QA', 'awesome-widgets-elementor' ),
+						'awea_tl_desc'  => esc_html__( 'Zero-downtime transition to production infrastructure backed by automated stress and security audits.', 'awesome-widgets-elementor' ),
+						'awea_tl_icon'  => [ 'value' => 'fas fa-rocket', 'library' => 'fa-solid' ],
 					],
 				],
 			]
@@ -220,26 +246,26 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		$this->end_controls_section();
 
 		/* ==========================================================================
-		   CONTENT: 2. LAYOUT
+		   CONTENT: 2. LAYOUT & EFFECTS
 		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_section_layout',
+			'awea_tl_section_layout',
 			[
-				'label' => esc_html__( 'Layout', 'awesome-widgets-elementor' ),
+				'label' => esc_html__( 'Layout & Effects', 'awesome-widgets-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
 
 		$this->add_control(
-			'awea_layout_mode',
+			'awea_tl_layout_mode',
 			[
-				'label'        => esc_html__( 'Alignment', 'awesome-widgets-elementor' ),
+				'label'        => esc_html__( 'Timeline Layout', 'awesome-widgets-elementor' ),
 				'type'         => Controls_Manager::SELECT,
 				'default'      => 'alternating',
 				'options'      => [
-					'alternating' => esc_html__( 'Alternating', 'awesome-widgets-elementor' ),
-					'left'        => esc_html__( 'Left Spine', 'awesome-widgets-elementor' ),
-					'right'       => esc_html__( 'Right Spine', 'awesome-widgets-elementor' ),
+					'alternating' => esc_html__( 'Left & Right Alternating', 'awesome-widgets-elementor' ),
+					'left'        => esc_html__( 'Line on Left', 'awesome-widgets-elementor' ),
+					'right'       => esc_html__( 'Line on Right', 'awesome-widgets-elementor' ),
 				],
 				'prefix_class' => 'awea-tl-mode-',
 			]
@@ -248,15 +274,15 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Image_Size::get_type(),
 			[
-				'name'    => 'awea_img_size',
+				'name'    => 'awea_tl_img_size',
 				'default' => 'large',
 			]
 		);
 
 		$this->add_control(
-			'awea_title_tag',
+			'awea_tl_title_tag',
 			[
-				'label'   => esc_html__( 'Title HTML Tag', 'awesome-widgets-elementor' ),
+				'label'   => esc_html__( 'Heading Tag', 'awesome-widgets-elementor' ),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'h3',
 				'options' => [
@@ -274,12 +300,43 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		);
 
 		$this->add_control(
-			'awea_scroll_anim',
+			'awea_tl_hover_motion',
 			[
-				'label'        => esc_html__( 'Scroll Reveal', 'awesome-widgets-elementor' ),
+				'label'        => esc_html__( 'Card Hover Effect', 'awesome-widgets-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'default'      => 'lift',
+				'options'      => [
+					'none'  => esc_html__( 'None', 'awesome-widgets-elementor' ),
+					'lift'  => esc_html__( 'Move Up', 'awesome-widgets-elementor' ),
+					'scale' => esc_html__( 'Zoom In', 'awesome-widgets-elementor' ),
+				],
+				'prefix_class' => 'awea-tl-motion-',
+			]
+		);
+
+		$this->add_control(
+			'awea_tl_accent_bar',
+			[
+				'label'        => esc_html__( 'Color Line', 'awesome-widgets-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'default'      => 'none',
+				'options'      => [
+					'none'         => esc_html__( 'None', 'awesome-widgets-elementor' ),
+					'top-hover'    => esc_html__( 'Top Line (On Hover)', 'awesome-widgets-elementor' ),
+					'top-always'   => esc_html__( 'Top Line (Always Show)', 'awesome-widgets-elementor' ),
+					'bottom-hover' => esc_html__( 'Bottom Line (On Hover)', 'awesome-widgets-elementor' ),
+				],
+				'prefix_class' => 'awea-tl-bar-',
+			]
+		);
+
+		$this->add_control(
+			'awea_tl_scroll_anim',
+			[
+				'label'        => esc_html__( 'Scroll Reveal Effect', 'awesome-widgets-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
-				'label_on'     => esc_html__( 'On', 'awesome-widgets-elementor' ),
-				'label_off'    => esc_html__( 'Off', 'awesome-widgets-elementor' ),
+				'label_on'     => esc_html__( 'Yes', 'awesome-widgets-elementor' ),
+				'label_off'    => esc_html__( 'No', 'awesome-widgets-elementor' ),
 				'return_value' => 'yes',
 				'default'      => 'yes',
 				'prefix_class' => 'awea-tl-anim-',
@@ -289,20 +346,20 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		$this->end_controls_section();
 
 		/* ==========================================================================
-		   STYLE: 1. LAYOUT
+		   STYLE: 1. TIMELINE LAYOUT
 		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_style_layout',
+			'awea_tl_style_layout',
 			[
-				'label' => esc_html__( 'Layout', 'awesome-widgets-elementor' ),
+				'label' => esc_html__( 'Timeline Layout', 'awesome-widgets-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_responsive_control(
-			'awea_max_width',
+			'awea_tl_max_width',
 			[
-				'label'      => esc_html__( 'Max Width', 'awesome-widgets-elementor' ),
+				'label'      => esc_html__( 'Maximum Width', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%', 'vw' ],
 				'range'      => [
@@ -317,9 +374,9 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'awea_row_gap',
+			'awea_tl_row_gap',
 			[
-				'label'      => esc_html__( 'Row Gap', 'awesome-widgets-elementor' ),
+				'label'      => esc_html__( 'Space Between Steps', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range'      => [ 'px' => [ 'min' => 12, 'max' => 100 ] ],
@@ -331,9 +388,9 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'awea_spine_gap',
+			'awea_tl_spine_gap',
 			[
-				'label'      => esc_html__( 'Spine Gap', 'awesome-widgets-elementor' ),
+				'label'      => esc_html__( 'Space From Center Line', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range'      => [ 'px' => [ 'min' => 16, 'max' => 80 ] ],
@@ -353,7 +410,7 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		   STYLE: 2. SPINE & NODES
 		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_style_spine',
+			'awea_tl_style_spine',
 			[
 				'label' => esc_html__( 'Spine & Nodes', 'awesome-widgets-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
@@ -361,11 +418,11 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		);
 
 		$this->add_control(
-			'awea_spine_color',
+			'awea_tl_spine_color',
 			[
 				'label'     => esc_html__( 'Line Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#cbd5e1',
+				'global'    => [ 'default' => Global_Colors::COLOR_ACCENT ],
 				'selectors' => [
 					'{{WRAPPER}} .awea-tl-wrap::before' => 'background-color: {{VALUE}};',
 				],
@@ -373,9 +430,9 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'awea_spine_width',
+			'awea_tl_spine_width',
 			[
-				'label'      => esc_html__( 'Line Width', 'awesome-widgets-elementor' ),
+				'label'      => esc_html__( 'Line Thickness', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range'      => [ 'px' => [ 'min' => 1, 'max' => 8 ] ],
@@ -387,9 +444,9 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'awea_node_size',
+			'awea_tl_node_size',
 			[
-				'label'      => esc_html__( 'Node Size', 'awesome-widgets-elementor' ),
+				'label'      => esc_html__( 'Circle Size', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range'      => [ 'px' => [ 'min' => 18, 'max' => 56 ] ],
@@ -402,7 +459,7 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'awea_icon_size',
+			'awea_tl_icon_size',
 			[
 				'label'      => esc_html__( 'Icon Size', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
@@ -417,9 +474,9 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'awea_node_offset',
+			'awea_tl_node_offset',
 			[
-				'label'      => esc_html__( 'Top Offset', 'awesome-widgets-elementor' ),
+				'label'      => esc_html__( 'Top Position', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range'      => [ 'px' => [ 'min' => 0, 'max' => 80 ] ],
@@ -431,30 +488,28 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		);
 
 		$this->add_control(
-			'awea_node_halo_color',
+			'awea_tl_node_halo_color',
 			[
-				'label'     => esc_html__( 'Node Ring Cutout Color', 'awesome-widgets-elementor' ),
+				'label'     => esc_html__( 'Outer Ring Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .awea-tl-wrap' => '--awea-tl-halo: {{VALUE}};',
 				],
 			]
 		);
 
-		$this->start_controls_tabs( 'awea_node_tabs' );
+		$this->start_controls_tabs( 'awea_tl_node_tabs' );
 
 		$this->start_controls_tab(
-			'awea_node_normal',
+			'awea_tl_node_normal',
 			[ 'label' => esc_html__( 'Normal', 'awesome-widgets-elementor' ) ]
 		);
 
 		$this->add_control(
-			'awea_dot_bg',
+			'awea_tl_dot_bg',
 			[
-				'label'     => esc_html__( 'Background', 'awesome-widgets-elementor' ),
+				'label'     => esc_html__( 'Background Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .awea-tl-dot' => 'background-color: {{VALUE}};',
 				],
@@ -462,13 +517,13 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		);
 
 		$this->add_control(
-			'awea_dot_border',
+			'awea_tl_dot_border',
 			[
 				'label'     => esc_html__( 'Border & Icon Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'global'    => [ 'default' => Global_Colors::COLOR_PRIMARY ],
+				'global'    => [ 'default' => Global_Colors::COLOR_ACCENT ],
 				'selectors' => [
-					'{{WRAPPER}} .awea-tl-dot' => 'border-color: {{VALUE}}; color: {{VALUE}};',
+					'{{WRAPPER}} .awea-tl-dot' => 'border-color: var(--awea-tl-item-accent, {{VALUE}}); color: var(--awea-tl-item-accent, {{VALUE}});',
 				],
 			]
 		);
@@ -476,28 +531,27 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
-			'awea_node_hover',
+			'awea_tl_node_hover',
 			[ 'label' => esc_html__( 'Hover', 'awesome-widgets-elementor' ) ]
 		);
 
 		$this->add_control(
-			'awea_dot_bg_hover',
+			'awea_tl_dot_bg_hover',
 			[
-				'label'     => esc_html__( 'Background', 'awesome-widgets-elementor' ),
+				'label'     => esc_html__( 'Background Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'global'    => [ 'default' => Global_Colors::COLOR_PRIMARY ],
+				'global'    => [ 'default' => Global_Colors::COLOR_ACCENT ],
 				'selectors' => [
-					'{{WRAPPER}} .awea-tl-item:hover .awea-tl-dot' => 'background-color: {{VALUE}}; border-color: {{VALUE}};',
+					'{{WRAPPER}} .awea-tl-item:hover .awea-tl-dot' => 'background-color: var(--awea-tl-item-accent, {{VALUE}}); border-color: var(--awea-tl-item-accent, {{VALUE}});',
 				],
 			]
 		);
 
 		$this->add_control(
-			'awea_dot_icon_hover',
+			'awea_tl_dot_icon_hover',
 			[
 				'label'     => esc_html__( 'Icon Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .awea-tl-item:hover .awea-tl-dot' => 'color: {{VALUE}};',
 				],
@@ -510,22 +564,22 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		$this->end_controls_section();
 
 		/* ==========================================================================
-		   STYLE: 3. CARDS
+		   STYLE: 3. MILESTONE CARDS
 		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_style_cards',
+			'awea_tl_style_cards',
 			[
-				'label' => esc_html__( 'Cards', 'awesome-widgets-elementor' ),
+				'label' => esc_html__( 'Milestone Cards', 'awesome-widgets-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_responsive_control(
-			'awea_card_padding',
+			'awea_tl_card_padding',
 			[
-				'label'      => esc_html__( 'Padding', 'awesome-widgets-elementor' ),
+				'label'      => esc_html__( 'Inner Spacing', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'rem' ],
+				'size_units' => [ 'px', 'rem', '%' ],
 				'default'    => [
 					'top'      => '28',
 					'right'    => '28',
@@ -541,16 +595,16 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'awea_card_radius',
+			'awea_tl_card_radius',
 			[
-				'label'      => esc_html__( 'Border Radius', 'awesome-widgets-elementor' ),
+				'label'      => esc_html__( 'Corner Roundness', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default'    => [
-					'top'      => '20',
-					'right'    => '20',
-					'bottom'   => '20',
-					'left'     => '20',
+					'top'      => '16',
+					'right'    => '16',
+					'bottom'   => '16',
+					'left'     => '16',
 					'unit'     => 'px',
 					'isLinked' => true,
 				],
@@ -560,29 +614,39 @@ class Widget_Awesome_Timeline extends Widget_Base {
 			]
 		);
 
-		$this->start_controls_tabs( 'awea_card_tabs' );
+		$this->add_control(
+			'awea_tl_accent_bar_color',
+			[
+				'label'     => esc_html__( 'Color Line', 'awesome-widgets-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => [ 'default' => Global_Colors::COLOR_ACCENT ],
+				'condition' => [ 'awea_tl_accent_bar!' => 'none' ],
+				'selectors' => [
+					'{{WRAPPER}} .awea-tl-accent-bar' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->start_controls_tabs( 'awea_tl_card_tabs' );
 
 		$this->start_controls_tab(
-			'awea_card_normal',
+			'awea_tl_card_normal',
 			[ 'label' => esc_html__( 'Normal', 'awesome-widgets-elementor' ) ]
 		);
 
-		$this->add_control(
-			'awea_card_bg',
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
 			[
-				'label'     => esc_html__( 'Background', 'awesome-widgets-elementor' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '#ffffff',
-				'selectors' => [
-					'{{WRAPPER}} .awea-tl-card' => 'background-color: {{VALUE}};',
-				],
+				'name'     => 'awea_tl_card_bg_group',
+				'types'    => [ 'classic', 'gradient' ],
+				'selector' => '{{WRAPPER}} .awea-tl-card',
 			]
 		);
 
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			[
-				'name'           => 'awea_card_border',
+				'name'           => 'awea_tl_card_border',
 				'selector'       => '{{WRAPPER}} .awea-tl-card',
 				'fields_options' => [
 					'border' => [ 'default' => 'solid' ],
@@ -595,7 +659,6 @@ class Widget_Awesome_Timeline extends Widget_Base {
 							'isLinked' => true,
 						],
 					],
-					'color'  => [ 'default' => '#e2e8f0' ],
 				],
 			]
 		);
@@ -603,7 +666,7 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			[
-				'name'     => 'awea_card_shadow',
+				'name'     => 'awea_tl_card_shadow',
 				'selector' => '{{WRAPPER}} .awea-tl-card',
 			]
 		);
@@ -611,30 +674,27 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
-			'awea_card_hover',
+			'awea_tl_card_hover',
 			[ 'label' => esc_html__( 'Hover', 'awesome-widgets-elementor' ) ]
 		);
 
-		$this->add_control(
-			'awea_card_bg_hover',
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
 			[
-				'label'     => esc_html__( 'Background', 'awesome-widgets-elementor' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '#f8fafc',
-				'selectors' => [
-					'{{WRAPPER}} .awea-tl-item:hover .awea-tl-card' => 'background-color: {{VALUE}};',
-				],
+				'name'     => 'awea_tl_card_bg_hover_group',
+				'types'    => [ 'classic', 'gradient' ],
+				'selector' => '{{WRAPPER}} .awea-tl-item:hover .awea-tl-card',
 			]
 		);
 
 		$this->add_control(
-			'awea_card_border_hover',
+			'awea_tl_card_border_hover',
 			[
 				'label'     => esc_html__( 'Border Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'global'    => [ 'default' => Global_Colors::COLOR_PRIMARY ],
+				'global'    => [ 'default' => Global_Colors::COLOR_ACCENT ],
 				'selectors' => [
-					'{{WRAPPER}} .awea-tl-item:hover .awea-tl-card' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .awea-tl-item:hover .awea-tl-card' => 'border-color: var(--awea-tl-item-accent, {{VALUE}});',
 				],
 			]
 		);
@@ -642,7 +702,7 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			[
-				'name'     => 'awea_card_shadow_hover',
+				'name'     => 'awea_tl_card_shadow_hover',
 				'selector' => '{{WRAPPER}} .awea-tl-item:hover .awea-tl-card',
 			]
 		);
@@ -653,42 +713,41 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		$this->end_controls_section();
 
 		/* ==========================================================================
-		   STYLE: 4. TAG & TEXT
+		   STYLE: 4. TEXT & LINK STYLE
 		   ========================================================================== */
 		$this->start_controls_section(
-			'awea_style_text',
+			'awea_tl_style_text',
 			[
-				'label' => esc_html__( 'Typography & Link', 'awesome-widgets-elementor' ),
+				'label' => esc_html__( 'Text & Link Style', 'awesome-widgets-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_control(
-			'awea_tag_heading',
+			'awea_tl_tag_heading',
 			[
-				'label' => esc_html__( 'Tag Badge', 'awesome-widgets-elementor' ),
+				'label' => esc_html__( 'Date or Step Tag', 'awesome-widgets-elementor' ),
 				'type'  => Controls_Manager::HEADING,
 			]
 		);
 
 		$this->add_control(
-			'awea_tag_color',
+			'awea_tl_tag_color',
 			[
-				'label'     => esc_html__( 'Color', 'awesome-widgets-elementor' ),
+				'label'     => esc_html__( 'Text Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'global'    => [ 'default' => Global_Colors::COLOR_PRIMARY ],
+				'global'    => [ 'default' => Global_Colors::COLOR_ACCENT ],
 				'selectors' => [
-					'{{WRAPPER}} .awea-tl-tag' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .awea-tl-tag' => 'color: var(--awea-tl-item-accent, {{VALUE}});',
 				],
 			]
 		);
 
 		$this->add_control(
-			'awea_tag_bg',
+			'awea_tl_tag_bg',
 			[
-				'label'     => esc_html__( 'Background', 'awesome-widgets-elementor' ),
+				'label'     => esc_html__( 'Background Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => 'rgba(79, 70, 229, 0.08)',
 				'selectors' => [
 					'{{WRAPPER}} .awea-tl-tag' => 'background-color: {{VALUE}};',
 				],
@@ -698,27 +757,27 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'awea_tag_typo',
+				'name'     => 'awea_tl_tag_typo',
 				'selector' => '{{WRAPPER}} .awea-tl-tag',
 				'global'   => [ 'default' => Global_Typography::TYPOGRAPHY_SECONDARY ],
 			]
 		);
 
 		$this->add_control(
-			'awea_title_heading',
+			'awea_tl_title_heading',
 			[
-				'label'     => esc_html__( 'Title', 'awesome-widgets-elementor' ),
+				'label'     => esc_html__( 'Main Heading', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
 		);
 
 		$this->add_control(
-			'awea_title_color',
+			'awea_tl_title_color',
 			[
-				'label'     => esc_html__( 'Color', 'awesome-widgets-elementor' ),
+				'label'     => esc_html__( 'Text Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#0f172a',
+				'global'    => [ 'default' => Global_Colors::COLOR_PRIMARY ],
 				'selectors' => [
 					'{{WRAPPER}} .awea-tl-title' => 'color: {{VALUE}};',
 				],
@@ -728,16 +787,24 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'awea_title_typo',
+				'name'     => 'awea_tl_title_typo',
 				'selector' => '{{WRAPPER}} .awea-tl-title',
 				'global'   => [ 'default' => Global_Typography::TYPOGRAPHY_PRIMARY ],
 			]
 		);
 
-		$this->add_responsive_control(
-			'awea_title_space',
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
 			[
-				'label'      => esc_html__( 'Bottom Spacing', 'awesome-widgets-elementor' ),
+				'name'     => 'awea_tl_title_shadow',
+				'selector' => '{{WRAPPER}} .awea-tl-title',
+			]
+		);
+
+		$this->add_responsive_control(
+			'awea_tl_title_space',
+			[
+				'label'      => esc_html__( 'Space Below Heading', 'awesome-widgets-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range'      => [ 'px' => [ 'min' => 0, 'max' => 40 ] ],
@@ -749,7 +816,7 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		);
 
 		$this->add_control(
-			'awea_desc_heading',
+			'awea_tl_desc_heading',
 			[
 				'label'     => esc_html__( 'Description', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::HEADING,
@@ -758,11 +825,11 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		);
 
 		$this->add_control(
-			'awea_desc_color',
+			'awea_tl_desc_color',
 			[
-				'label'     => esc_html__( 'Color', 'awesome-widgets-elementor' ),
+				'label'     => esc_html__( 'Text Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#475569',
+				'global'    => [ 'default' => Global_Colors::COLOR_TEXT ],
 				'selectors' => [
 					'{{WRAPPER}} .awea-tl-desc' => 'color: {{VALUE}};',
 				],
@@ -772,14 +839,14 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'awea_desc_typo',
+				'name'     => 'awea_tl_desc_typo',
 				'selector' => '{{WRAPPER}} .awea-tl-desc',
 				'global'   => [ 'default' => Global_Typography::TYPOGRAPHY_TEXT ],
 			]
 		);
 
 		$this->add_control(
-			'awea_link_heading',
+			'awea_tl_link_heading',
 			[
 				'label'     => esc_html__( 'Action Link', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::HEADING,
@@ -790,30 +857,30 @@ class Widget_Awesome_Timeline extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'awea_link_typo',
+				'name'     => 'awea_tl_link_typo',
 				'selector' => '{{WRAPPER}} .awea-tl-link',
 				'global'   => [ 'default' => Global_Typography::TYPOGRAPHY_ACCENT ],
 			]
 		);
 
 		$this->add_control(
-			'awea_link_color',
+			'awea_tl_link_color',
 			[
-				'label'     => esc_html__( 'Color', 'awesome-widgets-elementor' ),
+				'label'     => esc_html__( 'Link Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'global'    => [ 'default' => Global_Colors::COLOR_PRIMARY ],
+				'global'    => [ 'default' => Global_Colors::COLOR_ACCENT ],
 				'selectors' => [
-					'{{WRAPPER}} .awea-tl-link' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .awea-tl-link' => 'color: var(--awea-tl-item-accent, {{VALUE}});',
 				],
 			]
 		);
 
 		$this->add_control(
-			'awea_link_hover_color',
+			'awea_tl_link_hover_color',
 			[
 				'label'     => esc_html__( 'Hover Color', 'awesome-widgets-elementor' ),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#0f172a',
+				'global'    => [ 'default' => Global_Colors::COLOR_PRIMARY ],
 				'selectors' => [
 					'{{WRAPPER}} .awea-tl-link:hover, {{WRAPPER}} .awea-tl-link:focus-visible' => 'color: {{VALUE}};',
 				],
@@ -825,70 +892,97 @@ class Widget_Awesome_Timeline extends Widget_Base {
 
 	protected function render() {
 		$settings = $this->get_settings_for_display();
-		$items    = $settings['awea_items'] ?? [];
+		$items    = $settings['awea_tl_items'] ?? [];
 
 		if ( empty( $items ) ) {
 			return;
 		}
 
-		$tag = Utils::validate_html_tag( $settings['awea_title_tag'] ?? 'h3' );
+		$tag = Utils::validate_html_tag( $settings['awea_tl_title_tag'] ?? 'h3' );
 		?>
 		<div class="awea-tl-wrap">
 			<?php foreach ( $items as $index => $item ) :
 				$id        = $item['_id'] ?? $index;
-				$badge     = $item['awea_tag'] ?? '';
-				$title     = $item['awea_title'] ?? '';
-				$desc      = $item['awea_desc'] ?? '';
-				$has_icon  = ! empty( $item['awea_icon']['value'] );
-				$img_item  = $item['awea_image'] ?? [];
+				$badge     = $item['awea_tl_tag'] ?? '';
+				$title     = $item['awea_tl_title'] ?? '';
+				$desc      = $item['awea_tl_desc'] ?? '';
+				$featured  = 'yes' === ( $item['awea_tl_item_featured'] ?? '' );
+				$has_icon  = ! empty( $item['awea_tl_icon']['value'] );
+				$img_item  = $item['awea_tl_image'] ?? [];
 				$img_url   = $img_item['url'] ?? '';
-				$link_text = $item['awea_link_text'] ?? '';
-				$has_link  = ! empty( $link_text ) && ! empty( $item['awea_link_url']['url'] );
-				$link_key  = 'link_' . $id;
+				$link_text = $item['awea_tl_link_text'] ?? '';
+				$has_link  = ! empty( $link_text ) && ! empty( $item['awea_tl_link_url']['url'] );
+				$link_key  = 'awea_tl_link_' . $id;
+
+				$tag_setting_key   = $this->get_repeater_setting_key( 'awea_tl_tag', 'awea_tl_items', $index );
+				$title_setting_key = $this->get_repeater_setting_key( 'awea_tl_title', 'awea_tl_items', $index );
+				$desc_setting_key  = $this->get_repeater_setting_key( 'awea_tl_desc', 'awea_tl_items', $index );
+
+				$this->add_inline_editing_attributes( $tag_setting_key, 'none' );
+				$this->add_inline_editing_attributes( $title_setting_key, 'none' );
+				$this->add_inline_editing_attributes( $desc_setting_key, 'basic' );
+
+				$this->add_render_attribute( $tag_setting_key, 'class', 'awea-tl-tag' );
+				$this->add_render_attribute( $title_setting_key, 'class', 'awea-tl-title' );
+				$this->add_render_attribute( $desc_setting_key, 'class', 'awea-tl-desc' );
 
 				if ( $has_link ) {
-					$this->add_link_attributes( $link_key, $item['awea_link_url'] );
+					$this->add_link_attributes( $link_key, $item['awea_tl_link_url'] );
 					$this->add_render_attribute( $link_key, 'class', 'awea-tl-link' );
+				}
+
+				$item_classes = [
+					'awea-tl-item',
+					'elementor-repeater-item-' . esc_attr( $id ),
+				];
+				if ( $featured ) {
+					$item_classes[] = 'awea-tl-featured';
 				}
 
 				$img_html = '';
 				if ( ! empty( $img_url ) ) {
 					if ( ! empty( $img_item['id'] ) ) {
 						$img_data = [
-							'awea_image'                     => $img_item,
-							'awea_img_size_size'             => $settings['awea_img_size_size'] ?? 'large',
-							'awea_img_size_custom_dimension' => $settings['awea_img_size_custom_dimension'] ?? [],
+							'awea_tl_image'                     => $img_item,
+							'awea_tl_img_size_size'             => $settings['awea_tl_img_size_size'] ?? 'large',
+							'awea_tl_img_size_custom_dimension' => $settings['awea_tl_img_size_custom_dimension'] ?? [],
 						];
-						$img_html = Group_Control_Image_Size::get_attachment_image_html( $img_data, 'awea_img_size', 'awea_image' );
+						$img_html = Group_Control_Image_Size::get_attachment_image_html( $img_data, 'awea_tl_img_size', 'awea_tl_image' );
 					}
 					if ( empty( $img_html ) ) {
 						$img_html = sprintf( '<img src="%s" alt="%s" loading="lazy" />', esc_url( $img_url ), esc_attr( $title ) );
 					}
 				}
 				?>
-				<div class="awea-tl-item elementor-repeater-item-<?php echo esc_attr( $id ); ?>">
+				<div class="<?php echo esc_attr( implode( ' ', $item_classes ) ); ?>">
 
 					<div class="awea-tl-dot" aria-hidden="true">
 						<?php if ( $has_icon ) : ?>
-							<?php Icons_Manager::render_icon( $item['awea_icon'], [ 'aria-hidden' => 'true' ] ); ?>
+							<?php Icons_Manager::render_icon( $item['awea_tl_icon'], [ 'aria-hidden' => 'true' ] ); ?>
 						<?php else : ?>
 							<span class="awea-tl-dot-core"></span>
 						<?php endif; ?>
 					</div>
 
 					<article class="awea-tl-card">
+						<span class="awea-tl-accent-bar" aria-hidden="true"></span>
+
 						<?php if ( ! empty( $badge ) ) : ?>
-							<span class="awea-tl-tag"><?php echo esc_html( $badge ); ?></span>
+							<span <?php $this->print_render_attribute_string( $tag_setting_key ); ?>>
+								<?php echo esc_html( $badge ); ?>
+							</span>
 						<?php endif; ?>
 
 						<?php if ( ! empty( $title ) ) : ?>
-							<<?php Utils::print_validated_html_tag( $tag ); ?> class="awea-tl-title">
+							<<?php Utils::print_validated_html_tag( $tag ); ?> <?php $this->print_render_attribute_string( $title_setting_key ); ?>>
 								<?php echo esc_html( $title ); ?>
 							</<?php Utils::print_validated_html_tag( $tag ); ?>>
 						<?php endif; ?>
 
 						<?php if ( ! empty( $desc ) ) : ?>
-							<p class="awea-tl-desc"><?php echo wp_kses_post( $desc ); ?></p>
+							<p <?php $this->print_render_attribute_string( $desc_setting_key ); ?>>
+								<?php echo wp_kses_post( $desc ); ?>
+							</p>
 						<?php endif; ?>
 
 						<?php if ( ! empty( $img_html ) ) : ?>

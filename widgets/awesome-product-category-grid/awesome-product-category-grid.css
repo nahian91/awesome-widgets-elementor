@@ -1,8 +1,14 @@
 /* ==========================================================================
-   Awesome Product Category Grid Widget
+   Awesome Product Category Grid Widget (Global Token Edition v2.5.0)
    ========================================================================== */
 
 .awea-product-category-grid-wrap {
+	--awea-pcg-primary: var(--e-global-color-primary);
+	--awea-pcg-secondary: var(--e-global-color-secondary);
+	--awea-pcg-text: var(--e-global-color-text);
+	--awea-pcg-accent: var(--e-global-color-accent);
+	--awea-pcg-border: color-mix(in srgb, currentColor 12%, transparent);
+
 	width: 100%;
 	position: relative;
 	box-sizing: border-box;
@@ -14,49 +20,85 @@
 	box-sizing: border-box;
 }
 
-.awea-grid-wrapper {
-	display: grid !important;
+.awea-product-category-grid-wrap .awea-grid-wrapper {
+	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 24px;
+	column-gap: 24px;
+	row-gap: 24px;
 	width: 100%;
 	align-items: stretch;
 }
 
-.awea-grid-item {
+.awea-product-category-grid-wrap .awea-grid-item {
 	display: flex;
 	flex-direction: column;
 	min-width: 0;
 }
 
-/* Luxury Dark Card Shell */
-.awea-cat-card {
+/* Shared Card Shell */
+.awea-product-category-grid-wrap .awea-cat-card {
 	position: relative;
 	overflow: hidden;
 	text-decoration: none;
-	display: block;
+	display: flex;
+	flex-direction: column;
 	width: 100%;
-	height: 540px;
-	background-color: #0f172a;
+	height: 100%;
 	isolation: isolate;
-	border-radius: 28px;
-	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 20px;
+	border: 1px solid var(--awea-pcg-border);
 	transition:
 		background-color 0.25s ease,
 		border-color 0.25s ease,
-		box-shadow 0.25s ease;
+		box-shadow 0.3s ease,
+		transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.awea-cat-card:focus-visible {
-	outline: 2px solid var(--e-global-color-primary, #4f46e5);
+.awea-product-category-grid-wrap .awea-cat-card:focus-visible {
+	outline: 2px solid var(--awea-pcg-accent);
 	outline-offset: 2px;
 }
 
-.awea-cat-card:hover {
-	border-color: var(--e-global-color-primary, #4f46e5);
+.awea-product-category-grid-wrap .awea-cat-card:hover {
+	border-color: var(--awea-pcg-accent);
+	box-shadow: 0 20px 40px -15px color-mix(in srgb, var(--awea-pcg-primary) 16%, transparent);
 }
 
-/* Gradient Overlay Layer */
-.awea-cat-card::before {
+.awea-pcg-motion-lift .awea-product-category-grid-wrap .awea-cat-card:hover {
+	transform: translateY(-6px);
+}
+
+.awea-pcg-motion-scale .awea-product-category-grid-wrap .awea-cat-card:hover {
+	transform: scale(1.02);
+}
+
+.awea-product-category-grid-wrap .awea-cat-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: filter 0.4s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+	display: block;
+}
+
+.awea-product-category-grid-wrap .awea-cat-card:hover .awea-cat-image {
+	transform: scale(1.04);
+}
+
+/* ==========================================================================
+   MODE 1: Overlay Info Box (On Photo)
+   ========================================================================== */
+.awea-pcg-style-overlay .awea-cat-card {
+	display: block;
+	height: 480px;
+	background-color: #0f172a;
+}
+
+.awea-pcg-style-overlay .awea-cat-media {
+	width: 100%;
+	height: 100%;
+}
+
+.awea-pcg-style-overlay .awea-cat-card::before {
 	content: "";
 	position: absolute;
 	inset: 0;
@@ -66,31 +108,23 @@
 	transition: opacity 0.4s ease;
 }
 
-/* Category Photo */
-.awea-cat-image {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	filter: grayscale(20%) brightness(0.88);
-	transition: filter 0.4s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-	display: block;
+.awea-pcg-style-overlay .awea-cat-image {
+	filter: grayscale(15%) brightness(0.9);
 }
 
-.awea-cat-card:hover .awea-cat-image {
+.awea-pcg-style-overlay .awea-cat-card:hover .awea-cat-image {
 	filter: grayscale(0%) brightness(1);
-	transform: scale(1.03);
 }
 
-/* Frosted Glass Info Box */
-.awea-cat-info {
+.awea-pcg-style-overlay .awea-cat-info {
 	position: absolute;
 	bottom: 20px;
 	inset-inline-start: 20px;
 	inset-inline-end: 20px;
-	padding: 24px;
-	background: rgba(255, 255, 255, 0.06);
-	border: 1px solid rgba(255, 255, 255, 0.12);
-	border-radius: 20px;
+	padding: 22px;
+	background-color: rgba(15, 23, 42, 0.72);
+	border: 1px solid rgba(255, 255, 255, 0.14);
+	border-radius: 14px;
 	z-index: 2;
 	backdrop-filter: blur(16px);
 	-webkit-backdrop-filter: blur(16px);
@@ -99,111 +133,117 @@
 		border-color 0.3s ease;
 }
 
-.awea-cat-card:hover .awea-cat-info {
-	background: rgba(255, 255, 255, 0.12);
-	border-color: rgba(255, 255, 255, 0.3);
+.awea-pcg-style-overlay .awea-cat-card:hover .awea-cat-info {
+	background-color: rgba(15, 23, 42, 0.84);
+	border-color: rgba(255, 255, 255, 0.28);
 }
 
-.awea-cat-info span {
+.awea-pcg-style-overlay .awea-cat-kicker {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+.awea-pcg-style-overlay .awea-cat-title {
+	color: #ffffff;
+}
+
+.awea-pcg-style-overlay .awea-view-collection {
+	color: #ffffff;
+}
+
+/* ==========================================================================
+   MODE 2: Clean Card (Text Below Photo)
+   ========================================================================== */
+.awea-pcg-style-editorial .awea-cat-card {
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
+}
+
+.awea-pcg-style-editorial .awea-cat-media {
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	overflow: hidden;
+	background-color: color-mix(in srgb, currentColor 6%, transparent);
+}
+
+.awea-pcg-style-editorial .awea-cat-info {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+	padding: 22px;
+}
+
+.awea-pcg-style-editorial .awea-cat-kicker {
+	color: var(--awea-pcg-accent);
+}
+
+.awea-pcg-style-editorial .awea-cat-title {
+	color: var(--awea-pcg-primary);
+}
+
+.awea-pcg-style-editorial .awea-view-collection {
+	color: var(--awea-pcg-accent);
+	margin-top: auto;
+}
+
+/* ==========================================================================
+   Shared Typography & Action Link
+   ========================================================================== */
+.awea-product-category-grid-wrap .awea-cat-kicker {
 	display: block;
 	margin-bottom: 6px;
-	font-size: 0.72rem;
-	font-weight: 800;
-	text-transform: uppercase;
-	letter-spacing: 0.15em;
-	color: rgba(255, 255, 255, 0.65);
 	line-height: 1.2;
 }
 
-.awea-cat-info h3 {
+.awea-product-category-grid-wrap .awea-cat-title {
 	margin: 0 0 14px 0;
-	font-size: 1.45rem;
-	font-weight: 800;
 	line-height: 1.25;
-	letter-spacing: -0.02em;
-	color: #ffffff;
 	word-break: break-word;
 }
 
-/* Explore Link */
-.awea-view-collection {
+.awea-product-category-grid-wrap .awea-view-collection {
 	display: inline-flex;
 	align-items: center;
-	font-weight: 700;
-	font-size: 0.85rem;
-	color: #ffffff;
-	opacity: 0.85;
+	opacity: 0.88;
 	transition:
 		opacity 0.25s ease,
 		transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 	line-height: 1.2;
 }
 
-.awea-view-collection::after {
+.awea-product-category-grid-wrap .awea-view-collection::after {
 	content: "→";
 	margin-inline-start: 8px;
 	transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.awea-cat-card:hover .awea-view-collection {
+.awea-product-category-grid-wrap .awea-cat-card:hover .awea-view-collection {
 	opacity: 1;
 }
 
-.awea-cat-card:hover .awea-view-collection::after {
+.awea-product-category-grid-wrap .awea-cat-card:hover .awea-view-collection::after {
 	transform: translateX(4px);
-}
-
-/* Radial Ambient Glow Layer */
-.awea-cat-card::after {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background: radial-gradient(circle at 50% 120%, rgba(255, 255, 255, 0.16) 0%, transparent 70%);
-	opacity: 0;
-	transition: opacity 0.4s ease;
-	pointer-events: none;
-	z-index: 3;
-}
-
-.awea-cat-card:hover::after {
-	opacity: 1;
 }
 
 /* Accessibility & Responsive */
 @media (prefers-reduced-motion: reduce) {
-	.awea-cat-card,
-	.awea-cat-image,
-	.awea-cat-info,
-	.awea-view-collection::after {
+	.awea-product-category-grid-wrap .awea-cat-card,
+	.awea-product-category-grid-wrap .awea-cat-image,
+	.awea-product-category-grid-wrap .awea-cat-info,
+	.awea-product-category-grid-wrap .awea-view-collection::after {
 		transition: none !important;
 		transform: none !important;
 	}
 }
 
 @media (max-width: 767px) {
-	.awea-grid-wrapper {
-		grid-template-columns: 1fr !important;
-		gap: 16px;
-	}
-
-	.awea-cat-card {
-		border-radius: 20px;
-		height: 420px;
-	}
-
-	.awea-cat-info {
+	.awea-pcg-style-overlay .awea-cat-info {
 		padding: 16px;
 		bottom: 12px;
 		inset-inline-start: 12px;
 		inset-inline-end: 12px;
-		border-radius: 14px;
+		border-radius: 12px;
 	}
 
-	.awea-cat-info h3 {
-		font-size: 1.15rem;
-	}
-
-	.awea-view-collection {
+	.awea-product-category-grid-wrap .awea-view-collection {
 		opacity: 1;
 	}
 }

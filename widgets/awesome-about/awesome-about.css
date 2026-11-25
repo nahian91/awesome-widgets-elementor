@@ -1,13 +1,14 @@
 /* ==========================================================================
-   Awesome About Widget
+   Awesome About Widget (Global Token Edition v2.5.0)
    ========================================================================== */
 
 .awea-about-grid {
-	--awea-about-primary: var(--e-global-color-primary, #4f46e5);
-	--awea-about-accent: var(--e-global-color-accent, #38bdf8);
-	--awea-about-heading: #0f172a;
-	--awea-about-text: #475569;
-	--awea-about-muted: #64748b;
+	--awea-ab-primary: var(--e-global-color-primary);
+	--awea-ab-secondary: var(--e-global-color-secondary);
+	--awea-ab-text: var(--e-global-color-text);
+	--awea-ab-accent: var(--e-global-color-accent);
+	--awea-ab-surface: var(--e-global-color-background, #ffffff);
+	--awea-ab-border: color-mix(in srgb, currentColor 12%, transparent);
 
 	width: 100%;
 	display: grid;
@@ -33,17 +34,17 @@
 }
 
 .awea-about-pos-right .awea-about-main-img {
-	margin-left: auto;
+	margin-inline-start: auto;
 }
 
 .awea-about-pos-right .awea-about-float-img {
-	right: auto;
-	left: 0;
+	inset-inline-end: auto;
+	inset-inline-start: 0;
 }
 
 .awea-about-pos-right .awea-about-badge {
-	left: auto;
-	right: -12px;
+	inset-inline-start: auto;
+	inset-inline-end: -12px;
 }
 
 /* --------------------------------------------------------------------------
@@ -57,9 +58,9 @@
 .awea-about-main-img {
 	width: 92%;
 	aspect-ratio: 4 / 5;
-	border-radius: 64px 20px 20px 64px;
+	border-radius: 48px 16px 16px 48px;
 	overflow: hidden;
-	background-color: #e2e8f0;
+	background-color: color-mix(in srgb, currentColor 6%, transparent);
 }
 
 .awea-about-main-img img {
@@ -67,7 +68,7 @@
 	height: 100%;
 	object-fit: cover;
 	display: block;
-	transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+	transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
 }
 
 .awea-about-visual:hover .awea-about-main-img img {
@@ -78,13 +79,13 @@
 	position: absolute;
 	width: 38%;
 	aspect-ratio: 1 / 1;
-	right: 0;
+	inset-inline-end: 0;
 	bottom: 10%;
 	z-index: 2;
 	border-radius: 50%;
-	border: 8px solid #ffffff;
+	border: 8px solid var(--awea-ab-surface);
 	overflow: hidden;
-	background-color: #cbd5e1;
+	background-color: color-mix(in srgb, currentColor 8%, transparent);
 }
 
 .awea-about-float-img img {
@@ -97,17 +98,13 @@
 .awea-about-badge {
 	position: absolute;
 	top: 8%;
-	left: -12px;
+	inset-inline-start: -12px;
 	z-index: 3;
 	padding: 12px 22px;
 	border-radius: 100px;
-	background-color: var(--awea-about-primary);
-	color: #ffffff;
-	font-size: 0.8125rem;
-	font-weight: 700;
+	background-color: var(--awea-ab-accent);
+	color: var(--awea-ab-surface);
 	line-height: 1.2;
-	text-transform: uppercase;
-	letter-spacing: 0.08em;
 }
 
 /* --------------------------------------------------------------------------
@@ -124,12 +121,8 @@
 	align-items: center;
 	gap: 12px;
 	margin-bottom: 16px;
-	font-size: 0.8125rem;
-	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: 0.14em;
 	line-height: 1.3;
-	color: var(--awea-about-accent);
+	color: var(--awea-ab-accent);
 }
 
 .awea-about-line {
@@ -142,19 +135,41 @@
 
 .awea-about-title {
 	margin: 0 0 20px 0;
-	font-size: clamp(1.875rem, 3.8vw, 3rem);
-	font-weight: 800;
-	line-height: 1.15;
-	letter-spacing: -0.025em;
-	color: var(--awea-about-heading);
+	color: var(--awea-ab-primary);
 	word-break: break-word;
+}
+
+.awea-about-hl {
+	--awea-ab-hl: var(--awea-ab-accent);
+	--awea-ab-hl-2: var(--awea-ab-primary);
+	color: var(--awea-ab-hl);
+}
+
+.awea-about-hl-gradient .awea-about-hl {
+	background: linear-gradient(120deg, var(--awea-ab-hl), var(--awea-ab-hl-2));
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+.awea-about-hl-underline .awea-about-hl {
+	display: inline-block;
+	text-decoration: underline;
+	text-decoration-color: var(--awea-ab-hl);
+	text-decoration-thickness: 0.09em;
+	text-underline-offset: 0.14em;
+}
+
+.awea-about-hl-marker .awea-about-hl {
+	display: inline-block;
+	padding: 0.02em 0.24em;
+	border-radius: 0.2em;
+	background-color: color-mix(in srgb, var(--awea-ab-hl) 12%, transparent);
 }
 
 .awea-about-desc {
 	margin: 0 0 28px 0;
-	font-size: 1.03125rem;
-	line-height: 1.72;
-	color: var(--awea-about-text);
+	color: var(--awea-ab-text);
 	word-break: break-word;
 }
 
@@ -183,10 +198,7 @@
 	display: flex;
 	align-items: flex-start;
 	gap: 10px;
-	font-size: 0.9375rem;
-	font-weight: 600;
-	line-height: 1.45;
-	color: var(--awea-about-heading);
+	color: var(--awea-ab-primary);
 	word-break: break-word;
 }
 
@@ -196,7 +208,7 @@
 	justify-content: center;
 	margin-top: 2px;
 	font-size: 18px;
-	color: var(--awea-about-primary);
+	color: var(--awea-ab-accent);
 	flex-shrink: 0;
 }
 
@@ -225,21 +237,28 @@
 	padding: 15px 30px;
 	border: 1px solid transparent;
 	border-radius: 12px;
-	background-color: var(--awea-about-primary);
-	color: #ffffff;
-	font-size: 0.9375rem;
-	font-weight: 700;
+	background-color: var(--awea-ab-primary);
+	color: var(--awea-ab-surface);
 	line-height: 1.2;
 	text-decoration: none;
 	cursor: pointer;
-	transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+	transition:
+		background-color 0.25s ease,
+		color 0.25s ease,
+		border-color 0.25s ease,
+		transform 0.2s ease;
 }
 
 .awea-about-btn:hover,
 .awea-about-btn:focus-visible {
-	background-color: var(--awea-about-heading);
-	color: #ffffff;
+	background-color: var(--awea-ab-accent);
+	color: var(--awea-ab-surface);
 	transform: translateY(-2px);
+}
+
+.awea-about-btn:focus-visible {
+	outline: 2px solid var(--awea-ab-accent);
+	outline-offset: 3px;
 }
 
 .awea-about-btn-icon {
@@ -252,6 +271,11 @@
 	width: 14px;
 	height: 14px;
 	fill: currentColor;
+}
+
+.awea-about-btn-icon i {
+	font-size: 13px;
+	line-height: 1;
 }
 
 .awea-about-btn:hover .awea-about-btn-icon {
@@ -269,7 +293,13 @@
 }
 
 .awea-about-phone-link:hover {
-	opacity: 0.85;
+	opacity: 0.88;
+}
+
+.awea-about-phone-link:focus-visible {
+	outline: 2px solid var(--awea-ab-accent);
+	outline-offset: 4px;
+	border-radius: 10px;
 }
 
 .awea-about-phone-ico {
@@ -280,11 +310,15 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	color: var(--awea-about-primary);
-	background-color: #f1f5f9;
-	border: 1px solid #e2e8f0;
+	color: var(--awea-ab-accent);
+	background-color: color-mix(in srgb, var(--awea-ab-accent) 10%, transparent);
+	border: 1px solid color-mix(in srgb, var(--awea-ab-accent) 20%, transparent);
 	flex-shrink: 0;
-	transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+	transition:
+		transform 0.25s ease,
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		color 0.25s ease;
 }
 
 .awea-about-phone-ico svg {
@@ -293,10 +327,15 @@
 	fill: currentColor;
 }
 
+.awea-about-phone-ico i {
+	font-size: 16px;
+	line-height: 1;
+}
+
 .awea-about-phone-link:hover .awea-about-phone-ico {
-	background-color: var(--awea-about-primary);
-	border-color: var(--awea-about-primary);
-	color: #ffffff;
+	background-color: var(--awea-ab-accent);
+	border-color: var(--awea-ab-accent);
+	color: var(--awea-ab-surface);
 	transform: scale(1.05);
 }
 
@@ -307,25 +346,28 @@
 }
 
 .awea-about-phone-lbl {
-	font-size: 0.75rem;
-	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: 0.08em;
 	line-height: 1.2;
-	color: var(--awea-about-muted);
+	color: var(--awea-ab-secondary);
 }
 
 .awea-about-phone-num {
-	font-size: 1.0625rem;
-	font-weight: 800;
 	line-height: 1.3;
-	letter-spacing: -0.01em;
-	color: var(--awea-about-heading);
+	color: var(--awea-ab-primary);
 }
 
 /* --------------------------------------------------------------------------
-   5. Responsive Breakpoints
+   5. Accessibility & Responsive Breakpoints
    -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.awea-about-main-img img,
+	.awea-about-btn,
+	.awea-about-btn-icon,
+	.awea-about-phone-ico {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
 @media (max-width: 1024px) {
 	.awea-about-grid {
 		grid-template-columns: 1fr;
@@ -344,22 +386,22 @@
 
 	.awea-about-badge,
 	.awea-about-pos-right .awea-about-badge {
-		left: 12px;
-		right: auto;
+		inset-inline-start: 12px;
+		inset-inline-end: auto;
 	}
 }
 
 @media (max-width: 640px) {
 	.awea-about-main-img {
 		width: 100%;
-		border-radius: 28px;
+		border-radius: 24px;
 	}
 
 	.awea-about-float-img,
 	.awea-about-pos-right .awea-about-float-img {
 		width: 34%;
-		right: 12px;
-		left: auto;
+		inset-inline-end: 12px;
+		inset-inline-start: auto;
 		bottom: 12px;
 		border-width: 5px;
 	}
@@ -367,10 +409,9 @@
 	.awea-about-badge,
 	.awea-about-pos-right .awea-about-badge {
 		top: 12px;
-		left: 12px;
-		right: auto;
+		inset-inline-start: 12px;
+		inset-inline-end: auto;
 		padding: 8px 14px;
-		font-size: 0.72rem;
 	}
 
 	.awea-about-actions {

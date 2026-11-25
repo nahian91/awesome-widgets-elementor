@@ -1,19 +1,21 @@
 /* ==========================================================================
-   Awesome Product List Widget
+   Awesome Product List Widget (Global Token Edition v2.5.0)
    ========================================================================== */
 
 .awea-product-list-wrap {
-	--awea-pl-primary: var(--e-global-color-primary, #4f46e5);
-	--awea-pl-heading: #0f172a;
-	--awea-pl-muted: #94a3b8;
-	--awea-pl-border: #e2e8f0;
+	--awea-pl-primary: var(--e-global-color-primary);
+	--awea-pl-secondary: var(--e-global-color-secondary);
+	--awea-pl-text: var(--e-global-color-text);
+	--awea-pl-accent: var(--e-global-color-accent);
+	--awea-pl-surface: var(--e-global-color-background, #ffffff);
+	--awea-pl-border: color-mix(in srgb, currentColor 12%, transparent);
 
 	width: 100%;
 	position: relative;
 	box-sizing: border-box;
-	background-color: #ffffff;
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
 	border: 1px solid var(--awea-pl-border);
-	border-radius: 24px;
+	border-radius: 20px;
 	padding: 32px;
 	transition:
 		background-color 0.25s ease,
@@ -28,7 +30,7 @@
 }
 
 .awea-product-list-wrap:hover {
-	border-color: var(--awea-pl-primary);
+	border-color: var(--awea-pl-accent);
 }
 
 /* --------------------------------------------------------------------------
@@ -37,10 +39,7 @@
 .awea-product-list-header {
 	margin-top: 0;
 	margin-bottom: 20px;
-	font-size: 1.35rem;
-	font-weight: 800;
-	letter-spacing: -0.02em;
-	color: var(--awea-pl-heading);
+	color: var(--awea-pl-primary);
 	line-height: 1.25;
 	word-break: break-word;
 }
@@ -49,9 +48,10 @@
    Product Rows Container
    -------------------------------------------------------------------------- */
 .awea-product-list-items {
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
+	display: grid;
+	grid-template-columns: repeat(1, minmax(0, 1fr));
+	column-gap: 28px;
+	row-gap: 16px;
 }
 
 .awea-product-list-row {
@@ -59,27 +59,45 @@
 	align-items: center;
 	gap: 18px;
 	padding-bottom: 16px;
-	border-bottom: 1px solid #f1f5f9;
+	border-bottom: 1px solid color-mix(in srgb, currentColor 8%, transparent);
 	transition: border-color 0.25s ease;
 }
 
-.awea-product-list-row:last-child {
+.awea-pl-cols-1 .awea-product-list-row:last-child {
 	padding-bottom: 0 !important;
 	border-bottom: none !important;
 	margin-bottom: 0 !important;
 }
 
 /* --------------------------------------------------------------------------
-   Thumbnail Image
+   Thumbnail Image & Sale Badge
    -------------------------------------------------------------------------- */
 .awea-product-list-thumb {
+	position: relative;
 	width: 84px;
 	height: 84px;
-	border-radius: 16px;
+	border-radius: 14px;
 	overflow: hidden;
-	background-color: #f1f5f9;
+	background-color: color-mix(in srgb, currentColor 6%, transparent);
 	flex-shrink: 0;
 	border: 1px solid var(--awea-pl-border);
+}
+
+.awea-pl-sale-badge {
+	position: absolute;
+	top: 6px;
+	inset-inline-start: 6px;
+	z-index: 2;
+	padding: 2px 7px;
+	border-radius: 100px;
+	background-color: var(--awea-pl-accent);
+	color: var(--awea-pl-surface);
+	font-size: 0.65rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	line-height: 1.2;
+	pointer-events: none;
 }
 
 .awea-product-list-thumb a {
@@ -97,7 +115,7 @@
 }
 
 .awea-product-list-row:hover .awea-product-list-thumb img {
-	transform: scale(1.03);
+	transform: scale(1.04);
 }
 
 /* --------------------------------------------------------------------------
@@ -111,27 +129,25 @@
 .awea-product-list-title {
 	margin-top: 0;
 	margin-bottom: 6px;
-	font-size: 1.05rem;
-	font-weight: 700;
 	line-height: 1.35;
-	letter-spacing: -0.01em;
 	word-break: break-word;
 }
 
 .awea-product-list-title a {
 	text-decoration: none;
-	color: var(--awea-pl-heading);
+	color: var(--awea-pl-primary);
 	transition: color 0.25s ease;
 }
 
 .awea-product-list-title a:focus-visible {
-	outline: 2px solid var(--awea-pl-primary);
+	outline: 2px solid var(--awea-pl-accent);
 	outline-offset: 2px;
 	border-radius: 4px;
 }
 
-.awea-product-list-row:hover .awea-product-list-title a {
-	color: var(--awea-pl-primary);
+.awea-product-list-row:hover .awea-product-list-title a,
+.awea-product-list-title a:hover {
+	color: var(--awea-pl-accent);
 }
 
 .awea-product-list-rating {
@@ -147,9 +163,7 @@
 }
 
 .awea-product-list-price {
-	font-size: 1rem;
-	font-weight: 800;
-	color: var(--awea-pl-primary);
+	color: var(--awea-pl-accent);
 	font-variant-numeric: tabular-nums;
 	line-height: 1.2;
 }
@@ -160,9 +174,9 @@
 }
 
 .awea-product-list-price del {
-	font-size: 0.82rem;
-	color: var(--awea-pl-muted);
-	font-weight: 500;
+	font-size: 0.85em;
+	color: var(--awea-pl-text);
+	opacity: 0.55;
 	margin-inline-end: 4px;
 }
 
@@ -179,17 +193,15 @@
 	display: none !important;
 }
 
-.awea-product-grid-btn {
+.awea-product-list-wrap .awea-product-grid-btn {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	padding: 8px 16px;
 	border-radius: 100px;
-	font-weight: 700;
-	font-size: 0.82rem;
 	text-decoration: none;
-	background-color: #f8fafc;
-	color: var(--awea-pl-heading);
+	background-color: color-mix(in srgb, currentColor 6%, transparent);
+	color: var(--awea-pl-primary);
 	border: 1px solid var(--awea-pl-border);
 	transition:
 		background-color 0.25s ease,
@@ -199,21 +211,21 @@
 	line-height: 1.2;
 }
 
-.awea-product-grid-btn:focus-visible {
-	outline: 2px solid var(--awea-pl-primary);
+.awea-product-list-wrap .awea-product-grid-btn:focus-visible {
+	outline: 2px solid var(--awea-pl-accent);
 	outline-offset: 2px;
 }
 
-.awea-product-grid-btn:hover,
-.awea-product-grid-btn:focus-visible {
-	background-color: var(--awea-pl-primary);
-	color: #ffffff;
-	border-color: transparent;
+.awea-product-list-wrap .awea-product-grid-btn:hover,
+.awea-product-list-wrap .awea-product-grid-btn:focus-visible {
+	background-color: var(--awea-pl-accent);
+	color: var(--awea-pl-surface);
+	border-color: var(--awea-pl-accent);
 }
 
-.awea-view-cart {
+.awea-product-list-wrap .awea-view-cart {
 	display: none;
-	background-color: #10b981 !important;
+	background-color: #16a34a !important;
 	color: #ffffff !important;
 	border-color: transparent !important;
 }
@@ -232,7 +244,7 @@
 @media (prefers-reduced-motion: reduce) {
 	.awea-product-list-wrap,
 	.awea-product-list-thumb img,
-	.awea-product-grid-btn {
+	.awea-product-list-wrap .awea-product-grid-btn {
 		transition: none !important;
 		transform: none !important;
 	}
@@ -241,7 +253,7 @@
 @media (max-width: 640px) {
 	.awea-product-list-wrap {
 		padding: 20px 16px;
-		border-radius: 18px;
+		border-radius: 16px;
 	}
 
 	.awea-product-list-row {
@@ -261,8 +273,7 @@
 		margin-top: 4px;
 	}
 
-	.awea-product-grid-btn {
+	.awea-product-list-wrap .awea-product-grid-btn {
 		padding: 6px 12px;
-		font-size: 0.78rem;
 	}
 }

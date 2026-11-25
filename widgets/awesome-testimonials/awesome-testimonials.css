@@ -1,220 +1,250 @@
 /* ==========================================================================
-   AWEA Testimonials — Zero-Shadow Architectural Repeater Grid
+   Awesome Testimonials Widget (Global Token Edition v2.5.0)
    ========================================================================== */
 
-@property --awea-tm-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
+@property --awea-ts-angle {
+	syntax: "<angle>";
+	initial-value: 0deg;
+	inherits: false;
 }
 
-.awea-tm-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-  width: 100%;
-  box-sizing: border-box;
-  align-items: stretch;
+.awea-ts-grid {
+	--awea-ts-primary: var(--e-global-color-primary);
+	--awea-ts-secondary: var(--e-global-color-secondary);
+	--awea-ts-text: var(--e-global-color-text);
+	--awea-ts-accent: var(--e-global-color-accent);
+	--awea-ts-border: color-mix(in srgb, currentColor 12%, transparent);
+
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	column-gap: 24px;
+	row-gap: 24px;
+	width: 100%;
+	box-sizing: border-box;
+	align-items: stretch;
 }
 
-.awea-tm-card {
-  --awea-tm-beam: var(--e-global-color-primary, #4f46e5);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  padding: 32px 30px;
-  border-radius: 24px;
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  overflow: hidden;
-  box-sizing: border-box;
-  box-shadow: none;
-  transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease;
+.awea-ts-grid *,
+.awea-ts-grid *::before,
+.awea-ts-grid *::after {
+	box-sizing: border-box;
 }
 
-.awea-tm-card:hover {
-  background-color: #f8fafc;
-  border-color: var(--awea-tm-beam);
-  box-shadow: none;
+.awea-ts-card {
+	--awea-ts-active-accent: var(--awea-ts-item-accent, var(--awea-ts-accent));
+	--awea-ts-beam: var(--awea-ts-active-accent);
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+	padding: 32px 30px;
+	border-radius: 16px;
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
+	border: 1px solid var(--awea-ts-border);
+	overflow: hidden;
+	box-sizing: border-box;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.3s ease,
+		transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Kinetic Border Beam (Zero Shadow) */
-.awea-tm-beam-yes .awea-tm-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1.5px;
-  background: conic-gradient(from var(--awea-tm-angle), transparent 70%, var(--awea-tm-beam), transparent);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
+.awea-ts-card.awea-ts-featured {
+	border-color: var(--awea-ts-active-accent);
+	box-shadow: 0 16px 34px -12px color-mix(in srgb, var(--awea-ts-active-accent) 22%, transparent);
 }
 
-@keyframes aweaTmSpin {
-  to {
-    --awea-tm-angle: 360deg;
-  }
+.awea-ts-card:hover {
+	border-color: var(--awea-ts-active-accent);
+	box-shadow: 0 18px 36px -14px color-mix(in srgb, var(--awea-ts-primary) 12%, transparent);
 }
 
-.awea-tm-beam-yes .awea-tm-card:hover::after {
-  opacity: 1;
-  animation: aweaTmSpin 3.5s linear infinite;
+.awea-ts-motion-lift .awea-ts-card:hover {
+	transform: translateY(-5px);
+}
+
+.awea-ts-motion-scale .awea-ts-card:hover {
+	transform: scale(1.02);
+}
+
+/* Kinetic Border Glow */
+.awea-ts-beam-yes .awea-ts-card::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	padding: 1.5px;
+	background: conic-gradient(from var(--awea-ts-angle), transparent 70%, var(--awea-ts-beam), transparent);
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+	pointer-events: none;
+}
+
+@keyframes aweaTsSpin {
+	to {
+		--awea-ts-angle: 360deg;
+	}
+}
+
+.awea-ts-beam-yes .awea-ts-card:hover::after {
+	opacity: 1;
+	animation: aweaTsSpin 3.5s linear infinite;
 }
 
 /* Quote Watermark */
-.awea-tm-quote-mark {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 40px;
-  height: 40px;
-  opacity: 0.08;
-  color: var(--awea-tm-beam);
-  z-index: 1;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
+.awea-ts-quote-mark {
+	position: absolute;
+	top: 24px;
+	inset-inline-end: 24px;
+	width: 40px;
+	height: 40px;
+	opacity: 0.1;
+	color: var(--awea-ts-active-accent);
+	z-index: 1;
+	pointer-events: none;
+	transition: opacity 0.3s ease;
 }
 
-.awea-tm-card:hover .awea-tm-quote-mark {
-  opacity: 0.16;
+.awea-ts-card:hover .awea-ts-quote-mark {
+	opacity: 0.18;
 }
 
 /* Rating Stars */
-.awea-tm-stars {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  position: relative;
-  z-index: 2;
-  margin-bottom: 18px;
+.awea-ts-stars {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	position: relative;
+	z-index: 2;
+	margin-bottom: 16px;
 }
 
-.awea-tm-stars i {
-  font-size: 14px;
-  line-height: 1;
+.awea-ts-stars i {
+	font-size: 14px;
+	line-height: 1;
 }
 
 .awea-star-on {
-  color: #f59e0b;
+	color: #f59e0b;
 }
 
 .awea-star-off {
-  color: #e2e8f0;
+	color: color-mix(in srgb, currentColor 20%, transparent);
 }
 
-/* Review Speech */
-.awea-tm-text {
-  margin: 0 0 24px 0;
-  position: relative;
-  z-index: 2;
-  font-size: 1rem;
-  line-height: 1.68;
-  color: #334155;
-  font-style: italic;
-  word-break: break-word;
+/* Review Headline & Speech */
+.awea-ts-headline {
+	margin: 0 0 8px 0;
+	position: relative;
+	z-index: 2;
+	color: var(--awea-ts-primary);
+	word-break: break-word;
 }
 
-/* Author Footer (Bottom-Anchored Across Equal-Height Cards) */
-.awea-tm-footer {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-top: auto;
-  padding-top: 18px;
-  border-top: 1px solid #f1f5f9;
-  position: relative;
-  z-index: 2;
+.awea-ts-text {
+	margin: 0 0 24px 0;
+	position: relative;
+	z-index: 2;
+	color: var(--awea-ts-text);
+	font-style: italic;
+	word-break: break-word;
 }
 
-.awea-tm-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 100%;
-  object-fit: cover;
-  flex-shrink: 0;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+/* Customer Footer (Bottom-Anchored Across Equal-Height Cards) */
+.awea-ts-footer {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	margin-top: auto;
+	padding-top: 18px;
+	border-top: 1px solid color-mix(in srgb, currentColor 8%, transparent);
+	position: relative;
+	z-index: 2;
 }
 
-.awea-tm-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
+.awea-ts-avatar {
+	width: 48px;
+	height: 48px;
+	border-radius: 100%;
+	object-fit: cover;
+	flex-shrink: 0;
+	border: 1px solid var(--awea-ts-border);
 }
 
-.awea-tm-name {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 800;
-  line-height: 1.25;
-  color: #0f172a;
-  word-break: break-word;
+.awea-ts-meta {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
 }
 
-.awea-tm-role {
-  font-style: normal;
-  font-size: 0.84rem;
-  line-height: 1.3;
-  color: #64748b;
-  display: block;
-  word-break: break-word;
+.awea-ts-name {
+	margin: 0;
+	color: var(--awea-ts-primary);
+	word-break: break-word;
+}
+
+.awea-ts-role {
+	font-style: normal;
+	color: var(--awea-ts-secondary);
+	display: block;
+	word-break: break-word;
 }
 
 /* Verified Badge */
-.awea-tm-verify {
-  margin-left: auto;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background-color: #dcfce7;
-  color: #15803d;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+.awea-ts-verify {
+	margin-inline-start: auto;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background-color: color-mix(in srgb, var(--awea-ts-active-accent) 14%, transparent);
+	color: var(--awea-ts-active-accent);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
 }
 
-.awea-tm-verify svg {
-  width: 12px;
-  height: 12px;
+.awea-ts-verify svg {
+	width: 12px;
+	height: 12px;
 }
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  .awea-tm-beam-yes .awea-tm-card:hover::after {
-    animation: none !important;
-  }
+	.awea-ts-beam-yes .awea-ts-card:hover::after {
+		animation: none !important;
+	}
 
-  .awea-tm-card,
-  .awea-tm-quote-mark {
-    transition: none !important;
-  }
+	.awea-ts-card,
+	.awea-ts-quote-mark {
+		transition: none !important;
+		transform: none !important;
+	}
 }
 
 /* Mobile (<= 767px) */
 @media (max-width: 767px) {
-  .awea-tm-card {
-    padding: 24px 20px;
-    border-radius: 18px;
-  }
+	.awea-ts-card {
+		padding: 24px 20px;
+		border-radius: 14px;
+	}
 
-  .awea-tm-quote-mark {
-    top: 18px;
-    right: 18px;
-    width: 32px;
-    height: 32px;
-  }
+	.awea-ts-quote-mark {
+		top: 18px;
+		inset-inline-end: 18px;
+		width: 32px;
+		height: 32px;
+	}
 
-  .awea-tm-footer {
-    gap: 12px;
-  }
+	.awea-ts-footer {
+		gap: 12px;
+	}
 }

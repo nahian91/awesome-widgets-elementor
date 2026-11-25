@@ -1,13 +1,15 @@
 /* ==========================================================================
-   Awesome Timeline Widget
+   Awesome Timeline Widget (Global Token Edition v2.5.0)
    ========================================================================== */
 
 .awea-tl-wrap {
-	--awea-tl-primary: var(--e-global-color-primary, #4f46e5);
-	--awea-tl-heading: #0f172a;
-	--awea-tl-text: #475569;
-	--awea-tl-border: #e2e8f0;
-	--awea-tl-halo: #ffffff;
+	--awea-tl-primary: var(--e-global-color-primary);
+	--awea-tl-secondary: var(--e-global-color-secondary);
+	--awea-tl-text: var(--e-global-color-text);
+	--awea-tl-accent: var(--e-global-color-accent);
+	--awea-tl-border: color-mix(in srgb, currentColor 12%, transparent);
+	--awea-tl-halo: var(--e-global-color-background, #ffffff);
+	--awea-tl-bar-size: 4px;
 
 	width: 100%;
 	max-width: 1060px;
@@ -33,7 +35,7 @@
 	top: 0;
 	width: 2px;
 	height: 100%;
-	background-color: #cbd5e1;
+	background-color: color-mix(in srgb, var(--awea-tl-accent) 28%, transparent);
 	transform: translateX(-50%);
 	pointer-events: none;
 	z-index: 1;
@@ -43,6 +45,9 @@
    2. Alternating Item Positioning (Default)
    -------------------------------------------------------------------------- */
 .awea-tl-item {
+	--awea-tl-active-accent: var(--awea-tl-item-accent, var(--awea-tl-accent));
+	--awea-tl-soft-tint: color-mix(in srgb, var(--awea-tl-active-accent) 10%, transparent);
+
 	display: flex;
 	justify-content: flex-end;
 	padding-right: 50%;
@@ -139,10 +144,10 @@
 	width: 34px;
 	height: 34px;
 	border-radius: 50%;
-	background-color: #ffffff;
-	border: 2px solid var(--awea-tl-primary);
+	background-color: var(--awea-tl-halo);
+	border: 2px solid var(--awea-tl-active-accent);
 	outline: 5px solid var(--awea-tl-halo);
-	color: var(--awea-tl-primary);
+	color: var(--awea-tl-active-accent);
 	transform: translateX(-50%);
 	z-index: 3;
 	display: flex;
@@ -174,31 +179,85 @@
 }
 
 .awea-tl-item:hover .awea-tl-dot {
-	background-color: var(--awea-tl-primary);
-	border-color: var(--awea-tl-primary);
-	color: #ffffff;
+	background-color: var(--awea-tl-active-accent);
+	border-color: var(--awea-tl-active-accent);
+	color: var(--e-global-color-background, #ffffff);
 }
 
 /* --------------------------------------------------------------------------
-   4. Milestone Card Box
+   4. Milestone Card Box & Hover Motion
    -------------------------------------------------------------------------- */
 .awea-tl-card {
-	width: 100%;
-	background-color: #ffffff;
-	border: 1px solid var(--awea-tl-border);
-	border-radius: 20px;
-	padding: 28px;
 	position: relative;
+	overflow: hidden;
+	width: 100%;
+	background-color: color-mix(in srgb, currentColor 3%, transparent);
+	border: 1px solid var(--awea-tl-border);
+	border-radius: 16px;
+	padding: 28px;
 	word-break: break-word;
 	transition:
 		background-color 0.25s ease,
 		border-color 0.25s ease,
-		box-shadow 0.25s ease;
+		box-shadow 0.3s ease,
+		transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-tl-featured .awea-tl-card {
+	border-color: var(--awea-tl-active-accent);
+	box-shadow: 0 16px 34px -12px color-mix(in srgb, var(--awea-tl-active-accent) 20%, transparent);
 }
 
 .awea-tl-item:hover .awea-tl-card {
-	background-color: #f8fafc;
-	border-color: var(--awea-tl-primary);
+	border-color: var(--awea-tl-active-accent);
+	box-shadow: 0 18px 36px -14px color-mix(in srgb, var(--awea-tl-primary) 12%, transparent);
+}
+
+.awea-tl-motion-lift .awea-tl-item:hover .awea-tl-card {
+	transform: translateY(-5px);
+}
+
+.awea-tl-motion-scale .awea-tl-item:hover .awea-tl-card {
+	transform: scale(1.02);
+}
+
+/* Accent Line Indicator */
+.awea-tl-accent-bar {
+	display: none;
+	position: absolute;
+	z-index: 3;
+	left: 0;
+	right: 0;
+	height: var(--awea-tl-bar-size);
+	background-color: var(--awea-tl-active-accent);
+	pointer-events: none;
+	transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.awea-tl-bar-top-always .awea-tl-accent-bar,
+.awea-tl-bar-top-hover .awea-tl-accent-bar {
+	display: block;
+	top: 0;
+}
+
+.awea-tl-bar-top-hover .awea-tl-accent-bar {
+	transform: scaleX(0);
+	transform-origin: left center;
+}
+
+.awea-tl-bar-top-hover .awea-tl-item:hover .awea-tl-accent-bar {
+	transform: scaleX(1);
+}
+
+.awea-tl-bar-bottom-hover .awea-tl-accent-bar {
+	display: block;
+	bottom: 0;
+	transform: scaleX(0);
+	transform-origin: center;
+}
+
+.awea-tl-bar-bottom-hover .awea-tl-item:hover .awea-tl-accent-bar {
+	transform: scaleX(1);
 }
 
 /* --------------------------------------------------------------------------
@@ -209,29 +268,21 @@
 	align-items: center;
 	padding: 4px 12px;
 	border-radius: 100px;
-	background-color: rgba(79, 70, 229, 0.08);
-	color: var(--awea-tl-primary);
-	font-size: 0.72rem;
-	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: 0.08em;
+	background-color: var(--awea-tl-soft-tint);
+	border: 1px solid color-mix(in srgb, var(--awea-tl-active-accent) 20%, transparent);
+	color: var(--awea-tl-active-accent);
 	line-height: 1.2;
 	margin-bottom: 12px;
 }
 
 .awea-tl-title {
 	margin: 0 0 10px 0;
-	font-size: 1.25rem;
-	font-weight: 800;
-	color: var(--awea-tl-heading);
+	color: var(--awea-tl-primary);
 	line-height: 1.28;
-	letter-spacing: -0.02em;
 }
 
 .awea-tl-desc {
 	margin: 0;
-	font-size: 0.94rem;
-	line-height: 1.62;
 	color: var(--awea-tl-text);
 }
 
@@ -239,7 +290,7 @@
 	margin-top: 16px;
 	border-radius: 12px;
 	overflow: hidden;
-	border: 1px solid rgba(15, 23, 42, 0.06);
+	border: 1px solid var(--awea-tl-border);
 }
 
 .awea-tl-media img {
@@ -254,16 +305,14 @@
 	align-items: center;
 	gap: 6px;
 	margin-top: 16px;
-	font-size: 0.88rem;
-	font-weight: 700;
-	color: var(--awea-tl-primary);
+	color: var(--awea-tl-active-accent);
 	text-decoration: none;
 	line-height: 1.2;
 	transition: color 0.25s ease;
 }
 
 .awea-tl-link:focus-visible {
-	outline: 2px solid var(--awea-tl-primary);
+	outline: 2px solid var(--awea-tl-active-accent);
 	outline-offset: 3px;
 	border-radius: 4px;
 }
@@ -276,7 +325,7 @@
 
 .awea-tl-link:hover,
 .awea-tl-link:focus-visible {
-	color: var(--awea-tl-heading);
+	color: var(--awea-tl-primary);
 }
 
 .awea-tl-link:hover svg {
@@ -295,7 +344,8 @@
 
 	.awea-tl-dot,
 	.awea-tl-card,
-	.awea-tl-link svg {
+	.awea-tl-link svg,
+	.awea-tl-accent-bar {
 		transition: none !important;
 		transform: none !important;
 	}
@@ -335,6 +385,6 @@
 
 	.awea-tl-card {
 		padding: 22px 20px;
-		border-radius: 16px;
+		border-radius: 14px;
 	}
 }
